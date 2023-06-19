@@ -1,0 +1,77 @@
+{
+    "name": "quiz",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.8.1",
+        "@vkontakte/icons": "^2.43.0",
+        "@vkontakte/vk-bridge": "^2.7.4",
+        "@vkontakte/vkui": "^5.5.2",
+        "axios": "^0.27.2",
+        "history": "^4.6.3",
+        "marked": "^0.3.6",
+        "prop-types": "^15.5.10",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0",
+        "react-hook-form": "^7.45.0-next.1",
+        "react-redux": "^8.0.1",
+        "react-router": "^6.3.0",
+        "react-router-dom": "^6.3.0",
+        "redux": "^4.2.0",
+        "redux-devtools-extension": "^2.13.2",
+        "redux-logger": "^3.0.1",
+        "redux-saga": "1.2.3",
+        "styled-components": "^5.3.5",
+        "styled-normalize": "^8.0.7",
+        "styled-theming": "^2.2.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.4.1",
+        "@types/react": "^18.0.7",
+        "@types/react-dom": "^18.0.2",
+        "@types/styled-components": "^5.1.25",
+        "@typescript-eslint/eslint-plugin": "^5.21.0",
+        "@typescript-eslint/parser": "^5.21.0",
+        "babel": "^6.23.0",
+        "babel-eslint": "^10.1.0",
+        "cross-env": "^5.2.1",
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb": "^19.0.2",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-plugin-airbnb": "^0.0.1-security",
+        "eslint-plugin-babel": "^5.3.1",
+        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-prefer-arrow": "^1.2.3",
+        "eslint-plugin-promise": "^5.2.0",
+        "eslint-plugin-react": "^7.27.1",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "eslint-plugin-ternary": "^2.0.0",
+        "react-scripts": "5.0.1",
+        "typescript": "^4.6.3"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
