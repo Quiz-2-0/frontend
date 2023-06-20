@@ -16,7 +16,10 @@ const App = () => {
   const location = useLocation();
   return (
     <Main style={{ fontFamily: 'SFProDisplay' }}>
-      <Login />
+      <Routes>
+        <Route path='/login' element={<Login />} />
+      </Routes>
+
     </Main>
   );
 };
