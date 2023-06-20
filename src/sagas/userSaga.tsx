@@ -13,12 +13,13 @@ import { setMistake, setLogged } from '../store/allSlice';
 import { loginUser, jwt } from '../api/api';
 import { TUser } from '../types/types';
 
-function* loginWorker(action: PayloadAction<{ email: string, password: string }>) {
-  const { email, password } = action.payload;
+function* loginWorker(action: PayloadAction<{ email: string, password: string, role: string }>) {
+  console.log(action.payload);
+  const { email, password, role } = action.payload;
 
   try {
     /// идем на сервер
-    const { data } = yield call(() => loginUser(email, password));
+    const { data } = yield call(() => loginUser(email, password, role));
 
     const { token, ...rest } = data;
 

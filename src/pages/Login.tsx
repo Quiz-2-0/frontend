@@ -1,9 +1,12 @@
+/* eslint-disable import/order */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from '../store/store.types';
 import { NavLink } from 'react-router-dom';
 import {
   SplitLayout,
@@ -22,10 +25,14 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
-import '../ui-lib/logo/logo.css';
-import '../ui-lib/Login.css';
+
+import { setRememberMe } from '../store/allSlice';
+import { fetchUserData } from '../store/userSlice';
 
 const Login: React.FC = () => {
+  /// /// adds
+  const dispatch = useDispatch();
+  const { isRememberMe } = useSelector((state) => state.all);
   const [role, setRole] = useState('user');
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -75,6 +82,11 @@ const Login: React.FC = () => {
   };
 
   const onSubmit = () => {
+    dispatch(fetchUserData({
+      role,
+      email,
+      password,
+    }));
     console.log({
       role,
       email,
@@ -205,7 +217,10 @@ const Login: React.FC = () => {
               className='text'
               checked={isMemorized}
               style={{ padding: 0 }}
-              onClick={() => setIsMemorized(!isMemorized)}>
+              onClick={() => {
+                dispatch(setRememberMe(!isRememberMe));
+                setIsMemorized(!isMemorized);
+              }}>
               Запомнить меня
             </Checkbox>
             <Link href='/reset-password' className='text'>

@@ -44,9 +44,10 @@ const appAPI: AxiosInstance = axios.create(defaultRequestConfig);
 export const loginUser = (
   email: string,
   password: string,
+  role: string,
 ) => {
   const loginData = {
-    email, password,
+    email, password, role,
   };
   const requestConfig: AxiosRequestConfig = {
     url: LOGIN_ROUTE,

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '../types/types';
 
@@ -17,7 +19,7 @@ const userDataSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<TUser>) => ({
       ...state, currentUser: action.payload,
     }),
-    fetchUserData: (state) => { },
+    fetchUserData: (state, action: PayloadAction<{ email: string, role: string, password: string }>) => { },
   },
 });
 
