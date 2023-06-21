@@ -1,8 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Login from '../pages/Login';
-import ResetPassword from '../pages/ResetPassword';
+import { SplitLayout, Spinner } from '@vkontakte/vkui';
+
+const Login = React.lazy(() => import('../pages/Login'));
+const ResetPassword = React.lazy(() => import('../pages/ResetPassword'));
+
 /// потом сделаем переключение темы
 const Main = styled.main`
   height: 100%;
@@ -16,11 +19,13 @@ const App = () => {
   const location = useLocation();
   return (
     <Main style={{ fontFamily: 'SFProDisplay' }}>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-      </Routes>
 
+      <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
+        </Routes>
+      </React.Suspense>
     </Main>
   );
 };
