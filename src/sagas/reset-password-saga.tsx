@@ -11,9 +11,9 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { recoverPassword } from '../api/api';
 import { resetPassword, setMistake } from '../store/allSlice';
 
-function* resetWorker(action: PayloadAction<{ email: string }>) {
-  const { email } = action.payload;
-
+function* resetWorker(action: PayloadAction<string>) {
+  const email = action.payload;
+  console.log(email);
   try {
     /// идем на сервер
     yield call(() => recoverPassword(email));

@@ -14,8 +14,8 @@ import { loginUser, jwt } from '../api/api';
 import { TUser } from '../types/types';
 
 function* loginWorker(action: PayloadAction<{ email: string, password: string, role: string }>) {
-  console.log(action.payload);
   const { email, password, role } = action.payload;
+  const isRemember: boolean = yield select((state) => state.all.isRememberMe);
 
   try {
     /// идем на сервер
@@ -23,7 +23,6 @@ function* loginWorker(action: PayloadAction<{ email: string, password: string, r
 
     const { token, ...rest } = data;
 
-    const isRemember: boolean = yield select((state) => state.all.isRememberMe);
     jwt.set(token, isRemember);
     // в случае успеха отдать данные редьюсеру
     yield put(setCurrentUser(rest as TUser));

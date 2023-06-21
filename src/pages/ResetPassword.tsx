@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, {
   FunctionComponent,
   useState,
@@ -18,9 +21,8 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import '../ui-lib/logo/logo.css';
-import '../ui-lib/input/input.css';
-import '../ui-lib/text/text.css';
+import { useDispatch } from '../store/store.types';
+import { resetPassword } from '../store/allSlice';
 
 const BackgroundImageWrapper = styled.div`
   width: 100%;
@@ -92,7 +94,7 @@ const ResetPassword: FunctionComponent = () => {
   const navigate = useNavigate();
   const loginBackground = './images/placeholder.png';
   const buttonIcon = './images/button_icon.svg';
-
+  const dispatch = useDispatch();
   const emailSchema = z.string().email();
 
   const buttonText = isSubmitted ? 'Войти' : 'Отправить новый пароль'; // eslint-disable-line ternary/no-unreachable
@@ -126,6 +128,7 @@ const ResetPassword: FunctionComponent = () => {
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    dispatch(resetPassword(email));
     e.preventDefault();
     if (isSubmitted) {
       navigate('/login');

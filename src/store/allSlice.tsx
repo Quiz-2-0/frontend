@@ -26,7 +26,7 @@ const allSlice = createSlice({
     setLogged: (state, action: PayloadAction<boolean>) => ({
       ...state, isLogged: action.payload,
     }),
-    resetPassword: (state) => {
+    resetPassword: (state, action: PayloadAction<string>) => {
 
     },
   },
