@@ -1,7 +1,9 @@
 body {
     height: 100%;
     margin: 0;
-    padding: 0;}
+    padding: 0;
+    min-height: 1024px;
+}
 
 html {
     height: 100%;
@@ -9,4 +11,37 @@ html {
 
 #root {
     height: 100%;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #21272a;
+    text-decoration: none;
+}
+
+.form-item {
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #21272a;
+    padding-bottom: 32px;
+}
+
+.form-item_error {
+    padding-bottom: 10px;
+}
+
+.vkuiInternalFormItem--status-error .vkuiFormField {
+    background: white;
+}
+
+.input {
+    height: 48px;
+    background: none;
+    border-bottom: 1px solid #c1c7cd;
+    font-size: 16px;
+    color: #697077;
 }

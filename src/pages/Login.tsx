@@ -1,6 +1,12 @@
+/* eslint-disable import/order */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from '../store/store.types';
 import { NavLink } from 'react-router-dom';
 import {
   SplitLayout,
@@ -13,45 +19,91 @@ import {
   FormItem,
   Input,
   Checkbox,
+  Link,
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
-import '../ui-lib/logo/logo.css';
-import '../ui-lib/input/input.css';
-import '../ui-lib/text/text.css';
+
+import { setRememberMe } from '../store/allSlice';
+import { fetchUserData } from '../store/userSlice';
 
 const Login: React.FC = () => {
+  /// /// adds
+  const dispatch = useDispatch();
+  const { isRememberMe } = useSelector((state) => state.all);
+  const [role, setRole] = useState('user');
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [password, setPassword] = useState('');
+  const [isMemorized, setIsMemorized] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
+  const [isButtonDisabled, setIsDisabled] = useState(true);
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-  console.log(errors);
+  useEffect(() => {
+    (email && password && isEmailValid && isPasswordValid) && setIsDisabled(false);
+  }, [email, password, isEmailValid, isPasswordValid]);
 
-  type FormValues = {
-    email: string;
-    password: string;
+  /* const [currentUser, setCurrentUser] = ({});
+  const [loggedIn, setLoggedIn] = useState(false);
+  function handleLogin({ role, email, password }) {
+    return (имя файла).(название функции)(role, email, password)
+      .then((data) => {
+        isMemorized
+          ? localStorage.setItem("jwt", JSON.stringify(data.token))
+          : sessionStorage("jwt", JSON.stringify(data.token));
+        setLoggedIn(true);
+        setCurrentUser({
+          name: name,
+          email: email,
+          password: password,
+        });
+        navigate("(роут)");
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  } */
+
+  const resetForm = () => {
+    setRole('user');
+    setEmail('');
+    setPassword('');
+    setIsMemorized(false);
+    setIsEmailValid(true);
+    setIsPasswordValid(true);
+    setIsPasswordVisible(false);
+    setIsDisabled(true);
   };
 
-  const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    console.log(e.target.value);
+  const onSubmit = () => {
+    dispatch(fetchUserData({
+      role,
+      email,
+      password,
+    }));
+    console.log({
+      role,
+      email,
+      password,
+      memorised: isMemorized,
+    });
+    resetForm();
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
-    if (name === 'email') setEmail(value);
-    if (name === 'password') setPassword(value);
+    if (name === 'email') {
+      setEmail(value);
+    }
+    if (name === 'password') {
+      setPassword(value);
+    }
   };
 
   return (
@@ -86,10 +138,11 @@ const Login: React.FC = () => {
             Вход в личный кабинет
           </Title>
 
-          <Group style={{ padding: 0, marginBottom: '32px' }}>
+          <Group style={{ padding: 0, marginBottom: '16px' }}>
             <Div style={{ padding: 0 }}>
               <SegmentedControl
-                style={{ padding: 0, background: 'none', border: 'none' }}
+                onChange={(value) => { value === 'user' ? setRole('user') : setRole('admin'); }}
+                style={{ padding: 0 }}
                 options={[
                   {
                     label: 'Сотрудник',
@@ -106,14 +159,11 @@ const Login: React.FC = () => {
           <FormItem
             htmlFor='email'
             top='Логин'
-            style={{
-              padding: 0,
-              marginBottom: '16px',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '140%',
-              color: '#21272A',
-            }}>
+            onBlur={() => setIsEmailValid(validator.isEmail(email))}
+            onBeforeInput={() => setIsEmailValid(true)}
+            status={isEmailValid ? 'default' : 'error'}
+            bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
+            className={`form-item${isEmailValid ? '' : ' form-item_error'}`}>
             <Input
               id='email'
               type='email'
@@ -126,7 +176,13 @@ const Login: React.FC = () => {
           <FormItem
             top='Пароль'
             htmlFor='pass'
-            style={{ padding: 0, marginBottom: '16px' }}>
+            onBeforeInput={() => setIsPasswordValid(true)}
+            onBlur={() => {
+              (password.length >= 6 ? setIsPasswordValid(true) : setIsPasswordValid(false));
+            }}
+            status={isPasswordValid ? 'default' : 'error'}
+            bottom={isPasswordValid ? '' : 'Введите пароль'}
+            className={`form-item${isPasswordValid ? '' : ' form-item_error'}`}>
             <Input
               id='pass'
               type={isPasswordVisible ? 'text' : 'password'}
@@ -135,14 +191,14 @@ const Login: React.FC = () => {
               value={password}
               after={
                 isPasswordVisible ? (
-                  <Icon16View
-                    width={24}
-                    height={24}
+                  <Icon12EyeSlashOutline
+                    width={16}
+                    height={16}
                     onClick={changePasswordVisibility} />
                 ) : (
-                  <Icon12EyeSlashOutline
-                    width={24}
-                    height={24}
+                  <Icon16View
+                    width={16}
+                    height={16}
                     onClick={changePasswordVisibility} />
                 )
               }
@@ -157,15 +213,26 @@ const Login: React.FC = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Checkbox className='text'>Запомнить меня</Checkbox>
-            <NavLink to='/reset-password' className='text'>
+            <Checkbox
+              className='text'
+              checked={isMemorized}
+              style={{ padding: 0 }}
+              onClick={() => {
+                dispatch(setRememberMe(!isRememberMe));
+                setIsMemorized(!isMemorized);
+              }}>
+              Запомнить меня
+            </Checkbox>
+            <Link href='/reset-password' className='text'>
               Сбросить пароль
-            </NavLink>
+            </Link>
           </Div>
           <FormItem style={{ padding: 0 }}>
             <Button
               size='l'
               style={{ background: '#5181B8', borderRadius: '4px' }}
+              disabled={isButtonDisabled}
+              onClick={onSubmit}
               stretched>
               Войти
             </Button>

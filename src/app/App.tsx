@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import ResetPassword from '../pages/ResetPassword';
+import Login from '../pages/Login';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
@@ -16,7 +16,10 @@ const App = () => {
   const location = useLocation();
   return (
     <Main style={{ fontFamily: 'SFProDisplay' }}>
-      <ResetPassword />
+      <Routes>
+        <Route path='/login' element={<Login />} />
+      </Routes>
+
     </Main>
   );
 };
