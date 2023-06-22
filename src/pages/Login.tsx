@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from '../store/store.types';
 import { NavLink } from 'react-router-dom';
 import {
@@ -44,10 +44,6 @@ const Login: React.FC = () => {
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-
-  useEffect(() => {
-    (email && password && isEmailValid && isPasswordValid) && setIsDisabled(false);
-  }, [email, password, isEmailValid, isPasswordValid]);
 
   /* const [currentUser, setCurrentUser] = ({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -159,7 +155,10 @@ const Login: React.FC = () => {
           <FormItem
             htmlFor='email'
             top='Логин'
-            onBlur={() => setIsEmailValid(validator.isEmail(email))}
+            onBlur={() => {
+              setIsEmailValid(validator.isEmail(email));
+              setIsDisabled(!(validator.isEmail(email) && isPasswordValid));
+            }}
             onBeforeInput={() => setIsEmailValid(true)}
             status={isEmailValid ? 'default' : 'error'}
             bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
@@ -179,6 +178,7 @@ const Login: React.FC = () => {
             onBeforeInput={() => setIsPasswordValid(true)}
             onBlur={() => {
               (password.length >= 6 ? setIsPasswordValid(true) : setIsPasswordValid(false));
+              setIsDisabled(!(isEmailValid && password.length >= 6));
             }}
             status={isPasswordValid ? 'default' : 'error'}
             bottom={isPasswordValid ? '' : 'Введите пароль'}

@@ -22,16 +22,16 @@ html {
 }
 
 .form-item {
-    padding: 0;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 140%;
-    color: #21272a;
-    padding-bottom: 32px;
+    padding: 0 !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 140% !important;
+    color: #21272a !important;
+    padding-bottom: 32px !important;
 }
 
 .form-item_error {
-    padding-bottom: 10px;
+    padding-bottom: 8px !important;
 }
 
 .vkuiInternalFormItem--status-error .vkuiFormField {
@@ -39,9 +39,9 @@ html {
 }
 
 .input {
-    height: 48px;
-    background: none;
-    border-bottom: 1px solid #c1c7cd;
-    font-size: 16px;
-    color: #697077;
+    height: 48px !important;
+    background: none !important;
+    border-bottom: 1px solid #c1c7cd !important;
+    font-size: 16px !important;
+    color: #697077 !important;
 }
