@@ -24,21 +24,6 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
 import { resetPassword } from '../store/allSlice';
 
-const BackgroundImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const BackgroundImage = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-`;
-
 const BackButton = styled.button`
   margin: 0;
   padding: 0;
@@ -74,15 +59,16 @@ const ResendPasswordButton = styled.button`
 const StyledInput = styled(Input)`
   font-size: 16px;
   color: #697077;
-`;
-
-const ErrorSpan = styled.span`
-  position: absolute;
-  left: 0;
-  top: 68px;
-  color: #DA1E28;
-  font-size: 14px;
-  line-height: 16px;
+  height: 48px;
+  background: none;
+  border-bottom: 1px solid #c1c7cd;
+  
+  &:-webkit-autofill,
+  &:hover:-webkit-autofill,
+  &:focus:-webkit-autofill,
+  &:active:-webkit-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
+  }
 `;
 
 const ResetPassword: FunctionComponent = () => {
@@ -92,7 +78,6 @@ const ResetPassword: FunctionComponent = () => {
   const [timer, setTimer] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const navigate = useNavigate();
-  const loginBackground = './images/placeholder.png';
   const buttonIcon = './images/button_icon.svg';
   const dispatch = useDispatch();
   const emailSchema = z.string().email();
@@ -164,7 +149,10 @@ const ResetPassword: FunctionComponent = () => {
 
   return (
     <SplitLayout>
-      <SplitCol style={{ margin: '72px 0 0 189px' }}>
+      <SplitCol style={{
+        padding: '40px 0 0 189px',
+        boxSizing: 'border-box',
+      }}>
         <NavLink className='logo' to='/'>
           Logo
         </NavLink>
@@ -180,6 +168,7 @@ const ResetPassword: FunctionComponent = () => {
             boxSizing: 'border-box',
           }}>
           <BackButton
+            type='button'
             onClick={handleBackButtonClick}>
             <ButtonIcon
               src={buttonIcon}
@@ -240,17 +229,17 @@ const ResetPassword: FunctionComponent = () => {
                   padding: '28px 0 0 0',
                   position: 'relative',
                 }}
-                status={isEmailValid ? 'valid' : 'error'}>
+                onBlur={handleBlur}
+                status={isEmailValid ? 'default' : 'error'}
+                bottom={isEmailValid // eslint-disable-line ternary/no-unreachable
+                  ? '' : 'Неправильный формат почты'}>
                 <StyledInput
                   id='passwordReset'
                   type='email'
                   value={email}
+                  className='input'
                   placeholder='Введите рабочую почту'
-                  onChange={handleEmailChange}
-                  onBlur={handleBlur} />
-                {isEmailValid // eslint-disable-line ternary/no-unreachable
-                  ? null
-                  : <ErrorSpan>Неправильный формат почты</ErrorSpan>}
+                  onChange={handleEmailChange} />
               </FormItem>
             </>
           )}
@@ -268,11 +257,7 @@ const ResetPassword: FunctionComponent = () => {
           </Button>
         </FormLayout>
       </SplitCol>
-      <SplitCol>
-        <BackgroundImageWrapper>
-          <BackgroundImage src={loginBackground} alt='Изображение' />
-        </BackgroundImageWrapper>
-      </SplitCol>
+      <SplitCol style={{ background: '#5181B8' }} />
     </SplitLayout>
   );
 };

@@ -86,7 +86,11 @@ const Login: React.FC = () => {
 
   return (
     <SplitLayout>
-      <SplitCol style={{ maxWidth: 292, margin: '72px 0 0 189px' }}>
+      <SplitCol style={{
+        maxWidth: 292,
+        padding: '40px 0 0 189px',
+        boxSizing: 'border-box',
+      }}>
         <NavLink className='logo' to='/'>
           Logo
         </NavLink>
