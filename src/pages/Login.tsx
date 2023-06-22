@@ -33,44 +33,23 @@ const Login: React.FC = () => {
   /// /// adds
   const dispatch = useDispatch();
   const { isRememberMe } = useSelector((state) => state.all);
+  const { isLogged } = useSelector((state) => state.all);
   const [role, setRole] = useState('user');
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [password, setPassword] = useState('');
-  const [isMemorized, setIsMemorized] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isButtonDisabled, setIsDisabled] = useState(true);
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  /* const [currentUser, setCurrentUser] = ({});
-  const [loggedIn, setLoggedIn] = useState(false);
-  function handleLogin({ role, email, password }) {
-    return (имя файла).(название функции)(role, email, password)
-      .then((data) => {
-        isMemorized
-          ? localStorage.setItem("jwt", JSON.stringify(data.token))
-          : sessionStorage("jwt", JSON.stringify(data.token));
-        setLoggedIn(true);
-        setCurrentUser({
-          name: name,
-          email: email,
-          password: password,
-        });
-        navigate("(роут)");
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  } */
-
   const resetForm = () => {
     setRole('user');
     setEmail('');
     setPassword('');
-    setIsMemorized(false);
+    dispatch(setRememberMe(!isRememberMe));
     setIsEmailValid(true);
     setIsPasswordValid(true);
     setIsPasswordVisible(false);
@@ -83,13 +62,16 @@ const Login: React.FC = () => {
       email,
       password,
     }));
-    console.log({
-      role,
-      email,
-      password,
-      memorised: isMemorized,
-    });
-    resetForm();
+    // сбрасываю форму, только если юзер залогинен!!!
+    if (isLogged) {
+      console.log({
+        role,
+        email,
+        password,
+        rememberMe: isRememberMe,
+      });
+      resetForm();
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,7 +139,7 @@ const Login: React.FC = () => {
             top='Логин'
             onBlur={() => {
               setIsEmailValid(validator.isEmail(email));
-              setIsDisabled(!(validator.isEmail(email) && isPasswordValid));
+              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
             }}
             onBeforeInput={() => setIsEmailValid(true)}
             status={isEmailValid ? 'default' : 'error'}
@@ -178,7 +160,7 @@ const Login: React.FC = () => {
             onBeforeInput={() => setIsPasswordValid(true)}
             onBlur={() => {
               (password.length >= 6 ? setIsPasswordValid(true) : setIsPasswordValid(false));
-              setIsDisabled(!(isEmailValid && password.length >= 6));
+              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
             }}
             status={isPasswordValid ? 'default' : 'error'}
             bottom={isPasswordValid ? '' : 'Введите пароль'}
@@ -215,11 +197,10 @@ const Login: React.FC = () => {
             }}>
             <Checkbox
               className='text'
-              checked={isMemorized}
+              checked={isRememberMe}
               style={{ padding: 0 }}
               onClick={() => {
                 dispatch(setRememberMe(!isRememberMe));
-                setIsMemorized(!isMemorized);
               }}>
               Запомнить меня
             </Checkbox>
