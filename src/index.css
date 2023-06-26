@@ -1,53 +1,84 @@
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 #root {
-    height: 100%;
+  height: 100%;
+}
+
+.column-with-image {
+  background-image: url(../public/images/login__image.png);
+  background-color: #aad8aa;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-width: 885px !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 28px;
-    color: #21272a;
-    text-decoration: none;
+  background-image: url(../public/images/company-logo.svg);
+  display: block;
+  width: 155px;
+  height: 95px;
 }
 
 .form-item {
-    padding: 0 !important;
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    line-height: 140% !important;
-    color: #21272a !important;
-    padding-bottom: 32px !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  letter-spacing: -0.154px;
+  color: #21272a !important;
+  padding-bottom: 28px !important;
 }
 
 .form-item_error {
-    padding-bottom: 8px !important;
+  padding-bottom: 6px !important;
+}
+
+.tabs-item {
+  padding: 0 !important;
+}
+
+.tabs-item > div {
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .vkuiInternalFormItem--status-error .vkuiFormField {
-    background: white;
+  background: white;
 }
 
 .input {
-    height: 48px !important;
-    background: none !important;
-    border-bottom: 1px solid #c1c7cd !important;
-    font-size: 16px !important;
-    color: #697077 !important;
+  height: 40px !important;
+  border-bottom: 1px solid #c1c7cd !important;
+  font-size: 16px !important;
+  color: #dce1e5 !important;
+  background: none !important;
 }
 
 .input > input:-webkit-autofill,
 .input > input:-webkit-autofill:hover,
 .input > input:-webkit-autofill:focus,
-.input > input:-webkit-autofill:active  {
-     box-shadow: 0 0 0 30px white inset !important;
+.input > input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
+.reset-password-button {
+  max-width: fit-content !important;
+}
+
+.reset-password-button > span > span {
+  color: rgba(61, 135, 205, 0.53);
+  font-size: 15px !important;
+  line-height: 20px !important;
+  letter-spacing: -0.24px !important;
 }

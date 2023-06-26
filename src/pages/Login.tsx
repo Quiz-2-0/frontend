@@ -6,21 +6,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from '../store/store.types';
-import { NavLink } from 'react-router-dom';
 import {
-  SplitLayout,
-  SplitCol,
   FormLayout,
   Title,
-  Group,
   Div,
-  SegmentedControl,
   FormItem,
   Input,
   Checkbox,
   Link,
   Button,
+  Tabs,
+  TabsItem,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
@@ -41,6 +39,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isButtonDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
@@ -49,7 +48,7 @@ const Login: React.FC = () => {
     setRole('user');
     setEmail('');
     setPassword('');
-    dispatch(setRememberMe(!isRememberMe));
+    dispatch(setRememberMe(false));
     setIsEmailValid(true);
     setIsPasswordValid(true);
     setIsPasswordVisible(false);
@@ -57,13 +56,15 @@ const Login: React.FC = () => {
   };
 
   const onSubmit = () => {
-    dispatch(fetchUserData({
-      role,
-      email,
-      password,
-    }));
+    dispatch(
+      fetchUserData({
+        role,
+        email,
+        password,
+      }),
+    );
     // сбрасываю форму, только если юзер залогинен!!!
-    if (isLogged) {
+    if (!isLogged) {
       console.log({
         role,
         email,
@@ -85,147 +86,145 @@ const Login: React.FC = () => {
   };
 
   return (
-    <SplitLayout>
-      <SplitCol style={{
-        maxWidth: 292,
-        padding: '40px 0 0 189px',
+    <FormLayout
+      onSubmit={onSubmit}
+      style={{
+        maxWidth: '300px',
+        width: '100%',
+        minHeight: '510px',
+        border: 'none',
         boxSizing: 'border-box',
       }}>
-        <NavLink className='logo' to='/'>
-          Logo
-        </NavLink>
-        <FormLayout
-          onSubmit={onSubmit}
-          style={{
-            maxWidth: '410px',
-            width: '100%',
-            minHeight: '510px',
-            marginTop: '135px',
-            padding: '32px',
-            border: '1px solid #C1C7CD',
-            borderRadius: '32px',
-            boxSizing: 'border-box',
+      <Title
+        level='1'
+        style={{
+          paddingBottom: '40px',
+          fontWeight: 600,
+          fontSize: '20px',
+          lineHeight: '24px',
+          textAlign: 'center',
+          letterSpacing: '0.38px',
+          color: '#21272A',
+        }}>
+        Вход в личный кабинет
+      </Title>
+
+      <Tabs
+        style={{
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '20px',
+          letterSpacing: '-0.32px',
+          paddingBottom: '12px',
+        }}>
+        <TabsItem
+          className='tabs-item'
+          selected={role === 'user'}
+          onClick={() => setRole('user')}>
+          Сотрудник
+        </TabsItem>
+        <TabsItem
+          className='tabs-item'
+          selected={role === 'admin'}
+          onClick={() => setRole('admin')}>
+          Администратор
+        </TabsItem>
+      </Tabs>
+
+      <FormItem
+        htmlFor='email'
+        top='Логин'
+        onBlur={() => {
+          setIsEmailValid(validator.isEmail(email));
+          setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
+        }}
+        onChange={() => setIsEmailValid(true)}
+        status={isEmailValid ? 'default' : 'error'}
+        bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
+        className={`form-item${isEmailValid ? '' : ' form-item_error'}`}>
+        <Input
+          id='email'
+          type='email'
+          placeholder='Email'
+          name='email'
+          value={email}
+          onChange={onChange}
+          className='input' />
+      </FormItem>
+      <FormItem
+        top='Пароль'
+        htmlFor='pass'
+        onChange={() => setIsPasswordValid(true)}
+        onBlur={() => {
+          password.length >= 6
+            ? setIsPasswordValid(true)
+            : setIsPasswordValid(false);
+          setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
+        }}
+        status={isPasswordValid ? 'default' : 'error'}
+        bottom={isPasswordValid ? '' : 'Введите пароль'}
+        className={`form-item${isPasswordValid ? '' : ' form-item_error'}`}>
+        <Input
+          id='pass'
+          type={isPasswordVisible ? 'text' : 'password'}
+          placeholder='Пароль'
+          name='password'
+          value={password}
+          after={
+            isPasswordVisible ? (
+              <Icon16View
+                width={16}
+                height={16}
+                onClick={changePasswordVisibility} />
+            ) : (
+              <Icon12EyeSlashOutline
+                width={16}
+                height={16}
+                onClick={changePasswordVisibility} />
+            )
+          }
+          onChange={onChange}
+          className='input' />
+      </FormItem>
+      <Div
+        style={{
+          padding: 0,
+          marginBottom: '40px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Checkbox
+          checked={isRememberMe}
+          style={{ padding: 0 }}
+          onClick={() => {
+            dispatch(setRememberMe(!isRememberMe));
           }}>
-          <Title
-            level='1'
-            style={{
-              paddingBottom: '48px',
-              fontWeight: 600,
-              fontSize: '20px',
-              lineHeight: '24px',
-              textAlign: 'center',
-              letterSpacing: '0.38px',
-              color: '#21272A',
-            }}>
-            Вход в личный кабинет
-          </Title>
-
-          <Group style={{ padding: 0, marginBottom: '16px' }}>
-            <Div style={{ padding: 0 }}>
-              <SegmentedControl
-                onChange={(value) => { value === 'user' ? setRole('user') : setRole('admin'); }}
-                style={{ padding: 0 }}
-                options={[
-                  {
-                    label: 'Сотрудник',
-                    value: 'user',
-                  },
-                  {
-                    label: 'Администратор',
-                    value: 'admin',
-                  },
-                ]} />
-            </Div>
-          </Group>
-
-          <FormItem
-            htmlFor='email'
-            top='Логин'
-            onBlur={() => {
-              setIsEmailValid(validator.isEmail(email));
-              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
-            }}
-            onBeforeInput={() => setIsEmailValid(true)}
-            status={isEmailValid ? 'default' : 'error'}
-            bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
-            className={`form-item${isEmailValid ? '' : ' form-item_error'}`}>
-            <Input
-              id='email'
-              type='email'
-              placeholder='Введите рабочую почту'
-              name='email'
-              value={email}
-              onChange={onChange}
-              className='input' />
-          </FormItem>
-          <FormItem
-            top='Пароль'
-            htmlFor='pass'
-            onBeforeInput={() => setIsPasswordValid(true)}
-            onBlur={() => {
-              (password.length >= 6 ? setIsPasswordValid(true) : setIsPasswordValid(false));
-              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
-            }}
-            status={isPasswordValid ? 'default' : 'error'}
-            bottom={isPasswordValid ? '' : 'Введите пароль'}
-            className={`form-item${isPasswordValid ? '' : ' form-item_error'}`}>
-            <Input
-              id='pass'
-              type={isPasswordVisible ? 'text' : 'password'}
-              placeholder='Введите пароль'
-              name='password'
-              value={password}
-              after={
-                isPasswordVisible ? (
-                  <Icon12EyeSlashOutline
-                    width={16}
-                    height={16}
-                    onClick={changePasswordVisibility} />
-                ) : (
-                  <Icon16View
-                    width={16}
-                    height={16}
-                    onClick={changePasswordVisibility} />
-                )
-              }
-              onChange={onChange}
-              className='input' />
-          </FormItem>
-          <Div
-            style={{
-              padding: 0,
-              marginBottom: '16px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Checkbox
-              className='text'
-              checked={isRememberMe}
-              style={{ padding: 0 }}
-              onClick={() => {
-                dispatch(setRememberMe(!isRememberMe));
-              }}>
-              Запомнить меня
-            </Checkbox>
-            <Link href='/reset-password' className='text'>
-              Сбросить пароль
-            </Link>
-          </Div>
-          <FormItem style={{ padding: 0 }}>
-            <Button
-              size='l'
-              style={{ background: '#5181B8', borderRadius: '4px' }}
-              disabled={isButtonDisabled}
-              onClick={onSubmit}
-              stretched>
-              Войти
-            </Button>
-          </FormItem>
-        </FormLayout>
-      </SplitCol>
-      <SplitCol style={{ background: '#5181B8' }} />
-    </SplitLayout>
+          Запомнить меня
+        </Checkbox>
+        <Button
+          size='s'
+          mode='link'
+          className='reset-password-button'
+          onClick={() => {
+            navigate('/reset-password');
+            resetForm();
+          }}
+          stretched>
+          Сбросить пароль
+        </Button>
+      </Div>
+      <FormItem style={{ padding: 0 }}>
+        <Button
+          size='l'
+          style={{ background: '#3D87CD', borderRadius: '4px' }}
+          disabled={isButtonDisabled}
+          onClick={onSubmit}
+          stretched>
+          Войти
+        </Button>
+      </FormItem>
+    </FormLayout>
   );
 };
 
