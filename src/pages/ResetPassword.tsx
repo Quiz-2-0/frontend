@@ -12,24 +12,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { z } from 'zod';
 import {
-  FormLayout,
   Title,
   Text,
   FormItem,
-  Input,
-  Button,
 } from '@vkontakte/vkui';
 import { useRecoverPasswordMutation } from '../api/apiv2';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
-
-const StyledFormLayout = styled(FormLayout)`
-  max-width: 300px;
-  width: 100%;
-  min-height: 510px;
-  border: none;
-  box-sizing: border-box;
-`;
+import StyledButton from '../ui-lib/StyledButton';
+import StyledFormLayout from '../ui-lib/StyledFormLayout';
+import StyledInput from '../ui-lib/StyledInput';
 
 const BackButton = styled.button`
   margin: 0;
@@ -61,26 +53,6 @@ const ResendPasswordButton = styled.button`
   line-height: 20px;
   text-align: left;
   cursor: pointer;
-`;
-
-const StyledInput = styled(Input)`
-  font-size: 16px;
-  height: 40px;
-  background-color: #F7F8FA;
-
-  &:-webkit-autofill,
-  &:hover:-webkit-autofill,
-  &:focus:-webkit-autofill,
-  &:active:-webkit-autofill {
-    box-shadow: 0 0 0 30px white inset !important;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  height: 40px;
-  margin-top: 36px;
-  border-radius: 4px;
-  background-color: #3D87CD;
 `;
 
 const ResetPassword: FunctionComponent = () => {

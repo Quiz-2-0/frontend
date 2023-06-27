@@ -11,13 +11,10 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from '../store/store.types';
 import { useLoginMutation, jwt } from '../api/apiv2';
 import {
-  FormLayout,
   Title,
   Div,
   FormItem,
-  Input,
   Checkbox,
-  Link,
   Button,
   Tabs,
   TabsItem,
@@ -25,7 +22,10 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
-
+import StyledButton from '../ui-lib/StyledButton';
+import StyledFormLayout from '../ui-lib/StyledFormLayout';
+import StyledInput from '../ui-lib/StyledInput';
+import styled from 'styled-components';
 import { setLogged, setRememberMe } from '../store/allSlice';
 import { setCurrentUser } from '../store/userSlice';
 import { TUser } from '../types/types';
@@ -93,16 +93,30 @@ const Login: React.FC = () => {
     return <p>Ошибка</p>;
   }
 
+  const StyledResetButton = styled(Button)`
+    max-width: fit-content;
+
+    & > span > span {
+      fontS-size: 15px;
+      lineH-height: 20px;
+      letter-spacing: -0.24px;
+      font-weight: 400;
+    }
+  `;
+
+  const StyledTabsItem = styled(TabsItem)`
+    padding: 0;
+
+    & > div {
+      width: 100%;
+      left: 0;
+      right: 0;
+    }
+  `;
+
   return (
-    <FormLayout
-      onSubmit={() => onSubmit()}
-      style={{
-        maxWidth: '300px',
-        width: '100%',
-        minHeight: '510px',
-        border: 'none',
-        boxSizing: 'border-box',
-      }}>
+    <StyledFormLayout
+      onSubmit={onSubmit}>
       <Title
         level='1'
         style={{
@@ -125,18 +139,16 @@ const Login: React.FC = () => {
           letterSpacing: '-0.32px',
           paddingBottom: '12px',
         }}>
-        <TabsItem
-          className='tabs-item'
+        <StyledTabsItem
           selected={role === 'user'}
           onClick={() => setRole('user')}>
           Сотрудник
-        </TabsItem>
-        <TabsItem
-          className='tabs-item'
+        </StyledTabsItem>
+        <StyledTabsItem
           selected={role === 'admin'}
           onClick={() => setRole('admin')}>
           Администратор
-        </TabsItem>
+        </StyledTabsItem>
       </Tabs>
 
       <FormItem
@@ -149,15 +161,22 @@ const Login: React.FC = () => {
         onChange={() => setIsEmailValid(true)}
         status={isEmailValid ? 'default' : 'error'}
         bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
-        className={`form-item${isEmailValid ? '' : ' form-item_error'}`}>
-        <Input
+        style={{
+          padding: '0',
+          fontWeight: '400',
+          fontSize: '14px',
+          lineHeight: '18px',
+          letterSpacing: '-0.154px',
+          color: '#21272a',
+          paddingBottom: `${isEmailValid ? '24px' : '0px'}`,
+        }}>
+        <StyledInput
           id='email'
           type='email'
           placeholder='Email'
           name='email'
           value={email}
-          onChange={onChange}
-          className='input' />
+          onChange={onChange} />
       </FormItem>
       <FormItem
         top='Пароль'
@@ -171,8 +190,16 @@ const Login: React.FC = () => {
         }}
         status={isPasswordValid ? 'default' : 'error'}
         bottom={isPasswordValid ? '' : 'Введите пароль'}
-        className={`form-item${isPasswordValid ? '' : ' form-item_error'}`}>
-        <Input
+        style={{
+          padding: '0',
+          fontWeight: '400',
+          fontSize: '14px',
+          lineHeight: '18px',
+          letterSpacing: '-0.154px',
+          color: '#21272a',
+          paddingBottom: `${isPasswordValid ? '24px' : '0px'}`,
+        }}>
+        <StyledInput
           id='pass'
           type={isPasswordVisible ? 'text' : 'password'}
           placeholder='Пароль'
@@ -191,13 +218,11 @@ const Login: React.FC = () => {
                 onClick={changePasswordVisibility} />
             )
           }
-          onChange={onChange}
-          className='input' />
+          onChange={onChange} />
       </FormItem>
       <Div
         style={{
           padding: 0,
-          marginBottom: '40px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -210,30 +235,28 @@ const Login: React.FC = () => {
           }}>
           Запомнить меня
         </Checkbox>
-        <Button
+        <StyledResetButton
           type='button'
           size='s'
           mode='link'
-          className='reset-password-button'
           onClick={() => {
             navigate('/reset-password');
             resetForm();
           }}
           stretched>
           Сбросить пароль
-        </Button>
+        </StyledResetButton>
       </Div>
       <FormItem style={{ padding: 0 }}>
-        <Button
+        <StyledButton
           size='l'
-          style={{ background: '#3D87CD', borderRadius: '4px' }}
           disabled={isButtonDisabled}
           onClick={onSubmit}
           stretched>
           Войти
-        </Button>
+        </StyledButton>
       </FormItem>
-    </FormLayout>
+    </StyledFormLayout>
   );
 };
 
