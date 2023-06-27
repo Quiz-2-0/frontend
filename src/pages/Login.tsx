@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable import/order */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -8,6 +9,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from '../store/store.types';
+import { useLoginMutation, jwt } from '../api/apiv2';
 import {
   FormLayout,
   Title,
@@ -24,11 +26,13 @@ import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
 
-import { setRememberMe } from '../store/allSlice';
-import { fetchUserData } from '../store/userSlice';
+import { setLogged, setRememberMe } from '../store/allSlice';
+import { setCurrentUser } from '../store/userSlice';
+import { TUser } from '../types/types';
 
 const Login: React.FC = () => {
   /// /// adds
+  const [login, { isError, isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const { isRememberMe } = useSelector((state) => state.all);
   const { isLogged } = useSelector((state) => state.all);
@@ -55,14 +59,12 @@ const Login: React.FC = () => {
     setIsDisabled(true);
   };
 
-  const onSubmit = () => {
-    dispatch(
-      fetchUserData({
-        role,
-        email,
-        password,
-      }),
-    );
+  const onSubmit = async () => {
+    const user = await login({ role, email, password }).unwrap();
+    const { token, ...rest } = user;
+    jwt.set(token, isRememberMe);
+    setCurrentUser(rest as TUser);
+    setLogged(true);
     // сбрасываю форму, только если юзер залогинен!!!
     if (!isLogged) {
       console.log({
@@ -87,7 +89,7 @@ const Login: React.FC = () => {
 
   return (
     <FormLayout
-      onSubmit={onSubmit}
+      onSubmit={() => onSubmit()}
       style={{
         maxWidth: '300px',
         width: '100%',

@@ -19,14 +19,12 @@ const userDataSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<TUser>) => ({
       ...state, currentUser: action.payload,
     }),
-    fetchUserData: (state, action: PayloadAction<{ email: string, role: string, password: string }>) => { },
   },
 });
 
 const userReducer = userDataSlice.reducer;
 export const {
   setCurrentUser,
-  fetchUserData,
 } = userDataSlice.actions;
 
 export default userReducer;

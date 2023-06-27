@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -20,9 +21,9 @@ import {
   Input,
   Button,
 } from '@vkontakte/vkui';
+import { useRecoverPasswordMutation } from '../api/apiv2';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
-import { resetPassword } from '../store/allSlice';
 
 const BackButton = styled.button`
   margin: 0;
@@ -81,7 +82,7 @@ const ResetPassword: FunctionComponent = () => {
   const buttonIcon = './images/button_icon.svg';
   const dispatch = useDispatch();
   const emailSchema = z.string().email();
-
+  const [recoverPassword, { isLoading, isError }] = useRecoverPasswordMutation();
   const buttonText = isSubmitted ? 'Войти' : 'Отправить новый пароль'; // eslint-disable-line ternary/no-unreachable
 
   const isButtonDisabled = !isEmailValid || email === '';
@@ -114,9 +115,9 @@ const ResetPassword: FunctionComponent = () => {
       .padStart(2, '0')}`;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    dispatch(resetPassword(email));
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    await recoverPassword(email);
     if (isSubmitted) {
       navigate('/login');
     } else {
