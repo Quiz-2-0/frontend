@@ -1,22 +1,34 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { SplitLayout, SplitCol, Title } from '@vkontakte/vkui';
+import styled from 'styled-components';
 import '@vkontakte/vkui/dist/vkui.css';
 import Login from './Login';
 import ResetPassword from './ResetPassword';
+import Logo from '../ui-lib/Logo';
+import backgroundImage from '../images/login__image.png';
 
 const LayoutWithColumns: React.FC = () => {
   const location = useLocation();
 
+  const StyledColumn = styled(SplitCol)`
+    background-image: url(${backgroundImage});
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 885px;
+    width: 100%;
+    box-sizing: border-box;
+  `;
+
   return (
     <SplitLayout>
-      <SplitCol className='column-with-image'>
+      <StyledColumn>
         <Title
           style={{
             paddingTop: '49px',
             color: '#FFF',
             textAlign: 'center',
-            fontSize: '110px',
+            fontSize: '75px',
             fontFamily: 'AlethiaPro',
             fontWeight: '400',
             lineHeight: '100px',
@@ -24,16 +36,17 @@ const LayoutWithColumns: React.FC = () => {
           }}>
           Учись играя
         </Title>
-      </SplitCol>
+      </StyledColumn>
       <SplitCol
         maxWidth={555}
         style={{
+          margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '71px',
         }}>
-        <NavLink className='logo' to='/' />
+        <Logo style={{ marginTop: '60px' }} to='/' />
         {location.pathname === '/reset-password'
           ? <ResetPassword />
           : <Login />}
