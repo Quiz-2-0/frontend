@@ -59,10 +59,7 @@ html {
 
 .input {
   height: 40px !important;
-  border-bottom: 1px solid #c1c7cd !important;
   font-size: 16px !important;
-  color: #dce1e5 !important;
-  background: none !important;
 }
 
 .input > input:-webkit-autofill,
