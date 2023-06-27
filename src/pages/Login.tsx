@@ -31,7 +31,9 @@ import { setCurrentUser } from '../store/userSlice';
 import { TUser } from '../types/types';
 
 const Login: React.FC = () => {
-  /// /// adds
+  /// /// это хук который у нас содержит все данные о запросе к серверу
+  /// / в теории можно и в редакт ничего не толкать ,так как в хуке все сохраняется да
+  // еще и кэшируется, поэтому как будет у нас сервер и реальные запросы я попробую настроить
   const [login, { isError, isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const { isRememberMe } = useSelector((state) => state.all);

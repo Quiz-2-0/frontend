@@ -25,7 +25,7 @@ export const jwt = {
   test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),
   remove: (isRemember: boolean): void => (isRemember ? localStorage.removeItem('JWT') : sessionStorage.removeItem('JWT')),
 };
-
+/// вот так выглядит слайс под апи на каждую сущность
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_ROOT }),
