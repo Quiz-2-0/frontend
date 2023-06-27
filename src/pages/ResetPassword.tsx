@@ -7,12 +7,10 @@ import React, {
   useEffect,
   FormEvent,
 } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { z } from 'zod';
 import {
-  SplitLayout,
-  SplitCol,
   FormLayout,
   Title,
   Text,
@@ -201,7 +199,6 @@ const ResetPassword: FunctionComponent = () => {
               fontSize: '20px',
               lineHeight: '24px',
               textAlign: 'left',
-              letterSpacing: '0.38px',
               color: '#21272A',
             }}>
             Сброс пароля
@@ -210,6 +207,9 @@ const ResetPassword: FunctionComponent = () => {
             weight='3'
             style={{
               marginTop: '8px',
+              fontSize: '14px',
+              lineHeight: '20px',
+              letterSpacing: '-0.24px',
             }}>
             Введите рабочую почту, которая подключена к образовательной
             платформе.
@@ -217,8 +217,8 @@ const ResetPassword: FunctionComponent = () => {
           <FormItem
             htmlFor='passwordReset'
             style={{
-              padding: '28px 0 0 0',
-              position: 'relative',
+              marginTop: '36px',
+              padding: '0',
             }}
             onBlur={handleBlur}
             status={isEmailValid ? 'default' : 'error'}
@@ -232,7 +232,12 @@ const ResetPassword: FunctionComponent = () => {
               type='email'
               value={email}
               className='input'
-              placeholder='Введите рабочую почту'
+              placeholder='e-mail'
+              style={{
+                height: '40px',
+                fontSize: '16px',
+                backgroundColor: '#F7F8FA',
+              }}
               onChange={handleEmailChange} />
           </FormItem>
         </>
@@ -243,9 +248,10 @@ const ResetPassword: FunctionComponent = () => {
         stretched
         disabled={isButtonDisabled}
         style={{
+          height: '40px',
           marginTop: '36px',
           borderRadius: '4px',
-          backgroundColor: '#5181B8',
+          backgroundColor: '#3D87CD',
         }}>
         {buttonText}
       </Button>

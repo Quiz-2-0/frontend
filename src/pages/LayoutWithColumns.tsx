@@ -13,7 +13,7 @@ const LayoutWithColumns: React.FC = () => {
       <SplitCol className='column-with-image'>
         <Title
           style={{
-            paddingTop: '40px',
+            paddingTop: '49px',
             color: '#FFF',
             textAlign: 'center',
             fontSize: '110px',
@@ -32,7 +32,7 @@ const LayoutWithColumns: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '87.5px',
+          gap: '71px',
         }}>
         <NavLink className='logo' to='/' />
         {location.pathname === '/reset-password'
