@@ -22,7 +22,7 @@ const LayoutWithColumns: React.FC = () => {
             lineHeight: '100px',
             letterSpacing: '-0.24px',
           }}>
-          Quiz camp
+          Учись играя
         </Title>
       </SplitCol>
       <SplitCol
