@@ -13,7 +13,7 @@ const LayoutWithColumns: React.FC = () => {
       <SplitCol className='column-with-image'>
         <Title
           style={{
-            paddingTop: '40px',
+            paddingTop: '49px',
             color: '#FFF',
             textAlign: 'center',
             fontSize: '110px',
@@ -22,17 +22,16 @@ const LayoutWithColumns: React.FC = () => {
             lineHeight: '100px',
             letterSpacing: '-0.24px',
           }}>
-          Quiz camp
+          Учись играя
         </Title>
       </SplitCol>
       <SplitCol
         maxWidth={555}
         style={{
-          paddingTop: '60px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '87.5px',
+          gap: '71px',
         }}>
         <NavLink className='logo' to='/' />
         {location.pathname === '/reset-password'

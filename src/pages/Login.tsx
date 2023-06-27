@@ -205,6 +205,7 @@ const Login: React.FC = () => {
           Запомнить меня
         </Checkbox>
         <Button
+          type='button'
           size='s'
           mode='link'
           className='reset-password-button'

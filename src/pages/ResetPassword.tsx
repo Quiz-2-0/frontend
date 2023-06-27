@@ -8,12 +8,10 @@ import React, {
   useEffect,
   FormEvent,
 } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { z } from 'zod';
 import {
-  SplitLayout,
-  SplitCol,
   FormLayout,
   Title,
   Text,
@@ -24,6 +22,14 @@ import {
 import { useRecoverPasswordMutation } from '../api/apiv2';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
+
+const StyledFormLayout = styled(FormLayout)`
+  max-width: 300px;
+  width: 100%;
+  min-height: 510px;
+  border: none;
+  box-sizing: border-box;
+`;
 
 const BackButton = styled.button`
   margin: 0;
@@ -59,10 +65,8 @@ const ResendPasswordButton = styled.button`
 
 const StyledInput = styled(Input)`
   font-size: 16px;
-  color: #697077;
-  height: 48px;
-  background: none;
-  border-bottom: 1px solid #c1c7cd;
+  height: 40px;
+  background-color: #F7F8FA;
 
   &:-webkit-autofill,
   &:hover:-webkit-autofill,
@@ -70,6 +74,13 @@ const StyledInput = styled(Input)`
   &:active:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset !important;
   }
+`;
+
+const StyledButton = styled(Button)`
+  height: 40px;
+  margin-top: 36px;
+  border-radius: 4px;
+  background-color: #3D87CD;
 `;
 
 const ResetPassword: FunctionComponent = () => {
@@ -151,15 +162,8 @@ const ResetPassword: FunctionComponent = () => {
   };
 
   return (
-    <FormLayout
-      onSubmit={handleSubmit}
-      style={{
-        maxWidth: '300px',
-        width: '100%',
-        minHeight: '510px',
-        border: 'none',
-        boxSizing: 'border-box',
-      }}>
+    <StyledFormLayout
+      onSubmit={handleSubmit}>
       <BackButton type='button' onClick={handleBackButtonClick}>
         <ButtonIcon src={buttonIcon} alt='Стрелочка назад' />
         Назад
@@ -202,7 +206,6 @@ const ResetPassword: FunctionComponent = () => {
               fontSize: '20px',
               lineHeight: '24px',
               textAlign: 'left',
-              letterSpacing: '0.38px',
               color: '#21272A',
             }}>
             Сброс пароля
@@ -211,6 +214,9 @@ const ResetPassword: FunctionComponent = () => {
             weight='3'
             style={{
               marginTop: '8px',
+              fontSize: '14px',
+              lineHeight: '20px',
+              letterSpacing: '-0.24px',
             }}>
             Введите рабочую почту, которая подключена к образовательной
             платформе.
@@ -218,8 +224,8 @@ const ResetPassword: FunctionComponent = () => {
           <FormItem
             htmlFor='passwordReset'
             style={{
-              padding: '28px 0 0 0',
-              position: 'relative',
+              marginTop: '36px',
+              padding: '0',
             }}
             onBlur={handleBlur}
             status={isEmailValid ? 'default' : 'error'}
@@ -232,25 +238,19 @@ const ResetPassword: FunctionComponent = () => {
               id='passwordReset'
               type='email'
               value={email}
-              className='input'
-              placeholder='Введите рабочую почту'
+              placeholder='e-mail'
               onChange={handleEmailChange} />
           </FormItem>
         </>
       )}
-      <Button
+      <StyledButton
         type='submit'
         size='l'
         stretched
-        disabled={isButtonDisabled}
-        style={{
-          marginTop: '36px',
-          borderRadius: '4px',
-          backgroundColor: '#5181B8',
-        }}>
+        disabled={isButtonDisabled}>
         {buttonText}
-      </Button>
-    </FormLayout>
+      </StyledButton>
+    </StyledFormLayout>
   );
 };
 
