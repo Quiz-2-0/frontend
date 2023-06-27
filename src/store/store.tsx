@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+
 import userReducer from './userSlice';
 import allReducer from './allSlice';
-import rootSaga from '../sagas/rootSaga';
 
-const sagaMiddleware = createSagaMiddleware();
+import { userApi } from '../api/apiv2';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     all: allReducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware),
 });
-sagaMiddleware.run(rootSaga);
+
 export default store;
