@@ -23,6 +23,7 @@ html {
 }
 
 .logo {
+  margin-top: 60px;
   background-image: url(../public/images/company-logo.svg);
   display: block;
   width: 155px;

@@ -28,7 +28,6 @@ const LayoutWithColumns: React.FC = () => {
       <SplitCol
         maxWidth={555}
         style={{
-          paddingTop: '60px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
