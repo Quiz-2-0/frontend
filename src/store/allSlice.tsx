@@ -26,9 +26,6 @@ const allSlice = createSlice({
     setLogged: (state, action: PayloadAction<boolean>) => ({
       ...state, isLogged: action.payload,
     }),
-    resetPassword: (state, action: PayloadAction<string>) => {
-
-    },
   },
 });
 
@@ -36,7 +33,6 @@ const allReducer = allSlice.reducer;
 export const {
   setRememberMe,
   setMistake,
-  resetPassword,
   setLogged,
 } = allSlice.actions;
 
