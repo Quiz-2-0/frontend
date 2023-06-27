@@ -22,6 +22,14 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
 import { resetPassword } from '../store/allSlice';
 
+const StyledFormLayout = styled(FormLayout)`
+  max-width: 300px;
+  width: 100%;
+  min-height: 510px;
+  border: none;
+  box-sizing: border-box;
+`;
+
 const BackButton = styled.button`
   margin: 0;
   padding: 0;
@@ -56,10 +64,8 @@ const ResendPasswordButton = styled.button`
 
 const StyledInput = styled(Input)`
   font-size: 16px;
-  color: #697077;
-  height: 48px;
-  background: none;
-  border-bottom: 1px solid #c1c7cd;
+  height: 40px;
+  background-color: #F7F8FA;
 
   &:-webkit-autofill,
   &:hover:-webkit-autofill,
@@ -67,6 +73,13 @@ const StyledInput = styled(Input)`
   &:active:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset !important;
   }
+`;
+
+const StyledButton = styled(Button)`
+  height: 40px;
+  margin-top: 36px;
+  border-radius: 4px;
+  background-color: #3D87CD;
 `;
 
 const ResetPassword: FunctionComponent = () => {
@@ -148,15 +161,8 @@ const ResetPassword: FunctionComponent = () => {
   };
 
   return (
-    <FormLayout
-      onSubmit={handleSubmit}
-      style={{
-        maxWidth: '300px',
-        width: '100%',
-        minHeight: '510px',
-        border: 'none',
-        boxSizing: 'border-box',
-      }}>
+    <StyledFormLayout
+      onSubmit={handleSubmit}>
       <BackButton type='button' onClick={handleBackButtonClick}>
         <ButtonIcon src={buttonIcon} alt='Стрелочка назад' />
         Назад
@@ -231,31 +237,19 @@ const ResetPassword: FunctionComponent = () => {
               id='passwordReset'
               type='email'
               value={email}
-              className='input'
               placeholder='e-mail'
-              style={{
-                height: '40px',
-                fontSize: '16px',
-                backgroundColor: '#F7F8FA',
-              }}
               onChange={handleEmailChange} />
           </FormItem>
         </>
       )}
-      <Button
+      <StyledButton
         type='submit'
         size='l'
         stretched
-        disabled={isButtonDisabled}
-        style={{
-          height: '40px',
-          marginTop: '36px',
-          borderRadius: '4px',
-          backgroundColor: '#3D87CD',
-        }}>
+        disabled={isButtonDisabled}>
         {buttonText}
-      </Button>
-    </FormLayout>
+      </StyledButton>
+    </StyledFormLayout>
   );
 };
 
