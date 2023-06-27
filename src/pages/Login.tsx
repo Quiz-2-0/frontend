@@ -34,7 +34,7 @@ const Login: React.FC = () => {
   /// /// это хук который у нас содержит все данные о запросе к серверу
   /// / в теории можно и в редакт ничего не толкать ,так как в хуке все сохраняется да
   // еще и кэшируется, поэтому как будет у нас сервер и реальные запросы я попробую настроить
-  const [login, { isError, isLoading }] = useLoginMutation();
+  const [login, { isError, error }] = useLoginMutation();
   const dispatch = useDispatch();
   const { isRememberMe } = useSelector((state) => state.all);
   const { isLogged } = useSelector((state) => state.all);
@@ -88,6 +88,10 @@ const Login: React.FC = () => {
       setPassword(value);
     }
   };
+  /// / prosto test
+  if (error) {
+    return <p>Ошибка</p>;
+  }
 
   return (
     <FormLayout
