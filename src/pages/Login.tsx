@@ -30,6 +30,27 @@ import { setLogged, setRememberMe } from '../store/allSlice';
 import { setCurrentUser } from '../store/userSlice';
 import { TUser } from '../types/types';
 
+const StyledResetButton = styled(Button)`
+  max-width: fit-content;
+
+  & > span > span {
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+    font-weight: 400;
+  }
+`;
+
+const StyledTabsItem = styled(TabsItem)`
+  padding: 0;
+
+  & > div {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+`;
+
 const Login: React.FC = () => {
   /// /// это хук который у нас содержит все данные о запросе к серверу
   /// / в теории можно и в редакт ничего не толкать ,так как в хуке все сохраняется да
@@ -92,27 +113,6 @@ const Login: React.FC = () => {
   if (error) {
     return <p>Ошибка</p>;
   }
-
-  const StyledResetButton = styled(Button)`
-    max-width: fit-content;
-
-    & > span > span {
-      fontS-size: 15px;
-      lineH-height: 20px;
-      letter-spacing: -0.24px;
-      font-weight: 400;
-    }
-  `;
-
-  const StyledTabsItem = styled(TabsItem)`
-    padding: 0;
-
-    & > div {
-      width: 100%;
-      left: 0;
-      right: 0;
-    }
-  `;
 
   return (
     <StyledFormLayout
