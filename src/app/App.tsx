@@ -3,9 +3,9 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { SplitLayout, Spinner } from '@vkontakte/vkui';
 import { useSelector } from '../store/store.types';
-import Header from '../ui-lib/Header';
-import LayoutWithColumns from '../ui-lib/LayoutWithColumns';
-import PersonalAccount from '../ui-lib/PersonalAccount';
+import Header from '../ui-lib/widgets/Header';
+import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
+import PersonalAccount from '../pages/PersonalAccount';
 
 /// потом сделаем переключение темы
 const Main = styled.main`

@@ -4,11 +4,11 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from './Logo';
-import { BellIcon, RedBallIcon, LogOuticon } from './icons';
-import ava from '../images/derick-mckinney-QuwQYDBI6sI-unsplash 1.png';
-import logoImg from '../images/logo.svg';
-import { useSelector, useDispatch } from '../store/store.types';
+import Logo from '../Logo';
+import { BellIcon, RedBallIcon, LogOuticon } from '../icons';
+import ava from '../../images/derick-mckinney-QuwQYDBI6sI-unsplash 1.png';
+import logoImg from '../../images/logo.svg';
+import { useSelector, useDispatch } from '../../store/store.types';
 
 const HeaderWrapper = styled.header`
   width: 100%;
