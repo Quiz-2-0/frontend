@@ -70,7 +70,7 @@ const Castle: React.FC = () => {
         style={{ maxWidth: '286px', margin: '0 auto', height: '40px' }}
         type='button'
         size='l'
-        onClick={() => navigate('/quizes')}
+        onClick={() => navigate('/quizzes')}
         stretched>
         Продолжить строить
       </Button>
