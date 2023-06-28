@@ -68,7 +68,7 @@ const Login: React.FC = () => {
     setCurrentUser(rest as TUser);
     setLogged(true);
     // сбрасываю форму, только если юзер залогинен!!!
-    if (!isLogged) {
+    if (isLogged) {
       console.log({
         role,
         email,
@@ -249,9 +249,9 @@ const Login: React.FC = () => {
       </Div>
       <FormItem style={{ padding: 0 }}>
         <StyledButton
+          type='submit'
           size='l'
           disabled={isButtonDisabled}
-          onClick={onSubmit}
           stretched>
           Войти
         </StyledButton>
