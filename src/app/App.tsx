@@ -22,13 +22,14 @@ const App = () => {
   return (
     <Main style={{ fontFamily: 'SFProDisplay' }}>
       {isLogged && <Header />}
-      <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
+      <Header />
+      {/*  <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
         <Routes>
           <Route path='/' element={<PersonalAccount />} />
           <Route path='/login' element={<LayoutWithColumns />} />
           <Route path='/reset-password' element={<LayoutWithColumns />} />
         </Routes>
-      </React.Suspense>
+      </React.Suspense> */}
     </Main>
   );
 };
