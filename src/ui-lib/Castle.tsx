@@ -12,7 +12,7 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../ui-lib/StyledDiv';
+import StyledDiv from './StyledDiv';
 import grandmothersHouse from '../images/houses/grandmothers-house.png';
 
 const Castle: React.FC = () => {
