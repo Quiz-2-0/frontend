@@ -22,7 +22,9 @@ const Castle: React.FC = () => {
   const name = 'У бабушки в деревне';
 
   return (
-    <StyledDiv style={{ maxWidth: '358px', width: '100%', minHeight: '430px' }}>
+    <StyledDiv style={{
+      maxWidth: '358px', width: '100%', minHeight: '430px', maxHeight: '513px',
+    }}>
       <Title
         style={{ textAlign: 'center', paddingBottom: '16px' }}
         level='2'>
