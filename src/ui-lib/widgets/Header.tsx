@@ -52,7 +52,7 @@ const UserName = styled.p`
   line-height: 18px;
   letter-spacing: -0.154px;
   font-weight: 400;
-  
+  color: #000;
   margin: 0;
   align-self: center;
   margin-right: 24px;
