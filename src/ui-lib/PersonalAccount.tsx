@@ -4,6 +4,7 @@ import { SplitLayout, SplitCol } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import Sidebar from './Sidebar';
 import Castle from './Castle';
+import Rating from './Rating';
 
 const PersonalAccount: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,9 @@ const PersonalAccount: React.FC = () => {
     <SplitLayout>
       <SplitCol>
         <Sidebar />
+      </SplitCol>
+      <SplitCol>
+        <Rating />
       </SplitCol>
       <SplitCol>Rating, Progress, Achievements</SplitCol>
       <SplitCol>
