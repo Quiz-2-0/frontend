@@ -1,19 +1,20 @@
+/* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { SplitLayout, Spinner } from '@vkontakte/vkui';
 import { useSelector } from '../store/store.types';
-import Header from '../ui-lib/widgets/Header';
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
-import PersonalAccount from '../pages/PersonalAccount';
+import MainLayout from '../ui-lib/widgets/MainLayout';
+import { routes } from '../constants/routes';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
   height: 100%;
   width: 100%;
-  font-family: '';
   display: flex;
   flex-direction: column;
+  background-color: #FFF;
 `;
 
 const App = () => {
@@ -21,13 +22,16 @@ const App = () => {
   const { isLogged } = useSelector((state) => state.all);
   return (
     <Main style={{ fontFamily: 'SFProDisplay' }}>
-      {isLogged && <Header />}
 
       <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
         <Routes>
-          <Route path='/' element={<PersonalAccount />} />
           <Route path='/login' element={<LayoutWithColumns />} />
           <Route path='/reset-password' element={<LayoutWithColumns />} />
+          {routes.map(({ path, Component }, index) => (
+            <Route element={<MainLayout />} key={index}>
+              <Route path={path} element={Component} />
+            </Route>
+          ))}
         </Routes>
       </React.Suspense>
     </Main>
