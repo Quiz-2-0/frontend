@@ -97,8 +97,8 @@ const Login: React.FC = () => {
     max-width: fit-content;
 
     & > span > span {
-      fontS-size: 15px;
-      lineH-height: 20px;
+      font-size: 15px;
+      line-height: 20px;
       letter-spacing: -0.24px;
       font-weight: 400;
     }

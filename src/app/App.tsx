@@ -6,6 +6,7 @@ import { useSelector } from '../store/store.types';
 import Header from '../ui-lib/Header';
 import LayoutWithColumns from '../ui-lib/LayoutWithColumns';
 import PersonalAccount from '../ui-lib/PersonalAccount';
+import Achives from '../ui-lib/Achives';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
@@ -25,7 +26,7 @@ const App = () => {
 
       <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
         <Routes>
-          <Route path='/' element={<PersonalAccount />} />
+          <Route path='/' element={<Achives />} />
           <Route path='/login' element={<LayoutWithColumns />} />
           <Route path='/reset-password' element={<LayoutWithColumns />} />
         </Routes>

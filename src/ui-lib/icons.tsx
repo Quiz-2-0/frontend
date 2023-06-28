@@ -5,6 +5,13 @@ import styled from 'styled-components';
 import { ReactComponent as Bell } from '../images/notification.svg';
 import { ReactComponent as LogOut } from '../images/logout.svg';
 import { ReactComponent as RedBall } from '../images/redball.svg';
+import { ReactComponent as Arrow } from '../images/arrow.svg';
+
+export const ArrowIcon = styled(Arrow)`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
 
 export const BellIcon = styled(Bell)`
   width: 28px;
