@@ -9,7 +9,7 @@ import {
   Caption,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from './StyledDiv';
+import StyledDiv from '../StyledDiv';
 
 export const StyledNavLink = styled(NavLink)`
   display: block;
