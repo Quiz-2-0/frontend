@@ -7,7 +7,6 @@ import { Icon24HomeOutline, Icon24Square4Outline, Icon24CupOutline } from '@vkon
 import styled from 'styled-components';
 
 const StyledTabs = styled(Tabs)`
-  margin-left: 80px;
   max-width: 166px;
   width: 100%;
   min-heigth: 168px;

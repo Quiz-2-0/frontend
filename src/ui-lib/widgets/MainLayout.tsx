@@ -16,12 +16,8 @@ const Section = styled.section`
 const ContentWrapper = styled.div`
     display: flex;
     height: 100%;
-    
-    gap: 40px;
-    padding-right: 80px;
-  
-    padding-top: 40px;
-   
+    padding: 40px 80px 100px;
+    gap: 40px;   
 `;
 
 const MainLayout: FC = () => {
