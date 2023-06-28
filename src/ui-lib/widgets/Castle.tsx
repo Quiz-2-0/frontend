@@ -12,8 +12,8 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from './StyledDiv';
-import grandmothersHouse from '../images/houses/grandmothers-house.png';
+import StyledDiv from '../StyledDiv';
+import grandmothersHouse from '../../images/houses/grandmothers-house.png';
 
 const Castle: React.FC = () => {
   const navigate = useNavigate();

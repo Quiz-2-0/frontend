@@ -2,10 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { SplitLayout, SplitCol } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import Sidebar from './Sidebar';
-import Castle from './Castle';
-import Progress from './Progress';
-import Rating from './Rating';
+import Sidebar from '../ui-lib/widgets/Sidebar';
+import Castle from '../ui-lib/widgets/Castle';
+import Achives from '../ui-lib/widgets/Achives';
 
 const PersonalAccount: React.FC = () => {
   const navigate = useNavigate();
@@ -15,10 +14,7 @@ const PersonalAccount: React.FC = () => {
         <Sidebar />
       </SplitCol>
       <SplitCol>
-        <Rating />
-      </SplitCol>
-      <SplitCol>
-        <Progress />
+        <Achives />
       </SplitCol>
       <SplitCol>
         <Castle />
