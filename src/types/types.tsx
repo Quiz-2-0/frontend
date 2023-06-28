@@ -4,6 +4,7 @@ export type TUser = {
   courses: { [key: string]: any };
   progress: string;
   token: string;
+  avatar: string;
   achievements: { [key: string]: any };
   position: string;
   ratingPlace: number;

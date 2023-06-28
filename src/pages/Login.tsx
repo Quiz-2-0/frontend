@@ -65,8 +65,8 @@ const Login: React.FC = () => {
     const user = await login({ role, email, password }).unwrap();
     const { token, ...rest } = user;
     jwt.set(token, isRememberMe);
-    setCurrentUser(rest as TUser);
-    setLogged(true);
+    dispatch(setCurrentUser(rest as TUser));
+    dispatch(setLogged(true));
     // сбрасываю форму, только если юзер залогинен!!!
     if (!isLogged) {
       console.log({
