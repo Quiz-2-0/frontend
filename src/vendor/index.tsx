@@ -9,8 +9,7 @@ import RegularWoff from './fonts/SFProDisplay-Regular.woff';
 import RegularWoff2 from './fonts/SFProDisplay-Regular.woff2';
 import SemiboldWoff from './fonts/SFProDisplay-Semibold.woff';
 import SemiboldWoff2 from './fonts/SFProDisplay-Semibold.woff2';
-import AlethiaWoff from './fonts/alethiapro-regular-webfont.woff';
-import AlethiaWoff2 from './fonts/alethiapro-regular-webfont.woff2';
+import AlethiaTtf from './fonts/alethiapro-regular.ttf';
 
 export const GlobalStyles = createGlobalStyle`
   ${normalize}
@@ -55,8 +54,7 @@ export const AlethiaPro = createGlobalStyle`
     @font-face {
         font-family: 'AlethiaPro';
         src: local('AlethiaPro'),
-            url(${AlethiaWoff}) format('woff'),
-            url(${AlethiaWoff2}) format('woff2');
+            url(${AlethiaTtf}) format('truetype');
             font-weight: 400;
             font-style: normal;
     }
