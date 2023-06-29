@@ -12,7 +12,6 @@ const StyledDiv = styled.div`
   gap: 40px;
     flex-wrap: wrap;
     max-height: 600px;
-  
 `;
 
 const PersonalAccount: FC = () => {

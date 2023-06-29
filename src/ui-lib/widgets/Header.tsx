@@ -14,6 +14,7 @@ import AdvBanner from './AdvBanner';
 const HeaderWrapper = styled.header`
   width: 100%;
   padding-top: 32px;
+  box-sizing: border-box;
 `;
 const UpdatedLogo = styled(Logo)`
   background-image: url(${logoImg});
