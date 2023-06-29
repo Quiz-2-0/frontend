@@ -9,7 +9,6 @@ import { useSelector } from '../store/store.types';
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
-import QuizCard from '../ui-lib/widgets/QuizCard';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
@@ -28,7 +27,6 @@ const App = () => {
 
       <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
         <Routes>
-          <Route path='quizzes' element={<QuizCard />} />
           <Route path='/login' element={<LayoutWithColumns />} />
           <Route path='/reset-password' element={<LayoutWithColumns />} />
           {routes.map(({ path, Component }, index) => (

@@ -1,3 +1,4 @@
+/* eslint-disable ternary/no-unreachable */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState } from 'react';
@@ -15,7 +16,8 @@ const BannerPlate = styled.div<{ isOpen:boolean }>`
     background: #FFF ;
     box-shadow: 0px 16px 16px 0px rgba(0, 0, 0, 0.16), 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
-    transition: opacity ease .3s;
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+    transition: opacity ease .3s, visibility ease .3s;
     position: absolute;
     
     top: 80px;
