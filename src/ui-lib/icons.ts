@@ -8,6 +8,27 @@ import { ReactComponent as RedBall } from '../images/redball.svg';
 import { ReactComponent as Arrow } from '../images/arrow.svg';
 import { ReactComponent as Cup } from '../images/cup_outline_24.svg';
 import { ReactComponent as FourSquare } from '../images/square_4_outline_20.svg';
+import { ReactComponent as Duration } from '../images/duration_icon.svg';
+import { ReactComponent as Level } from '../images/level_icon.svg';
+import { ReactComponent as Questions } from '../images/questions_icon.svg';
+
+export const DurationIcon = styled(Duration)`
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+`;
+
+export const LevelIcon = styled(Level)`
+  width: 10px;
+  height: 12px;
+  cursor: pointer;
+`;
+
+export const QuestionsIcon = styled(Questions)`
+  width: 13px;
+  height: 11px;
+  cursor: pointer;
+`;
 
 export const CupIcon = styled(Cup)`
    width: 20px;
