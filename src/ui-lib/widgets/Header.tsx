@@ -1,6 +1,6 @@
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { BellIcon, RedBallIcon, LogOuticon } from '../icons';
 import ava from '../../images/derick-mckinney-QuwQYDBI6sI-unsplash 1.png';
 import logoImg from '../../images/logo.svg';
 import { useSelector, useDispatch } from '../../store/store.types';
+import AdvBanner from './AdvBanner';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -29,6 +30,7 @@ const HeaderContainer = styled.div`
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const ToolBar = styled.div`
@@ -69,9 +71,11 @@ const IconWrapper = styled.div`
 const Header: FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const [isOpen, openModal] = useState(false);
   return (
     <HeaderWrapper>
       <HeaderContainer>
+        <AdvBanner isOpen={isOpen} />
         <UpdatedLogo to='/' />
         <ToolBar>
           <AvatarWrapper width={60} height={60}>
@@ -79,8 +83,8 @@ const Header: FC = () => {
           </AvatarWrapper>
           <UserName>{currentUser ? currentUser.name : 'Иван Иванов'}</UserName>
           <IconWrapper>
-            <BellIcon />
-            {currentUser?.appointedCourses && <RedBallIcon />}
+            <BellIcon onClick={() => openModal(!isOpen)} />
+            {currentUser?.appointedCourses && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
           <LogOuticon />
         </ToolBar>
