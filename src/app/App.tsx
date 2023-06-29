@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
