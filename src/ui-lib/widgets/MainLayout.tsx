@@ -14,10 +14,11 @@ const Section = styled.section`
     flex-direction: column;
 `;
 const ContentWrapper = styled.div`
-    display: flex;
-    height: 100%;
-    padding: 40px 80px 100px;
-    gap: 40px;   
+  display: flex;
+  height: 100%;
+  padding: 40px 80px 0;
+  gap: 40px;
+  box-sizing: border-box;
 `;
 
 const MainLayout: FC = () => {
@@ -31,7 +32,6 @@ const MainLayout: FC = () => {
         <Sidebar />
         <Outlet />
       </ContentWrapper>
-
     </Section>
   );
 };
