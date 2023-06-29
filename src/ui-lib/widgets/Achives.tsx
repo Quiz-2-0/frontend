@@ -17,7 +17,7 @@ const UpdatedDiv = styled(StyledDiv)`
     
 `;
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
     width: 28px;
     height: 28px;
     background-color:rgba(63, 138, 224, 0.05);
@@ -26,6 +26,7 @@ const IconWrapper = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
 const ContainerHeader = styled.div`
     width:100%;
     justify-content: space-between;

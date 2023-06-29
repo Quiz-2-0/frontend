@@ -10,18 +10,8 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../StyledDiv';
-
-export const StyledNavLink = styled(NavLink)`
-  display: block;
-  width: 28px;
-  height: 28px;
-  background-color: rgba(63, 138, 224, 0.05);
-  border-radius: 4px;
-  background-image: url('../images/navlink_icon.svg');
-  background-size: 7px 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-`;
+import { IconWrapper } from './Achives';
+import { ArrowIcon } from '../icons';
 
 const UserWrapper = styled.div<{ width: number, height: number }>`
   width:${({ width }) => width}px;
@@ -62,7 +52,7 @@ const Rating: React.FC = () => (
         level='2'>
         Рейтинг
       </Title>
-      <StyledNavLink to='#' />
+      <IconWrapper><ArrowIcon /></IconWrapper>
     </Div>
     <Div
       style={{
