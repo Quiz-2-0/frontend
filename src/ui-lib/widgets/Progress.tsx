@@ -1,6 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 import {
   Title,
   Div,
@@ -12,7 +10,7 @@ import { IconWrapper } from './Achives';
 import { ArrowIcon } from '../icons';
 
 const Progress: React.FC = () => {
-  const progressPercentage = 75;
+  const progressPercentage = 70;
 
   return (
     <StyledDiv
