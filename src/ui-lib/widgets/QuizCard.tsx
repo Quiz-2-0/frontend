@@ -6,8 +6,19 @@ import {
   Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../StyledDiv';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
+
+const StyledQuizContainer = styled.li`
+  list-style: none;
+  width: 330px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px;
+  background: var(--white-white, #FFF);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+`;
 
 const StyledQuizCover = styled.img`
   width: 330px;
@@ -61,13 +72,7 @@ const StyledQuizTag = styled.span`
 `;
 
 const QuizCard: React.FC = () => (
-  <StyledDiv
-    style={{
-      width: '330px',
-      padding: '0',
-      overflow: 'hidden',
-      position: 'relative',
-    }}>
+  <StyledQuizContainer>
     <StyledQuizTag>Софт Скиллс</StyledQuizTag>
     <StyledQuizCover src='../images/work_and_life_balance.png' alt='Человек в отпуске' />
     <StyledQuizInfoWrapper>
@@ -102,7 +107,7 @@ const QuizCard: React.FC = () => (
         </StyledQuizDetailWrapper>
       </StyledQuizDetailsWrapper>
     </StyledQuizInfoWrapper>
-  </StyledDiv>
+  </StyledQuizContainer>
 );
 
 export default QuizCard;

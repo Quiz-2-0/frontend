@@ -6,7 +6,7 @@ const StyledDiv = styled(Div)`
   box-sizing: border-box;
   border-radius: 16px;
   background: var(--white-white, #FFF);
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
 `;
 
 export default StyledDiv;
