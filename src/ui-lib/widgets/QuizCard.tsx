@@ -56,8 +56,22 @@ const StyledQuizDetailCaption = styled(Caption)`
   letter-spacing: -0.55px;
 `;
 
+const StyledQuizTagContainer = styled.ul`
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+`;
+
 const StyledQuizTag = styled.span`
-  display: inline-block;
+  display: block;
   padding: 4px;
   border-radius: 4px;
   width: fit-content;
@@ -67,9 +81,6 @@ const StyledQuizTag = styled.span`
   line-height: 14px;
   font-weight: 400;
   color: #ffffff;
-  position: absolute;
-  top: 16px;
-  right: 16px;
 `;
 
 interface QuizCardProps {
@@ -79,6 +90,7 @@ interface QuizCardProps {
   duration: number;
   level: string;
   questionAmount: number;
+  tags: string[];
 }
 
 const QuizCard: React.FC<QuizCardProps> = (
@@ -89,44 +101,77 @@ const QuizCard: React.FC<QuizCardProps> = (
     duration,
     level,
     questionAmount,
+    tags,
   },
-) => (
-  <StyledQuizContainer>
-    <StyledQuizTag>Софт Скиллс</StyledQuizTag>
-    <StyledQuizCover src={image} alt={title} />
-    <StyledQuizInfoWrapper>
-      <Headline
-        weight='1'
-        style={{
-          letterSpacing: '-0.3px',
-        }}>
-        { title }
-      </Headline>
-      <Headline
-        style={{
-          padding: '4px 0 0 0',
-          display: 'inline-block',
-          minHeight: '60px',
-          letterSpacing: '-0.2px',
-        }}>
-        { description }
-      </Headline>
-      <StyledQuizDetailsWrapper>
-        <StyledQuizDetailWrapper>
-          <DurationIcon />
-          <StyledQuizDetailCaption>{`${duration} минут`}</StyledQuizDetailCaption>
-        </StyledQuizDetailWrapper>
-        <StyledQuizDetailWrapper>
-          <LevelIcon />
-          <StyledQuizDetailCaption>{ level }</StyledQuizDetailCaption>
-        </StyledQuizDetailWrapper>
-        <StyledQuizDetailWrapper>
-          <QuestionsIcon />
-          <StyledQuizDetailCaption>{`${questionAmount} вопросов`}</StyledQuizDetailCaption>
-        </StyledQuizDetailWrapper>
-      </StyledQuizDetailsWrapper>
-    </StyledQuizInfoWrapper>
-  </StyledQuizContainer>
-);
+) => {
+  const backgroundStyleByTag = (tag: string): { bgColor: string } => {
+    const bgStyleMap: { [key: string]: string } = {
+      Коммуникация: 'rgba(99, 185, 186, 0.8)',
+      Новый: 'rgba(255, 51, 71, 0.80)',
+    };
+
+    let bgStyle = 'rgba(80, 69, 119, 0.8)';
+    if (Object.prototype.hasOwnProperty.call(bgStyleMap, tag)) {
+      bgStyle = bgStyleMap[tag];
+    }
+
+    return {
+      bgColor: bgStyle,
+    };
+  };
+
+  return (
+    <StyledQuizContainer>
+      {tags === null
+        ? null
+        : (
+          <StyledQuizTagContainer>
+            {tags.map((tag) => {
+              const style = backgroundStyleByTag(tag);
+              return (
+                <StyledQuizTag
+                  style={{ backgroundColor: style.bgColor }}>
+                  {tag}
+                </StyledQuizTag>
+              );
+            })}
+          </StyledQuizTagContainer>
+        )}
+      <StyledQuizCover src={image} alt={title} />
+      <StyledQuizInfoWrapper>
+        <Headline
+          weight='1'
+          style={{
+            letterSpacing: '-0.3px',
+          }}>
+          {title}
+        </Headline>
+        <Headline
+          style={{
+            padding: '4px 0 0 0',
+            display: 'inline-block',
+            minHeight: '60px',
+            letterSpacing: '-0.2px',
+          }}>
+          {description}
+        </Headline>
+        <StyledQuizDetailsWrapper>
+          <StyledQuizDetailWrapper>
+            <DurationIcon />
+            <StyledQuizDetailCaption>{`${duration} минут`}</StyledQuizDetailCaption>
+          </StyledQuizDetailWrapper>
+          <StyledQuizDetailWrapper>
+            <LevelIcon />
+            <StyledQuizDetailCaption>{level}</StyledQuizDetailCaption>
+          </StyledQuizDetailWrapper>
+          <StyledQuizDetailWrapper>
+            <QuestionsIcon />
+            <StyledQuizDetailCaption>{`${questionAmount} вопросов`}</StyledQuizDetailCaption>
+          </StyledQuizDetailWrapper>
+        </StyledQuizDetailsWrapper>
+      </StyledQuizInfoWrapper>
+    </StyledQuizContainer>
+  );
+};
 
 export default QuizCard;
