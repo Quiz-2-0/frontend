@@ -18,6 +18,7 @@ const StyledQuizContainer = styled.li`
   border-radius: 16px;
   background: var(--white-white, #FFF);
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+  cursor: pointer;
 `;
 
 const StyledQuizCover = styled.img`
@@ -71,17 +72,35 @@ const StyledQuizTag = styled.span`
   right: 16px;
 `;
 
-const QuizCard: React.FC = () => (
+interface QuizCardProps {
+  image: string;
+  title: string;
+  description: string;
+  duration: number;
+  level: string;
+  questionAmount: number;
+}
+
+const QuizCard: React.FC<QuizCardProps> = (
+  {
+    image,
+    title,
+    description,
+    duration,
+    level,
+    questionAmount,
+  },
+) => (
   <StyledQuizContainer>
     <StyledQuizTag>Софт Скиллс</StyledQuizTag>
-    <StyledQuizCover src='../images/work_and_life_balance.png' alt='Человек в отпуске' />
+    <StyledQuizCover src={image} alt={title} />
     <StyledQuizInfoWrapper>
       <Headline
         weight='1'
         style={{
           letterSpacing: '-0.55px',
         }}>
-        Баланс работы и личной жизни
+        { title }
       </Headline>
       <Headline
         style={{
@@ -90,20 +109,20 @@ const QuizCard: React.FC = () => (
           minHeight: '60px',
           letterSpacing: '-0.9px',
         }}>
-        Подскажет, как не перегореть на работе.
+        { description }
       </Headline>
       <StyledQuizDetailsWrapper>
         <StyledQuizDetailWrapper>
           <DurationIcon />
-          <StyledQuizDetailCaption>20 минут</StyledQuizDetailCaption>
+          <StyledQuizDetailCaption>{`${duration} минут`}</StyledQuizDetailCaption>
         </StyledQuizDetailWrapper>
         <StyledQuizDetailWrapper>
           <LevelIcon />
-          <StyledQuizDetailCaption>Лёгкий</StyledQuizDetailCaption>
+          <StyledQuizDetailCaption>{ level }</StyledQuizDetailCaption>
         </StyledQuizDetailWrapper>
         <StyledQuizDetailWrapper>
           <QuestionsIcon />
-          <StyledQuizDetailCaption>10 вопросов</StyledQuizDetailCaption>
+          <StyledQuizDetailCaption>{`${questionAmount} вопросов`}</StyledQuizDetailCaption>
         </StyledQuizDetailWrapper>
       </StyledQuizDetailsWrapper>
     </StyledQuizInfoWrapper>
