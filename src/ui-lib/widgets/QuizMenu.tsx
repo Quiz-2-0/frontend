@@ -49,6 +49,10 @@ const StyledTabsItem = styled(TabsItem)`
   min-width: 125px;
   heigth: 100%;
 
+  &:hover {
+    background: none;
+  }
+
   & > div {
     display: none;
   }
