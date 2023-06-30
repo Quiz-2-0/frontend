@@ -20,6 +20,7 @@ interface Quiz {
   duration: number;
   level: string;
   questionAmount: number;
+  tags: string[];
 }
 
 const QuizCardList: FC = () => (
@@ -31,7 +32,8 @@ const QuizCardList: FC = () => (
         description={quiz.description}
         duration={quiz.duration}
         level={quiz.level}
-        questionAmount={quiz.questionAmount} />
+        questionAmount={quiz.questionAmount}
+        tags={quiz.tags} />
     ))}
   </StyledQuizListContainer>
 );
