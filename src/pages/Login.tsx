@@ -117,6 +117,7 @@ const Login: React.FC = () => {
 
   return (
     <StyledFormLayout
+      style={{ fontFamily: 'SFProDisplay' }}
       onSubmit={onSubmit}>
       <Title
         level='1'
@@ -168,7 +169,8 @@ const Login: React.FC = () => {
           fontSize: '14px',
           lineHeight: '18px',
           letterSpacing: '-0.154px',
-          color: '#21272a',
+          fontFamily: 'SFProDisplay !important',
+          color: '#333 !important',
           paddingBottom: `${isEmailValid ? '24px' : '0px'}`,
         }}>
         <StyledInput
@@ -197,7 +199,8 @@ const Login: React.FC = () => {
           fontSize: '14px',
           lineHeight: '18px',
           letterSpacing: '-0.154px',
-          color: '#21272a',
+          fontFamily: 'SFProDisplay',
+          color: '#333',
           paddingBottom: `${isPasswordValid ? '24px' : '0px'}`,
         }}>
         <StyledInput

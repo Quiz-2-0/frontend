@@ -66,7 +66,7 @@ const ResetPassword: FunctionComponent = () => {
   const dispatch = useDispatch();
   const emailSchema = z.string().email();
   const [recoverPassword, { isLoading, isError }] = useRecoverPasswordMutation();
-  const buttonText = isSubmitted ? 'Войти' : 'Отправить новый пароль'; // eslint-disable-line ternary/no-unreachable
+  const buttonText = isSubmitted ? 'Войти' : 'Отправить пароль'; // eslint-disable-line ternary/no-unreachable
 
   const isButtonDisabled = !isEmailValid || email === '';
 
@@ -146,6 +146,11 @@ const ResetPassword: FunctionComponent = () => {
             weight='3'
             style={{
               marginTop: '24px',
+              fontSize: '14px',
+              fontFamily: 'SFProDisplay',
+              fontStyle: 'normal',
+              fontWeight: '400',
+              lineHeight: '20px',
             }}>
             Новый пароль был успешно отправлен на почту
           </Title>
@@ -188,7 +193,6 @@ const ResetPassword: FunctionComponent = () => {
               marginTop: '8px',
               fontSize: '14px',
               lineHeight: '20px',
-              letterSpacing: '-0.24px',
             }}>
             Введите рабочую почту, которая подключена к образовательной
             платформе.
@@ -196,7 +200,7 @@ const ResetPassword: FunctionComponent = () => {
           <FormItem
             htmlFor='passwordReset'
             style={{
-              marginTop: '36px',
+              marginTop: '24px',
               padding: '0',
             }}
             onBlur={handleBlur}
