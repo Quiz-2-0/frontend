@@ -33,6 +33,10 @@ const StyledTabs = styled(Tabs)`
     color: #000;
   }
 
+  & > div > .vkuiTabsItem--selected > .vkuiTabsItem__status > .vkuiBadge--mode-prominent {
+    background-color: #ff3347;
+  }
+  
   & > div > .vkuiTabsItem--selected:hover {
     background: rgba(63, 138, 224, 0.15);
   }
@@ -44,10 +48,6 @@ const StyledTabsItem = styled(TabsItem)`
   max-width: max-content;
   min-width: 125px;
   heigth: 100%;
-
-  &:hover {
-    background: rgba(63, 138, 224, 0.15);
-  }
 
   & > div {
     display: none;
@@ -61,6 +61,18 @@ const StyledTabsItem = styled(TabsItem)`
     font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.32px;
+  }
+
+  &:hover > span {
+    color: #000;
+  }
+
+  & > .vkuiTabsItem__status > .vkuiBadge--mode-prominent {
+    background-color: #818C99;
+  }
+
+  &:hover > .vkuiTabsItem__status > .vkuiBadge--mode-prominent {
+    background-color: #ff3347;
   }
 `;
 
@@ -79,7 +91,7 @@ const QuizMenu: React.FC = () => {
 
   const quizTypeFilter = (type: string) => {
     type !== 'all'
-      ? console.log('Фильтр:', mockQuizes.filter(({ directory }) => directory === type))
+      ? console.log('Фильтр:', mockQuizes.filter(({ passed }) => passed === (type !== 'appointed')))
       : console.log('Все квизы:', mockQuizes);
     setQuizType(type);
   };
@@ -92,7 +104,7 @@ const QuizMenu: React.FC = () => {
         </StyledTabsItem>
         <StyledTabsItem
           selected={quizType === 'appointed'}
-          status={quizType === 'appointed' ? <Badge mode='prominent' /> : <Badge style={{ backgroundColor: '#818C99' }} mode='prominent' />}
+          status={<Badge mode='prominent' />}
           onClick={() => quizTypeFilter('appointed')}>
           Назначенные
         </StyledTabsItem>
