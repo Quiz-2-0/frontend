@@ -2,15 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as Bell } from '../images/notification.svg';
-import { ReactComponent as LogOut } from '../images/logout.svg';
-import { ReactComponent as RedBall } from '../images/redball.svg';
-import { ReactComponent as Arrow } from '../images/arrow.svg';
-import { ReactComponent as Cup } from '../images/cup_outline_24.svg';
-import { ReactComponent as FourSquare } from '../images/square_4_outline_20.svg';
-import { ReactComponent as Duration } from '../images/duration_icon.svg';
-import { ReactComponent as Level } from '../images/level_icon.svg';
-import { ReactComponent as Questions } from '../images/questions_icon.svg';
+import { ReactComponent as Bell } from '../images/icons/notification.svg';
+import { ReactComponent as LogOut } from '../images/icons/logout.svg';
+import { ReactComponent as RedBall } from '../images/icons/redball.svg';
+import { ReactComponent as Arrow } from '../images/icons/arrow.svg';
+import { ReactComponent as Cup } from '../images/icons/cup_outline_24.svg';
+import { ReactComponent as FourSquare } from '../images/icons/square_4_outline_20.svg';
+import { ReactComponent as Duration } from '../images/icons/duration_icon.svg';
+import { ReactComponent as Level } from '../images/icons/level_icon.svg';
+import { ReactComponent as Questions } from '../images/icons/questions_icon.svg';
 
 export const DurationIcon = styled(Duration)`
   width: 14px;

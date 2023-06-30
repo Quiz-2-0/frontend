@@ -22,6 +22,7 @@ import { useDispatch } from '../store/store.types';
 import StyledButton from '../ui-lib/StyledButton';
 import StyledFormLayout from '../ui-lib/StyledFormLayout';
 import StyledInput from '../ui-lib/StyledInput';
+import buttonIcon from '../images/icons/button_icon.svg';
 
 const BackButton = styled.button`
   margin: 0;
@@ -62,7 +63,6 @@ const ResetPassword: FunctionComponent = () => {
   const [timer, setTimer] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const navigate = useNavigate();
-  const buttonIcon = './images/button_icon.svg';
   const dispatch = useDispatch();
   const emailSchema = z.string().email();
   const [recoverPassword, { isLoading, isError }] = useRecoverPasswordMutation();

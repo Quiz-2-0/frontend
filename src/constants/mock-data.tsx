@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import quiz1 from '../images/341222.png';
-import quiz2 from '../images/3415.png';
-import quiz3 from '../images/3417.png';
-import quiz4 from '../images/3418.png';
-import quiz5 from '../images/3418965.png';
-import quiz6 from '../images/3419.png';
+import quiz1 from '../images/quizzes/quiz1.png';
+import quiz2 from '../images/quizzes/quiz2.png';
+import quiz3 from '../images/quizzes/quiz3.png';
+import quiz4 from '../images/quizzes/quiz4.png';
+import quiz5 from '../images/quizzes/quiz5.png';
+import quiz6 from '../images/quizzes/quiz6.png';
 /// directory может быть all done appointed
 export const mockQuizes = [
   {

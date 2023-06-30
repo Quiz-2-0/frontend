@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../Logo';
 import { BellIcon, RedBallIcon, LogOuticon } from '../icons';
-import ava from '../../images/derick-mckinney-QuwQYDBI6sI-unsplash 1.png';
-import logoImg from '../../images/logo.svg';
+import ava from '../../images/avatar/header_derick-mckinney.png';
+import logoImg from '../../images/logo/header__logo.svg';
 import { useSelector, useDispatch } from '../../store/store.types';
 import AdvBanner from './AdvBanner';
 

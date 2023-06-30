@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -11,6 +12,9 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../StyledDiv';
 import { IconWrapper } from './Achives';
 import { ArrowIcon } from '../icons';
+import beforeUser from '../../images/avatar/vera_petrova.png';
+import userAvatar from '../../images/avatar/derick_mckinney.png';
+import afterUser from '../../images/avatar/nicolay_smirnov.png';
 
 const UserWrapper = styled.div<{ width: number, height: number }>`
   width:${({ width }) => width}px;
@@ -91,7 +95,7 @@ const Rating: React.FC = () => (
           <Caption>21</Caption>
         </Div>
         <UserWrapper height={60} width={60}>
-          <User src='../images/vera_petrova.png' alt='Аватар' />
+          <User src={beforeUser} alt='Аватар' />
         </UserWrapper>
         <Caption
           style={{
@@ -130,7 +134,7 @@ const Rating: React.FC = () => (
           <Text>20</Text>
         </Div>
         <UserWrapper height={80} width={80}>
-          <User src='../images/derick_mckinney.png' alt='Аватар' />
+          <User src={userAvatar} alt='Аватар' />
         </UserWrapper>
         <Subhead>Вы</Subhead>
       </Div>
@@ -162,7 +166,7 @@ const Rating: React.FC = () => (
           <Caption>19</Caption>
         </Div>
         <UserWrapper height={60} width={60}>
-          <User src='../images/nicolay_smirnov.png' alt='Аватар' />
+          <User src={afterUser} alt='Аватар' />
         </UserWrapper>
         <Caption
           style={{

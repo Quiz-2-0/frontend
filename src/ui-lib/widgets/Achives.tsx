@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import StyledDiv from '../StyledDiv';
 import { ArrowIcon } from '../icons';
-import achive1 from '../../images/achievement icon.png';
-import achieve2 from '../../images/achievement icon1.png';
-import achieve3 from '../../images/achievement icon23.png';
+import achieve1 from '../../images/achievement-icons/icon1.png';
+import achieve2 from '../../images/achievement-icons/icon2.png';
+import achieve3 from '../../images/achievement-icons/icon3.png';
 
 const UpdatedDiv = styled(StyledDiv)`
     width: 100%;
@@ -106,33 +106,33 @@ const Achives: FC = () => {
       </ContainerHeader>
       <AchivesContainer>
         <AchivePlate>
-          <AchiveImage src={achive1} alt='ачивка крутая' />
+          <AchiveImage src={achieve1} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
               <Title>Вызов Июня</Title>
-              <Progress>8/10</Progress>
+              <Progress>2/10</Progress>
             </ContainerHeader>
             <ProgressBar width={40} />
           </ProgressWrapper>
         </AchivePlate>
 
         <AchivePlate>
-          <AchiveImage src={achive1} alt='ачивка крутая' />
+          <AchiveImage src={achieve2} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
-              <Title>Вызов Июня</Title>
-              <Progress>8/10</Progress>
+              <Title>5 квизов без ошибок</Title>
+              <Progress>2/10</Progress>
             </ContainerHeader>
             <ProgressBar width={60} />
           </ProgressWrapper>
         </AchivePlate>
 
         <AchivePlate>
-          <AchiveImage src={achive1} alt='ачивка крутая' />
+          <AchiveImage src={achieve3} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
-              <Title>Вызов Июня</Title>
-              <Progress>8/10</Progress>
+              <Title>Квизмэн</Title>
+              <Progress>4/10</Progress>
             </ContainerHeader>
             <ProgressBar width={200} />
           </ProgressWrapper>

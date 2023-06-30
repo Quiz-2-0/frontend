@@ -46,7 +46,7 @@ const LayoutWithColumns: React.FC = () => {
           alignItems: 'center',
           gap: '71px',
         }}>
-        <Logo style={{ marginTop: '60px' }} to='/' />
+        <Logo style={{ marginTop: '60px', width: '155px', height: '95px' }} to='/' />
         {location.pathname === '/reset-password'
           ? <ResetPassword />
           : <Login />}

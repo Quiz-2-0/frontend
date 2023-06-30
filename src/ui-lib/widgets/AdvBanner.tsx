@@ -4,9 +4,9 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { CupIcon, SquareIcon, RedBallIcon } from '../icons';
-import achive1 from '../../images/achievement icon.png';
-import achieve2 from '../../images/achievement icon1.png';
-import achieve3 from '../../images/achievement icon23.png';
+import achieve1 from '../../images/achievement-icons/icon1.png';
+import achieve2 from '../../images/achievement-icons/icon2.png';
+import achieve3 from '../../images/achievement-icons/icon3.png';
 
 const BannerPlate = styled.div<{ isOpen:boolean }>`
     display: flex;
@@ -103,7 +103,7 @@ const AdvBanner: FC<{ isOpen:boolean }> = ({ isOpen }) => (
         <CupIcon />
         <Sentence>У вас новая ачивка “Вызов июля"</Sentence>
         <AchieveWrapper>
-          <Achive src={achieve3} />
+          <Achive src={achieve1} />
         </AchieveWrapper>
       </AdvPlate>
       <AdvPlate>
@@ -117,9 +117,9 @@ const AdvBanner: FC<{ isOpen:boolean }> = ({ isOpen }) => (
       <AdvPlate>
         <RedBallIcon top={15} left={8} />
         <CupIcon />
-        <Sentence>У вас новая ачивка “Вызов июля”</Sentence>
+        <Sentence>У вас новая ачивка “5 квизов без ошибок”</Sentence>
         <AchieveWrapper>
-          <Achive src={achive1} />
+          <Achive src={achieve2} />
         </AchieveWrapper>
       </AdvPlate>
     </AdvContainer>

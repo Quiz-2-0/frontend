@@ -97,6 +97,7 @@ const Login: React.FC = () => {
         rememberMe: isRememberMe,
       });
       resetForm();
+      navigate('/');
     }
   };
 
