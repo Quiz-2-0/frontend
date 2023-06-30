@@ -10,8 +10,14 @@ import { useSelector } from '../store/store.types';
 const StyledDiv = styled.div`
   display: flex;
   gap: 40px;
-    flex-wrap: wrap;
-    max-height: 600px;
+  flex-direction: column;
+  max-height: 600px;
+`;
+
+const Div = styled.div`
+   display: flex;
+   gap: 40px;
+   
 `;
 
 const PersonalAccount: FC = () => {
@@ -20,8 +26,11 @@ const PersonalAccount: FC = () => {
   return (
     <>
       <StyledDiv>
-        <Rating />
-        <Progress />
+        <Div>
+          <Rating />
+          <Progress />
+        </Div>
+
         <Achives />
       </StyledDiv>
       <Castle />
