@@ -6,7 +6,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import Login from '../../pages/Login';
 import ResetPassword from '../../pages/ResetPassword';
 import Logo from '../Logo';
-import backgroundImage from '../../images/login__image.png';
+import backgroundImage from '../../images/new-login.png';
 
 const LayoutWithColumns: React.FC = () => {
   const location = useLocation();

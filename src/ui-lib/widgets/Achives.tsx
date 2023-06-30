@@ -21,10 +21,14 @@ export const IconWrapper = styled.div`
     width: 28px;
     height: 28px;
     background-color:rgba(63, 138, 224, 0.05);
+    transition: all ease .3s;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
+    &:hover {
+      background-color: rgba(63, 138, 224, 0.15);
+    }
 `;
 
 const ContainerHeader = styled.div`
