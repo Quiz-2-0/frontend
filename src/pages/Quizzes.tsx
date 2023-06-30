@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Div } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
-import QuizCard from '../ui-lib/widgets/QuizCard';
+import QuizCardList from '../ui-lib/widgets/QuizCardList';
 import QuizMenu from '../ui-lib/widgets/QuizMenu';
 
 const StyledDiv = styled(Div)`
@@ -18,7 +18,7 @@ const Quizzes: FC = () => {
   return (
     <StyledDiv>
       <QuizMenu />
-      <QuizCard />
+      <QuizCardList />
     </StyledDiv>
   );
 };

@@ -16,7 +16,7 @@ const Section = styled.section`
 const ContentWrapper = styled.div`
   display: flex;
   height: 100%;
-  padding: 40px 80px 0;
+  padding: 40px 80px 60px;
   gap: 40px;
   box-sizing: border-box;
 `;
