@@ -98,7 +98,7 @@ const QuizCard: React.FC<QuizCardProps> = (
       <Headline
         weight='1'
         style={{
-          letterSpacing: '-0.55px',
+          letterSpacing: '-0.3px',
         }}>
         { title }
       </Headline>
@@ -107,7 +107,7 @@ const QuizCard: React.FC<QuizCardProps> = (
           padding: '4px 0 0 0',
           display: 'inline-block',
           minHeight: '60px',
-          letterSpacing: '-0.9px',
+          letterSpacing: '-0.2px',
         }}>
         { description }
       </Headline>
