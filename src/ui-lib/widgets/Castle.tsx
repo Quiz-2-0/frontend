@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-plusplus */
 /* eslint-disable ternary/no-unreachable */
@@ -9,7 +10,6 @@ import {
   Title,
   Div,
   FormItem,
-  Image,
   Progress,
   Button,
 } from '@vkontakte/vkui';
@@ -69,6 +69,7 @@ const Castle: React.FC = () => {
           }}>
           {progressArr.map((progressValue: number, i: number) => (
             <Progress
+              key={i}
               aria-labelledby='progresslabel'
               value={progressValue}
               style={{
