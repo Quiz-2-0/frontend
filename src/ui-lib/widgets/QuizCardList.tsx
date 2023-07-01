@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable camelcase */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
-import { mockQuizes } from '../../constants/mock-data';
+
+import { useGetAllQuizesQuery } from '../../api/apiv2';
+import { TQuize } from '../../types/types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;
@@ -13,29 +17,22 @@ const StyledQuizListContainer = styled.ul`
   gap: 42px;
 `;
 
-interface Quiz {
-  image: string,
-  name: string;
-  description: string;
-  duration: number;
-  level: string;
-  questionAmount: number;
-  tags: string[];
-}
-
-const QuizCardList: FC = () => (
-  <StyledQuizListContainer>
-    {mockQuizes.map((quiz: Quiz) => (
-      <QuizCard
-        image={quiz.image}
-        title={quiz.name}
-        description={quiz.description}
-        duration={quiz.duration}
-        level={quiz.level}
-        questionAmount={quiz.questionAmount}
-        tags={quiz.tags} />
-    ))}
-  </StyledQuizListContainer>
-);
+const QuizCardList: FC = () => {
+  const { data, error, isLoading } = useGetAllQuizesQuery();
+  return (
+    <StyledQuizListContainer>
+      {data?.map((quiz: TQuize) => (
+        <QuizCard
+          image={quiz.image}
+          title={quiz.name}
+          description={quiz.description}
+          duration={quiz.duration}
+          level={quiz.level}
+          question_amount={quiz.question_amount}
+          tags={quiz.tags} />
+      ))}
+    </StyledQuizListContainer>
+  );
+};
 
 export default QuizCardList;

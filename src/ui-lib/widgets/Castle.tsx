@@ -17,7 +17,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../StyledDiv';
 import levels from '../../constants/levels';
-import { mockQuizes } from '../../constants/mock-data';
+import { useGetAllQuizesQuery } from '../../api/apiv2';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -30,12 +30,12 @@ const StyledImage = styled.img`
 
 const Castle: React.FC = () => {
   const navigate = useNavigate();
-
-  const doneQuizzes = mockQuizes.filter(({ passed }) => passed === true).length;
+  const { data, error, isLoading } = useGetAllQuizesQuery();
+  const doneQuizzes = data?.filter(({ passed }) => passed === true).length;
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
-    numberOfQuizzes > doneQuizzes
+    numberOfQuizzes > doneQuizzes!
   )) - 1;
-  const numberOfQuizzesToTheNextLevel = levels[userLevel + 1].numberOfQuizzes - doneQuizzes;
+  const numberOfQuizzesToTheNextLevel = levels[userLevel + 1].numberOfQuizzes - doneQuizzes!;
   const progressArr = [];
 
   for (let i = 0; i < levels[userLevel].level + 1; i++) {
@@ -54,7 +54,7 @@ const Castle: React.FC = () => {
       </Title>
       <StyledImage
         src={levels[userLevel].image}
-        style={{ }} />
+        style={{}} />
       <FormItem
         style={{ padding: '24px 16px', textAlign: 'center' }}
         top={`квизов до следующего уровня: ${numberOfQuizzesToTheNextLevel} шт.`}>

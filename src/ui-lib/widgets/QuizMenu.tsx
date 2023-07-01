@@ -9,7 +9,8 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
-import { mockQuizes } from '../../constants/mock-data';
+import { useGetAllQuizesQuery } from '../../api/apiv2';
+import { TQuize } from '../../types/types';
 
 const StyledDiv = styled(Div)`
   padding: 0 0 40px;
@@ -47,7 +48,7 @@ const StyledTabsItem = styled(TabsItem)`
   box-sizing: border-box;
   max-width: max-content;
   min-width: 125px;
-  heigth: 100%;
+  height: 100%;
 
   &:hover {
     background: none;
@@ -83,20 +84,21 @@ const StyledTabsItem = styled(TabsItem)`
 const QuizMenu: React.FC = () => {
   const [search, setSearch] = useState('');
   const [quizType, setQuizType] = useState('all');
+  const { data, error, isLoading } = useGetAllQuizesQuery();
 
   const onChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
   };
 
-  const quizNameFilter = mockQuizes.filter(
+  const quizNameFilter = data?.filter(
     ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
   );
   console.log('Результаты поиска:', quizNameFilter);
 
   const quizTypeFilter = (type: string) => {
     type !== 'all'
-      ? console.log('Фильтр:', mockQuizes.filter(({ passed }) => passed === (type !== 'appointed')))
-      : console.log('Все квизы:', mockQuizes);
+      ? console.log('Фильтр:', data?.filter(({ passed }) => passed === (type !== 'appointed')))
+      : console.log('Все квизы:', data);
     setQuizType(type);
   };
 
