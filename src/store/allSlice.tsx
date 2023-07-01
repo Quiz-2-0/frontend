@@ -9,6 +9,8 @@ type TState = {
   quizzesOnPage: TQuiz[];
   isFiltered: boolean;
   filteredQuizzes: TQuiz[];
+  quizType: string;
+  fromCastle: boolean;
 };
 
 const initialState: TState = {
@@ -18,6 +20,8 @@ const initialState: TState = {
   quizzesOnPage: mockQuizes,
   isFiltered: false,
   filteredQuizzes: [],
+  quizType: 'all',
+  fromCastle: false,
 };
 
 const allSlice = createSlice({
@@ -42,6 +46,12 @@ const allSlice = createSlice({
     setFilteredQuizzes: (state, action: PayloadAction<TQuiz[]>) => ({
       ...state, filteredQuizzes: action.payload,
     }),
+    setQuizType: (state, action: PayloadAction<string>) => ({
+      ...state, quizType: action.payload,
+    }),
+    setFromCastle: (state, action: PayloadAction<boolean>) => ({
+      ...state, fromCastle: action.payload,
+    }),
   },
 });
 
@@ -53,6 +63,8 @@ export const {
   setQuizzesOnPage,
   setIsFiltered,
   setFilteredQuizzes,
+  setQuizType,
+  setFromCastle,
 } = allSlice.actions;
 
 export default allReducer;

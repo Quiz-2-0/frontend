@@ -1,4 +1,5 @@
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-plusplus */
 /* eslint-disable ternary/no-unreachable */
@@ -18,6 +19,8 @@ import styled from 'styled-components';
 import StyledDiv from '../StyledDiv';
 import levels from '../../constants/levels';
 import { mockQuizes } from '../../constants/mock-data';
+import { setFromCastle, setQuizType } from '../../store/allSlice';
+import { useDispatch } from '../../store/store.types';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -30,6 +33,7 @@ const StyledImage = styled.img`
 
 const Castle: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const doneQuizzes = mockQuizes.filter(({ passed }) => passed === true).length;
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
@@ -42,6 +46,12 @@ const Castle: React.FC = () => {
     i < (levels[userLevel].level + 1 - numberOfQuizzesToTheNextLevel)
       ? progressArr.push(100) : progressArr.push(0);
   }
+
+  const onButtonClick = () => {
+    dispatch(setFromCastle(true));
+    dispatch(setQuizType('appointed'));
+    navigate('/quizzes');
+  };
 
   return (
     <StyledDiv style={{
@@ -87,7 +97,7 @@ const Castle: React.FC = () => {
         style={{ maxWidth: '286px', margin: '0 auto', height: '40px' }}
         type='button'
         size='l'
-        onClick={() => navigate('/quizzes')}
+        onClick={onButtonClick}
         stretched>
         Продолжить строить
       </Button>
