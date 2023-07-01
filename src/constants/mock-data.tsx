@@ -57,7 +57,7 @@ export const mockQuizes = [
     level: 'Средний',
     questionAmount: 15,
     tags: ['Софт Скиллс'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {

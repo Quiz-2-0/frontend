@@ -12,6 +12,20 @@ export type TUser = {
 
 };
 
+export type TQuiz = {
+  id: number,
+  image: string,
+  description: string,
+  directory: string,
+  name: string,
+  duration: number,
+  level: string,
+  questionAmount: number,
+  tags: string[],
+  passed: boolean,
+  questions: never[],
+};
+
 export type TUserLoginRequest = {
   email: string;
   password: string;

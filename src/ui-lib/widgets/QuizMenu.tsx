@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import React, { useState, useEffect } from 'react';
 import {
   Tabs,
   TabsItem,
@@ -9,6 +12,8 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from '../../store/store.types';
+import { setQuizzesOnPage, setIsFiltered, setFilteredQuizzes } from '../../store/allSlice';
 import { mockQuizes } from '../../constants/mock-data';
 
 const StyledDiv = styled(Div)`
@@ -81,22 +86,27 @@ const StyledTabsItem = styled(TabsItem)`
 `;
 
 const QuizMenu: React.FC = () => {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [quizType, setQuizType] = useState('all');
+  const { quizzesOnPage } = useSelector((state) => state.all);
+  const { filteredQuizzes } = useSelector((state) => state.all);
+
+  useEffect(() => {
+    dispatch(setIsFiltered(search !== ''));
+    dispatch(setFilteredQuizzes(quizzesOnPage.filter(
+      ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
+    )));
+  }, [search]);
 
   const onChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
   };
 
-  const quizNameFilter = mockQuizes.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
-  );
-  console.log('Результаты поиска:', quizNameFilter);
-
   const quizTypeFilter = (type: string) => {
     type !== 'all'
-      ? console.log('Фильтр:', mockQuizes.filter(({ passed }) => passed === (type !== 'appointed')))
-      : console.log('Все квизы:', mockQuizes);
+      ? dispatch(setQuizzesOnPage(mockQuizes.filter(({ passed }) => passed === (type !== 'appointed'))))
+      : dispatch(setQuizzesOnPage(mockQuizes));
     setQuizType(type);
   };
 
@@ -130,3 +140,18 @@ const QuizMenu: React.FC = () => {
 };
 
 export default QuizMenu;
+function setQuizzesSelector(arg0: string, arg1: {
+  id: number;
+  image: any;
+  description: string;
+  directory: string;
+  name: string;
+  duration: number;
+  level: string;
+  questionAmount: number;
+  tags: string[];
+  passed: boolean;
+  questions: never[];
+}[]) {
+  throw new Error('Function not implemented.');
+}

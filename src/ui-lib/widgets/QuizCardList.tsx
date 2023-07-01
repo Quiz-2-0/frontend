@@ -1,7 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
-import { mockQuizes } from '../../constants/mock-data';
+import { useSelector } from '../../store/store.types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;
@@ -23,19 +24,37 @@ interface Quiz {
   tags: string[];
 }
 
-const QuizCardList: FC = () => (
-  <StyledQuizListContainer>
-    {mockQuizes.map((quiz: Quiz) => (
-      <QuizCard
-        image={quiz.image}
-        title={quiz.name}
-        description={quiz.description}
-        duration={quiz.duration}
-        level={quiz.level}
-        questionAmount={quiz.questionAmount}
-        tags={quiz.tags} />
-    ))}
-  </StyledQuizListContainer>
-);
+const QuizCardList: FC = () => {
+  const { quizzesOnPage } = useSelector((state) => state.all);
+  const { isFiltered } = useSelector((state) => state.all);
+  const { filteredQuizzes } = useSelector((state) => state.all);
+
+  const quizCard = (quiz: Quiz, i: number) => (
+    <QuizCard
+      key={i}
+      image={quiz.image}
+      title={quiz.name}
+      description={quiz.description}
+      duration={quiz.duration}
+      level={quiz.level}
+      questionAmount={quiz.questionAmount}
+      tags={quiz.tags} />
+  );
+
+  return (
+    <StyledQuizListContainer>
+      {isFiltered
+        ? (filteredQuizzes.length !== 0
+          ? filteredQuizzes.map((quiz: Quiz, i: number) => quizCard(quiz, i))
+          : (
+            <>
+              <div> </div>
+              <p style={{ textAlign: 'center', margin: '0' }}>Ничего не найдено</p>
+            </>
+          ))
+        : (quizzesOnPage.map((quiz: Quiz, i: number) => quizCard(quiz, i)))}
+    </StyledQuizListContainer>
+  );
+};
 
 export default QuizCardList;
