@@ -4,6 +4,7 @@ import {
   Headline,
   Caption,
   Div,
+  Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
@@ -11,6 +12,7 @@ import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
 const StyledQuizContainer = styled.li`
   list-style: none;
   width: 330px;
+  height: 322px;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -19,16 +21,52 @@ const StyledQuizContainer = styled.li`
   background: var(--white-white, #FFF);
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
   cursor: pointer;
+
+  &:hover {
+    .cover {
+      height: 119px;
+    }
+    
+    .info {
+      transform: translateY(-55px);
+      -webkit-transform: translateY(-55px);
+      -moz-transform: translateY(-55px);
+      -o-transform: translateY(-55px);
+      -ms-transform: translateY(-55px);
+    }
+    
+    .btn {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
 `;
 
 const StyledQuizCover = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 330px;
   height: 174px;
   object-fit: cover;
+  transition: height 0.3s ease-in-out;
+  -webkit-transition: height 0.3s ease-in-out;
+  -moz-transition: height 0.3s ease-in-out;
+  -o-transition: height 0.3s ease-in-out;
+  -ms-transition: height 0.3s ease-in-out;
 `;
 
 const StyledQuizInfoWrapper = styled(Div)`
-  padding: 12px 16px 20px
+  padding: 12px 16px 20px;
+  position: absolute;
+  top: 178px;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  -moz-transition: transform 0.3s ease-in-out;
+  -o-transition: transform 0.3s ease-in-out;
+  -ms-transition: transform 0.3s ease-in-out;
 `;
 
 const StyledQuizDetailWrapper = styled(Div)`
@@ -68,6 +106,7 @@ const StyledQuizTagContainer = styled.ul`
   position: absolute;
   top: 16px;
   right: 16px;
+  z-index: 2;
 `;
 
 const StyledQuizTag = styled.span`
@@ -81,6 +120,21 @@ const StyledQuizTag = styled.span`
   line-height: 14px;
   font-weight: 400;
   color: #ffffff;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #5181B8;
+  margin-top: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
+  -webkit-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
+  -moz-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
+  -o-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
+  -ms-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
 `;
 
 interface QuizCardProps {
@@ -137,8 +191,8 @@ const QuizCard: React.FC<QuizCardProps> = (
             })}
           </StyledQuizTagContainer>
         )}
-      <StyledQuizCover src={image} alt={title} />
-      <StyledQuizInfoWrapper>
+      <StyledQuizCover src={image} alt={title} className='cover' />
+      <StyledQuizInfoWrapper className='info'>
         <Headline
           weight='1'
           style={{
@@ -169,6 +223,7 @@ const QuizCard: React.FC<QuizCardProps> = (
             <StyledQuizDetailCaption>{`${questionAmount} вопросов`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
+        <StyledButton className='btn'>Начать квиз</StyledButton>
       </StyledQuizInfoWrapper>
     </StyledQuizContainer>
   );
