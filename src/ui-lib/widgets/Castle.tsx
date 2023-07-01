@@ -48,8 +48,8 @@ const Castle: React.FC = () => {
   }
 
   const onButtonClick = () => {
-    dispatch(setFromCastle(true));
-    dispatch(setQuizType('appointed'));
+    /*  dispatch(setFromCastle(true));
+    dispatch(setQuizType('appointed')); */
     navigate('/quizzes');
   };
 

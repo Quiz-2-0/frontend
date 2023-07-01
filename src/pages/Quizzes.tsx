@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Div } from '@vkontakte/vkui';
