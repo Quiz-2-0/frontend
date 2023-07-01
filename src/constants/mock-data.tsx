@@ -83,7 +83,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 10,
     tags: ['Софт Скиллс'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -96,7 +96,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 10,
     tags: ['Софт Скиллс'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -109,7 +109,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 11,
     tags: ['Коммуникация'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -122,7 +122,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 20,
     tags: ['Новый', 'Коммуникация'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -135,7 +135,7 @@ export const mockQuizes = [
     level: 'Средний',
     questionAmount: 15,
     tags: ['Софт Скиллс'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -148,7 +148,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 10,
     tags: ['Софт Скиллс'],
-    passed: true,
+    passed: false,
     questions: [],
   },
   {
@@ -161,7 +161,7 @@ export const mockQuizes = [
     level: 'Лёгкий',
     questionAmount: 10,
     tags: ['Софт Скиллс'],
-    passed: false,
+    passed: true,
     questions: [],
   },
 ];
