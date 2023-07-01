@@ -4,7 +4,7 @@
 /* eslint-disable ternary/no-unreachable */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, QUIZES_STATA,
+  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, QUIZES_STATA, GET_USER,
 } from '../constants/api-url';
 import { TUser, TUserLoginRequest, TQuize } from '../types/types';
 
@@ -51,6 +51,16 @@ export const userApi = createApi({
       }),
 
     }),
+    getCurrentUser: build.query<TUser, void>({
+      query: () => ({
+        url: GET_USER,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+
+      }),
+    }),
 
   }),
 });
@@ -81,6 +91,7 @@ export const quizApi = createApi({
 export const {
   useLoginMutation,
   useRecoverPasswordMutation,
+  useGetCurrentUserQuery,
 } = userApi;
 
 export const {

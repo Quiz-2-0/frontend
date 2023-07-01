@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 export type TUser = {
-  name: string;
+  firstName: string;
+  lastname: string;
   role: string;
   courses: { [key: string]: any };
   progress: string;

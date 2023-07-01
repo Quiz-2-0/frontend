@@ -10,6 +10,7 @@ import ava from '../../images/avatar/header_derick-mckinney.png';
 import logoImg from '../../images/logo/header__logo.svg';
 import { useSelector, useDispatch } from '../../store/store.types';
 import AdvBanner from './AdvBanner';
+import { useGetCurrentUserQuery } from '../../api/apiv2';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -71,7 +72,7 @@ const IconWrapper = styled.div`
 
 const Header: FC = () => {
   const navigate = useNavigate();
-  const { currentUser } = useSelector((state) => state.user);
+  const { data } = useGetCurrentUserQuery();
   const [isOpen, openModal] = useState(false);
   return (
     <HeaderWrapper>
@@ -80,12 +81,12 @@ const Header: FC = () => {
         <UpdatedLogo to='/' />
         <ToolBar>
           <AvatarWrapper width={60} height={60}>
-            <Avatar src={currentUser ? currentUser?.avatar : ava} alt='тут лицо чувака' />
+            <Avatar src={data?.avatar} alt='тут лицо чувака' />
           </AvatarWrapper>
-          <UserName>{currentUser ? currentUser.name : 'Иван Иванов'}</UserName>
+          <UserName>{data?.firstName}</UserName>
           <IconWrapper>
             <BellIcon onClick={() => openModal(!isOpen)} />
-            {currentUser?.appointedCourses && <RedBallIcon top={3} left={17} />}
+            {data?.appointedCourses && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
           <LogOuticon />
         </ToolBar>

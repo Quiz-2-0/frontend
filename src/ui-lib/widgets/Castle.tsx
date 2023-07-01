@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-plusplus */
@@ -35,11 +37,12 @@ const Castle: React.FC = () => {
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
     numberOfQuizzes > doneQuizzes!
   )) - 1;
-  const numberOfQuizzesToTheNextLevel = levels[userLevel + 1].numberOfQuizzes - doneQuizzes!;
+  console.log(userLevel);
+  const numberOfQuizzesToTheNextLevel = levels[Math.abs(userLevel) + 1].numberOfQuizzes - doneQuizzes!;
   const progressArr = [];
 
-  for (let i = 0; i < levels[userLevel].level + 1; i++) {
-    i < (levels[userLevel].level + 1 - numberOfQuizzesToTheNextLevel)
+  for (let i = 0; i < levels[Math.abs(userLevel)].level + 1; i++) {
+    i < (levels[Math.abs(userLevel)].level + 1 - numberOfQuizzesToTheNextLevel)
       ? progressArr.push(100) : progressArr.push(0);
   }
 
@@ -50,10 +53,10 @@ const Castle: React.FC = () => {
       <Title
         style={{ textAlign: 'center', paddingBottom: '16px' }}
         level='2'>
-        {levels[userLevel].title}
+        {levels[Math.abs(userLevel)].title}
       </Title>
       <StyledImage
-        src={levels[userLevel].image}
+        src={levels[Math.abs(userLevel)].image}
         style={{}} />
       <FormItem
         style={{ padding: '24px 16px', textAlign: 'center' }}

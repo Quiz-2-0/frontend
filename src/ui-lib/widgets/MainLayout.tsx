@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { useSelector } from '../../store/store.types';
-import { useLoginMutation } from '../../api/apiv2';
+import { useGetCurrentUserQuery, useLoginMutation } from '../../api/apiv2';
 
 const Section = styled.section`
     width: 100%;

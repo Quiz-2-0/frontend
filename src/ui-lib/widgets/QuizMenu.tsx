@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import {
   Tabs,
   TabsItem,
@@ -15,7 +16,6 @@ import styled from 'styled-components';
 import { useGetAllQuizesQuery } from '../../api/apiv2';
 import { TQuize } from '../../types/types';
 import { useSelector, useDispatch } from '../../store/store.types';
-
 
 const StyledDiv = styled(Div)`
   padding: 0 0 40px;
@@ -86,20 +86,15 @@ const StyledTabsItem = styled(TabsItem)`
   }
 `;
 
-const QuizMenu: React.FC = () => {
+const QuizMenu: React.FC<{ search: string, setSearch: any }> = ({ search, setSearch }) => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
+
   const [quizType, setQuizType] = useState('all');
   const { data, error, isLoading } = useGetAllQuizesQuery();
 
-  const onChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
   };
-
-  const quizNameFilter = data?.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
-  );
-  console.log('Результаты поиска:', quizNameFilter);
 
   const quizTypeFilter = (type: string) => {
     type !== 'all'
@@ -138,18 +133,3 @@ const QuizMenu: React.FC = () => {
 };
 
 export default QuizMenu;
-function setQuizzesSelector(arg0: string, arg1: {
-  id: number;
-  image: any;
-  description: string;
-  directory: string;
-  name: string;
-  duration: number;
-  level: string;
-  questionAmount: number;
-  tags: string[];
-  passed: boolean;
-  questions: never[];
-}[]) {
-  throw new Error('Function not implemented.');
-}

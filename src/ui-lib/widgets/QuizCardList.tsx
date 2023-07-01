@@ -17,11 +17,14 @@ const StyledQuizListContainer = styled.ul`
   gap: 42px;
 `;
 
-const QuizCardList: FC = () => {
+const QuizCardList: FC<{ currentArr: TQuize[] }> = ({ currentArr }) => {
   const { data, error, isLoading } = useGetAllQuizesQuery();
+
+  const setArr = () => (currentArr || data);
+
   return (
     <StyledQuizListContainer>
-      {data?.map((quiz: TQuize) => (
+      {setArr()?.map((quiz: TQuize) => (
         <QuizCard
           image={quiz.image}
           title={quiz.name}
