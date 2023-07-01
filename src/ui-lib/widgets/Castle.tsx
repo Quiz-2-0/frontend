@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-plusplus */
 /* eslint-disable ternary/no-unreachable */
@@ -46,6 +47,12 @@ const Castle: React.FC = () => {
       ? progressArr.push(100) : progressArr.push(0);
   }
 
+  const onButtonClick = () => {
+    dispatch(setFromCastle(true));
+    dispatch(setQuizType('appointed'));
+    navigate('/quizzes');
+  };
+
   return (
     <StyledDiv style={{
       maxWidth: '358px', width: '100%', height: 'max-content',
@@ -90,7 +97,7 @@ const Castle: React.FC = () => {
         style={{ maxWidth: '286px', margin: '0 auto', height: '40px' }}
         type='button'
         size='l'
-        onClick={() => navigate('/quizzes')}
+        onClick={onButtonClick}
         stretched>
         Продолжить строить
       </Button>

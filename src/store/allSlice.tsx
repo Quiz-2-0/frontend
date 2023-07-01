@@ -11,7 +11,6 @@ const initialState: TState = {
   isRememberMe: false,
   mistake: '',
   isLogged: false,
-
 };
 
 const allSlice = createSlice({
