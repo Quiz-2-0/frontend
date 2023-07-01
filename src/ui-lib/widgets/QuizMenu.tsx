@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import {
   Tabs,
   TabsItem,
@@ -13,7 +14,13 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from '../../store/store.types';
-import { setQuizzesOnPage, setIsFiltered, setFilteredQuizzes } from '../../store/allSlice';
+import {
+  setQuizzesOnPage,
+  setIsFiltered,
+  setFilteredQuizzes,
+  setQuizType,
+  setFromCastle,
+} from '../../store/allSlice';
 import { mockQuizes } from '../../constants/mock-data';
 
 const StyledDiv = styled(Div)`
@@ -86,11 +93,25 @@ const StyledTabsItem = styled(TabsItem)`
 `;
 
 const QuizMenu: React.FC = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
-  const [quizType, setQuizType] = useState('all');
+  const { quizType } = useSelector((state) => state.all);
   const { quizzesOnPage } = useSelector((state) => state.all);
-  const { filteredQuizzes } = useSelector((state) => state.all);
+  const { fromCastle } = useSelector((state) => state.all);
+
+  useEffect(() => {
+    if (fromCastle) {
+      dispatch(setQuizType('appointed'));
+      dispatch(setQuizzesOnPage(mockQuizes.filter(({ passed }) => passed === false)));
+    } else {
+      dispatch(setQuizType('all'));
+      dispatch(setQuizzesOnPage(mockQuizes));
+    }
+    dispatch(setFromCastle(false));
+    dispatch(setIsFiltered(false));
+    dispatch(setFilteredQuizzes([]));
+  }, [location]);
 
   useEffect(() => {
     dispatch(setIsFiltered(search !== ''));
@@ -107,7 +128,7 @@ const QuizMenu: React.FC = () => {
     type !== 'all'
       ? dispatch(setQuizzesOnPage(mockQuizes.filter(({ passed }) => passed === (type !== 'appointed'))))
       : dispatch(setQuizzesOnPage(mockQuizes));
-    setQuizType(type);
+    dispatch(setQuizType(type));
   };
 
   return (
