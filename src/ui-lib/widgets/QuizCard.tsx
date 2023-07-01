@@ -24,7 +24,8 @@ const StyledQuizContainer = styled.li`
 
   &:hover {
     .cover {
-      height: 119px;
+      opacity: 0.5;
+      transform: scale(1.3);
     }
     
     .info {
@@ -50,23 +51,26 @@ const StyledQuizCover = styled.img`
   width: 330px;
   height: 174px;
   object-fit: cover;
-  transition: height 0.3s ease-in-out;
-  -webkit-transition: height 0.3s ease-in-out;
-  -moz-transition: height 0.3s ease-in-out;
-  -o-transition: height 0.3s ease-in-out;
-  -ms-transition: height 0.3s ease-in-out;
+  transition: all 4s ease;
+  -webkit-transition: all 4s ease;
+  -moz-transition: all 4s ease;
+  -o-transition: all 4s ease;
+  -ms-transition: all 4s ease;
 `;
 
 const StyledQuizInfoWrapper = styled(Div)`
   padding: 12px 16px 20px;
+  width: 100%;
+  background-color: #ffffff;
+  box-sizing: border-box;
   position: absolute;
   top: 178px;
   left: 0;
-  transition: transform 0.3s ease-in-out;
-  -webkit-transition: transform 0.3s ease-in-out;
-  -moz-transition: transform 0.3s ease-in-out;
-  -o-transition: transform 0.3s ease-in-out;
-  -ms-transition: transform 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const StyledQuizDetailWrapper = styled(Div)`
@@ -130,11 +134,11 @@ const StyledButton = styled(Button)`
   margin-top: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
-  -webkit-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
-  -moz-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
-  -o-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
-  -ms-transition: opacity 0.3s ease-in-out, visibility 0s ease-in-out 0.3s;
+  transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -webkit-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -moz-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -o-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -ms-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
 `;
 
 interface QuizCardProps {
