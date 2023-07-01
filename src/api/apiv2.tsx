@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_ROOT, LOGIN_ROUTE, RESET_PASSWORD } from '../constants/api-url';
-import { TUser, TUserLoginRequest } from '../types/types';
+import {
+  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, QUIZES_STATA, GET_USER,
+} from '../constants/api-url';
+import { TUser, TUserLoginRequest, TQuize } from '../types/types';
 
 export const jwt = {
   set: (value: string, isRemember: boolean): void => {
@@ -18,8 +23,8 @@ export const jwt = {
       sessionStorage.removeItem('JWT');
     }
   },
-  get: (isRemember: boolean): string => {
-    const res = isRemember ? localStorage.getItem('JWT') : sessionStorage.getItem('JWT');
+  get: (): string => {
+    const res = localStorage.getItem('JWT') || sessionStorage.getItem('JWT');
     return res || '';
   },
   test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),
@@ -46,6 +51,39 @@ export const userApi = createApi({
       }),
 
     }),
+    getCurrentUser: build.query<TUser, void>({
+      query: () => ({
+        url: GET_USER,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+
+      }),
+    }),
+
+  }),
+});
+
+export const quizApi = createApi({
+  reducerPath: 'quizApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_ROOT,
+    prepareHeaders: (headers, { getState, endpoint }) => {
+      headers.set('Authorization', `Bearer ${jwt.get()}`);
+
+      return headers;
+    },
+  }),
+  tagTypes: ['quiz'],
+  endpoints: (build) => ({
+    getAllQuizes: build.query<TQuize[], void>({
+      query: () => ALL_QUIZES,
+    }),
+    getQuiz: build.query<TQuize, number>({
+      query: (id: number) => `${ALL_QUIZES}${id}`,
+
+    }),
 
   }),
 });
@@ -53,4 +91,10 @@ export const userApi = createApi({
 export const {
   useLoginMutation,
   useRecoverPasswordMutation,
+  useGetCurrentUserQuery,
 } = userApi;
+
+export const {
+  useGetAllQuizesQuery,
+  useGetQuizQuery,
+} = quizApi;

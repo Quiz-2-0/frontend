@@ -1,7 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
+
+import React from 'react';
+
 /* eslint-disable import/prefer-default-export */
-import PersonalAccount from '../pages/PersonalAccount';
-import Quizzes from '../pages/Quizzes';
+const PersonalAccount = React.lazy(() => import('../pages/PersonalAccount'));
+const Quizzes = React.lazy(() => import('../pages/Quizzes'));
 /// сюда все урлы защищенные помещаем
 export const routes = [
   { path: '/', Component: <PersonalAccount /> },

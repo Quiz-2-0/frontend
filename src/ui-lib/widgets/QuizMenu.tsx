@@ -1,9 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import {
   Tabs,
   TabsItem,
@@ -13,15 +13,9 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
+import { useGetAllQuizesQuery } from '../../api/apiv2';
+import { TQuize } from '../../types/types';
 import { useSelector, useDispatch } from '../../store/store.types';
-import {
-  setQuizzesOnPage,
-  setIsFiltered,
-  setFilteredQuizzes,
-  setQuizType,
-  setFromCastle,
-} from '../../store/allSlice';
-import { mockQuizes } from '../../constants/mock-data';
 
 const StyledDiv = styled(Div)`
   padding: 0 0 40px;
@@ -33,7 +27,7 @@ const StyledDiv = styled(Div)`
 const StyledTabs = styled(Tabs)`
   max-width: 429px;
   width: 100%;
-  heigth: 48px;
+  height: 48px;
 
   & > div {
     display: flex;
@@ -59,7 +53,7 @@ const StyledTabsItem = styled(TabsItem)`
   box-sizing: border-box;
   max-width: max-content;
   min-width: 125px;
-  heigth: 100%;
+  height: 100%;
 
   &:hover {
     background: none;
@@ -92,43 +86,21 @@ const StyledTabsItem = styled(TabsItem)`
   }
 `;
 
-const QuizMenu: React.FC = () => {
-  const location = useLocation();
+const QuizMenu: React.FC<{ search: string, setSearch: any }> = ({ search, setSearch }) => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
-  const { quizType } = useSelector((state) => state.all);
-  const { quizzesOnPage } = useSelector((state) => state.all);
-  const { fromCastle } = useSelector((state) => state.all);
 
-  useEffect(() => {
-    if (fromCastle) {
-      dispatch(setQuizType('appointed'));
-      dispatch(setQuizzesOnPage(mockQuizes.filter(({ passed }) => passed === false)));
-    } else {
-      dispatch(setQuizType('all'));
-      dispatch(setQuizzesOnPage(mockQuizes));
-    }
-    dispatch(setFromCastle(false));
-    dispatch(setIsFiltered(false));
-    dispatch(setFilteredQuizzes([]));
-  }, [location]);
+  const [quizType, setQuizType] = useState('all');
+  const { data, error, isLoading } = useGetAllQuizesQuery();
 
-  useEffect(() => {
-    dispatch(setIsFiltered(search !== ''));
-    dispatch(setFilteredQuizzes(quizzesOnPage.filter(
-      ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
-    )));
-  }, [search]);
-
-  const onChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
   };
 
   const quizTypeFilter = (type: string) => {
     type !== 'all'
-      ? dispatch(setQuizzesOnPage(mockQuizes.filter(({ passed }) => passed === (type !== 'appointed'))))
-      : dispatch(setQuizzesOnPage(mockQuizes));
-    dispatch(setQuizType(type));
+      ? console.log('Фильтр:', data?.filter(({ passed }) => passed === (type !== 'appointed')))
+      : console.log('Все квизы:', data);
+    setQuizType(type);
   };
 
   return (
@@ -161,18 +133,3 @@ const QuizMenu: React.FC = () => {
 };
 
 export default QuizMenu;
-function setQuizzesSelector(arg0: string, arg1: {
-  id: number;
-  image: any;
-  description: string;
-  directory: string;
-  name: string;
-  duration: number;
-  level: string;
-  questionAmount: number;
-  tags: string[];
-  passed: boolean;
-  questions: never[];
-}[]) {
-  throw new Error('Function not implemented.');
-}

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Outlet } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { useSelector } from '../../store/store.types';
+import { useGetCurrentUserQuery, useLoginMutation } from '../../api/apiv2';
 
 const Section = styled.section`
     width: 100%;
@@ -22,17 +23,21 @@ const ContentWrapper = styled.div`
 `;
 
 const MainLayout: FC = () => {
-  const { isLogged } = useSelector((state) => state.all);
-  /// на будущий токен
-  /*  if (!isLogged) { return null; } */
+  const [login, { data, error }] = useLoginMutation({
+    fixedCacheKey: 'shared-update-post',
+  });
   return (
-    <Section>
-      <Header />
-      <ContentWrapper>
-        <Sidebar />
-        <Outlet />
-      </ContentWrapper>
-    </Section>
+    localStorage.getItem('JWT') || sessionStorage.getItem('JWT')
+      ? (
+        <Section>
+          <Header />
+          <ContentWrapper>
+            <Sidebar />
+            <Outlet />
+          </ContentWrapper>
+        </Section>
+      )
+      : <Navigate to='/login' />
   );
 };
 

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -18,9 +20,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../StyledDiv';
 import levels from '../../constants/levels';
-import { mockQuizes } from '../../constants/mock-data';
-import { setFromCastle, setQuizType } from '../../store/allSlice';
-import { useDispatch } from '../../store/store.types';
+import { useGetAllQuizesQuery } from '../../api/apiv2';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -33,23 +33,23 @@ const StyledImage = styled.img`
 
 const Castle: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const doneQuizzes = mockQuizes.filter(({ passed }) => passed === true).length;
+  const { data, error, isLoading } = useGetAllQuizesQuery();
+  const doneQuizzes = data?.filter(({ passed }) => passed === true).length;
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
-    numberOfQuizzes > doneQuizzes
+    numberOfQuizzes > doneQuizzes!
   )) - 1;
-  const numberOfQuizzesToTheNextLevel = levels[userLevel + 1].numberOfQuizzes - doneQuizzes;
+  console.log(userLevel);
+  const numberOfQuizzesToTheNextLevel = levels[Math.abs(userLevel) + 1].numberOfQuizzes - doneQuizzes!;
   const progressArr = [];
 
-  for (let i = 0; i < levels[userLevel].level + 1; i++) {
-    i < (levels[userLevel].level + 1 - numberOfQuizzesToTheNextLevel)
+  for (let i = 0; i < levels[Math.abs(userLevel)].level + 1; i++) {
+    i < (levels[Math.abs(userLevel)].level + 1 - numberOfQuizzesToTheNextLevel)
       ? progressArr.push(100) : progressArr.push(0);
   }
 
   const onButtonClick = () => {
-    dispatch(setFromCastle(true));
-    dispatch(setQuizType('appointed'));
+    /*  dispatch(setFromCastle(true));
+    dispatch(setQuizType('appointed')); */
     navigate('/quizzes');
   };
 
@@ -60,11 +60,11 @@ const Castle: React.FC = () => {
       <Title
         style={{ textAlign: 'center', paddingBottom: '16px' }}
         level='2'>
-        {levels[userLevel].title}
+        {levels[Math.abs(userLevel)].title}
       </Title>
       <StyledImage
-        src={levels[userLevel].image}
-        style={{ }} />
+        src={levels[Math.abs(userLevel)].image}
+        style={{}} />
       <FormItem
         style={{ padding: '24px 16px', textAlign: 'center' }}
         top={`квизов до следующего уровня: ${numberOfQuizzesToTheNextLevel} шт.`}>

@@ -1,8 +1,11 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable camelcase */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
-import { useSelector } from '../../store/store.types';
+
+import { useGetAllQuizesQuery } from '../../api/apiv2';
+import { TQuize } from '../../types/types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;
@@ -14,45 +17,23 @@ const StyledQuizListContainer = styled.ul`
   gap: 42px;
 `;
 
-interface Quiz {
-  image: string,
-  name: string;
-  description: string;
-  duration: number;
-  level: string;
-  questionAmount: number;
-  tags: string[];
-}
+const QuizCardList: FC<{ currentArr: TQuize[] }> = ({ currentArr }) => {
+  const { data, error, isLoading } = useGetAllQuizesQuery();
 
-const QuizCardList: FC = () => {
-  const { quizzesOnPage } = useSelector((state) => state.all);
-  const { isFiltered } = useSelector((state) => state.all);
-  const { filteredQuizzes } = useSelector((state) => state.all);
-
-  const quizCard = (quiz: Quiz, i: number) => (
-    <QuizCard
-      key={i}
-      image={quiz.image}
-      title={quiz.name}
-      description={quiz.description}
-      duration={quiz.duration}
-      level={quiz.level}
-      questionAmount={quiz.questionAmount}
-      tags={quiz.tags} />
-  );
+  const setArr = () => (currentArr || data);
 
   return (
     <StyledQuizListContainer>
-      {isFiltered
-        ? (filteredQuizzes.length !== 0
-          ? filteredQuizzes.map((quiz: Quiz, i: number) => quizCard(quiz, i))
-          : (
-            <>
-              <div> </div>
-              <p style={{ textAlign: 'center', margin: '0' }}>Ничего не найдено</p>
-            </>
-          ))
-        : (quizzesOnPage.map((quiz: Quiz, i: number) => quizCard(quiz, i)))}
+      {setArr()?.map((quiz: TQuize) => (
+        <QuizCard
+          image={quiz.image}
+          title={quiz.name}
+          description={quiz.description}
+          duration={quiz.duration}
+          level={quiz.level}
+          question_amount={quiz.question_amount}
+          tags={quiz.tags} />
+      ))}
     </StyledQuizListContainer>
   );
 };

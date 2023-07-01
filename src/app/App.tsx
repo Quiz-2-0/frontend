@@ -5,7 +5,7 @@ import React, { FC, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { SplitLayout, Spinner } from '@vkontakte/vkui';
-import { useSelector } from '../store/store.types';
+import { useGetCurrentUserQuery } from '../api/apiv2';
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
@@ -19,25 +19,21 @@ const Main = styled.main`
   background-color: #FFF;
 `;
 
-const App = () => {
-  const location = useLocation();
-  const { isLogged } = useSelector((state) => state.all);
-  return (
-    <Main style={{ fontFamily: 'SFProDisplay' }}>
+const App = () => (
+  <Main style={{ fontFamily: 'SFProDisplay' }}>
 
-      <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
-        <Routes>
-          <Route path='/login' element={<LayoutWithColumns />} />
-          <Route path='/reset-password' element={<LayoutWithColumns />} />
-          {routes.map(({ path, Component }, index) => (
-            <Route element={<MainLayout />} key={index}>
-              <Route path={path} element={Component} />
-            </Route>
-          ))}
-        </Routes>
-      </React.Suspense>
-    </Main>
-  );
-};
+    <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
+      <Routes>
+        <Route path='/login' element={<LayoutWithColumns />} />
+        <Route path='/reset-password' element={<LayoutWithColumns />} />
+        {routes.map(({ path, Component }, index) => (
+          <Route element={<MainLayout />} key={index}>
+            <Route path={path} element={Component} />
+          </Route>
+        ))}
+      </Routes>
+    </React.Suspense>
+  </Main>
+);
 
 export default App;

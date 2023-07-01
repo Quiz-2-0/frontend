@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -147,8 +151,8 @@ interface QuizCardProps {
   description: string;
   duration: number;
   level: string;
-  questionAmount: number;
-  tags: string[];
+  question_amount: number;
+  tags: any;
 }
 
 const QuizCard: React.FC<QuizCardProps> = (
@@ -158,19 +162,19 @@ const QuizCard: React.FC<QuizCardProps> = (
     description,
     duration,
     level,
-    questionAmount,
+    question_amount,
     tags,
   },
 ) => {
-  const backgroundStyleByTag = (tag: string): { bgColor: string } => {
+  const backgroundStyleByTag = (tag: any): { bgColor: string } => {
     const bgStyleMap: { [key: string]: string } = {
       Коммуникация: 'rgba(99, 185, 186, 0.8)',
       Новый: 'rgba(255, 51, 71, 0.80)',
     };
 
     let bgStyle = 'rgba(80, 69, 119, 0.8)';
-    if (Object.prototype.hasOwnProperty.call(bgStyleMap, tag)) {
-      bgStyle = bgStyleMap[tag];
+    if (Object.prototype.hasOwnProperty.call(bgStyleMap, tag.color)) {
+      bgStyle = bgStyleMap[tag.color];
     }
 
     return {
@@ -184,12 +188,12 @@ const QuizCard: React.FC<QuizCardProps> = (
         ? null
         : (
           <StyledQuizTagContainer>
-            {tags.map((tag) => {
+            {tags.map((tag: any) => {
               const style = backgroundStyleByTag(tag);
               return (
                 <StyledQuizTag
                   style={{ backgroundColor: style.bgColor }}>
-                  {tag}
+                  {tag.name}
                 </StyledQuizTag>
               );
             })}
@@ -224,7 +228,7 @@ const QuizCard: React.FC<QuizCardProps> = (
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <QuestionsIcon />
-            <StyledQuizDetailCaption>{`${questionAmount} вопросов`}</StyledQuizDetailCaption>
+            <StyledQuizDetailCaption>{`${question_amount} вопросов`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
         <StyledButton className='btn'>Начать квиз</StyledButton>
