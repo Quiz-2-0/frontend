@@ -39,12 +39,14 @@ const LayoutWithColumns: React.FC = () => {
       </StyledColumn>
       <SplitCol
         maxWidth={555}
+        width='100%'
         style={{
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '71px',
+          width: '100%',
         }}>
         <Logo style={{ marginTop: '60px', width: '155px', height: '95px' }} to='/' />
         {location.pathname === '/reset-password'

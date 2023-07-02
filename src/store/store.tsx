@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 import { configureStore } from '@reduxjs/toolkit';
 
-import userReducer from './userSlice';
-import allReducer from './allSlice';
+import userReducer from './userSlice/userSlice';
+import allReducer from './allSlice/allSlice';
 
 import { userApi, quizApi } from '../api/apiv2';
 

@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUser } from '../types/types';
+import { TUser } from '../../types/types';
+import { sliceName } from './selectors';
 
 type TState = {
   currentUser: TUser | null;
@@ -13,7 +14,7 @@ const initialState: TState = {
 };
 
 const userDataSlice = createSlice({
-  name: 'userData',
+  name: sliceName,
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<TUser>) => ({

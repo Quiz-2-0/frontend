@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/no-unreachable */
 import React, { FC, useState } from 'react';
@@ -57,13 +58,19 @@ const Text = styled.p`
     
     
 `;
+
+const ModifiedIconWrapper = styled(IconWrapper) <{ isOpen: boolean }>`
+     transform: ${({ isOpen }) => (isOpen ? 'rotate(270deg)' : 'rotate(90deg)')};
+    
+`;
+
 const Dropdown: FC<{ name: string, description: string }> = ({ name, description }) => {
   const [isOpen, open] = useState(false);
   return (
     <Li>
       <HeaderBlock>
         <H4>{name}</H4>
-        <IconWrapper isOpen={isOpen} onClick={() => open(!isOpen)}><ArrowIcon /></IconWrapper>
+        <ModifiedIconWrapper isOpen={isOpen} onClick={() => open(!isOpen)}><ArrowIcon /></ModifiedIconWrapper>
       </HeaderBlock>
       <TextDiv isOpen={isOpen}><Text>{description}</Text></TextDiv>
     </Li>
