@@ -17,7 +17,7 @@ const UpdatedDiv = styled(StyledDiv)`
     
 `;
 
-export const IconWrapper = styled.div<{ isOpen?:boolean }>`
+export const IconWrapper = styled.div`
     width: 28px;
     height: 28px;
     background-color:rgba(63, 138, 224, 0.05);
@@ -26,7 +26,7 @@ export const IconWrapper = styled.div<{ isOpen?:boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: ${({ isOpen }) => (isOpen ? 'rotate(270deg)' : 'rotate(90deg)')};
+   
     &:hover {
       background-color: rgba(63, 138, 224, 0.15);
     }

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TQuiz } from '../types/types';
+import { TQuiz } from '../../types/types';
+import { sliceName } from './selectors';
 
 type TState = {
   isRememberMe: boolean;
@@ -14,7 +15,7 @@ const initialState: TState = {
 };
 
 const allSlice = createSlice({
-  name: 'allData',
+  name: sliceName,
   initialState,
   reducers: {
     setRememberMe: (state, action: PayloadAction<boolean>) => ({
