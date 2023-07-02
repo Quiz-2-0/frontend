@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -24,7 +26,7 @@ const StyledDiv = styled(Div)`
   align-items: center;
 `;
 
-const StyledTabs = styled(Tabs)`
+export const StyledTabs = styled(Tabs)`
   max-width: 429px;
   width: 100%;
   height: 48px;
@@ -48,7 +50,7 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const StyledTabsItem = styled(TabsItem)`
+export const StyledTabsItem = styled(TabsItem)`
   padding: 0 16px;
   box-sizing: border-box;
   max-width: max-content;
