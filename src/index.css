@@ -1,13 +1,26 @@
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  height: 100%;
+    height: 100%;
 }
 
 #root {
-  height: 100%;
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: rgba(255, 255, 255, .5);
+    border-radius: 100px;
+    opacity: .5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(226, 226, 234);
+    height: 50px;
+    border-radius: 100px;
 }

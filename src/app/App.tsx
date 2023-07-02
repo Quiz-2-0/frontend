@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { SplitLayout, Spinner } from '@vkontakte/vkui';
-import { useGetCurrentUserQuery } from '../api/apiv2';
+
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
