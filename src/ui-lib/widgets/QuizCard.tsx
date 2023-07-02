@@ -6,12 +6,20 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   Headline,
-  Caption,
   Div,
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { useNavigate } from 'react-router';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
+import { useDispatch } from '../../store/store.types';
+import StyledQuizDetailsWrapper from '../StyledDetailsWrapper';
+import StyledQuizDetailWrapper from '../StyledQuizDetailWrapper';
+import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
+import StyledQuizTag from '../StyledQuizTag';
+import StyledQuizTagContainer from '../StyledQuizTagContainer';
+import backgroundStyleByTag from '../../constants/background-style-by-tag';
+import { setQuizId } from '../../store/allSlice/allSlice';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -77,59 +85,6 @@ const StyledQuizInfoWrapper = styled(Div)`
   -ms-transition: all 0.4s ease-in-out;
 `;
 
-const StyledQuizDetailWrapper = styled(Div)`
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 4px;
-`;
-
-const StyledQuizDetailsWrapper = styled(Div)`
-  padding: 13px 0 0 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-`;
-
-const StyledQuizDetailCaption = styled(Caption)`
-  font-weight: 600;
-  color: #818C99;
-  text-transform: uppercase;
-  letter-spacing: -0.55px;
-`;
-
-const StyledQuizTagContainer = styled.ul`
-  margin: 0;
-  padding: 0 0 0 16px;
-  list-style: none;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 8px;
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
-`;
-
-const StyledQuizTag = styled.span`
-  display: block;
-  padding: 4px;
-  border-radius: 4px;
-  width: fit-content;
-  height: fit-content;
-  background-color: rgba(80, 69, 119, 0.8);
-  font-size: 11px;
-  line-height: 14px;
-  font-weight: 400;
-  color: #ffffff;
-`;
-
 const StyledButton = styled(Button)`
   width: 100%;
   height: 40px;
@@ -146,6 +101,7 @@ const StyledButton = styled(Button)`
 `;
 
 interface QuizCardProps {
+  id: number,
   image: string;
   title: string;
   description: string;
@@ -157,6 +113,7 @@ interface QuizCardProps {
 
 const QuizCard: React.FC<QuizCardProps> = (
   {
+    id,
     image,
     title,
     description,
@@ -166,20 +123,11 @@ const QuizCard: React.FC<QuizCardProps> = (
     tags,
   },
 ) => {
-  const backgroundStyleByTag = (tag: any): { bgColor: string } => {
-    const bgStyleMap: { [key: string]: string } = {
-      Коммуникация: 'rgba(99, 185, 186, 0.8)',
-      Новый: 'rgba(255, 51, 71, 0.80)',
-    };
-
-    let bgStyle = 'rgba(80, 69, 119, 0.8)';
-    if (Object.prototype.hasOwnProperty.call(bgStyleMap, tag.color)) {
-      bgStyle = bgStyleMap[tag.color];
-    }
-
-    return {
-      bgColor: bgStyle,
-    };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onButtonClick = () => {
+    dispatch(setQuizId(id));
+    navigate('./quiz');
   };
 
   return (
@@ -187,7 +135,12 @@ const QuizCard: React.FC<QuizCardProps> = (
       {tags === null
         ? null
         : (
-          <StyledQuizTagContainer>
+          <StyledQuizTagContainer style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            zIndex: '2',
+          }}>
             {tags.map((tag: any) => {
               const style = backgroundStyleByTag(tag);
               return (
@@ -231,7 +184,7 @@ const QuizCard: React.FC<QuizCardProps> = (
             <StyledQuizDetailCaption>{`${question_amount} вопросов`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
-        <StyledButton className='btn'>Начать квиз</StyledButton>
+        <StyledButton className='btn' onClick={onButtonClick}>Начать квиз</StyledButton>
       </StyledQuizInfoWrapper>
     </StyledQuizContainer>
   );

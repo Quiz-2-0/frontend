@@ -23,26 +23,8 @@ import StyledButton from '../ui-lib/StyledButton';
 import StyledFormLayout from '../ui-lib/StyledFormLayout';
 import StyledInput from '../ui-lib/StyledInput';
 import buttonIcon from '../images/icons/button_icon.svg';
-
-const BackButton = styled.button`
-  margin: 0;
-  padding: 0;
-  width: 70px;
-  height: 20px;
-  background-color: transparent;
-  color: #21272a;
-  border: none;
-  font-size: 15px;
-  line-height: 20px;
-  text-align: left;
-  cursor: pointer;
-`;
-
-const ButtonIcon = styled.img`
-  width: 13px;
-  height: 12px;
-  padding-right: 12px;
-`;
+import BackButton from '../ui-lib/BackButton';
+import ButtonIcon from '../ui-lib/ButtonIcon';
 
 const ResendPasswordButton = styled.button`
   margin: 24px 0 0 0;

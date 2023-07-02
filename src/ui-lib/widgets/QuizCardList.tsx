@@ -26,6 +26,8 @@ const QuizCardList: FC<{ currentArr: TQuize[] }> = ({ currentArr }) => {
     <StyledQuizListContainer>
       {setArr()?.map((quiz: TQuize) => (
         <QuizCard
+          id={quiz.id}
+          key={quiz.id}
           image={quiz.image}
           title={quiz.name}
           description={quiz.description}

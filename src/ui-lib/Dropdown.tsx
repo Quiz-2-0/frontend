@@ -14,6 +14,7 @@ const Li = styled.li`
     padding: 24px 16px; 
     border-bottom: 1px solid #F2F3F5;
     position: relative;
+    box-sizing: border-box;
 `;
 
 const HeaderBlock = styled.div`
