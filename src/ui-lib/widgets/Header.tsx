@@ -10,7 +10,7 @@ import ava from '../../images/avatar/header_derick-mckinney.png';
 import logoImg from '../../images/logo/header__logo.svg';
 import { useSelector, useDispatch } from '../../store/store.types';
 import AdvBanner from './AdvBanner';
-import { useGetCurrentUserQuery } from '../../api/apiv2';
+import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '../../api/apiv2';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -73,7 +73,13 @@ const IconWrapper = styled.div`
 const Header: FC = () => {
   const navigate = useNavigate();
   const { data } = useGetCurrentUserQuery();
+  const { data: quizes } = useGetAllQuizesQuery();
   const [isOpen, openModal] = useState(false);
+  const logOutFunction = () => {
+    const isRemember = localStorage.getItem('isRemember') === 'true';
+    jwt.remove(isRemember);
+    navigate('/login');
+  };
   return (
     <HeaderWrapper>
       <HeaderContainer>
@@ -86,9 +92,9 @@ const Header: FC = () => {
           <UserName>{data?.firstName}</UserName>
           <IconWrapper>
             <BellIcon onClick={() => openModal(!isOpen)} />
-            {data?.appointedCourses && <RedBallIcon top={3} left={17} />}
+            {quizes && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
-          <LogOuticon />
+          <LogOuticon onClick={logOutFunction} />
         </ToolBar>
       </HeaderContainer>
     </HeaderWrapper>
