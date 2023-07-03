@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -12,14 +13,13 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import { useNavigate } from 'react-router';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
-import { useDispatch } from '../../store/store.types';
 import StyledQuizDetailsWrapper from '../StyledDetailsWrapper';
 import StyledQuizDetailWrapper from '../StyledQuizDetailWrapper';
 import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
 import StyledQuizTag from '../StyledQuizTag';
 import StyledQuizTagContainer from '../StyledQuizTagContainer';
 import backgroundStyleByTag from '../../constants/background-style-by-tag';
-import { setQuizId } from '../../store/allSlice/allSlice';
+import { QuizCardProps } from '../../types/types';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -100,17 +100,6 @@ const StyledButton = styled(Button)`
   -ms-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
 `;
 
-interface QuizCardProps {
-  id: number,
-  image: string;
-  title: string;
-  description: string;
-  duration: number;
-  level: string;
-  question_amount: number;
-  tags: any;
-}
-
 const QuizCard: React.FC<QuizCardProps> = (
   {
     id,
@@ -123,11 +112,9 @@ const QuizCard: React.FC<QuizCardProps> = (
     tags,
   },
 ) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onButtonClick = () => {
-    dispatch(setQuizId(id));
-    navigate('./quiz');
+    navigate(`/quizzes/${id}`);
   };
 
   return (

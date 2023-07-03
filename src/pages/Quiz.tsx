@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 import {
   Div,
@@ -24,8 +24,6 @@ import BackButton from '../ui-lib/BackButton';
 import ButtonIcon from '../ui-lib/ButtonIcon';
 import buttonIcon from '../images/icons/button_icon.svg';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../ui-lib/icons';
-import { useSelector, useDispatch } from '../store/store.types';
-import { setQuizId } from '../store/allSlice/allSlice';
 import ListForQuiz from '../ui-lib/widgets/ListForQuiz';
 
 const StyledButton = styled(Button)`
@@ -46,11 +44,11 @@ const StyledButton = styled(Button)`
 `;
 
 const Quiz: React.FC = () => {
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const { quizId } = useSelector((state) => state.all);
-  const { data, error, isLoading } = useGetQuizQuery(quizId);
-  console.log(data);
+  const { id } = useParams();
+  console.log(id);
+
+  const { data, error, isLoading } = useGetQuizQuery(id);
+
   const navigate = useNavigate();
 
   return (
