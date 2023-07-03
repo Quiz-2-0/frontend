@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 export type TUser = {
   firstName: string;
@@ -48,4 +49,15 @@ export type TQuize = {
   tags: Tag[];
   questions: Question[];
   passed?: any;
+};
+
+export type QuizCardProps = {
+  id: number,
+  image: string;
+  title: string;
+  description: string;
+  duration: number;
+  level: string;
+  question_amount: number;
+  tags: any;
 };

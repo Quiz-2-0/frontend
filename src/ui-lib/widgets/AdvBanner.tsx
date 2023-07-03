@@ -8,7 +8,7 @@ import achieve1 from '../../images/achievement-icons/icon1.png';
 import achieve2 from '../../images/achievement-icons/icon2.png';
 import achieve3 from '../../images/achievement-icons/icon3.png';
 
-const BannerPlate = styled.div<{ isOpen:boolean }>`
+const BannerPlate = styled.div<{ isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     width: 304px;
@@ -92,8 +92,8 @@ const AdvPlate = styled.li`
     }
 `;
 
-const AdvBanner: FC<{ isOpen:boolean }> = ({ isOpen }) => (
-  <BannerPlate isOpen={isOpen}>
+const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
+  <BannerPlate className='banner' isOpen={isOpen}>
     <BannerHeader>
       <Button>прочесть все</Button>
     </BannerHeader>

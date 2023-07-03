@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import ClickAwayListener from 'react-click-away-listener';
 import Logo from '../Logo';
 import { BellIcon, RedBallIcon, LogOuticon } from '../icons';
 import ava from '../../images/avatar/header_derick-mckinney.png';
@@ -73,6 +76,7 @@ const IconWrapper = styled.div`
 const Header: FC = () => {
   const navigate = useNavigate();
   const { data } = useGetCurrentUserQuery();
+  /// нужно убрать этот ранний запрос за квизами
   const { data: quizes } = useGetAllQuizesQuery();
   const [isOpen, openModal] = useState(false);
   const logOutFunction = () => {
@@ -80,10 +84,18 @@ const Header: FC = () => {
     jwt.remove(isRemember);
     navigate('/login');
   };
+  useEffect(() => {
+    document.addEventListener('click', (e: any) => {
+      if (e.target!.closest('.banner') === null) { openModal(false); }
+    });
+  }, []);
+
   return (
     <HeaderWrapper>
       <HeaderContainer>
+
         <AdvBanner isOpen={isOpen} />
+
         <UpdatedLogo to='/' />
         <ToolBar>
           <AvatarWrapper width={60} height={60}>
@@ -91,7 +103,7 @@ const Header: FC = () => {
           </AvatarWrapper>
           <UserName>{data?.firstName}</UserName>
           <IconWrapper>
-            <BellIcon onClick={() => openModal(!isOpen)} />
+            <BellIcon onClick={(e: any) => { e.stopPropagation(); openModal(!isOpen); }} />
             {quizes && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
           <LogOuticon onClick={logOutFunction} />

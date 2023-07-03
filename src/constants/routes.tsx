@@ -10,5 +10,5 @@ const Quiz = React.lazy(() => import('../pages/Quiz'));
 export const routes = [
   { path: '/', Component: <PersonalAccount /> },
   { path: '/quizzes', Component: <Quizzes /> },
-  { path: '/quizzes/quiz', Component: <Quiz /> },
+  { path: '/quizzes/:id', Component: <Quiz /> },
 ];
