@@ -29,7 +29,7 @@ const StyledTabs = styled(Tabs)`
 `;
 
 const StyledTabsItem = styled(TabsItem)`
-  padding: 12px 24px;
+  padding: 12px 12px;
   box-sizing: border-box;
   heigth: 48px;
   display: flex;

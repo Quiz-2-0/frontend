@@ -7,7 +7,7 @@
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Title,
@@ -20,7 +20,9 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../StyledDiv';
 import levels from '../../constants/levels';
+import { setFromCastle } from '../../store/allSlice/allSlice';
 import { useGetAllQuizesQuery } from '../../api/apiv2';
+import { useDispatch } from '../../store/store.types';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -33,12 +35,13 @@ const StyledImage = styled.img`
 
 const Castle: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { data, error, isLoading } = useGetAllQuizesQuery();
-  const doneQuizzes = data?.filter(({ passed }) => passed === true).length;
+
+  const doneQuizzes = data?.filter(({ isPassed }) => isPassed === true).length;
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
     numberOfQuizzes > doneQuizzes!
   )) - 1;
-  console.log(userLevel);
   const numberOfQuizzesToTheNextLevel = levels[Math.abs(userLevel) + 1].numberOfQuizzes - doneQuizzes!;
   const progressArr = [];
 
@@ -48,8 +51,7 @@ const Castle: React.FC = () => {
   }
 
   const onButtonClick = () => {
-    /*  dispatch(setFromCastle(true));
-    dispatch(setQuizType('appointed')); */
+    dispatch(setFromCastle(true));
     navigate('/quizzes');
   };
 

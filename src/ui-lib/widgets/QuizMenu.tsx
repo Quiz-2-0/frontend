@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useState, useEffect, SetStateAction } from 'react';
+import React, { SetStateAction } from 'react';
 import {
   Tabs,
   TabsItem,
@@ -15,9 +15,6 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
-import { useGetAllQuizesQuery } from '../../api/apiv2';
-import { TQuize } from '../../types/types';
-import { useSelector, useDispatch } from '../../store/store.types';
 
 const StyledDiv = styled(Div)`
   padding: 0 0 40px;
@@ -88,21 +85,19 @@ export const StyledTabsItem = styled(TabsItem)`
   }
 `;
 
-const QuizMenu: React.FC<{ search: string, setSearch: any }> = ({ search, setSearch }) => {
-  const dispatch = useDispatch();
-
-  const [quizType, setQuizType] = useState('all');
-  const { data, error, isLoading } = useGetAllQuizesQuery();
-
+const QuizMenu: React.FC<{
+  search: string,
+  setSearch: any,
+  quizType: string,
+  quizTypeFilter: (type: string) => void,
+}> = ({
+  search,
+  setSearch,
+  quizType,
+  quizTypeFilter,
+}) => {
   const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
-  };
-
-  const quizTypeFilter = (type: string) => {
-    type !== 'all'
-      ? console.log('Фильтр:', data?.filter(({ passed }) => passed === (type !== 'appointed')))
-      : console.log('Все квизы:', data);
-    setQuizType(type);
   };
 
   return (

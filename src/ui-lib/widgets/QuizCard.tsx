@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -18,7 +19,6 @@ import StyledQuizDetailWrapper from '../StyledQuizDetailWrapper';
 import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
 import StyledQuizTag from '../StyledQuizTag';
 import StyledQuizTagContainer from '../StyledQuizTagContainer';
-import backgroundStyleByTag from '../../constants/background-style-by-tag';
 import { QuizCardProps } from '../../types/types';
 
 const StyledQuizContainer = styled.li`
@@ -128,15 +128,12 @@ const QuizCard: React.FC<QuizCardProps> = (
             right: '16px',
             zIndex: '2',
           }}>
-            {tags.map((tag: any) => {
-              const style = backgroundStyleByTag(tag);
-              return (
-                <StyledQuizTag
-                  style={{ backgroundColor: style.bgColor }}>
-                  {tag.name}
-                </StyledQuizTag>
-              );
-            })}
+            {tags.map((tag: any) => (
+              <StyledQuizTag
+                style={{ backgroundColor: `${tag.color}`, opacity: '.8' }}>
+                {tag.name}
+              </StyledQuizTag>
+            ))}
           </StyledQuizTagContainer>
         )}
       <StyledQuizCover src={image} alt={title} className='cover' />
