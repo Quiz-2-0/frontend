@@ -1,0 +1,126 @@
+@keyframes fill-orange-background {
+  0%, 10% {
+    height: 0%;
+    opacity: 1;
+  }
+  35%, 98% {
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fill-green-background {
+  0%, 35% {
+    height: 0%;
+    opacity: 1;
+  }
+  70%, 98% {
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fill-intersection-green-background {
+  0%, 72% {
+    height: 0%;
+    opacity: 1;
+  }
+  98% {
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes raise-triangle {
+  0%, 5% {
+    bottom: -12.5px;
+    left: 8.5px;
+    opacity: 0;
+  }
+  8%, 10% {
+    bottom: -12.5px;
+    left: 8.5px;
+    opacity: 1;
+  }
+  35%, 98% {
+    bottom: 25px;
+    left: -30px;
+    opacity: 1;
+  }
+  100% {
+    bottom: 25px;
+    left: -30px;
+    opacity: 0;
+  }
+}
+
+
+@keyframes raise-intersection-triangle {
+  0%, 70% {
+    bottom: -55px;
+    opacity: 0;
+  }
+  72% {
+    bottom: -55px;
+    opacity: 1;
+  }
+  98% {
+    bottom: -3px;
+    opacity: 1;
+  }
+  100% {
+    bottom: -3px;
+    opacity: 0;
+  }
+}
+
+@keyframes change-content {
+  0%, 5% {
+    content: 'Добавляем ачивки...';
+    opacity: 0;
+  }
+  10%, 25% {
+    content: 'Добавляем ачивки...';
+    opacity: 1;
+  }
+  35% {
+    content: 'Добавляем ачивки...';
+    opacity: 0;
+  }
+  40.1% {
+    content: 'Обновляем квизы...';
+    opacity: 0;
+  }
+  50%, 60% {
+    content: 'Обновляем квизы...';
+    opacity: 1;
+  }
+  70% {
+    content: 'Обновляем квизы...';
+    opacity: 0;
+  }
+  70.1% {
+    content: 'Достраиваем замок...';
+    opacity: 0;
+  }
+  80%, 90% {
+    content: 'Достраиваем замок...';
+    opacity: 1;
+  }
+  100% {
+    content: 'Достраиваем замок...';
+    opacity: 0;
+  }
+}
