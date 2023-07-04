@@ -5,12 +5,14 @@ type TState = {
   isRememberMe: boolean;
   mistake: string;
   isLogged: boolean;
+  fromCastle: boolean;
 };
 
 const initialState: TState = {
   isRememberMe: false,
   mistake: '',
   isLogged: false,
+  fromCastle: false,
 };
 
 const allSlice = createSlice({
@@ -26,6 +28,9 @@ const allSlice = createSlice({
     setLogged: (state, action: PayloadAction<boolean>) => ({
       ...state, isLogged: action.payload,
     }),
+    setFromCastle: (state, action: PayloadAction<boolean>) => ({
+      ...state, fromCastle: action.payload,
+    }),
   },
 });
 
@@ -34,6 +39,7 @@ export const {
   setRememberMe,
   setMistake,
   setLogged,
+  setFromCastle,
 } = allSlice.actions;
 
 export default allReducer;

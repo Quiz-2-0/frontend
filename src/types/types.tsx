@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 export type TUser = {
   firstName: string;
-  lastname: string;
+  lastName: string;
   role: string;
   courses: { [key: string]: any };
   progress: string;
@@ -26,6 +26,7 @@ type Tag = {
   name: string;
   color: string;
 };
+
 type Answer = {
   id: number;
   text: string;
@@ -38,6 +39,12 @@ export type Question = {
   text: string;
   answers: Answer[];
 };
+
+export type Volume = {
+  name: string;
+  description: string;
+};
+
 export type TQuize = {
   id: number,
   image: string,
@@ -48,7 +55,9 @@ export type TQuize = {
   question_amount: number;
   tags: Tag[];
   questions: Question[];
-  passed?: any;
+  volumes: Volume[];
+  isPassed: any;
+  appointed: any;
 };
 
 export type QuizCardProps = {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
@@ -101,7 +102,7 @@ const Header: FC = () => {
           <AvatarWrapper width={60} height={60}>
             <Avatar src={data?.avatar} alt='тут лицо чувака' />
           </AvatarWrapper>
-          <UserName>{data?.firstName}</UserName>
+          <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>
             <BellIcon onClick={(e: any) => { e.stopPropagation(); openModal(!isOpen); }} />
             {quizes && <RedBallIcon top={3} left={17} />}
