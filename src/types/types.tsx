@@ -33,8 +33,7 @@ type Answer = {
   image: string;
   isAnswerRight: boolean;
 };
-
-type Question = {
+export type Question = {
   id: number;
   image: string;
   text: string;
