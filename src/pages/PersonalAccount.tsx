@@ -31,9 +31,6 @@ const Div = styled.div`
 
 const PersonalAccount: FC = () => {
   const navigate = useNavigate();
-  const [login, { data, error }] = useLoginMutation({
-    fixedCacheKey: 'shared-update-post',
-  });
 
   return (
     <>

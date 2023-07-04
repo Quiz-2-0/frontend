@@ -76,7 +76,7 @@ const IconWrapper = styled.div`
 
 const Header: FC = () => {
   const navigate = useNavigate();
-  const { data } = useGetCurrentUserQuery();
+  const { data, error } = useGetCurrentUserQuery();
   /// нужно убрать этот ранний запрос за квизами
   const { data: quizes } = useGetAllQuizesQuery();
   const [isOpen, openModal] = useState(false);
