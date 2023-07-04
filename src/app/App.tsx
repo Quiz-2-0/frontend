@@ -4,11 +4,12 @@
 import React, { FC, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { SplitLayout, Spinner } from '@vkontakte/vkui';
+import { SplitLayout } from '@vkontakte/vkui';
 
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
+import Loader from '../ui-lib/widgets/Loader';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
@@ -22,7 +23,7 @@ const Main = styled.main`
 const App = () => (
   <Main style={{ fontFamily: 'SFProDisplay' }}>
 
-    <React.Suspense fallback={<SplitLayout popout={<Spinner />} />}>
+    <React.Suspense fallback={<SplitLayout popout={<Loader />} />}>
       <Routes>
         <Route path='/login' element={<LayoutWithColumns />} />
         <Route path='/reset-password' element={<LayoutWithColumns />} />
