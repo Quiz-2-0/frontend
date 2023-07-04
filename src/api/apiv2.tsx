@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -80,8 +81,8 @@ export const quizApi = createApi({
     getAllQuizes: build.query<TQuize[], void>({
       query: () => ALL_QUIZES,
     }),
-    getQuiz: build.query<TQuize, number>({
-      query: (id: number) => `${ALL_QUIZES}${id}`,
+    getQuiz: build.query<TQuize, any>({
+      query: (id: any) => `${ALL_QUIZES}${id}`,
 
     }),
 

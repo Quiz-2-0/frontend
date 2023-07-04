@@ -4,7 +4,6 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
 
-import { useGetAllQuizesQuery } from '../../api/apiv2';
 import { TQuize } from '../../types/types';
 
 const StyledQuizListContainer = styled.ul`
@@ -17,25 +16,28 @@ const StyledQuizListContainer = styled.ul`
   gap: 42px;
 `;
 
-const QuizCardList: FC<{ currentArr: TQuize[] }> = ({ currentArr }) => {
-  const { data, error, isLoading } = useGetAllQuizesQuery();
-
-  const setArr = () => (currentArr || data);
-
+const QuizCardList: FC<{ quizList: TQuize[] | undefined }> = ({ quizList }) => {
+  console.log(quizList, quizList?.length !== 0 || quizList !== undefined, quizList?.length);
   return (
     <StyledQuizListContainer>
-      {setArr()?.map((quiz: TQuize) => (
-        <QuizCard
-          id={quiz.id}
-          key={quiz.id}
-          image={quiz.image}
-          title={quiz.name}
-          description={quiz.description}
-          duration={quiz.duration}
-          level={quiz.level}
-          question_amount={quiz.question_amount}
-          tags={quiz.tags} />
-      ))}
+      {quizList?.length === 0 || quizList === undefined
+        ? (
+          <>
+            <div> </div>
+            <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
+          </>
+        ) : quizList?.map((quiz: TQuize) => (
+          <QuizCard
+            id={quiz.id}
+            key={quiz.id}
+            image={quiz.image}
+            title={quiz.name}
+            description={quiz.description}
+            duration={quiz.duration}
+            level={quiz.level}
+            question_amount={quiz.question_amount}
+            tags={quiz.tags} />
+        ))}
     </StyledQuizListContainer>
   );
 };

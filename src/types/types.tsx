@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 export type TUser = {
   firstName: string;
-  lastname: string;
+  lastName: string;
   role: string;
   courses: { [key: string]: any };
   progress: string;
@@ -25,18 +26,25 @@ type Tag = {
   name: string;
   color: string;
 };
+
 type Answer = {
   id: number;
   text: string;
   image: string;
   isAnswerRight: boolean;
 };
-type Question = {
+export type Question = {
   id: number;
   image: string;
   text: string;
   answers: Answer[];
 };
+
+export type Volume = {
+  name: string;
+  description: string;
+};
+
 export type TQuize = {
   id: number,
   image: string,
@@ -47,5 +55,18 @@ export type TQuize = {
   question_amount: number;
   tags: Tag[];
   questions: Question[];
-  passed?: any;
+  volumes: Volume[];
+  isPassed: any;
+  appointed: any;
+};
+
+export type QuizCardProps = {
+  id: number,
+  image: string;
+  title: string;
+  description: string;
+  duration: number;
+  level: string;
+  question_amount: number;
+  tags: any;
 };
