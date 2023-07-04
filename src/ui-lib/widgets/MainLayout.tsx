@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Navigate, Outlet } from 'react-router';
+import { Navigate, Outlet, useNavigate } from 'react-router';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { useSelector } from '../../store/store.types';
-import { useGetCurrentUserQuery, useLoginMutation } from '../../api/apiv2';
+import { jwt, useGetCurrentUserQuery, useLoginMutation } from '../../api/apiv2';
 
 const Section = styled.section`
     width: 100%;
@@ -23,21 +23,22 @@ const ContentWrapper = styled.div`
 `;
 
 const MainLayout: FC = () => {
-  const [login, { data, error }] = useLoginMutation({
-    fixedCacheKey: 'shared-update-post',
-  });
+  const navigate = useNavigate();
+  const { data, error, isLoading } = useGetCurrentUserQuery();
+
+  if (isLoading) return <div>gjgjgjgjgjgj</div>;
+  if (error) return <Navigate to='/login' />;
+
   return (
-    localStorage.getItem('JWT') || sessionStorage.getItem('JWT')
-      ? (
-        <Section>
-          <Header />
-          <ContentWrapper>
-            <Sidebar />
-            <Outlet />
-          </ContentWrapper>
-        </Section>
-      )
-      : <Navigate to='/login' />
+
+    <Section>
+      <Header />
+      <ContentWrapper>
+        <Sidebar />
+        <Outlet />
+      </ContentWrapper>
+    </Section>
+
   );
 };
 
