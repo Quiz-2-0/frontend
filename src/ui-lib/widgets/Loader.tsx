@@ -1,24 +1,30 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import '../LoaderAnimation.css';
+import { useDispatch } from 'react-redux';
+import { setLoaderState } from '../../store/allSlice/allSlice';
 
 const StyledBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 7.74px;
   align-items: center;
   justify-content: center;
   background-color: white;
+  background-color: azure;
+    opacity: .7;
+    z-index: 99999999;
 `;
 
 const StyledDiv = styled.div`
   width: 261px;
-  height: 127px;
+  height: 130px;
   border-bottom: 2px solid black;
   display: flex;
   justify-content: center;
@@ -33,7 +39,7 @@ const HouseWithTriangleRoof = styled.div`
 `;
 
 const HouseWithStraightRoof = styled.div`
-  heigth: 127px;
+  height: 126px;
   width: 65.7px;
   border: 2px solid #6DAE6D;
   transform: translateX(-11.8px);
@@ -174,24 +180,35 @@ const StyledText = styled.p`
   }
 `;
 
-const Loader: FC = () => (
-  <StyledBackground>
-    <StyledDiv>
-      <HouseWithTriangleRoof>
-        <Triangle />
-        <Rectangle />
-      </HouseWithTriangleRoof>
-      <HouseWithStraightRoof />
-      <Intersection>
-        <IntersectionTriangle>
-          <IntersectionLine style={{ transform: 'rotate(-45deg) translate(26px, -10px)', height: '30px' }} />
-          <IntersectionLine style={{ transform: 'rotate(0deg) translate(0, -53px)', height: '21px' }} />
-        </IntersectionTriangle>
-        <IntersectionRectangle />
-      </Intersection>
-    </StyledDiv>
-    <StyledText />
-  </StyledBackground>
-);
+const Loader: FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setLoaderState(false));
+    }, 3000);
+  }, []);
+
+  return (
+    <StyledBackground>
+      <StyledDiv>
+        <HouseWithTriangleRoof>
+          <Triangle />
+          <Rectangle />
+        </HouseWithTriangleRoof>
+        <HouseWithStraightRoof />
+        <Intersection>
+          <IntersectionTriangle>
+            <IntersectionLine style={{ transform: 'rotate(-45deg) translate(26px, -10px)', height: '30px' }} />
+            <IntersectionLine style={{ transform: 'rotate(0deg) translate(0, -53px)', height: '21px' }} />
+          </IntersectionTriangle>
+          <IntersectionRectangle />
+        </Intersection>
+      </StyledDiv>
+      <StyledText />
+    </StyledBackground>
+
+  );
+};
 
 export default Loader;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable import/order */
@@ -27,7 +28,7 @@ import StyledButton from '../ui-lib/StyledButton';
 import StyledFormLayout from '../ui-lib/StyledFormLayout';
 import StyledInput from '../ui-lib/StyledInput';
 import styled from 'styled-components';
-import { setLogged, setRememberMe } from '../store/allSlice/allSlice';
+import { setLogged, setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
 import { setCurrentUser } from '../store/userSlice/userSlice';
 import { TUser } from '../types/types';
 
@@ -95,6 +96,7 @@ const Login: React.FC = () => {
 
     if (user) {
       navigate('/');
+      dispatch(setLoaderState(true));
     }
   };
 

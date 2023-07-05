@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
   Div,
@@ -24,6 +25,7 @@ import ButtonIcon from '../ui-lib/ButtonIcon';
 import buttonIcon from '../images/icons/button_icon.svg';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../ui-lib/icons';
 import ListForQuiz from '../ui-lib/widgets/ListForQuiz';
+import { setLoaderState } from '../store/allSlice/allSlice';
 
 const StyledButton = styled(Button)`
   border-radius: 4px;
@@ -43,10 +45,8 @@ const StyledButton = styled(Button)`
 
 const Quiz: React.FC = () => {
   const { id } = useParams();
-  console.log(id);
-
   const { data, error, isLoading } = useGetQuizQuery(id);
-  console.log(data);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -109,7 +109,7 @@ const Quiz: React.FC = () => {
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>
           </Div>
-          <StyledButton>Начать квиз</StyledButton>
+          <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}/question`); }}>Начать квиз</StyledButton>
         </Div>
         <img style={{ maxWidth: '510px', width: '100%', borderRadius: '8px' }} src={data?.image} alt={data?.name} />
       </Div>

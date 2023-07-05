@@ -25,7 +25,7 @@ const Quizzes: FC = () => {
   const [search, setSearch] = useState('');
   const [quizType, setQuizType] = useState(fromCastle ? 'appointed' : 'all');
   const { data, error, isLoading } = useGetAllQuizesQuery();
-  console.log(data);
+
   const [quizzesOnPage, setQuizzesOnPage] = useState(data);
 
   const quizNameFilter = data?.filter(

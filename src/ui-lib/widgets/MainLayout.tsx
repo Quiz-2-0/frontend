@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Navigate, Outlet, useNavigate } from 'react-router';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { useSelector } from '../../store/store.types';
-import { jwt, useGetCurrentUserQuery, useLoginMutation } from '../../api/apiv2';
+import { useSelector, useDispatch } from '../../store/store.types';
+import { useGetCurrentUserQuery } from '../../api/apiv2';
+
+import { setLoaderState } from '../../store/allSlice/allSlice';
 
 const Section = styled.section`
     width: 100%;
@@ -23,10 +26,11 @@ const ContentWrapper = styled.div`
 `;
 
 const MainLayout: FC = () => {
-  const navigate = useNavigate();
   const { data, error, isLoading } = useGetCurrentUserQuery();
+  const { isLoaderRun } = useSelector((state) => state.all);
+  const dispatch = useDispatch();
 
-  if (isLoading) return <div>gjgjgjgjgjgj</div>;
+  /* if (isLoading) { dispatch(setLoaderState(true)); } */
   if (error) return <Navigate to='/login' />;
 
   return (
