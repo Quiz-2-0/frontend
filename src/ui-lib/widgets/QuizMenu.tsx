@@ -90,11 +90,13 @@ const QuizMenu: React.FC<{
   setSearch: any,
   quizType: string,
   quizTypeFilter: (type: string) => void,
+  appointedQuizzes: boolean | undefined,
 }> = ({
   search,
   setSearch,
   quizType,
   quizTypeFilter,
+  appointedQuizzes,
 }) => {
   const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setSearch(e.target.value);
@@ -108,7 +110,7 @@ const QuizMenu: React.FC<{
         </StyledTabsItem>
         <StyledTabsItem
           selected={quizType === 'appointed'}
-          status={<Badge mode='prominent' />}
+          status={<Badge mode='prominent' style={{ visibility: `${appointedQuizzes ? 'visible' : 'hidden'}` }} />}
           onClick={() => quizTypeFilter('appointed')}>
           Назначенные
         </StyledTabsItem>

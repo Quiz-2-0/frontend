@@ -7,20 +7,20 @@ import { StyledTabs, StyledTabsItem } from './QuizMenu';
 import { Volume } from '../../types/types';
 
 const Div = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-width: 1074px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 1074px;
+  width: 100%;
 `;
 
 const List = styled.ul`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 `;
 
 const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
@@ -44,7 +44,9 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
           <List>
             {volumes && volumes.length !== 0
               ? volumes?.map((el: Volume) => (
-                <Dropdown name={el.name} description={el.description} />
+                <Dropdown
+                  name={el.name}
+                  description={el.description} />
               ))
               : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Справочные материалы не найдены</p>}
           </List>

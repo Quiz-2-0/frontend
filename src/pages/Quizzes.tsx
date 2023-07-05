@@ -27,6 +27,9 @@ const Quizzes: FC = () => {
   const { data, error, isLoading } = useGetAllQuizesQuery();
 
   const [quizzesOnPage, setQuizzesOnPage] = useState(data);
+  const [appointedQuizzes, setAppointedQuizzes] = useState(
+    data?.some(({ appointed }) => appointed === true),
+  );
 
   const quizNameFilter = data?.filter(
     ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
@@ -52,6 +55,7 @@ const Quizzes: FC = () => {
       quizTypeFilter('appointed');
     } else {
       setQuizzesOnPage(data);
+      setAppointedQuizzes(data?.some(({ appointed }) => appointed === true));
     }
   }, [data, location]);
 
@@ -61,7 +65,8 @@ const Quizzes: FC = () => {
         search={search}
         setSearch={setSearch}
         quizType={quizType}
-        quizTypeFilter={quizTypeFilter} />
+        quizTypeFilter={quizTypeFilter}
+        appointedQuizzes={appointedQuizzes} />
       <QuizCardList quizList={search !== '' ? quizNameFilter : quizzesOnPage} />
     </StyledDiv>
   );

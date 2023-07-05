@@ -26,12 +26,11 @@ const HeaderBlock = styled.div`
 const H4 = styled.h4`
     flex: auto;
     color: #000;
-    font-size: 24px;
-    font-family: 'SFProDisplay';
+    font-size: 20px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 28px;
-    letter-spacing: 0.326px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.38px;
     margin: 0;
   
 `;
@@ -48,16 +47,12 @@ const TextDiv = styled.div<{ isOpen: boolean }>`
     font-weight: 400;
     line-height: 20px;
     margin: 0;
-    transition: all ease .7s;
-    & p {
-      
-    }
- 
+    transition: all ease .7s; 
 `;
+
 const Text = styled.p`
     margin: 0;
-    
-    
+    min-height: 15px;
 `;
 
 const ModifiedIconWrapper = styled(IconWrapper) <{ isOpen: boolean }>`
@@ -73,7 +68,11 @@ const Dropdown: FC<{ name: string, description: string }> = ({ name, description
         <H4>{name}</H4>
         <ModifiedIconWrapper isOpen={isOpen} onClick={() => open(!isOpen)}><ArrowIcon /></ModifiedIconWrapper>
       </HeaderBlock>
-      <TextDiv isOpen={isOpen}><Text>{description}</Text></TextDiv>
+      <TextDiv isOpen={isOpen}>
+        {description.split('<br>').map((line) => (
+          <Text>{line}</Text>
+        ))}
+      </TextDiv>
     </Li>
 
   );

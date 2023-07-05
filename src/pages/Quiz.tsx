@@ -104,7 +104,7 @@ const Quiz: React.FC = () => {
               <StyledQuizDetailWrapper>
                 <QuestionsIcon />
                 <StyledQuizDetailCaption>
-                  {`${data?.question_amount} вопросов`}
+                  {`${data?.question_amount} вопрос${data && data?.question_amount > 4 ? 'ов' : 'а'}`}
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>

@@ -17,10 +17,8 @@ const StyledBackground = styled.div`
   gap: 7.74px;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  background-color: azure;
-    opacity: .7;
-    z-index: 99999999;
+  background-color: rgba(255, 255, 255, .8);
+  z-index: 99999;
 `;
 
 const StyledDiv = styled.div`
@@ -43,7 +41,7 @@ const HouseWithStraightRoof = styled.div`
   height: 126px;
   width: 65.7px;
   border: 2px solid #6DAE6D;
-  transform: translateX(-11.8px);
+  transform: translateX(-11.8px) translateY(1px);
   border-radius: 2px;
   position: relative;
 
@@ -56,7 +54,7 @@ const HouseWithStraightRoof = styled.div`
     height: 0%;
     opacity: 0;
     background-color: #6DAE6D;
-    animation: fill-green-background 5s linear infinite
+    animation: fill-green-background 3s linear infinite
   }
 `;
 
@@ -82,7 +80,7 @@ const Triangle = styled.div`
     border-radius: 2px;
     border-color: transparent transparent #FFA000 transparent;
     transform: rotate(-45deg);
-    animation: raise-triangle 5s linear infinite;
+    animation: raise-triangle 3s linear infinite;
   }
 `;
 
@@ -105,7 +103,7 @@ const Rectangle = styled.div`
     height: 0%;
     opacity: 0;
     background-color: #FFA000;
-    animation: fill-orange-background 5s linear infinite
+    animation: fill-orange-background 3s linear infinite
   }
 `;
 
@@ -130,7 +128,7 @@ const IntersectionTriangle = styled(Triangle)`
     border-width: 23.6px 0 0 23.6px;
     border-color: transparent transparent transparent #4E7C3C;
     transform: rotate(0deg);
-    animation: raise-intersection-triangle 5s linear infinite;
+    animation: raise-intersection-triangle 3s linear infinite;
   }
 `;
 
@@ -157,7 +155,7 @@ const IntersectionRectangle = styled(Rectangle)`
     left: 0;
     bottom: 0;
     background: #4E7C3C;
-    animation: fill-intersection-green-background 5s linear infinite;
+    animation: fill-intersection-green-background 3s linear infinite;
   }
 `;
 
@@ -177,7 +175,7 @@ const StyledText = styled.p`
     top: 0;
     left: 0;
     content: '';
-    animation: change-content 5s linear infinite;
+    animation: change-content 3s linear infinite;
   }
 `;
 

@@ -169,7 +169,7 @@ const QuizCard: React.FC<QuizCardProps> = (
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <QuestionsIcon />
-            <StyledQuizDetailCaption>{`${question_amount} вопросов`}</StyledQuizDetailCaption>
+            <StyledQuizDetailCaption>{`${question_amount} вопрос${question_amount > 4 ? 'ов' : 'а'}`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
         <StyledButton className='btn' onClick={onButtonClick}>Начать квиз</StyledButton>
