@@ -53,7 +53,10 @@ const AvatarWrapper = styled.div<{ width: number, height: number }>`
   margin-right: 8px;
   cursor: pointer;
 `;
-const Avatar = styled.img``;
+const Avatar = styled.img`
+  width: 100%;
+  height: q00%;
+`;
 
 const UserName = styled.p`
   font-size: 14px;
@@ -101,7 +104,7 @@ const Header: FC = () => {
         <UpdatedLogo to='/' />
         <ToolBar>
           <AvatarWrapper width={60} height={60}>
-            <Avatar src={data?.avatar} alt='тут лицо чувака' />
+            <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
           </AvatarWrapper>
           <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>
