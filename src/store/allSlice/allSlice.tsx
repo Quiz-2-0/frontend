@@ -6,6 +6,7 @@ type TState = {
   mistake: string;
   isLogged: boolean;
   fromCastle: boolean;
+  isLoaderRun: boolean;
 };
 
 const initialState: TState = {
@@ -13,6 +14,7 @@ const initialState: TState = {
   mistake: '',
   isLogged: false,
   fromCastle: false,
+  isLoaderRun: false,
 };
 
 const allSlice = createSlice({
@@ -31,6 +33,9 @@ const allSlice = createSlice({
     setFromCastle: (state, action: PayloadAction<boolean>) => ({
       ...state, fromCastle: action.payload,
     }),
+    setLoaderState: (state, action: PayloadAction<boolean>) => ({
+      ...state, isLoaderRun: action.payload,
+    }),
   },
 });
 
@@ -40,6 +45,7 @@ export const {
   setMistake,
   setLogged,
   setFromCastle,
+  setLoaderState,
 } = allSlice.actions;
 
 export default allReducer;

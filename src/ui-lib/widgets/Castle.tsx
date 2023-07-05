@@ -20,7 +20,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../StyledDiv';
 import levels from '../../constants/levels';
-import { setFromCastle } from '../../store/allSlice/allSlice';
+import { setFromCastle, setLoaderState } from '../../store/allSlice/allSlice';
 import { useGetAllQuizesQuery } from '../../api/apiv2';
 import { useDispatch } from '../../store/store.types';
 
@@ -52,6 +52,7 @@ const Castle: React.FC = () => {
 
   const onButtonClick = () => {
     dispatch(setFromCastle(true));
+    dispatch(setLoaderState(true));
     navigate('/quizzes');
   };
 

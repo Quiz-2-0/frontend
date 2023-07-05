@@ -3,9 +3,9 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Question } from '../types/types';
 
-const BarElement = styled.li<{ isCurrentBar: boolean }>`
-    width: 100%;
-    flex-shrink: 0;
+const BarElement = styled.li<{ isCurrentBar: boolean, width: number }>`
+    
+    flex-basis: ${({ width }) => width}%;
     background-color:${({ isCurrentBar }) => (isCurrentBar ? '#3F8AE0' : 'rgba(63, 138, 224, 0.15)')};
     border-right: 3px solid #3F8AE0;
     &:last-of-type {
@@ -25,12 +25,13 @@ const Bar = styled.ul`
     max-width: 914px;
     width: 100%;
     display: flex;
+    height: 8px;
 `;
 
-const ProgressBar: FC<{ progressObject: { [key: string]: number }, questionArr: Question[] }> = ({ progressObject, questionArr }) => (
+const ProgressBar: FC<{ progressObject: any, questionArr: Question[] }> = ({ progressObject, questionArr }) => (
   <Bar>
-    {questionArr.map((el) => (
-      <BarElement isCurrentBar={progressObject[el.id] !== null} key={el.id} />
+    {questionArr.map((el, index) => (
+      <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
     ))}
   </Bar>
 );

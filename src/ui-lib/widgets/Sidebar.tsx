@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -5,11 +6,13 @@ import { Tabs, TabsItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24HomeOutline, Icon24Square4Outline, Icon24CupOutline } from '@vkontakte/icons';
 import styled from 'styled-components';
+import { useDispatch } from '../../store/store.types';
+import { setLoaderState } from '../../store/allSlice/allSlice';
 
 const StyledTabs = styled(Tabs)`
   max-width: 166px;
   width: 100%;
-  min-heigth: 168px;
+  min-height: 168px;
 
   & > div {
     display: flex;
@@ -61,17 +64,22 @@ const StyledTabsItem = styled(TabsItem)`
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const setUrl = (url: string) => {
+    dispatch(setLoaderState(true));
+    navigate(url);
+  };
   return (
     <StyledTabs>
-      <StyledTabsItem selected={location.pathname === '/'} onClick={() => navigate('/')}>
+      <StyledTabsItem selected={location.pathname === '/'} onClick={() => setUrl('/')}>
         <Icon24HomeOutline />
         Главная
       </StyledTabsItem>
-      <StyledTabsItem selected={location.pathname === '/quizzes'} onClick={() => navigate('/quizzes')}>
+      <StyledTabsItem selected={location.pathname === '/quizzes'} onClick={() => setUrl('/quizzes')}>
         <Icon24Square4Outline />
         Квизы
       </StyledTabsItem>
-      <StyledTabsItem selected={location.pathname === '/achievements'} onClick={() => navigate('/achievements')}>
+      <StyledTabsItem selected={location.pathname === '/achievements'} onClick={() => setUrl('/achievements')}>
         <Icon24CupOutline />
         Достижения
       </StyledTabsItem>

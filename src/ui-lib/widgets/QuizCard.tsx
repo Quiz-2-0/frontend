@@ -20,6 +20,8 @@ import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
 import StyledQuizTag from '../StyledQuizTag';
 import StyledQuizTagContainer from '../StyledQuizTagContainer';
 import { QuizCardProps } from '../../types/types';
+import { setLoaderState } from '../../store/allSlice/allSlice';
+import { useDispatch } from '../../store/store.types';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -113,8 +115,10 @@ const QuizCard: React.FC<QuizCardProps> = (
   },
 ) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onButtonClick = () => {
     navigate(`/quizzes/${id}`);
+    dispatch(setLoaderState(true));
   };
 
   return (

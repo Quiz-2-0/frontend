@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -31,8 +32,9 @@ const Div = styled.div`
 
 const PersonalAccount: FC = () => {
   const navigate = useNavigate();
-
+  const { isLoaderRun } = useSelector((state) => state.all);
   return (
+
     <>
       <StyledDiv>
         <Div>
@@ -43,7 +45,9 @@ const PersonalAccount: FC = () => {
         <Achives />
       </StyledDiv>
       <Castle />
+
     </>
+
   );
 };
 
