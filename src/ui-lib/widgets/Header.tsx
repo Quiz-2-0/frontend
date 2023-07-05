@@ -52,7 +52,11 @@ const AvatarWrapper = styled.div<{ width: number, height: number }>`
   margin-right: 8px;
   cursor: pointer;
 `;
-const Avatar = styled.img``;
+const Avatar = styled.img`
+      width: 60px;
+    height: 60px;
+    object-fit: cover;
+`;
 
 const UserName = styled.p`
   font-size: 14px;
