@@ -54,8 +54,9 @@ const AvatarWrapper = styled.div<{ width: number, height: number }>`
   cursor: pointer;
 `;
 const Avatar = styled.img`
-  width: 100%;
-  height: q00%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
 `;
 
 const UserName = styled.p`
