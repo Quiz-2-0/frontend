@@ -104,7 +104,7 @@ const Rating: React.FC = () => {
           <Caption
             style={{
               textAlign: 'center',
-              letterSpacing: '-1px',
+              letterSpacing: '0.06px',
             }}>
             Владимир Маяковский
           </Caption>
@@ -175,7 +175,7 @@ const Rating: React.FC = () => {
           <Caption
             style={{
               textAlign: 'center',
-              letterSpacing: '-1px',
+              letterSpacing: '0.06px',
             }}>
             Фёдор Достоевский
           </Caption>

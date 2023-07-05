@@ -20,7 +20,7 @@ const BannerPlate = styled.div<{ isOpen: boolean }>`
     transition: opacity ease .3s, visibility ease .3s;
     position: absolute;
     
-    top: 80px;
+    top: 71px;
     right: 0px;
     z-index: 50;
 `;
@@ -42,23 +42,24 @@ const Button = styled.button`
     line-height: 14px;
     color: #577CA1;
     cursor: pointer;
+    padding: 0;
 `;
 
 const AchieveWrapper = styled.div`
-  width:20px;
-  height:20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  margin-left: 8px;
 `;
 const Achive = styled.img`
-    width: 20px;
-    height: 20px;
-   
+    width: 100%;
+    height: 100%;
 `;
 
 const Sentence = styled.p`
+    max-width: 200px;
+    width: 100%;
     font-size: 14px;
     font-family: 'SFProDisplay';
     font-style: normal;
@@ -67,7 +68,6 @@ const Sentence = styled.p`
     letter-spacing: -0.154px;
     color: #6D7885;
     margin: 0;
-    margin-left: 12px;
 `;
 
 const AdvContainer = styled.ul`
@@ -80,16 +80,23 @@ const AdvContainer = styled.ul`
 
 const AdvPlate = styled.li`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     border-bottom: 1px solid #E7E8EC;
-    padding-inline: 16px;
+    padding: 8px 16px 8px 24px ;
     box-sizing: border-box;
-    height: 36px;
+    min-height: 36px;
     position: relative;
     &:last-of-type {
         border-bottom: none;
     }
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
 `;
 
 const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
@@ -99,25 +106,31 @@ const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
     </BannerHeader>
     <AdvContainer>
       <AdvPlate>
-        <RedBallIcon top={15} left={8} />
-        <CupIcon />
-        <Sentence>У вас новая ачивка “Вызов июля"</Sentence>
+        <RedBallIcon left={14} />
+        <StyledDiv>
+          <CupIcon />
+          <Sentence>У вас новая ачивка “Вызов июля"</Sentence>
+        </StyledDiv>
         <AchieveWrapper>
           <Achive src={achieve1} />
         </AchieveWrapper>
       </AdvPlate>
       <AdvPlate>
-        <RedBallIcon top={15} left={8} />
-        <SquareIcon />
-        <Sentence>Вам назначен новый квиз</Sentence>
+        <RedBallIcon left={14} />
+        <StyledDiv>
+          <SquareIcon />
+          <Sentence>Вам назначен новый квиз</Sentence>
+        </StyledDiv>
         {/*    {<AchieveWrapper>
                       <Achive src={achieve3} />
                   </AchieveWrapper>} */}
       </AdvPlate>
       <AdvPlate>
-        <RedBallIcon top={15} left={8} />
-        <CupIcon />
-        <Sentence>У вас новая ачивка “5 квизов без ошибок”</Sentence>
+        <RedBallIcon left={14} />
+        <StyledDiv>
+          <CupIcon />
+          <Sentence>У вас новая ачивка “5 квизов без ошибок”</Sentence>
+        </StyledDiv>
         <AchieveWrapper>
           <Achive src={achieve2} />
         </AchieveWrapper>

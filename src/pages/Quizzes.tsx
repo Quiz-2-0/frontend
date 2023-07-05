@@ -31,7 +31,7 @@ const Quizzes: FC = () => {
     data?.some(({ appointed }) => appointed === true),
   );
 
-  const quizNameFilter = data?.filter(
+  const quizNameFilter = quizzesOnPage?.filter(
     ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
   );
 
