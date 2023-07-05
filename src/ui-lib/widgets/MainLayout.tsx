@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from '../../store/store.types';
 import { useGetCurrentUserQuery } from '../../api/apiv2';
 
 import { setLoaderState } from '../../store/allSlice/allSlice';
+import Loader from './Loader';
 
 const Section = styled.section`
     width: 100%;
@@ -30,7 +31,7 @@ const MainLayout: FC = () => {
   const { isLoaderRun } = useSelector((state) => state.all);
   const dispatch = useDispatch();
 
-  /* if (isLoading) { dispatch(setLoaderState(true)); } */
+  if (isLoading) return <Loader />;
   if (error) return <Navigate to='/login' />;
 
   return (
