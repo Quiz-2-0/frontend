@@ -91,7 +91,7 @@ const Login: React.FC = () => {
     const { access, ...rest } = user;
     const inMemory = localStorage.getItem('isRemember') === 'true';
     jwt.set(access, inMemory);
-    dispatch(setCurrentUser(rest as TUser));
+
     resetForm();
 
     if (user) {

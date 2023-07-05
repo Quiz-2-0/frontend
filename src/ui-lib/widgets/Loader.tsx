@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
