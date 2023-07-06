@@ -28,9 +28,9 @@ const Bar = styled.ul`
     height: 8px;
 `;
 
-const ProgressBar: FC<{ progressObject: any, questionArr: Question[] }> = ({ progressObject, questionArr }) => (
+const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined }> = ({ progressObject, questionArr }) => (
   <Bar>
-    {questionArr.map((el, index) => (
+    {questionArr && questionArr.map((el, index) => (
       <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
     ))}
   </Bar>

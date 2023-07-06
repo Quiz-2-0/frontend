@@ -27,7 +27,7 @@ type Tag = {
   color: string;
 };
 
-type Answer = {
+export type Answer = {
   id: number;
   text: string;
   image: string;
