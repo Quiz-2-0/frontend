@@ -97,7 +97,7 @@ const QuizQuestion: React.FC = () => {
       <Title
         weight='3'
         style={{ paddingBottom: '40px', fontWeight: 500 }}>
-        {currentPage === questions.length ? `Поздравляем, Квиз «${data?.name}» пройден.` : `Квиз «${data?.name}»`}
+        {currentPage === questions.length ? `Поздравляем, квиз «${data?.name}» пройден.` : `Квиз «${data?.name}»`}
       </Title>
       {currentPage === questions.length
         ? (
@@ -105,7 +105,7 @@ const QuizQuestion: React.FC = () => {
             <Headline weight='3'>
               {`Вы ответили правильно на ${rightAnswersAmount} вопрос${rightAnswersAmount === 1 ? '' : ((rightAnswersAmount > 4 || rightAnswersAmount) === 0 ? 'ов' : 'а')} из ${questions.length}`}
             </Headline>
-            <Text style={{ paddingTop: '12px' }}>Отличный результат, самое время продолжить строить замок мечты!</Text>
+            <Text style={{ paddingTop: '12px' }}>{rightAnswersAmount === questions.length ? 'Отличный результат, самое время продолжить строить замок мечты!' : 'Самое время разобрать ошибки, либо попробовать пройти ещё раз.'}</Text>
             <Div style={{
               padding: 0,
               marginTop: '32px',
