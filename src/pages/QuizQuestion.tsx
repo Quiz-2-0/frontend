@@ -59,7 +59,8 @@ const QuizQuestion: React.FC = () => {
 
   const { data, error, isLoading } = useGetQuizQuery(id);
 
-  const [progressObject, setProgress] = useState({ 0: '' });
+  const [progressObject, setProgress] = useState<Record<number, string>>({ 0: '' });
+
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(0);
   const [questions, setQuestions] = useState(data ? data.questions : []);
