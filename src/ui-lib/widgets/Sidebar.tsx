@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
         <Icon24HomeOutline />
         Главная
       </StyledTabsItem>
-      <StyledTabsItem selected={location.pathname === '/quizzes'} onClick={() => setUrl('/quizzes')}>
+      <StyledTabsItem selected={location.pathname !== ('/' && '/achievements')} onClick={() => setUrl('/quizzes')}>
         <Icon24Square4Outline />
         Квизы
       </StyledTabsItem>

@@ -12,21 +12,16 @@ import {
   Div,
   Title,
   Headline,
-  Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router';
+import { useParams } from 'react-router';
 import StyledButton from '../ui-lib/StyledButton';
 import { useGetQuizQuery } from '../api/apiv2';
 import ProgressBar from '../ui-lib/ProgressBar';
 import { useDispatch } from '../store/store.types';
 import { setLoaderState } from '../store/allSlice/allSlice';
 import { Answer } from '../types/types';
+import Results from '../ui-lib/widgets/Results';
 
 const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
   cursor: pointer;
@@ -53,13 +48,10 @@ const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
 `;
 
 const QuizQuestion: React.FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const { id } = useParams();
-
   const { data, error, isLoading } = useGetQuizQuery(id);
 
-  const [progressObject, setProgress] = useState<Record<number, string>>({ 0: '' });
+  const [progressObject, setProgress] = useState<Record<number, string>>({});
 
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(0);
@@ -83,7 +75,7 @@ const QuizQuestion: React.FC = () => {
     setCurrentPage(currentPage + 1);
     setSelectedAnswer(0);
     if (currentPage !== questions.length) {
-      setProgress({ ...progressObject, [currentPage + 1]: ' ' });
+      setProgress({ ...progressObject, [currentPage]: ' ' });
     }
   };
 
@@ -98,32 +90,19 @@ const QuizQuestion: React.FC = () => {
       <Title
         weight='3'
         style={{ paddingBottom: '40px', fontWeight: 500 }}>
-        {currentPage === questions.length ? `Поздравляем, квиз «${data?.name}» пройден.` : `Квиз «${data?.name}»`}
+        {currentPage === questions.length ? '' : `Квиз «${data?.name}»`}
       </Title>
       {currentPage === questions.length
         ? (
-          <>
-            <Headline weight='3'>
-              {`Вы ответили правильно на ${rightAnswersAmount} вопрос${rightAnswersAmount === 1 ? '' : ((rightAnswersAmount > 4 || rightAnswersAmount) === 0 ? 'ов' : 'а')} из ${questions.length}`}
-            </Headline>
-            <Text style={{ paddingTop: '12px' }}>{rightAnswersAmount === questions.length ? 'Отличный результат, самое время продолжить строить замок мечты!' : 'Самое время разобрать ошибки, либо попробовать пройти ещё раз.'}</Text>
-            <Div style={{
-              padding: 0,
-              marginTop: '32px',
-              width: 'min-content',
-              display: 'flex',
-              gap: '12px',
-            }}>
-              {rightAnswersAmount !== questions.length
-                && <StyledButton mode='outline' onClick={() => navigate('/quizzes')} style={{ width: '167px' }}>Разобрать ошибки</StyledButton>}
-              <StyledButton onClick={() => navigate('/quizzes')} style={{ width: '167px' }}>К списку квизов</StyledButton>
-            </Div>
-          </>
+          <Results
+            rightAnswers={rightAnswersAmount}
+            questions={questions.length}
+            quizName={data?.name} />
         ) : (
           <>
             <ProgressBar questionArr={questions} progressObject={progressObject} />
-            <Headline weight='3' style={{ marginTop: '20px' }}>{`Вопрос ${currentPage + 1}/${data?.question_amount}`}</Headline>
-            <Title style={{ margin: '20px 0 32px' }}>{questions[currentPage].text}</Title>
+            <Headline weight='3' style={{ marginTop: '32px' }}>{`Вопрос ${currentPage + 1}/${data?.question_amount}`}</Headline>
+            <Title style={{ margin: '20px 0' }}>{questions[currentPage].text}</Title>
             <ul
               style={{
                 listStyle: 'none',

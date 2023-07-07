@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const StyledPercentageLabel = styled('div')`
   width: 47px;
   height: 22px;
-  background-color: #43A843;
+  background-color: #3F8AE0;
   border-radius: 11px;
   display: flex;
   flex-direction: column;
@@ -29,15 +29,15 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ percentage })
       value={percentage}
       styles={{
         path: {
-          stroke: 'rgba(67, 168, 67, 1)',
+          stroke: '#3F8AE0',
           strokeLinecap: 'round',
           transition: 'stroke-dashoffset 0.5s ease 0s',
           strokeWidth: '5',
-          transform: 'rotate(0.25turn)',
+          transform: 'rotate(2turn)',
           transformOrigin: 'center center',
         },
         trail: {
-          stroke: 'rgba(67, 168, 67, 0.2)',
+          stroke: 'rgba(63, 138, 224, .2)',
           strokeWidth: '5',
         },
       }}>
