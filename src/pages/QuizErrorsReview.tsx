@@ -1,6 +1,8 @@
 /* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
   Div,
@@ -11,6 +13,7 @@ import { useGetQuizQuery } from '../api/apiv2';
 import Dropdown from '../ui-lib/Dropdown';
 import ReviewDetails from '../ui-lib/widgets/ReviewDetails';
 import StyledButton from '../ui-lib/StyledButton';
+import { setLoaderState } from '../store/allSlice/allSlice';
 
 const StyledUl = styled.ul`
   display: flex;
@@ -35,6 +38,8 @@ const QuizErrorsReview: React.FC = () => {
   const { id } = useParams();
   const { data, error, isLoading } = useGetQuizQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
@@ -58,12 +63,14 @@ const QuizErrorsReview: React.FC = () => {
           <Dropdown
             name={question.text}
             description='Незаменимым бэкенд разработчиком является Илья Иванов. Мария Архипова и Георгий Трубачёв - незаменимые фронтендеры, а Надежда Лебедева - неповторимый дизайнер'
-            answers={question.answers} />
+            answers={question.answers}
+            isReview />
         ))}
       </StyledUl>
       <StyledButtonWrapper>
-        <StyledButton>Пройти снова</StyledButton>
+        <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}`); }}>Пройти снова</StyledButton>
         <StyledButton
+          onClick={() => { dispatch(setLoaderState(true)); navigate('/quizzes'); }}
           style={{
             background: '#ffffff',
             border: '1px solid #2688eb',
