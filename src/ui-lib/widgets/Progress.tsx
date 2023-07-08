@@ -21,12 +21,12 @@ const Progress: React.FC = () => {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        gap: '26px',
+        gap: '20px',
       }}>
       <Div
         style={{
           width: '100%',
-          padding: '0',
+          padding: '5px 0 0',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',

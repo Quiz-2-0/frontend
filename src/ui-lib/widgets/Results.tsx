@@ -21,7 +21,7 @@ const Results: FC<{
     <Div style={{
       maxWidth: '500px',
       width: '100%',
-      padding: '0',
+      padding: '0 40px 0 0',
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
@@ -29,7 +29,16 @@ const Results: FC<{
       alignItems: 'center',
       margin: '40px auto 0',
     }}>
-      <img src={image} alt='Поздравляем!' style={{ maxWidth: '400px', borderRadius: '8px' }} />
+      <img
+        src={image}
+        alt='Поздравляем!'
+        style={{
+          width: '400px',
+          borderRadius: '8px',
+          height: '270px',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }} />
       <Title
         weight='3'
         style={{ paddingTop: '8px', fontWeight: 500 }}>

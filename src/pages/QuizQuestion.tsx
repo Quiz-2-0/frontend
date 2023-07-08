@@ -89,7 +89,7 @@ const QuizQuestion: React.FC = () => {
     <Div style={{ padding: 0, width: '100%', maxWidth: '914px' }}>
       <Title
         weight='3'
-        style={{ paddingBottom: '40px', fontWeight: 500 }}>
+        style={{ padding: '10px 0 40px', fontWeight: 500 }}>
         {currentPage === questions.length ? '' : `Квиз «${data?.name}»`}
       </Title>
       {currentPage === questions.length
@@ -102,7 +102,15 @@ const QuizQuestion: React.FC = () => {
           <>
             <ProgressBar questionArr={questions} progressObject={progressObject} />
             <Headline weight='3' style={{ marginTop: '32px' }}>{`Вопрос ${currentPage + 1}/${data?.question_amount}`}</Headline>
-            <Title style={{ margin: '20px 0' }}>{questions[currentPage].text}</Title>
+            <Title style={{
+              margin: '20px 0',
+              fontSize: '20px',
+              fontWeight: 600,
+              lineHeight: '24px',
+              letterSpacing: '0.38px',
+            }}>
+              {questions[currentPage].text}
+            </Title>
             <ul
               style={{
                 listStyle: 'none',

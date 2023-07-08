@@ -29,8 +29,9 @@ import { setLoaderState } from '../store/allSlice/allSlice';
 
 const StyledButton = styled(Button)`
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 0 20px;
   max-width: max-content;
+  height: 40px;
 
   & > .vkuiButton__in > .vkuiButton__content {
     padding: 0;
@@ -88,6 +89,13 @@ const Quiz: React.FC = () => {
               )}
             </Div>
             <Text style={{ fontSize: '16px' }}>{data?.description}</Text>
+          </Div>
+          <Div style={{
+            padding: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '25px',
+          }}>
             <StyledQuizDetailsWrapper style={{ paddingTop: '24px' }}>
               <StyledQuizDetailWrapper>
                 <DurationIcon />
@@ -108,10 +116,18 @@ const Quiz: React.FC = () => {
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>
+            <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}/question`); }}>Начать квиз</StyledButton>
           </Div>
-          <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}/question`); }}>Начать квиз</StyledButton>
         </Div>
-        <img style={{ maxWidth: '510px', width: '100%', borderRadius: '8px' }} src={data?.image} alt={data?.name} />
+        <img
+          style={{
+            maxWidth: '510px',
+            width: '100%',
+            height: '284px',
+            borderRadius: '8px',
+          }}
+          src={data?.image}
+          alt={data?.name} />
       </Div>
       <ListForQuiz volumes={data?.volumes} />
     </Div>

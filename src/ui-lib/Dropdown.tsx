@@ -10,7 +10,6 @@ const Li = styled.li`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
     padding: 24px 16px; 
     border-bottom: 1px solid #F2F3F5;
     position: relative;
@@ -51,11 +50,12 @@ const TextDiv = styled.div`
   font-weight: 400;
   line-height: 20px;
   margin: 0;
+  margin-top: 14px;
 `;
 
 const Text = styled.p`
     margin: 0;
-    min-height: 15px;
+    min-height: 8px;
 `;
 
 const ModifiedIconWrapper = styled(IconWrapper) <{ isOpen: boolean }>`

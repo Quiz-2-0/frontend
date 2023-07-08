@@ -31,7 +31,7 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   return (
     <Div>
       <StyledTabs>
-        <StyledTabsItem selected={listType === 'about'} onClick={() => quizTypeFilter('about')}>
+        <StyledTabsItem style={{ letterSpacing: '-0.32px' }} selected={listType === 'about'} onClick={() => quizTypeFilter('about')}>
           Справочные материалы
         </StyledTabsItem>
 

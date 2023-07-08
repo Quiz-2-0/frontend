@@ -33,6 +33,21 @@ const StyledImage = styled.img`
   object-fit: cover;
 `;
 
+const StyledButton = styled(Button)`
+  max-width: 286px;
+  margin: 0 auto;
+  height: 40px;
+  border-radius: 4px;
+
+  & > .vkuiButton__in > .vkuiButton__content {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+  }
+`;
+
 const Castle: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -96,14 +111,13 @@ const Castle: React.FC = () => {
           ))}
         </Div>
       </FormItem>
-      <Button
-        style={{ maxWidth: '286px', margin: '0 auto', height: '40px' }}
+      <StyledButton
         type='button'
         size='l'
         onClick={onButtonClick}
         stretched>
         Продолжить строить
-      </Button>
+      </StyledButton>
     </StyledDiv>
   );
 };

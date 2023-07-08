@@ -64,22 +64,22 @@ const Progress = styled.p`
 const AchivePlate = styled.li`
     display: flex;
     gap: 16px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 12px 0;
     width: 100%;
-
+    border-bottom: 1px solid #F2F3F5;
 `;
 
 const ProgressWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 25px ;
+    justify-content: space-between;
     flex: auto;
 `;
 /// / создать метод для высчитывания длины прогрессбара
 const ProgressBar = styled.span<{ width?: number }>`
     width: 100%;
     height: 8px;
+    margin-bottom: 2px;
     background-color: rgba(63, 138, 224, 0.15);
     border-radius: 8px;
     position: relative;
@@ -99,6 +99,7 @@ const AchivesContainer = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
+    gap: 12px;
 `;
 
 const Achives: FC = () => {
