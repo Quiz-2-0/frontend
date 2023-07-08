@@ -46,7 +46,8 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
               ? volumes?.map((el: Volume) => (
                 <Dropdown
                   name={el.name}
-                  description={el.description} />
+                  description={el.description}
+                  answers={[]} />
               ))
               : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Справочные материалы не найдены</p>}
           </List>
