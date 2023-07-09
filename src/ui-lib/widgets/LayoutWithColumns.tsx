@@ -25,7 +25,7 @@ const LayoutWithColumns: React.FC = () => {
       <StyledColumn>
         <Title
           style={{
-            paddingTop: '49px',
+            paddingTop: '42px',
             color: '#FFF',
             textAlign: 'center',
             fontSize: '75px',

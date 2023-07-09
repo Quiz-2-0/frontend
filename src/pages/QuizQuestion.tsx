@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -16,7 +18,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
 import StyledButton from '../ui-lib/StyledButton';
-import { useGetQuizQuery } from '../api/apiv2';
+import { useGetQuizQuery, useSetAnswerMutation } from '../api/apiv2';
 import ProgressBar from '../ui-lib/ProgressBar';
 import { useDispatch } from '../store/store.types';
 import { setLoaderState } from '../store/allSlice/allSlice';
@@ -50,7 +52,7 @@ const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
 const QuizQuestion: React.FC = () => {
   const { id } = useParams();
   const { data, error, isLoading } = useGetQuizQuery(id);
-
+  const [setAnswer, result] = useSetAnswerMutation();
   const [progressObject, setProgress] = useState<Record<number, string>>({});
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -69,8 +71,9 @@ const QuizQuestion: React.FC = () => {
     );
   }, [allAnswers]);
 
-  const setNextPage = () => {
+  const setNextPage = async () => {
     const answ = questions[currentPage].answers.find(({ id }) => id === selectedAnswer);
+    await setAnswer(selectedAnswer);
     setAllAnswers([...allAnswers, answ]);
     setCurrentPage(currentPage + 1);
     setSelectedAnswer(0);
@@ -80,6 +83,7 @@ const QuizQuestion: React.FC = () => {
   };
 
   const selectAnswer = (answerId: number) => {
+    console.log(answerId);
     setSelectedAnswer(answerId);
   };
 

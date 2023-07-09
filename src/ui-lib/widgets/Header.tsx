@@ -17,7 +17,7 @@ import AdvBanner from './AdvBanner';
 import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '../../api/apiv2';
 
 const HeaderWrapper = styled.header`
-  max-width:
+  
   width: 100%;
   padding: 32px 80px 0;
   box-sizing: border-box;

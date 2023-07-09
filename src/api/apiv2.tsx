@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -83,9 +84,20 @@ export const quizApi = createApi({
     }),
     getQuiz: build.query<TQuize, any>({
       query: (id: any) => `${ALL_QUIZES}${id}`,
+      providesTags: ['quiz'],
 
     }),
-
+    getStatistic: build.query<{ question: string, answer: string, isRight: boolean, explanation: string }[], any>({
+      query: (id: any) => `${ALL_QUIZES}${id}/statistic`,
+    }),
+    setAnswer: build.mutation<void, number>({
+      query: (id: number | string) => ({
+        url: `${ALL_QUIZES}${id}/answer/`,
+        method: 'POST',
+        body: { id },
+      }),
+      invalidatesTags: ['quiz'],
+    }),
   }),
 });
 
@@ -98,4 +110,6 @@ export const {
 export const {
   useGetAllQuizesQuery,
   useGetQuizQuery,
+  useSetAnswerMutation,
+  useGetStatisticQuery,
 } = quizApi;
