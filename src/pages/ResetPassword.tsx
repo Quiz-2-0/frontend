@@ -124,28 +124,31 @@ const ResetPassword: FunctionComponent = () => {
       </BackButton>
       {isSubmitted ? ( // eslint-disable-line ternary/no-unreachable
         <>
-          <Title
+          <Text
             weight='3'
             style={{
               marginTop: '24px',
-              fontSize: '14px',
-              fontFamily: 'SFProDisplay',
-              fontStyle: 'normal',
-              fontWeight: '400',
+              fontSize: '15px',
               lineHeight: '20px',
+              letterSpacing: '-0.7px',
             }}>
-            Новый пароль был успешно отправлен на почту
-          </Title>
+            Новый пароль был отправлен на почту
+          </Text>
           <Title
             style={{
-              marginTop: '16px',
+              marginTop: '8px',
+              fontSize: '20px',
+              lineHeight: '24px',
             }}>
             {email}
           </Title>
           {isTimerActive ? (
             <Text
               style={{
-                marginTop: '20px',
+                marginTop: '24px',
+                fontSize: '13px',
+                lineHeight: '16px',
+                letterSpacing: '-0.7px',
               }}>
               {`отправить пароль ещё раз через ${formatTime(timer)}`}
             </Text>

@@ -30,15 +30,45 @@ const ReviewDetails: React.FC<{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '40px',
+        gap: '46px',
       }}>
       <StyledDetailWrapper>
-        <Subhead>дата прохождения</Subhead>
-        <Title weight='2'>{data}</Title>
+        <Subhead
+          style={{
+            fontSize: '14px',
+            lineHeight: '18px',
+            letterSpacing: '-0.75px',
+          }}>
+          дата прохождения
+        </Subhead>
+        <Title
+          weight='2'
+          style={{
+            fontSize: '20px',
+            lineHeight: '24px',
+            letterSpacing: '0.2px',
+          }}>
+          {data}
+        </Title>
       </StyledDetailWrapper>
       <StyledDetailWrapper>
-        <Subhead>результат</Subhead>
-        <Title weight='2'>{`${rightQuestionsAmount}/${questionsAmount} верных ответов`}</Title>
+        <Subhead
+          style={{
+            fontSize: '14px',
+            lineHeight: '18px',
+            letterSpacing: '-0.75px',
+          }}>
+          результат
+        </Subhead>
+        <Title
+          weight='2'
+          style={{
+            fontSize: '20px',
+            lineHeight: '24px',
+            letterSpacing: '0.4px',
+          }}>
+          {`${rightQuestionsAmount}/${questionsAmount} верных ответов`}
+        </Title>
       </StyledDetailWrapper>
     </StyledDiv>
 );

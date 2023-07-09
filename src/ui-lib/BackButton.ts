@@ -12,6 +12,10 @@ const BackButton = styled.button`
   line-height: 20px;
   text-align: left;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export default BackButton;
