@@ -40,6 +40,7 @@ const PersonalAccount: FC = () => {
         <Div>
           <Rating />
           <Progress />
+
         </Div>
 
         <Achives />

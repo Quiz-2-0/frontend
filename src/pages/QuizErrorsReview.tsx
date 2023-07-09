@@ -9,7 +9,7 @@ import {
   Title,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetQuizQuery } from '../api/apiv2';
+import { useGetQuizQuery, useGetStatisticQuery } from '../api/apiv2';
 import Dropdown from '../ui-lib/Dropdown';
 import ReviewDetails from '../ui-lib/widgets/ReviewDetails';
 import StyledButton from '../ui-lib/StyledButton';
@@ -37,6 +37,7 @@ const StyledButtonWrapper = styled(Div)`
 const QuizErrorsReview: React.FC = () => {
   const { id } = useParams();
   const { data, error, isLoading } = useGetQuizQuery(id);
+  const { data: stata } = useGetStatisticQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,8 +57,8 @@ const QuizErrorsReview: React.FC = () => {
       </Title>
       <ReviewDetails
         data='05 июля 2023'
-        questionsAmount={questions.length}
-        rightQuestionsAmount={3} />
+        questionsAmount={data?.questions.length || 0}
+        rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
       <StyledUl>
         {questions.map((question) => (
           <Dropdown

@@ -43,13 +43,28 @@ const StyledResetButton = styled(Button)`
   }
 `;
 
+const CustomButton = styled(StyledButton)`
+  margin-top: 27px;
+`;
+
 const StyledTabsItem = styled(TabsItem)`
   padding: 0;
+ 
 
   & > div {
-    width: 100%;
+    width: 130px;
     left: 0;
     right: 0;
+  }
+  & > span {
+    font-family: 'SFProDisplay';
+    font-size: 16px;
+    width: 114px;
+    padding-top: 4px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.32px;
   }
 `;
 
@@ -131,12 +146,13 @@ const Login: React.FC = () => {
           <Title
             level='1'
             style={{
-              paddingBottom: '40px',
+              paddingBottom: '24px',
               fontWeight: 600,
               fontSize: '20px',
               lineHeight: '24px',
               textAlign: 'center',
               letterSpacing: '0.38px',
+              fontFamily: 'SFProDisplay',
               color: '#21272A',
             }}>
             Вход в личный кабинет
@@ -148,7 +164,7 @@ const Login: React.FC = () => {
               fontWeight: '500',
               lineHeight: '20px',
               letterSpacing: '-0.32px',
-              paddingBottom: '12px',
+              paddingBottom: '20px',
             }}>
             <StyledTabsItem
               selected={role === 'EMP'}
@@ -180,7 +196,7 @@ const Login: React.FC = () => {
               letterSpacing: '-0.154px',
               fontFamily: 'SFProDisplay !important',
               color: '#333 !important',
-              paddingBottom: `${isEmailValid ? '24px' : '0px'}`,
+              paddingBottom: `${isEmailValid ? '26px' : '0px'}`,
             }}>
             <StyledInput
               id='email'
@@ -210,7 +226,7 @@ const Login: React.FC = () => {
               letterSpacing: '-0.154px',
               fontFamily: 'SFProDisplay',
               color: '#333',
-              paddingBottom: `${isPasswordValid ? '24px' : '0px'}`,
+              paddingBottom: `${isPasswordValid ? '16px' : '0px'}`,
             }}>
             <StyledInput
               id='pass'
@@ -241,7 +257,7 @@ const Login: React.FC = () => {
               alignItems: 'center',
             }}>
             <Checkbox
-              style={{ padding: 0 }}
+              style={{ padding: 0, fontSize: '13px' }}
               onClick={() => {
                 setUserInMemory();
               }}>
@@ -260,13 +276,13 @@ const Login: React.FC = () => {
             </StyledResetButton>
           </Div>
           <FormItem style={{ padding: 0 }}>
-            <StyledButton
+            <CustomButton
               type='submit'
               size='l'
               disabled={isButtonDisabled}
               stretched>
               Войти
-            </StyledButton>
+            </CustomButton>
           </FormItem>
         </StyledFormLayout>
       )
