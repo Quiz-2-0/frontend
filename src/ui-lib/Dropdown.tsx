@@ -1,19 +1,20 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/no-unreachable */
+/* eslint-disable import/no-named-as-default */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { ArrowIcon, CheckIcon } from './icons';
 import { IconWrapper } from './widgets/Achives';
 
-const Li = styled.li`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 24px 16px; 
-    border-bottom: 1px solid #F2F3F5;
-    position: relative;
-    box-sizing: border-box;
+const Li = styled.li<{ isReview: boolean }>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #F2F3F5;
+  position: relative;
+  box-sizing: border-box;
+  padding: ${({ isReview }) => (isReview ? '24px 0' : '24px 16px')}
 `;
 
 const HeaderBlock = styled.div`
@@ -36,7 +37,7 @@ const H4 = styled.h4<{ isReview: boolean }>`
 
 const StyledExpandedItem = styled.div<{ isOpen: boolean, isReview: boolean }>`
   max-height: ${({ isOpen }) => (isOpen ? '190px' : '0')};
-  padding: ${({ isReview }) => (isReview ? '0 0 0 36px' : '0')};
+  padding: ${({ isReview }) => (isReview ? '0 0 0 28px' : '0')};
   overflow: auto;
   position: relative;
   transition: all ease .7s;
@@ -64,7 +65,7 @@ const ModifiedIconWrapper = styled(IconWrapper) <{ isOpen: boolean }>`
 
 const StyledAnswersList = styled.ul <{ isReview: boolean }>`
   display: ${({ isReview }) => (isReview ? 'flex' : 'none')};
-  margin: 16px 0 20px;
+  margin: 28px 0 20px;
   padding: 0;
   list-style: none;
   flex-direction: row;
@@ -83,11 +84,13 @@ const StyledAnswerItem = styled.li <{ isRight: boolean }>`
 `;
 
 const Dropdown: FC<{
+  index: number | null,
   name: string,
   description: string,
   answers: [] | { id: number, text: string, image: null | string, isAnswerRight: boolean }[],
   isReview: boolean }> = (
   {
+    index,
     name,
     description,
     answers,
@@ -97,10 +100,12 @@ const Dropdown: FC<{
   const [isOpen, open] = useState(false);
 
   return (
-    <Li>
+    <Li isReview={isReview}>
       <HeaderBlock>
         {isReview ? <CheckIcon /> : null}
-        <H4 isReview={isReview}>{name}</H4>
+        {index === null
+          ? <H4 isReview={isReview}>{name}</H4>
+          : <H4 isReview={isReview}>{`${index}. ${name}`}</H4>}
         <ModifiedIconWrapper isOpen={isOpen} onClick={() => open(!isOpen)}><ArrowIcon /></ModifiedIconWrapper>
       </HeaderBlock>
       <StyledExpandedItem isOpen={isOpen} isReview={isReview}>

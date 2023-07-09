@@ -45,6 +45,7 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
             {volumes && volumes.length !== 0
               ? volumes?.map((el: Volume) => (
                 <Dropdown
+                  index={null}
                   name={el.name}
                   description={el.description}
                   answers={[]}

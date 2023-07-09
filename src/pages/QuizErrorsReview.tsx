@@ -21,7 +21,7 @@ const StyledUl = styled.ul`
   width: 100%;
   list-style: none;
   padding: 0;
-  margin: 26px 0 0 0;
+  margin: 20px 0 0 0;
 `;
 
 const StyledButtonWrapper = styled(Div)`
@@ -61,6 +61,7 @@ const QuizErrorsReview: React.FC = () => {
       <StyledUl>
         {questions.map((question) => (
           <Dropdown
+            index={question.id}
             name={question.text}
             description='Незаменимым бэкенд разработчиком является Илья Иванов. Мария Архипова и Георгий Трубачёв - незаменимые фронтендеры, а Надежда Лебедева - неповторимый дизайнер'
             answers={question.answers}
