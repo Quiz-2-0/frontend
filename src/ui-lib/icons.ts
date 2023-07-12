@@ -12,6 +12,7 @@ import { ReactComponent as Duration } from '../images/icons/duration_icon.svg';
 import { ReactComponent as Level } from '../images/icons/level_icon.svg';
 import { ReactComponent as Questions } from '../images/icons/questions_icon.svg';
 import { ReactComponent as Check } from '../images/icons/checked.svg';
+import { ReactComponent as False } from '../images/icons/false.svg';
 
 export const DurationIcon = styled(Duration)`
   width: 14px;
@@ -72,6 +73,12 @@ export const RedBallIcon = styled(RedBall)<{ top:number, left:number }>`
 `;
 
 export const CheckIcon = styled(Check)`
+  width: 28px;
+  height: 28px;
+  display: block;
+`;
+
+export const FalseIcon = styled(False)`
   width: 28px;
   height: 28px;
   display: block;

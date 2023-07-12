@@ -15,6 +15,14 @@ import ReviewDetails from '../ui-lib/widgets/ReviewDetails';
 import StyledButton from '../ui-lib/StyledButton';
 import { setLoaderState } from '../store/allSlice/allSlice';
 
+type Statistic = {
+  explanation: string;
+  isRight: boolean;
+  question: string;
+  right_answer: string;
+  user_answer: string;
+};
+
 const StyledUl = styled.ul`
   display: flex;
   flex-direction: column;
@@ -39,12 +47,25 @@ const QuizErrorsReview: React.FC = () => {
   const { data, error, isLoading } = useGetQuizQuery(id);
   const { data: stata } = useGetStatisticQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
+  const [volumes, setVolumes] = useState(data ? data.volumes : []);
+  const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
   }, [data]);
+
+  useEffect(() => {
+    setVolumes(data ? data.volumes : []);
+  }, [data]);
+
+  useEffect(() => {
+    setStatistics(stata);
+  }, [stata]);
+
+  console.log(statistics);
+  console.log(questions);
 
   return (
     <Div style={{ padding: 0, width: '100%', maxWidth: '914px' }}>
@@ -60,14 +81,21 @@ const QuizErrorsReview: React.FC = () => {
         questionsAmount={data?.questions.length || 0}
         rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
       <StyledUl>
-        {questions.map((question) => (
-          <Dropdown
-            index={question.id}
-            name={question.text}
-            description='Незаменимым бэкенд разработчиком является Илья Иванов. Мария Архипова и Георгий Трубачёв - незаменимые фронтендеры, а Надежда Лебедева - неповторимый дизайнер'
-            answers={question.answers}
-            isReview />
-        ))}
+        {
+          statistics
+            ? questions.map((question, i) => (
+              <Dropdown
+                index={question.id}
+                name={question.text}
+                description={volumes[i]?.description}
+                answers={question.answers}
+                isReview
+                isRight={statistics[i]?.isRight}
+                rightAnswer={statistics[i]?.right_answer}
+                userAnswer={statistics[i]?.user_answer} />
+            ))
+            : null
+        }
       </StyledUl>
       <StyledButtonWrapper>
         <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}`); }}>Пройти снова</StyledButton>

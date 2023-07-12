@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable import/no-named-as-default */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable ternary/nesting */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { ArrowIcon, CheckIcon } from './icons';
+import { ArrowIcon, CheckIcon, FalseIcon } from './icons';
 import { IconWrapper } from './widgets/Achives';
 
 const Li = styled.li<{ isReview: boolean }>`
@@ -75,12 +77,12 @@ const StyledAnswersList = styled.ul <{ isReview: boolean }>`
   flex-wrap: wrap;
 `;
 
-const StyledAnswerItem = styled.li <{ isRight: boolean }>`
+const StyledAnswerItem = styled.li <{ isRight: 'red' | 'green' | 'transparent' }>`
   margin: 0;
   padding: 16px;
-  border: ${({ isRight }) => (isRight ? 'none' : '1px solid #DCE1E6')};
+  border: ${({ isRight }) => (isRight === 'transparent' ? '1px solid #DCE1E6' : 'none')};
   border-radius: 4px;
-  background-color: ${({ isRight }) => (isRight ? '#DEF0D3' : 'transparent')};
+  background-color: ${({ isRight }) => (isRight)};
 `;
 
 const Dropdown: FC<{
@@ -88,13 +90,19 @@ const Dropdown: FC<{
   name: string,
   description: string,
   answers: [] | { id: number, text: string, image: null | string, isAnswerRight: boolean }[],
-  isReview: boolean }> = (
+  isReview: boolean,
+  isRight?: boolean,
+  rightAnswer?: string,
+  userAnswer?: string, }> = (
   {
     index,
     name,
     description,
     answers,
     isReview,
+    isRight,
+    rightAnswer,
+    userAnswer,
   },
 ) => {
   const [isOpen, open] = useState(false);
@@ -102,7 +110,7 @@ const Dropdown: FC<{
   return (
     <Li isReview={isReview}>
       <HeaderBlock>
-        {isReview ? <CheckIcon /> : null}
+        {isReview && (isRight ? <CheckIcon /> : <FalseIcon />)}
         {index === null
           ? <H4 isReview={isReview}>{name}</H4>
           : <H4 isReview={isReview}>{`${index}. ${name}`}</H4>}
@@ -114,7 +122,7 @@ const Dropdown: FC<{
           : (
             <StyledAnswersList isReview={isReview}>
               {answers.map((answer) => (
-                <StyledAnswerItem isRight={answer.isAnswerRight}>
+                <StyledAnswerItem isRight={rightAnswer === answer.text ? 'green' : (userAnswer === answer.text ? 'red' : 'transparent')}>
                   {answer.text}
                 </StyledAnswerItem>
               ))}
@@ -128,6 +136,12 @@ const Dropdown: FC<{
       </StyledExpandedItem>
     </Li>
   );
+};
+
+Dropdown.defaultProps = {
+  isRight: false,
+  rightAnswer: '',
+  userAnswer: '',
 };
 
 export default Dropdown;
