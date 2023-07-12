@@ -33,6 +33,7 @@ export type Answer = {
   image: string;
   isAnswerRight: boolean;
 };
+
 export type Question = {
   id: number;
   image: string;

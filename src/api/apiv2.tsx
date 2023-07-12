@@ -87,7 +87,7 @@ export const quizApi = createApi({
       providesTags: ['quiz'],
 
     }),
-    getStatistic: build.query<{ question: string, answer: string, isRight: boolean, explanation: string }[], any>({
+    getStatistic: build.query<{ question: string, answer: string, isRight: boolean, explanation: string, right_answer: string, user_answer: string }[], any>({
       query: (id: any) => `${ALL_QUIZES}${id}/statistic`,
     }),
     setAnswer: build.mutation<void, number>({

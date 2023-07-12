@@ -57,7 +57,7 @@ const Results: FC<{
         {rightAnswers !== questions && (
           <StyledButton
             mode='outline'
-            onClick={() => navigate(`/quizzes/${id}/mistakes`)}
+            onClick={() => navigate(`/quizzes/${id}/review`)}
             style={{
               width: '167px',
               margin: 0,
