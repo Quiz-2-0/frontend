@@ -88,6 +88,7 @@ const Header: FC = () => {
   const logOutFunction = () => {
     const isRemember = localStorage.getItem('isRemember') === 'true';
     jwt.remove(isRemember);
+    localStorage.removeItem('isRemember');
     navigate('/login');
   };
   useEffect(() => {

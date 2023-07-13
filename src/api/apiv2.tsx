@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -8,7 +9,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, QUIZES_STATA, GET_USER,
 } from '../constants/api-url';
-import { TUser, TUserLoginRequest, TQuize } from '../types/types';
+import {
+  TUser, TUserLoginRequest, TQuize, TAnswerRequest,
+} from '../types/types';
 
 export const jwt = {
   set: (value: string, isRemember: boolean): void => {
@@ -90,11 +93,11 @@ export const quizApi = createApi({
     getStatistic: build.query<{ question: string, answer: string, isRight: boolean, explanation: string, right_answer: string, user_answer: string }[], any>({
       query: (id: any) => `${ALL_QUIZES}${id}/statistic`,
     }),
-    setAnswer: build.mutation<void, number>({
-      query: (id: number | string) => ({
-        url: `${ALL_QUIZES}${id}/answer/`,
+    setAnswer: build.mutation<void, TAnswerRequest>({
+      query: ({ quizId, ...patch }) => ({
+        url: `${ALL_QUIZES}${quizId}/answer/`,
         method: 'POST',
-        body: { id },
+        body: patch,
       }),
       invalidatesTags: ['quiz'],
     }),
