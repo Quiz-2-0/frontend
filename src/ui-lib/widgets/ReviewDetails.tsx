@@ -37,7 +37,7 @@ const ReviewDetails: React.FC<{
           style={{
             fontSize: '14px',
             lineHeight: '18px',
-            letterSpacing: '-0.75px',
+            letterSpacing: '-0.15px',
           }}>
           дата прохождения
         </Subhead>
@@ -56,7 +56,7 @@ const ReviewDetails: React.FC<{
           style={{
             fontSize: '14px',
             lineHeight: '18px',
-            letterSpacing: '-0.75px',
+            letterSpacing: '-0.15px',
           }}>
           результат
         </Subhead>
