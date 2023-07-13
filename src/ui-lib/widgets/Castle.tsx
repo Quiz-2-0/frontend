@@ -66,8 +66,10 @@ const Castle: React.FC = () => {
   }
 
   const onButtonClick = () => {
-    dispatch(setFromCastle(true));
-    dispatch(setLoaderState(true));
+    console.log(data?.find(({ appointed }) => appointed === true));
+    dispatch(data?.find(({ appointed }) => appointed === true)
+      ? setFromCastle(true)
+      : setFromCastle(false));
     navigate('/quizzes');
   };
 

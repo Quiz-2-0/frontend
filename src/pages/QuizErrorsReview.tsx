@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState, useEffect } from 'react';
@@ -90,9 +91,9 @@ const QuizErrorsReview: React.FC = () => {
         }
       </StyledUl>
       <StyledButtonWrapper>
-        <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}`); }}>Пройти снова</StyledButton>
+        <StyledButton onClick={() => navigate(`/quizzes/${id}`)}>Пройти снова</StyledButton>
         <StyledButton
-          onClick={() => { dispatch(setLoaderState(true)); navigate('/quizzes'); }}
+          onClick={() => navigate('/quizzes')}
           style={{
             background: '#ffffff',
             border: '1px solid #2688eb',

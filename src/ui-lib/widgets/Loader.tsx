@@ -17,7 +17,7 @@ const StyledBackground = styled.div`
   gap: 7.74px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgb(255, 255, 255);
   z-index: 99999;
 `;
 

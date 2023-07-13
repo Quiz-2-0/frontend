@@ -67,14 +67,14 @@ const CustomButton = styled(StyledButton)`
 
 const StyledTabsItem = styled(TabsItem)`
   padding: 0;
- 
 
   & > div {
-    width: 130px;
-    left: 0;
-    right: 0;
+    width: 134.5px;
+    left: 5px;
+    right: 5px;
   }
   & > span {
+    width: min-content;
     font-family: 'SFProDisplay';
     font-size: 16px;
     width: 114px;
@@ -82,6 +82,7 @@ const StyledTabsItem = styled(TabsItem)`
     font-style: normal;
     font-weight: 500;
     line-height: 20px;
+    align-items: center;
     letter-spacing: -0.32px;
   }
 `;

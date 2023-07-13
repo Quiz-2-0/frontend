@@ -84,8 +84,6 @@ const QuizQuestion: React.FC = () => {
     setSelectedAnswer(answerId);
   };
 
-  /* if (isLoading) { dispatch(setLoaderState(true)); } */
-
   return (
     <Div style={{ padding: 0, width: '100%', maxWidth: '914px' }}>
       <Title

@@ -119,7 +119,6 @@ const QuizCard: React.FC<QuizCardProps> = (
   const dispatch = useDispatch();
   const onButtonClick = () => {
     navigate(`/quizzes/${id}`);
-    dispatch(setLoaderState(true));
   };
 
   return (

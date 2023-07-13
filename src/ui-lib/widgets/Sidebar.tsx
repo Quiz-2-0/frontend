@@ -66,7 +66,6 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const setUrl = (url: string) => {
-    dispatch(setLoaderState(true));
     navigate(url);
   };
   return (
