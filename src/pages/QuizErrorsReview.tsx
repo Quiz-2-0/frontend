@@ -47,17 +47,12 @@ const QuizErrorsReview: React.FC = () => {
   const { data, error, isLoading } = useGetQuizQuery(id);
   const { data: stata } = useGetStatisticQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
-  const [volumes, setVolumes] = useState(data ? data.volumes : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
-  }, [data]);
-
-  useEffect(() => {
-    setVolumes(data ? data.volumes : []);
   }, [data]);
 
   useEffect(() => {
@@ -82,9 +77,9 @@ const QuizErrorsReview: React.FC = () => {
           statistics
             ? questions.map((question, i) => (
               <Dropdown
-                index={question.id}
+                index={i + 1}
                 name={question.text}
-                description={volumes[i]?.description}
+                description={statistics[i]?.explanation}
                 answers={question.answers}
                 isReview
                 isRight={statistics[i]?.isRight}
