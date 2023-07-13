@@ -16,7 +16,7 @@ const Li = styled.li<{ isReview: boolean }>`
   border-bottom: 1px solid #F2F3F5;
   position: relative;
   box-sizing: border-box;
-  padding: ${({ isReview }) => (isReview ? '24px 0' : '24px 16px')}
+  padding: ${({ isReview }) => (isReview ? '24px 0' : '24px 16px')};
 `;
 
 const HeaderBlock = styled.div`
@@ -89,7 +89,8 @@ const Dropdown: FC<{
   isReview: boolean,
   isRight?: boolean,
   rightAnswer?: string,
-  userAnswer?: string, }> = (
+  userAnswer?: string,
+}> = (
   {
     index,
     name,
