@@ -38,7 +38,7 @@ const H4 = styled.h4<{ isReview: boolean }>`
 `;
 
 const StyledExpandedItem = styled.div<{ isOpen: boolean, isReview: boolean }>`
-  max-height: ${({ isOpen }) => (isOpen ? '190px' : '0')};
+  max-height: ${({ isOpen }) => (isOpen ? '250px' : '0')};
   padding: ${({ isReview }) => (isReview ? '0 0 0 28px' : '0')};
   overflow: auto;
   position: relative;
@@ -77,7 +77,7 @@ const StyledAnswersList = styled.ul <{ isReview: boolean }>`
   flex-wrap: wrap;
 `;
 
-const StyledAnswerItem = styled.li <{ isRight: 'red' | 'green' | 'transparent' }>`
+const StyledAnswerItem = styled.li <{ isRight: '#FFD6CC' | '#DEF0D3' | 'transparent' }>`
   margin: 0;
   padding: 16px;
   border: ${({ isRight }) => (isRight === 'transparent' ? '1px solid #DCE1E6' : 'none')};
@@ -122,7 +122,7 @@ const Dropdown: FC<{
           : (
             <StyledAnswersList isReview={isReview}>
               {answers.map((answer) => (
-                <StyledAnswerItem isRight={rightAnswer === answer.text ? 'green' : (userAnswer === answer.text ? 'red' : 'transparent')}>
+                <StyledAnswerItem isRight={rightAnswer === answer.text ? '#DEF0D3' : (userAnswer === answer.text ? '#FFD6CC' : 'transparent')}>
                   {answer.text}
                 </StyledAnswerItem>
               ))}

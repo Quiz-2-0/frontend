@@ -32,6 +32,18 @@ import { setLogged, setRememberMe, setLoaderState } from '../store/allSlice/allS
 import { setCurrentUser } from '../store/userSlice/userSlice';
 import { TUser } from '../types/types';
 
+const StyledFormItem = styled(FormItem)`
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.154px;
+
+  & > .vkuiFormItem__top {
+    color: #333;
+  }
+`;
+
 const StyledResetButton = styled(Button)`
   max-width: fit-content;
 
@@ -178,7 +190,7 @@ const Login: React.FC = () => {
             </StyledTabsItem>
           </Tabs>
 
-          <FormItem
+          <StyledFormItem
             htmlFor='email'
             top='Логин'
             onBlur={() => {
@@ -188,25 +200,16 @@ const Login: React.FC = () => {
             onChange={() => setIsEmailValid(true)}
             status={isEmailValid ? 'default' : 'error'}
             bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
-            style={{
-              padding: '0',
-              fontWeight: '400',
-              fontSize: '14px',
-              lineHeight: '18px',
-              letterSpacing: '-0.154px',
-              fontFamily: 'SFProDisplay !important',
-              color: '#333 !important',
-              paddingBottom: `${isEmailValid ? '26px' : '0px'}`,
-            }}>
+            style={{ paddingBottom: `${isEmailValid ? '26px' : '0px'}` }}>
             <StyledInput
               id='email'
               type='email'
-              placeholder='Email'
+              placeholder='e-mail'
               name='email'
               value={email}
               onChange={onChange} />
-          </FormItem>
-          <FormItem
+          </StyledFormItem>
+          <StyledFormItem
             top='Пароль'
             htmlFor='pass'
             onChange={() => setIsPasswordValid(true)}
@@ -218,20 +221,11 @@ const Login: React.FC = () => {
             }}
             status={isPasswordValid ? 'default' : 'error'}
             bottom={isPasswordValid ? '' : 'Введите пароль'}
-            style={{
-              padding: '0',
-              fontWeight: '400',
-              fontSize: '14px',
-              lineHeight: '18px',
-              letterSpacing: '-0.154px',
-              fontFamily: 'SFProDisplay',
-              color: '#333',
-              paddingBottom: `${isPasswordValid ? '16px' : '0px'}`,
-            }}>
+            style={{ paddingBottom: `${isPasswordValid ? '16px' : '0px'}` }}>
             <StyledInput
               id='pass'
               type={isPasswordVisible ? 'text' : 'password'}
-              placeholder='Пароль'
+              placeholder='пароль'
               name='password'
               value={password}
               after={
@@ -248,7 +242,7 @@ const Login: React.FC = () => {
                 )
               }
               onChange={onChange} />
-          </FormItem>
+          </StyledFormItem>
           <Div
             style={{
               padding: 0,
