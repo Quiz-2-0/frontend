@@ -17,6 +17,8 @@ const LayoutWithColumns: React.FC = () => {
     background-size: cover;
     max-width: 885px;
     width: 100%;
+    min-height: 900px;
+    height: 100%;
     box-sizing: border-box;
   `;
 

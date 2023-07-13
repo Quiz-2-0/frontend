@@ -8,7 +8,7 @@ import { TQuize } from '../../types/types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;
-  padding: 0 0 80px 0;
+  padding: 0;
   max-width: 1074px;
   list-style: none;
   display: grid;

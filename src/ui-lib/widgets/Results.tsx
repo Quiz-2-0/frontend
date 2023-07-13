@@ -57,7 +57,7 @@ const Results: FC<{
         letterSpacing: '0.38px',
         textAlign: 'center',
       }}>
-        {`Вы ответили правильно на ${rightAnswers} вопрос${rightAnswers === 1 ? '' : (rightAnswers && (rightAnswers > 4 || rightAnswers)) === 0 ? 'ов' : 'а'} из ${questions}`}
+        {`Вы ответили правильно на ${isLoading ? '' : rightAnswers} вопрос${rightAnswers === 1 ? '' : (rightAnswers && (rightAnswers > 4 || rightAnswers)) === 0 ? 'ов' : 'а'} из ${questions}`}
       </Text>
       <Div
         style={{

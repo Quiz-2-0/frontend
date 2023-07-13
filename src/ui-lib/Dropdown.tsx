@@ -57,12 +57,8 @@ const TextDiv = styled.div`
 `;
 
 const Text = styled.p`
-    margin: 0;
-    min-height: 8px;
-`;
-
-const ModifiedIconWrapper = styled(IconWrapper) <{ isOpen: boolean }>`
-     transform: ${({ isOpen }) => (isOpen ? 'rotate(270deg)' : 'rotate(90deg)')};
+  margin: 0;
+  min-height: 8px;
 `;
 
 const StyledAnswersList = styled.ul <{ isReview: boolean }>`
@@ -114,7 +110,9 @@ const Dropdown: FC<{
         {index === null
           ? <H4 isReview={isReview}>{name}</H4>
           : <H4 isReview={isReview}>{`${index}. ${name}`}</H4>}
-        <ModifiedIconWrapper isOpen={isOpen} onClick={() => open(!isOpen)}><ArrowIcon /></ModifiedIconWrapper>
+        <IconWrapper onClick={() => open(!isOpen)}>
+          <ArrowIcon style={{ transform: `${isOpen ? 'rotate(270deg)' : 'rotate(90deg)'}`, transition: 'all .3s ease' }} />
+        </IconWrapper>
       </HeaderBlock>
       <StyledExpandedItem isOpen={isOpen} isReview={isReview}>
         {answers === null

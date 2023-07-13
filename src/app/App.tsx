@@ -7,18 +7,17 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { SplitLayout } from '@vkontakte/vkui';
 
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
 import Loader from '../ui-lib/widgets/Loader';
 import { useSelector, useDispatch } from '../store/store.types';
-import { setLoaderState } from '../store/allSlice/allSlice';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
   height: 100%;
+  min-height: 900px;
   width: 100%;
   display: flex;
   flex-direction: column;

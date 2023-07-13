@@ -11,27 +11,10 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useGetQuizQuery, useGetStatisticQuery } from '../api/apiv2';
-import Dropdown from '../ui-lib/Dropdown';
 import ReviewDetails from '../ui-lib/widgets/ReviewDetails';
 import StyledButton from '../ui-lib/StyledButton';
-import { setLoaderState } from '../store/allSlice/allSlice';
-
-type Statistic = {
-  explanation: string;
-  isRight: boolean;
-  question: string;
-  right_answer: string;
-  user_answer: string;
-};
-
-const StyledUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  list-style: none;
-  padding: 0;
-  margin: 20px 0 0 0;
-`;
+import ErrorParsing from '../ui-lib/widgets/ErrorParsing';
+import { Statistic } from '../types/types';
 
 const StyledButtonWrapper = styled(Div)`
   margin: 0;
@@ -61,7 +44,11 @@ const QuizErrorsReview: React.FC = () => {
   }, [stata]);
 
   return (
-    <Div style={{ padding: 0, width: '100%', maxWidth: '914px' }}>
+    <Div style={{
+      padding: 0,
+      width: '100%',
+      maxWidth: '914px',
+    }}>
       <Title
         weight='2'
         style={{
@@ -73,27 +60,7 @@ const QuizErrorsReview: React.FC = () => {
         data='14 июля 2023'
         questionsAmount={data?.questions.length || 0}
         rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
-      <StyledUl>
-        {
-          statistics === undefined || statistics.length === 0
-            ? (
-              <>
-                <div> </div>
-                <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
-              </>
-            ) : questions.map((question, i) => (
-              <Dropdown
-                index={i + 1}
-                name={question.text}
-                description={statistics[i]?.explanation}
-                answers={question.answers}
-                isReview
-                isRight={statistics[i]?.isRight}
-                rightAnswer={statistics[i]?.right_answer}
-                userAnswer={statistics[i]?.user_answer} />
-            ))
-        }
-      </StyledUl>
+      <ErrorParsing statistics={statistics} questions={questions} />
       <StyledButtonWrapper>
         <StyledButton onClick={() => navigate(`/quizzes/${id}`)}>Пройти снова</StyledButton>
         <StyledButton

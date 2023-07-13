@@ -31,6 +31,7 @@ const ReviewDetails: React.FC<{
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: '46px',
+        marginBottom: '20px',
       }}>
       <StyledDetailWrapper>
         <Subhead

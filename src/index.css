@@ -13,10 +13,6 @@ html {
     font-family: 'SFProDisplay';
 }
 
-#root {
-    height: 100%;
-}
-
 ::-webkit-scrollbar {
     width: 0;
     background: rgba(255, 255, 255, .5);

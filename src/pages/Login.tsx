@@ -34,9 +34,7 @@ import StyledButton from '../ui-lib/StyledButton';
 import StyledFormLayout from '../ui-lib/StyledFormLayout';
 import StyledInput from '../ui-lib/StyledInput';
 import styled from 'styled-components';
-import { setLogged, setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
-import { setCurrentUser } from '../store/userSlice/userSlice';
-import { TUser } from '../types/types';
+import { setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
 
 const StyledFormItem = styled(FormItem)`
   padding: 0;

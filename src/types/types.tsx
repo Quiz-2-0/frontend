@@ -78,3 +78,11 @@ export type TAnswerRequest = {
   id: number | string;
   quizId: number | string;
 };
+
+export type Statistic = {
+  explanation: string;
+  isRight: boolean;
+  question: string;
+  right_answer: string;
+  user_answer: string;
+};

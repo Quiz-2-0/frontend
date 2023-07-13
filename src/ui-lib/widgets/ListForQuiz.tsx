@@ -1,10 +1,16 @@
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
 import Dropdown from '../Dropdown';
 import { StyledTabs, StyledTabsItem } from './QuizMenu';
-import { Volume } from '../../types/types';
+import { Volume, Statistic } from '../../types/types';
+import { useGetQuizQuery, useGetStatisticQuery } from '../../api/apiv2';
+import ErrorParsing from './ErrorParsing';
 
 const Div = styled.div`
   display: flex;
@@ -24,10 +30,26 @@ const List = styled.ul`
 `;
 
 const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
+  const { id } = useParams();
+
+  const { data } = useGetQuizQuery(id);
+  const { data: stata } = useGetStatisticQuery(id);
+
+  const [questions, setQuestions] = useState(data ? data.questions : []);
+  const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const [listType, setListType] = useState('about');
   const quizTypeFilter = (type: string) => {
     setListType(type);
   };
+
+  useEffect(() => {
+    setQuestions(data ? data.questions : []);
+  }, [data]);
+
+  useEffect(() => {
+    setStatistics(stata);
+  }, [stata]);
+
   return (
     <Div>
       <StyledTabs>
@@ -53,7 +75,10 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
               ))
               : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Справочные материалы не найдены</p>}
           </List>
-        ) : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Ошибок нет</p>}
+        ) : (data?.isPassed
+          ? <ErrorParsing statistics={statistics} questions={questions} />
+          : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Ошибок нет</p>
+        )}
     </Div>
   );
 };

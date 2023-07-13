@@ -116,7 +116,9 @@ const Quiz: React.FC = () => {
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>
-            <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}/question`); }}>Начать квиз</StyledButton>
+            <StyledButton onClick={() => { dispatch(setLoaderState(true)); navigate(`/quizzes/${id}/question`); }}>
+              {data?.isPassed ? 'Пройти снова' : 'Начать квиз'}
+            </StyledButton>
           </Div>
         </Div>
         <img
