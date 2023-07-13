@@ -33,12 +33,15 @@ const Bar = styled.ul`
   height: 8px;
 `;
 
-const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined }> = ({ progressObject, questionArr }) => (
-  <Bar>
-    {questionArr && questionArr.map((el, index) => (
-      <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
-    ))}
-  </Bar>
-);
+const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined }> = ({ progressObject, questionArr }) => {
+  console.log(progressObject);
+  return (
+    <Bar>
+      {questionArr && questionArr.map((el, index) => (
+        <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
+      ))}
+    </Bar>
+  );
+};
 
 export default ProgressBar;

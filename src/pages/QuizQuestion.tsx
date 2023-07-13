@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-console */
+/* eslint-disable no-plusplus */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable ternary/nesting */
@@ -50,7 +57,7 @@ const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
 `;
 
 const QuizQuestion: React.FC = () => {
-  const { id } = useParams();
+  const { id = 0 } = useParams();
   const { data, error, isLoading } = useGetQuizQuery(id);
   const [setAnswer, result] = useSetAnswerMutation();
   const [progressObject, setProgress] = useState<Record<number, string>>({});
@@ -73,7 +80,8 @@ const QuizQuestion: React.FC = () => {
 
   const setNextPage = async () => {
     const answ = questions[currentPage].answers.find(({ id }) => id === selectedAnswer);
-    await setAnswer(selectedAnswer);
+    const requestObject = { quizId: id, id: selectedAnswer };
+    await setAnswer(requestObject);
     setAllAnswers([...allAnswers, answ]);
     setCurrentPage(currentPage + 1);
     setSelectedAnswer(0);
@@ -83,8 +91,8 @@ const QuizQuestion: React.FC = () => {
   };
 
   const selectAnswer = (answerId: number) => {
-    console.log(answerId);
     setSelectedAnswer(answerId);
+    console.log(progressObject);
   };
 
   /* if (isLoading) { dispatch(setLoaderState(true)); } */

@@ -39,6 +39,7 @@ export type Question = {
   image: string;
   text: string;
   answers: Answer[];
+  is_answered: boolean;
 };
 
 export type Volume = {
@@ -70,4 +71,9 @@ export type QuizCardProps = {
   level: string;
   question_amount: number;
   tags: any;
+};
+
+export type TAnswerRequest = {
+  id: number | string;
+  quizId: number | string;
 };
