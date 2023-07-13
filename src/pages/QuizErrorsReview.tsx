@@ -45,8 +45,8 @@ const StyledButtonWrapper = styled(Div)`
 
 const QuizErrorsReview: React.FC = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(id);
-  const { data: stata } = useGetStatisticQuery(id);
+  const { data, error } = useGetQuizQuery(id);
+  const { data: stata, isLoading } = useGetStatisticQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
@@ -70,12 +70,12 @@ const QuizErrorsReview: React.FC = () => {
         {data?.name}
       </Title>
       <ReviewDetails
-        data='05 июля 2023'
+        data='14 июля 2023'
         questionsAmount={data?.questions.length || 0}
         rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
       <StyledUl>
         {
-          statistics
+          statistics !== undefined && !isLoading
             ? questions.map((question, i) => (
               <Dropdown
                 index={i + 1}
