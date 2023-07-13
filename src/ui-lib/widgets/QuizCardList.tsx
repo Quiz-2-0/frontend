@@ -33,6 +33,7 @@ const QuizCardList: FC<{ quizList: TQuize[] | undefined }> = ({ quizList }) => (
           description={quiz.description}
           duration={quiz.duration}
           level={quiz.level}
+          isPassed={quiz.isPassed}
           question_amount={quiz.question_amount}
           tags={quiz.tags} />
       ))}

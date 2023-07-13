@@ -13,15 +13,17 @@ import Loader from './Loader';
 const Section = styled.section`
     width: 100%;
     max-width: 1440px;
+    min-height: 757px;
     height: 100%;
     margin: 0 auto;
     display: flex; 
     flex-direction: column;
+    padding-bottom: 60px;
 `;
 const ContentWrapper = styled.div`
   display: flex;
   height: 100%;
-  padding: 40px 80px 60px;
+  padding: 40px 80px 0;
   gap: 40px;
   box-sizing: border-box;
 `;

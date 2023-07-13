@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -8,7 +9,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+} from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from '../store/store.types';
 import { useLoginMutation, jwt } from '../api/apiv2';
@@ -135,6 +141,7 @@ const Login: React.FC = () => {
     if (name === 'password') {
       setPassword(value);
     }
+    setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
   };
   /// / prosto test
   if (error) {
@@ -200,7 +207,7 @@ const Login: React.FC = () => {
             onChange={() => setIsEmailValid(true)}
             status={isEmailValid ? 'default' : 'error'}
             bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
-            style={{ paddingBottom: `${isEmailValid ? '26px' : '0px'}` }}>
+            style={{ paddingBottom: `${isEmailValid ? '22px' : '0px'}` }}>
             <StyledInput
               id='email'
               type='email'
@@ -221,7 +228,7 @@ const Login: React.FC = () => {
             }}
             status={isPasswordValid ? 'default' : 'error'}
             bottom={isPasswordValid ? '' : 'Введите пароль'}
-            style={{ paddingBottom: `${isPasswordValid ? '16px' : '0px'}` }}>
+            style={{ paddingBottom: `${isPasswordValid ? '22px' : '0px'}` }}>
             <StyledInput
               id='pass'
               type={isPasswordVisible ? 'text' : 'password'}

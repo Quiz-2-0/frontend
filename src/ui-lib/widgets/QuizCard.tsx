@@ -112,6 +112,7 @@ const QuizCard: React.FC<QuizCardProps> = (
     level,
     question_amount,
     tags,
+    isPassed,
   },
 ) => {
   const navigate = useNavigate();
@@ -172,7 +173,7 @@ const QuizCard: React.FC<QuizCardProps> = (
             <StyledQuizDetailCaption>{`${question_amount} вопрос${question_amount > 4 ? 'ов' : 'а'}`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
-        <StyledButton className='btn' onClick={onButtonClick}>Начать квиз</StyledButton>
+        <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : 'Начать квиз'}</StyledButton>
       </StyledQuizInfoWrapper>
     </StyledQuizContainer>
   );

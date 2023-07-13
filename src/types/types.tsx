@@ -70,4 +70,5 @@ export type QuizCardProps = {
   level: string;
   question_amount: number;
   tags: any;
+  isPassed: any;
 };
