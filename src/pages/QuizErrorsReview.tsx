@@ -44,8 +44,8 @@ const StyledButtonWrapper = styled(Div)`
 
 const QuizErrorsReview: React.FC = () => {
   const { id } = useParams();
-  const { data, error } = useGetQuizQuery(id);
-  const { data: stata, isLoading } = useGetStatisticQuery(id);
+  const { data } = useGetQuizQuery(id);
+  const { data: stata } = useGetStatisticQuery(id);
   const [questions, setQuestions] = useState(data ? data.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
@@ -74,8 +74,13 @@ const QuizErrorsReview: React.FC = () => {
         rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
       <StyledUl>
         {
-          statistics !== undefined && !isLoading
-            ? questions.map((question, i) => (
+          statistics === undefined || statistics.length === 0
+            ? (
+              <>
+                <div> </div>
+                <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
+              </>
+            ) : questions.map((question, i) => (
               <Dropdown
                 index={i + 1}
                 name={question.text}
@@ -86,7 +91,6 @@ const QuizErrorsReview: React.FC = () => {
                 rightAnswer={statistics[i]?.right_answer}
                 userAnswer={statistics[i]?.user_answer} />
             ))
-            : null
         }
       </StyledUl>
       <StyledButtonWrapper>
