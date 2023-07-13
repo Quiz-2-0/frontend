@@ -38,7 +38,7 @@ const H4 = styled.h4<{ isReview: boolean }>`
 `;
 
 const StyledExpandedItem = styled.div<{ isOpen: boolean, isReview: boolean }>`
-  max-height: ${({ isOpen }) => (isOpen ? '250px' : '0')};
+  max-height: ${({ isOpen }) => (isOpen ? '350px' : '0')};
   padding: ${({ isReview }) => (isReview ? '0 0 0 28px' : '0')};
   overflow: auto;
   position: relative;
