@@ -64,9 +64,6 @@ const QuizErrorsReview: React.FC = () => {
     setStatistics(stata);
   }, [stata]);
 
-  console.log(statistics);
-  console.log(questions);
-
   return (
     <Div style={{ padding: 0, width: '100%', maxWidth: '914px' }}>
       <Title
