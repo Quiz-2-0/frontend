@@ -1,21 +1,29 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Title, Text, Div } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '../StyledButton';
 import image from '../../images/results__image.png';
+import { useGetStatisticQuery } from '../../api/apiv2';
 
 const Results: FC<{
-  rightAnswers: number,
   questions: number,
   quizName: string | undefined,
-}> = ({ rightAnswers, questions, quizName }) => {
+}> = ({ questions, quizName }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [rightAnswers, setRightAnswers] = useState<number | undefined>(0);
+
+  const { data, error, isLoading } = useGetStatisticQuery(id);
+  console.log(data);
+  useEffect(() => {
+    setRightAnswers(data?.filter((answ) => (answ !== undefined && answ.isRight === true)).length);
+  }, [data]);
 
   return (
     <Div style={{
@@ -41,11 +49,16 @@ const Results: FC<{
         }} />
       <Title
         weight='3'
-        style={{ paddingTop: '8px', fontWeight: 500 }}>
+        style={{ paddingTop: '8px', fontWeight: 500, textAlign: 'center' }}>
         {`Квиз «${quizName}» пройден!`}
       </Title>
-      <Text style={{ fontSize: '20px', lineHeight: '24px', letterSpacing: '0.38px' }}>
-        {`Вы ответили правильно на ${rightAnswers} вопрос${rightAnswers === 1 ? '' : (rightAnswers > 4 || rightAnswers) === 0 ? 'ов' : 'а'} из ${questions}`}
+      <Text style={{
+        fontSize: '20px',
+        lineHeight: '24px',
+        letterSpacing: '0.38px',
+        textAlign: 'center',
+      }}>
+        {`Вы ответили правильно на ${rightAnswers} вопрос${rightAnswers === 1 ? '' : (rightAnswers && (rightAnswers > 4 || rightAnswers)) === 0 ? 'ов' : 'а'} из ${questions}`}
       </Text>
       <Div
         style={{

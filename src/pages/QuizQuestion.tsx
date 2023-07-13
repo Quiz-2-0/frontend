@@ -65,24 +65,14 @@ const QuizQuestion: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(0);
   const [questions, setQuestions] = useState(data ? data.questions : []);
-  const [allAnswers, setAllAnswers] = useState<(Answer | undefined)[]>([]);
-  const [rightAnswersAmount, setRightAnswersAmount] = useState(0);
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
   }, [data]);
 
-  useEffect(() => {
-    setRightAnswersAmount(
-      allAnswers.filter((answ) => (answ !== undefined && answ.isAnswerRight === true)).length,
-    );
-  }, [allAnswers]);
-
   const setNextPage = async () => {
-    const answ = questions[currentPage].answers.find(({ id }) => id === selectedAnswer);
     const requestObject = { quizId: id, id: selectedAnswer };
     await setAnswer(requestObject);
-    setAllAnswers([...allAnswers, answ]);
     setCurrentPage(currentPage + 1);
     setSelectedAnswer(0);
     if (currentPage !== questions.length) {
@@ -92,7 +82,6 @@ const QuizQuestion: React.FC = () => {
 
   const selectAnswer = (answerId: number) => {
     setSelectedAnswer(answerId);
-    console.log(progressObject);
   };
 
   /* if (isLoading) { dispatch(setLoaderState(true)); } */
@@ -107,7 +96,6 @@ const QuizQuestion: React.FC = () => {
       {currentPage === questions.length
         ? (
           <Results
-            rightAnswers={rightAnswersAmount}
             questions={questions.length}
             quizName={data?.name} />
         ) : (
