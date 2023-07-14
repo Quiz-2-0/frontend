@@ -32,10 +32,9 @@ const List = styled.ul`
 const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   const { id } = useParams();
 
-  const { data } = useGetQuizQuery(id);
-  const { data: stata } = useGetStatisticQuery(id);
-
-  const [questions, setQuestions] = useState(data ? data.questions : []);
+  const { data: quizData } = useGetQuizQuery(id);
+  const { data: statisticsData } = useGetStatisticQuery(id);
+  const [questions, setQuestions] = useState(quizData ? quizData.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const [listType, setListType] = useState('about');
   const quizTypeFilter = (type: string) => {
@@ -43,12 +42,12 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   };
 
   useEffect(() => {
-    setQuestions(data ? data.questions : []);
-  }, [data]);
+    setQuestions(quizData ? quizData.questions : []);
+  }, [quizData]);
 
   useEffect(() => {
-    setStatistics(stata);
-  }, [stata]);
+    setStatistics(statisticsData);
+  }, [statisticsData]);
 
   return (
     <Div>
@@ -75,7 +74,7 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
               ))
               : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Справочные материалы не найдены</p>}
           </List>
-        ) : (data?.isPassed
+        ) : (quizData?.isPassed
           ? <ErrorParsing statistics={statistics} questions={questions} />
           : <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '16px' }}>Ошибок нет</p>
         )}

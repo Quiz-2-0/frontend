@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -20,8 +21,10 @@ const Results: FC<{
   const [rightAnswers, setRightAnswers] = useState<number | undefined>(0);
 
   const { data, error, isLoading } = useGetStatisticQuery(id);
+  console.log(data);
   useEffect(() => {
     setRightAnswers(data?.filter((answ) => (answ !== undefined && answ.isRight === true)).length);
+    console.log(data, rightAnswers);
   }, [data]);
 
   return (

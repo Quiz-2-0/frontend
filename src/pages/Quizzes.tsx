@@ -24,7 +24,9 @@ const Quizzes: FC = () => {
   const { fromCastle } = useSelector((state) => state.all);
   const [search, setSearch] = useState('');
   const [quizType, setQuizType] = useState(fromCastle ? 'appointed' : 'all');
-  const { data, error, isLoading } = useGetAllQuizesQuery();
+  const { data, error, isLoading } = useGetAllQuizesQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const [quizzesOnPage, setQuizzesOnPage] = useState(data);
   const [appointedQuizzes, setAppointedQuizzes] = useState(
@@ -55,6 +57,7 @@ const Quizzes: FC = () => {
       quizTypeFilter('appointed');
     } else {
       setQuizzesOnPage(data);
+      console.log(data);
       setAppointedQuizzes(data?.some(({ appointed }) => appointed === true));
     }
   }, [data, location]);

@@ -7,10 +7,10 @@
 /* eslint-disable ternary/no-unreachable */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, QUIZES_STATA, GET_USER,
+  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, GET_USER,
 } from '../constants/api-url';
 import {
-  TUser, TUserLoginRequest, TQuize, TAnswerRequest,
+  TUser, TUserLoginRequest, TQuize, TAnswerRequest, Statistic,
 } from '../types/types';
 
 export const jwt = {
@@ -84,14 +84,16 @@ export const quizApi = createApi({
   endpoints: (build) => ({
     getAllQuizes: build.query<TQuize[], void>({
       query: () => ALL_QUIZES,
+      keepUnusedDataFor: 0,
     }),
     getQuiz: build.query<TQuize, any>({
       query: (id: any) => `${ALL_QUIZES}${id}`,
       providesTags: ['quiz'],
-
+      keepUnusedDataFor: 0,
     }),
-    getStatistic: build.query<{ question: string, answer: string, isRight: boolean, explanation: string, right_answer: string, user_answer: string }[], any>({
+    getStatistic: build.query<Statistic[], any>({
       query: (id: any) => `${ALL_QUIZES}${id}/statistic`,
+      keepUnusedDataFor: 0,
     }),
     setAnswer: build.mutation<void, TAnswerRequest>({
       query: ({ quizId, ...patch }) => ({
