@@ -104,7 +104,6 @@ const QuizQuestion: React.FC = () => {
               questions={questions}
               selectedAnswer={selectedAnswer}
               selectAnswer={selectAnswer} />
-            <MultipleChoiceQuestion />
             <StyledButton onClick={setNextPage} disabled={selectedAnswer === 0} style={{ width: '167px', margin: '32px auto 0' }}>Дальше</StyledButton>
           </>
         )}
