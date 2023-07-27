@@ -15,12 +15,14 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable spaced-comment */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Div,
   Title,
   Headline,
+  Subhead,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
@@ -31,30 +33,10 @@ import { useDispatch } from '../store/store.types';
 import { setLoaderState } from '../store/allSlice/allSlice';
 import { Answer } from '../types/types';
 import Results from '../ui-lib/widgets/Results';
-
-const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
-  cursor: pointer;
-  padding: 16px;
-  list-style: none;
-  max-width: 447px;
-  width: 100%;
-  min-height: min-content;
-  height: 100%;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? '#3F8AE0' : '#DCE1E6')};
-  background: ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? 'rgba(63, 138, 224, 0.15)' : 'none')};
-
-  &:hover {
-    border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? '#3F8AE0' : 'rgba(63, 138, 224, 0.15)')};
-    background: ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? 'rgba(63, 138, 224, 0.2)' : 'rgba(63, 138, 224, 0.05)')};
-  }
-`;
+import SingleChoiceQuestion from '../ui-lib/widgets/SingleChoiceQuestion';
+import MultipleChoiceQuestion from '../ui-lib/widgets/MultipleChoiceQuestion';
+import OpenEndedQuestion from '../ui-lib/widgets/OpenEndedQuestion';
+import DragAndDropQuestion from '../ui-lib/widgets/DragAndDropQuestion';
 
 const QuizQuestion: React.FC = () => {
   const { id = 0 } = useParams();
@@ -62,7 +44,7 @@ const QuizQuestion: React.FC = () => {
   const [setAnswer, result] = useSetAnswerMutation();
   const [progressObject, setProgress] = useState<Record<number, string>>({});
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState(0);
   const [questions, setQuestions] = useState(data ? data.questions : []);
 
@@ -101,7 +83,7 @@ const QuizQuestion: React.FC = () => {
             <ProgressBar questionArr={questions} progressObject={progressObject} />
             <Headline weight='3' style={{ marginTop: '32px' }}>{`Вопрос ${currentPage + 1}/${data?.question_amount}`}</Headline>
             <Title style={{
-              margin: '20px 0',
+              margin: '20px 0 0 0',
               fontSize: '20px',
               fontWeight: 600,
               lineHeight: '24px',
@@ -109,30 +91,19 @@ const QuizQuestion: React.FC = () => {
             }}>
               {questions[currentPage].text}
             </Title>
-            <ul
+            <Subhead
+              weight='2'
               style={{
-                listStyle: 'none',
-                padding: '0',
-                margin: '0',
-                width: '100%',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '20px',
-                justifyItems: 'start',
-                alignItems: 'start',
-                justifyContent: 'start',
-                alignContent: 'start',
+                margin: '8px 0 20px',
+                color: '#818C99',
               }}>
-              {questions[currentPage].answers.map((el) => (
-                <Answers
-                  key={el.id}
-                  selectedAnswer={selectedAnswer}
-                  cardId={el.id}
-                  onClick={() => selectAnswer(el.id)}>
-                  {el.text}
-                </Answers>
-              ))}
-            </ul>
+              Текст для подсказки
+            </Subhead>
+            <SingleChoiceQuestion
+              currentPage={currentPage}
+              questions={questions}
+              selectedAnswer={selectedAnswer}
+              selectAnswer={selectAnswer} />
             <StyledButton onClick={setNextPage} disabled={selectedAnswer === 0} style={{ width: '167px', margin: '32px auto 0' }}>Дальше</StyledButton>
           </>
         )}
