@@ -6,6 +6,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
@@ -29,25 +31,22 @@ const App = () => {
   const { isLoaderRun } = useSelector((state) => state.all);
 
   return (
-
-    <Main style={{ fontFamily: 'SFProDisplay' }}>
-      {isLoaderRun && <Loader />}
-      <React.Suspense>
-
-        <Routes>
-          <Route path='/login' element={<LayoutWithColumns />} />
-          <Route path='/reset-password' element={<LayoutWithColumns />} />
-          {routes.map(({ path, Component }, index) => (
-
-            <Route element={<MainLayout />} key={index}>
-              <Route path={path} element={Component} />
-            </Route>
-          ))}
-        </Routes>
-
-      </React.Suspense>
-    </Main>
-
+    <DndProvider backend={HTML5Backend}>
+      <Main style={{ fontFamily: 'SFProDisplay' }}>
+        {isLoaderRun && <Loader />}
+        <React.Suspense>
+          <Routes>
+            <Route path='/login' element={<LayoutWithColumns />} />
+            <Route path='/reset-password' element={<LayoutWithColumns />} />
+            {routes.map(({ path, Component }, index) => (
+              <Route element={<MainLayout />} key={index}>
+                <Route path={path} element={Component} />
+              </Route>
+            ))}
+          </Routes>
+        </React.Suspense>
+      </Main>
+    </DndProvider>
   );
 };
 
