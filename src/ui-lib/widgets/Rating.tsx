@@ -37,7 +37,7 @@ const Rating: React.FC = () => {
     <StyledDiv
       style={{
         width: '318px',
-        height: '226px',
+        height: '202px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
