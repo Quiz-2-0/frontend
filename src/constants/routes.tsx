@@ -8,6 +8,7 @@ const Quizzes = React.lazy(() => import('../pages/Quizzes'));
 const Quiz = React.lazy(() => import('../pages/Quiz'));
 const QuizQuestion = React.lazy(() => import('../pages/QuizQuestion'));
 const QuizErrorsReview = React.lazy(() => import('../pages/QuizErrorsReview'));
+const Staff = React.lazy(() => import('../pages/Staff'));
 /// сюда все урлы защищенные помещаем
 export const routes = [
   { path: '/', Component: <PersonalAccount /> },
@@ -15,4 +16,5 @@ export const routes = [
   { path: '/quizzes/:id', Component: <Quiz /> },
   { path: '/quizzes/:id/question', Component: <QuizQuestion /> },
   { path: '/quizzes/:id/review', Component: <QuizErrorsReview /> },
+  { path: '/staff', Component: <Staff /> },
 ];

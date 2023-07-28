@@ -4,10 +4,16 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Tabs, TabsItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon24HomeOutline, Icon24Square4Outline, Icon24CupOutline } from '@vkontakte/icons';
+import {
+  Icon24HomeOutline,
+  Icon24Square4Outline,
+  Icon24CupOutline,
+  Icon24UsersOutline,
+  Icon24DocumentPlusOutline,
+  Icon24PollOutline,
+} from '@vkontakte/icons';
 import styled from 'styled-components';
 import { useDispatch } from '../../store/store.types';
-import { setLoaderState } from '../../store/allSlice/allSlice';
 
 const StyledTabs = styled(Tabs)`
   max-width: 166px;
@@ -65,23 +71,48 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const role = 'AD';
+  console.log(role);
   const setUrl = (url: string) => {
     navigate(url);
   };
   return (
     <StyledTabs>
-      <StyledTabsItem selected={location.pathname === '/'} onClick={() => setUrl('/')}>
-        <Icon24HomeOutline />
-        Главная
-      </StyledTabsItem>
-      <StyledTabsItem selected={location.pathname.includes('/quizzes')} onClick={() => setUrl('/quizzes')}>
-        <Icon24Square4Outline />
-        Квизы
-      </StyledTabsItem>
-      <StyledTabsItem selected={location.pathname === '/achievements'} onClick={() => setUrl('/achievements')}>
-        <Icon24CupOutline />
-        Достижения
-      </StyledTabsItem>
+      {role !== 'AD' ? (
+        <>
+          <StyledTabsItem selected={location.pathname === '/'} onClick={() => setUrl('/')}>
+            <Icon24HomeOutline />
+            Главная
+          </StyledTabsItem>
+          <StyledTabsItem selected={location.pathname.includes('/quizzes')} onClick={() => setUrl('/quizzes')}>
+            <Icon24Square4Outline />
+            Квизы
+          </StyledTabsItem>
+          <StyledTabsItem selected={location.pathname === '/achievements'} onClick={() => setUrl('/achievements')}>
+            <Icon24CupOutline />
+            Достижения
+          </StyledTabsItem>
+        </>
+      ) : (
+        <>
+          <StyledTabsItem selected={location.pathname === '/staff'} onClick={() => setUrl('/staff')}>
+            <Icon24UsersOutline />
+            Сотрудники
+          </StyledTabsItem>
+          <StyledTabsItem selected={location.pathname.includes('/adm-quizzes')} onClick={() => setUrl('/adm-quizzes')}>
+            <Icon24Square4Outline />
+            Квизы
+          </StyledTabsItem>
+          <StyledTabsItem selected={location.pathname === '/new-quiz'} onClick={() => setUrl('/new-quiz')}>
+            <Icon24DocumentPlusOutline />
+            Новый квиз
+          </StyledTabsItem>
+          <StyledTabsItem selected={location.pathname === '/analytics'} onClick={() => setUrl('/analytics')}>
+            <Icon24PollOutline />
+            Аналитика
+          </StyledTabsItem>
+        </>
+      )}
     </StyledTabs>
   );
 };

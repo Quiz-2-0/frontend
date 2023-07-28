@@ -127,7 +127,7 @@ const Login: React.FC = () => {
     resetForm();
 
     if (user) {
-      navigate('/');
+      navigate(`${role === 'EMP' ? '/' : '/staff'}`);
       dispatch(setLoaderState(true));
     }
   };
