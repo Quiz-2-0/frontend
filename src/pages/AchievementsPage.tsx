@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { Div, Title } from '@vkontakte/vkui';
+import { Div, Title, Text } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import ButtonIcon from '../ui-lib/ButtonIcon';
 import buttonIcon from '../images/icons/button_icon.svg';
@@ -15,6 +15,81 @@ import achieveSuperAccuracy from '../images/achievements-img/achieve_super_accur
 import achieveSuperSpeed from '../images/achievements-img/achieve_super_speed.png';
 import achieve5QuizzesInARow from '../images/achievements-img/achieve_5_quizzez_in_a_row.png';
 import achieveSoftSkillsGuru from '../images/achievements-img/achieve_soft_skills_guru.png';
+
+const achievements = [
+  {
+    id: 0,
+    counterTotal: 1,
+    counterAchieved: 1,
+    name: 'Лёгкий старт',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveEasyStart,
+    disabled: false,
+  },
+  {
+    id: 1,
+    counterTotal: 5,
+    counterAchieved: 5,
+    name: 'Софт киллер',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveSoftKiller,
+    disabled: false,
+  },
+  {
+    id: 2,
+    counterTotal: 10,
+    counterAchieved: 0,
+    name: 'Вызов августа',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveAugustChallenge,
+    disabled: true,
+  },
+  {
+    id: 3,
+    counterTotal: 5,
+    counterAchieved: 5,
+    name: 'Постоянство',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achievePermanence,
+    disabled: false,
+  },
+  {
+    id: 4,
+    counterTotal: 3,
+    counterAchieved: 0,
+    name: 'Супер точность',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveSuperAccuracy,
+    disabled: true,
+  },
+  {
+    id: 5,
+    counterTotal: 1,
+    counterAchieved: 1,
+    name: 'Супер скорость',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveSuperSpeed,
+    disabled: false,
+  },
+  {
+    id: 6,
+    counterTotal: 100,
+    counterAchieved: 0,
+    name: '5 квизов подряд',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieve5QuizzesInARow,
+    disabled: true,
+  },
+  {
+    id: 7,
+    counterTotal: 100,
+    counterAchieved: 0,
+    name: 'Гуру по софтам',
+    description: 'Первый раз пройти квиз из назначенных',
+    img: achieveSoftSkillsGuru,
+    disabled: true,
+  },
+];
 
 const Container = styled(Div)`
     max-width: 1074px;
@@ -36,7 +111,7 @@ const AchievementsWrapper = styled.ul`
   align-content: start;
 `;
 
-const AchieveDiv = styled.li`
+const AchieveLi = styled.li<{ disabled: boolean }>`
   width: 232px;
   height: 274px;
   padding: 24px;
@@ -50,10 +125,40 @@ const AchieveDiv = styled.li`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  opacity: ${({ disabled }) => (disabled ? '.5' : '1')};
+  
+  &:hover {
+    .counter {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+    .achieveImg {
+      width: 120px;
+      height: 120px;
+      margin: 0 0 12px;
+    }
+    
+    .achieveTitle {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+    .achieveDescription {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
 `;
 
 const AchieveCounter = styled(Title)`
   align-self: flex-end;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchieveImg = styled.img`
@@ -61,6 +166,31 @@ const AchieveImg = styled.img`
   height: 150px;
   border-radius: 50%;
   margin: 8px 0 20px;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+`;
+
+const AchieveTitle = styled(Title)`
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+`;
+
+const AchieveDescription = styled(Text)`
+  padding-top: 4px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchievementsPage: FC = () => {
@@ -68,52 +198,20 @@ const AchievementsPage: FC = () => {
 
   return (
     <Container>
-      <BackButton type='button' onClick={() => navigate('/quizzes')}>
+      <BackButton type='button' onClick={() => navigate('/')}>
         <ButtonIcon src={buttonIcon} alt='Стрелочка назад' />
         Назад
       </BackButton>
       <Title level='2' style={{ margin: '32px 0' }}>Ачивки</Title>
       <AchievementsWrapper>
-        <AchieveDiv>
-          <AchieveCounter level='3'>1/1</AchieveCounter>
-          <AchieveImg src={achieveEasyStart} alt='Ачивка Легкий старт' />
-          <Title level='3'>Лёгкий старт</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>5/5</AchieveCounter>
-          <AchieveImg src={achieveSoftKiller} alt='Ачивка Софт киллер' />
-          <Title level='3'>Софт киллер</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>0/10</AchieveCounter>
-          <AchieveImg src={achieveAugustChallenge} alt='Ачивка Вызов августа' />
-          <Title level='3'>Вызов августа</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>5/5</AchieveCounter>
-          <AchieveImg src={achievePermanence} alt='Ачивка Постоянство' />
-          <Title level='3'>Постоянство</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>0/3</AchieveCounter>
-          <AchieveImg src={achieveSuperAccuracy} alt='Ачивка Супер точность' />
-          <Title level='3'>Супер точность</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>1/1</AchieveCounter>
-          <AchieveImg src={achieveSuperSpeed} alt='Ачивка Супер Скорость' />
-          <Title level='3'>Супер скорость</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>0/100</AchieveCounter>
-          <AchieveImg src={achieve5QuizzesInARow} alt='Ачивка 5 квизов подряд' />
-          <Title level='3'>5 квизов подряд</Title>
-        </AchieveDiv>
-        <AchieveDiv>
-          <AchieveCounter level='3'>0/100</AchieveCounter>
-          <AchieveImg src={achieveSoftSkillsGuru} alt='Ачивка Гура по софтам' />
-          <Title level='3'>Гуру по софтам</Title>
-        </AchieveDiv>
+        {achievements.map((achievement) => (
+          <AchieveLi key={achievement.id} disabled={achievement.disabled}>
+            <AchieveCounter level='3' className='counter'>{`${achievement.counterAchieved}/${achievement.counterTotal}`}</AchieveCounter>
+            <AchieveImg src={achievement.img} alt='Ачивка Легкий старт' className='achieveImg' />
+            <AchieveTitle level='3' className='achieveTitle'>{achievement.name}</AchieveTitle>
+            <AchieveDescription weight='3' className='achieveDescription'>{achievement.description}</AchieveDescription>
+          </AchieveLi>
+        ))}
       </AchievementsWrapper>
     </Container>
   );
