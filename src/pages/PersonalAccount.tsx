@@ -14,6 +14,7 @@ import Castle from '../ui-lib/widgets/Castle';
 import Achives from '../ui-lib/widgets/Achives';
 import Progress from '../ui-lib/widgets/Progress';
 import Rating from '../ui-lib/widgets/Rating';
+import Achievements from '../ui-lib/widgets/Achievements';
 import { useSelector } from '../store/store.types';
 import { useLoginMutation, jwt, userApi } from '../api/apiv2';
 
@@ -39,10 +40,8 @@ const PersonalAccount: FC = () => {
       <StyledDiv>
         <Div>
           <Rating />
-          <Progress />
-
+          <Achievements />
         </Div>
-
         <Achives />
       </StyledDiv>
       <Castle />

@@ -42,6 +42,13 @@ export type Question = {
   is_answered: boolean;
 };
 
+export type SingleChoiceQuestionProps = {
+  currentPage: number;
+  questions: Question[];
+  selectedAnswer: number;
+  selectAnswer: (answerId: number) => void;
+};
+
 export type Volume = {
   name: string;
   description: string;
@@ -85,4 +92,22 @@ export type Statistic = {
   question: string;
   right_answer: string;
   user_answer: string;
+};
+
+export type Item = {
+  id: number;
+  text: string;
+};
+
+export type BoardProps = {
+  title: string;
+  board: Item[];
+  onItemMove: (itemId: number) => void;
+};
+
+export type DnDCardProps = {
+  id: number;
+  text: string;
+  backgroundColor: string;
+  borderColor: string;
 };

@@ -34,7 +34,6 @@ const MainLayout: FC = () => {
   if (error) return <Navigate to='/login' />;
 
   return (
-
     <Section>
       <Header />
       <ContentWrapper>
