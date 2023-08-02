@@ -1,3 +1,4 @@
+/* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -5,12 +6,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
 import MainLayout from '../ui-lib/widgets/MainLayout';
 import { routes } from '../constants/routes';
+import Error from '../pages/Error';
 import Loader from '../ui-lib/widgets/Loader';
 import { useSelector, useDispatch } from '../store/store.types';
 
@@ -25,8 +32,10 @@ const Main = styled.main`
 `;
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { isLoaderRun } = useSelector((state) => state.all);
+  console.log(localStorage.getItem('role'), sessionStorage.getItem('role'));
 
   return (
 
@@ -37,12 +46,15 @@ const App = () => {
         <Routes>
           <Route path='/login' element={<LayoutWithColumns />} />
           <Route path='/reset-password' element={<LayoutWithColumns />} />
-          {routes.map(({ path, Component }, index) => (
-
-            <Route element={<MainLayout />} key={index}>
-              <Route path={path} element={Component} />
-            </Route>
-          ))}
+          <Route path='/404' element={<Error />} />
+          {routes.map(({ path, Component, role }, index) => (
+            (localStorage.getItem('role') === role || sessionStorage.getItem('role') === role) && (location.pathname === path)
+              && (
+                <Route element={<MainLayout />} key={index}>
+                  <Route path={path} element={Component} />
+                </Route>
+              )))}
+          <Route path={location.pathname} element={<Navigate to='/404' />} />
         </Routes>
 
       </React.Suspense>

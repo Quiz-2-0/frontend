@@ -11,10 +11,10 @@ const QuizErrorsReview = React.lazy(() => import('../pages/QuizErrorsReview'));
 const Staff = React.lazy(() => import('../pages/Staff'));
 /// сюда все урлы защищенные помещаем
 export const routes = [
-  { path: '/', Component: <PersonalAccount /> },
-  { path: '/quizzes', Component: <Quizzes /> },
-  { path: '/quizzes/:id', Component: <Quiz /> },
-  { path: '/quizzes/:id/question', Component: <QuizQuestion /> },
-  { path: '/quizzes/:id/review', Component: <QuizErrorsReview /> },
-  { path: '/staff', Component: <Staff /> },
+  { path: '/', Component: <PersonalAccount />, role: 'EMP' },
+  { path: '/quizzes', Component: <Quizzes />, role: 'EMP' },
+  { path: '/quizzes/:id', Component: <Quiz />, role: 'EMP' },
+  { path: '/quizzes/:id/question', Component: <QuizQuestion />, role: 'EMP' },
+  { path: '/quizzes/:id/review', Component: <QuizErrorsReview />, role: 'EMP' },
+  { path: '/staff', Component: <Staff />, role: 'AD' },
 ];

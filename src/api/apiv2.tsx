@@ -14,18 +14,27 @@ import {
 } from '../types/types';
 
 export const jwt = {
-  set: (value: string, isRemember: boolean): void => {
+  set: (value: string, isRemember: boolean, role: string): void => {
+    console.log(isRemember, role);
     if (value) {
       if (isRemember) {
         localStorage.setItem('JWT', `${value}`);
+        localStorage.setItem('role', `${role}`);
+        console.log(localStorage.getItem('role'), 1);
         return;
       }
       sessionStorage.setItem('JWT', `${value}`);
+      sessionStorage.setItem('role', `${role}`);
+      console.log(sessionStorage.getItem('role'), 2);
     } else {
       if (isRemember) {
         localStorage.removeItem('JWT');
+        localStorage.removeItem('role');
+        console.log(localStorage.getItem('role'), 1);
       }
       sessionStorage.removeItem('JWT');
+      sessionStorage.removeItem('role');
+      console.log(sessionStorage.getItem('role'), 4);
     }
   },
   get: (): string => {
@@ -33,7 +42,7 @@ export const jwt = {
     return res || '';
   },
   test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),
-  remove: (isRemember: boolean): void => (isRemember ? localStorage.removeItem('JWT') : sessionStorage.removeItem('JWT')),
+  remove: (isRemember: boolean): void => (isRemember ? localStorage.clear() : sessionStorage.clear()),
 };
 /// вот так выглядит слайс под апи на каждую сущность
 export const userApi = createApi({
@@ -63,8 +72,8 @@ export const userApi = createApi({
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
-
       }),
+      keepUnusedDataFor: 0,
     }),
 
   }),

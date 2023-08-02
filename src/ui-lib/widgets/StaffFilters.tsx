@@ -5,7 +5,6 @@ import { Button, CustomSelect, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import departments from '../../constants/departments';
 import StyledDiv from '../StyledDiv';
 import StyledButton from '../StyledButton';
 
@@ -26,13 +25,20 @@ const StaffFilter: FC<{
   search: string,
   setSearch: any,
   type: any,
-  setType: any
+  setType: any,
+  departments: { label: string, value: string }[],
+  setIsChooseQuizzesPopupOpen: any,
+  setIsNewEmploeePopupOpen: any,
 }> = ({
   setSearch,
   search,
   type,
   setType,
+  departments,
+  setIsChooseQuizzesPopupOpen,
+  setIsNewEmploeePopupOpen,
 }) => {
+  console.log(departments);
   const onChange = (e: { target: { value: any; }; }) => {
     setSearch(e.target.value);
   };
@@ -48,15 +54,24 @@ const StaffFilter: FC<{
         }}>
         <StyledCustomSelect
           selectType={type}
-          options={departments}
           value={type}
+          options={departments}
           onChange={(e) => {
             console.log(e);
             setType(e.target.value);
           }} />
         <Buttons>
-          <StyledButton mode='outline' style={{ margin: 0, width: '220px' }}>Добавить сотрудника</StyledButton>
-          <StyledButton style={{ margin: 0, width: '220px' }}>Назначить квиз</StyledButton>
+          <StyledButton
+            mode='outline'
+            style={{ margin: 0, width: '220px' }}
+            onClick={() => setIsNewEmploeePopupOpen(true)}>
+            Добавить сотрудника
+          </StyledButton>
+          <StyledButton
+            style={{ margin: 0, width: '220px' }}
+            onClick={() => setIsChooseQuizzesPopupOpen(true)}>
+            Назначить квиз
+          </StyledButton>
         </Buttons>
       </StyledDiv>
       <Search
