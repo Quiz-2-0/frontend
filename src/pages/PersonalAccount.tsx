@@ -48,17 +48,38 @@ const PersonalAccount: FC = () => {
         alignItems: 'flex-start',
       }}>
       <div>
-        <Title>Лев, привет!</Title>
-        <Text>Сегодня отличное время, чтобы узнать новое или закрепить знания на практике.</Text>
+        <Title
+          style={{
+            margin: '0',
+            padding: '0',
+            fontSize: '24px',
+            fontWeight: '500',
+            lineHeight: '28px',
+            letterSpacing: '0.326px',
+          }}>
+          Лев, привет!
+        </Title>
+        <Text
+          style={{
+            margin: '10px 0 0',
+            padding: '0',
+            fontSize: '15px',
+            fontWeight: '400',
+            lineHeight: '28px',
+          }}>
+          Сегодня отличное время, чтобы узнать новое или закрепить знания на практике.
+        </Text>
       </div>
       <div
         style={{
           width: '100%',
+          margin: '28px 0 0',
           padding: '0',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-start',
           alignItems: 'flex-start',
+          gap: '28px',
         }}>
         <StyledDiv>
           <LearningProgress />
