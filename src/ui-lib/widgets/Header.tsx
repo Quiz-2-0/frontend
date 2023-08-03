@@ -91,6 +91,7 @@ const Header: FC = () => {
     localStorage.removeItem('isRemember');
     navigate('/login');
   };
+
   useEffect(() => {
     document.addEventListener('click', (e: any) => {
       if (e.target!.closest('.banner') === null) { openModal(false); }

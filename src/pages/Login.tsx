@@ -35,18 +35,7 @@ import StyledFormLayout from '../ui-lib/StyledFormLayout';
 import StyledInput from '../ui-lib/StyledInput';
 import styled from 'styled-components';
 import { setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
-
-const StyledFormItem = styled(FormItem)`
-  padding: 0;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  letter-spacing: -0.154px;
-
-  & > .vkuiFormItem__top {
-    color: #333;
-  }
-`;
+import StyledFormItem from '../ui-lib/StyledFormItem';
 
 const StyledResetButton = styled(Button)`
   max-width: fit-content;
@@ -104,7 +93,7 @@ const Login: React.FC = () => {
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-
+  console.log(role);
   const resetForm = () => {
     setRole('EMP');
     setEmail('');
@@ -119,15 +108,15 @@ const Login: React.FC = () => {
   const onSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
     const user = await login({ role, email, password }).unwrap();
-
+    console.log(role, 'login');
     const { access, ...rest } = user;
     const inMemory = localStorage.getItem('isRemember') === 'true';
-    jwt.set(access, inMemory);
+    jwt.set(access, inMemory, role);
 
     resetForm();
 
     if (user) {
-      navigate('/');
+      navigate(`${role === 'EMP' ? '/' : '/staff'}`);
       dispatch(setLoaderState(true));
     }
   };
@@ -142,10 +131,7 @@ const Login: React.FC = () => {
     }
     setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
   };
-  /// / prosto test
-  if (error) {
-    return <p>Ошибка</p>;
-  }
+
   const setUserInMemory = () => {
     if (localStorage.getItem('isRemember') === 'true') {
       localStorage.setItem('isRemember', 'false');
@@ -156,7 +142,7 @@ const Login: React.FC = () => {
 
   return (
     localStorage.getItem('JWT') || sessionStorage.getItem('JWT')
-      ? <Navigate to='/' />
+      ? <Navigate to={localStorage.getItem('role') || sessionStorage.getItem('role') === 'EMP' ? '/' : '/staff'} />
       : (
         <StyledFormLayout
           style={{ fontFamily: 'SFProDisplay' }}
