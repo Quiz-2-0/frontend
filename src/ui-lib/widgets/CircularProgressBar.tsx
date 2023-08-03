@@ -4,19 +4,20 @@ import 'react-circular-progressbar/dist/styles.css';
 import styled from 'styled-components';
 
 const StyledPercentageLabel = styled('div')`
-  width: 47px;
-  height: 22px;
-  background-color: #3F8AE0;
-  border-radius: 11px;
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: 400;
+  color: #000000;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
   text-align: center;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
 `;
 
 interface CircularProgressBarProps {
@@ -32,13 +33,13 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ percentage })
           stroke: '#3F8AE0',
           strokeLinecap: 'round',
           transition: 'stroke-dashoffset 0.5s ease 0s',
-          strokeWidth: '5',
+          strokeWidth: '8',
           transform: 'rotate(2turn)',
           transformOrigin: 'center center',
         },
         trail: {
           stroke: 'rgba(63, 138, 224, .2)',
-          strokeWidth: '5',
+          strokeWidth: '8',
         },
       }}>
       <StyledPercentageLabel>

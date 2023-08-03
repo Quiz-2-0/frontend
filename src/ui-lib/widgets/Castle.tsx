@@ -26,7 +26,7 @@ import { useDispatch } from '../../store/store.types';
 
 const StyledImage = styled.img`
   max-width: 310px;
-  min-height: max-content;
+  height: max-content;
   width: 100%;
   background: none;
   padding: 0;
@@ -75,7 +75,7 @@ const Castle: React.FC = () => {
 
   return (
     <StyledDiv style={{
-      maxWidth: '358px', width: '100%', height: 'max-content',
+      maxWidth: '358px', width: '100%', height: '446px',
     }}>
       <Title
         style={{ textAlign: 'center', paddingBottom: '16px' }}

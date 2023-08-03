@@ -22,7 +22,7 @@ const AchievementImg = styled.img`
   transition: transform 0.5s;
 `;
 
-const StyledNavButton = styled.button`
+export const StyledNavButton = styled.button`
   margin: 0;
   padding: 0;
   width: 28px;
