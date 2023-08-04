@@ -19,6 +19,7 @@ import LearningProgress from '../ui-lib/widgets/LearningProgress';
 import Castle from '../ui-lib/widgets/Castle';
 import Rating from '../ui-lib/widgets/Rating';
 import Achievements from '../ui-lib/widgets/Achievements';
+import IncompleteQuizzes from '../ui-lib/widgets/IncompleteQuizzes';
 import { useSelector } from '../store/store.types';
 import { useLoginMutation, jwt, userApi } from '../api/apiv2';
 
@@ -46,6 +47,7 @@ const PersonalAccount: FC = () => {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        gap: '28px',
       }}>
       <div>
         <Title
@@ -61,7 +63,7 @@ const PersonalAccount: FC = () => {
         </Title>
         <Text
           style={{
-            margin: '10px 0 0',
+            margin: '5px 0 0',
             padding: '0',
             fontSize: '15px',
             fontWeight: '400',
@@ -73,7 +75,7 @@ const PersonalAccount: FC = () => {
       <div
         style={{
           width: '100%',
-          margin: '28px 0 0',
+          margin: '0',
           padding: '0',
           display: 'flex',
           flexDirection: 'row',
@@ -90,6 +92,7 @@ const PersonalAccount: FC = () => {
         </StyledDiv>
         <Castle />
       </div>
+      <IncompleteQuizzes />
     </div>
   );
 };
