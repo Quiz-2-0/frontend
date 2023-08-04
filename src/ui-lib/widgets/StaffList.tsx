@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
@@ -86,20 +87,40 @@ const StyledBackAndForwardButton = styled(Button)`
 `;
 
 const StaffList: FC<{
-  departments: { label: string; value: string }[];
-}> = ({ departments }) => {
+  departments: { label: string; value: string }[] | string,
+  staffList: {
+    id: number,
+    firstName: string,
+    lastName: string,
+    patronymic: string,
+    email: string,
+    appounted: number,
+    passed: number,
+    raiting: number,
+    department: string,
+  }[],
+  isChecked: number[],
+  setIsChecked: any,
+  search: string,
+}> = ({
+  departments,
+  staffList,
+  search,
+  isChecked,
+  setIsChecked,
+}) => {
   const [isOpen, setIsOpen] = useState<number[]>([]);
-  const [isChecked, setIsChecked] = useState<number[]>([]);
+
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+
   const scrollToTop = () => {
-    setIsOpen([]);
     if (topRef.current) {
       topRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
   const scrollToBottom = () => {
-    setIsOpen([]);
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -108,12 +129,10 @@ const StaffList: FC<{
   return (
     <>
       <StyledDiv
-        style={{ maxHeight: '481px', height: '100%', padding: '0 0 24px' }}>
+        style={{ height: '481px', padding: '0 0 24px' }}>
         <FormItem
           style={{
             padding: 0,
-            height: '100%',
-            overflow: 'scroll',
             position: 'relative',
           }}>
           <div
@@ -121,13 +140,14 @@ const StaffList: FC<{
               padding: '24px 24px 12px',
               display: 'flex',
               background: '#fff',
-              zIndex: '999',
+              zIndex: '1',
+              gap: `${typeof departments === 'string' ? '98px' : '0'}`,
               justifyContent: 'space-between',
               position: 'sticky',
               top: '0',
             }}>
             <StyledCheckbox
-              checked={isChecked.length === staff.length}
+              checked={isChecked.length === staff.length && staff.length !== 0}
               onClick={() => (
                 isChecked.length === staff.length
                   ? setIsChecked([])
@@ -145,119 +165,189 @@ const StaffList: FC<{
                 Рейтинг
               </TableTitle>
             </StyledCheckbox>
-            <StyledButton
-              onClick={() => (
-                isOpen.length === departments.length - 1
-                  ? setIsOpen([])
-                  : setIsOpen(departments.slice(1).map((dep, i) => i))
+            {typeof departments !== 'string'
+              ? (
+                <StyledButton
+                  onClick={() => (
+                    isOpen.length === departments.length - 1
+                      ? setIsOpen([])
+                      : setIsOpen(departments.slice(1).map((dep, i) => i))
+                  )}
+                  style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }}
+                  mode='link'>
+                  {isOpen.length === departments.length - 1
+                    ? 'Развернуть'
+                    : 'Свернуть всё'}
+                </StyledButton>
+              ) : (
+                <div style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }} />
               )}
-              style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }}
-              mode='link'>
-              {isOpen.length === departments.length - 1
-                ? 'Развернуть'
-                : 'Свернуть всё'}
-            </StyledButton>
           </div>
-          <div style={{ height: '100%' }}>
-            {departments.slice(1).map((department, i) => (
-              <>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    margin: '12px 0 0',
-                    padding: '0 24px 8px',
-                    minHeight: '36px',
-                    borderBottom: '1px solid #F2F3F5',
-                  }}>
-                  <StyledCheckbox
-                    checked={
-                      staff.filter((user) => (
-                        department.value === user.department)).every(({ id }) => (
-                        isChecked.includes(id)
-                      ))
-                    }
-                    onClick={() => {
-                      const users = staff.filter((user) => (
-                        department.value === user.department)).map(({ id }) => id);
-                      users.every((id) => isChecked.includes(id))
-                        ? setIsChecked(isChecked.filter((num) => !users.includes(num)))
-                        : setIsChecked(Array.from(new Set(isChecked.concat(users))));
-                    }}
-                    style={{ maxHeight: '28px' }}>
-                    <TableItem
+          <div style={{ height: '397px', overflow: 'scroll', zIndex: '-1000' }}>
+            {typeof departments === 'string' || search !== ''
+              ? (
+                staffList.length === 0
+                  ? (
+                    <p
                       style={{
                         fontSize: '16px',
-                        fontWeight: '500',
-                        lineHeight: '20px',
-                        letterSpacing: '-0.32px',
+                        color: '#818C99',
+                        paddingLeft: '72px',
                       }}>
-                      {department.value}
-                    </TableItem>
-                  </StyledCheckbox>
-                  <IconWrapper
-                    onClick={() => (
-                      isOpen.includes(i)
-                        ? setIsOpen(isOpen.filter((num) => num !== i))
-                        : setIsOpen([...isOpen, i])
-                    )}>
-                    <ArrowIcon
+                      По вашему запросу ничего не найдено
+                    </p>
+                  ) : (
+                    staffList.map((user, i) => (
+                      <StyledDivWithCheckbox
+                        ref={
+                          i === 0
+                            ? topRef
+                            : i === staffList.length - 1
+                              ? bottomRef
+                              : null
+                        }>
+                        <StyledCheckbox
+                          checked={!!isChecked.includes(user.id)}
+                          onClick={() => (
+                            isChecked.includes(user.id)
+                              ? setIsChecked(isChecked.filter((num) => num !== user.id))
+                              : setIsChecked([...isChecked, user.id])
+                          )}>
+                          <TableItem style={{ minWidth: '220px' }}>
+                            {`${user.lastName} ${user.firstName} ${user.patronymic}`}
+                          </TableItem>
+                          <TableItem style={{ minWidth: '220px' }}>
+                            {user.email}
+                          </TableItem>
+                          <TableItem
+                            style={{ minWidth: '100px', textAlign: 'center' }}>
+                            {user.appounted}
+                          </TableItem>
+                          <TableItem
+                            style={{ minWidth: '100px', textAlign: 'center' }}>
+                            {user.passed}
+                          </TableItem>
+                          <TableItem
+                            style={{ minWidth: '100px', textAlign: 'center' }}>
+                            {user.raiting}
+                          </TableItem>
+                        </StyledCheckbox>
+                        <StaffLink mode='link'>
+                          <Icon24UserOutline />
+                        </StaffLink>
+                      </StyledDivWithCheckbox>
+                    )))) : (
+                departments.slice(1).map((department, i) => (
+                  <>
+                    <div
                       style={{
-                        transform: `${
-                          !isOpen.includes(i) ? 'rotate(270deg)' : 'rotate(90deg)'
-                        }`,
-                        transition: 'all .3s ease',
-                      }} />
-                  </IconWrapper>
-                </div>
-                <StyledExpandedItem isOpen={isOpen} id={i}>
-                  {staff.map((user) => {
-                    if (department.value === user.department) {
-                      return (
-                        <StyledDivWithCheckbox
-                          ref={
-                            user.id === 0
-                              ? topRef
-                              : user.id === staff.length - 1
-                                ? bottomRef
-                                : null
-                          }>
-                          <StyledCheckbox
-                            checked={!!isChecked.includes(user.id)}
-                            onClick={() => (
-                              isChecked.includes(user.id)
-                                ? setIsChecked(isChecked.filter((num) => num !== user.id))
-                                : setIsChecked([...isChecked, user.id])
-                            )}>
-                            <TableItem style={{ minWidth: '220px' }}>
-                              {`${user.surname} ${user.firstname} ${user.patronymic}`}
-                            </TableItem>
-                            <TableItem style={{ minWidth: '220px' }}>
-                              {user.email}
-                            </TableItem>
-                            <TableItem
-                              style={{ minWidth: '100px', textAlign: 'center' }}>
-                              {user.appounted}
-                            </TableItem>
-                            <TableItem
-                              style={{ minWidth: '100px', textAlign: 'center' }}>
-                              {user.passed}
-                            </TableItem>
-                            <TableItem
-                              style={{ minWidth: '100px', textAlign: 'center' }}>
-                              {user.raiting}
-                            </TableItem>
-                          </StyledCheckbox>
-                          <StaffLink mode='link'>
-                            <Icon24UserOutline />
-                          </StaffLink>
-                        </StyledDivWithCheckbox>
-                      );
-                    }
-                  })}
-                </StyledExpandedItem>
-              </>
-            ))}
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        margin: '12px 0 0',
+                        padding: '0 24px 8px',
+                        minHeight: '36px',
+                        borderBottom: '1px solid #F2F3F5',
+                      }}>
+                      <StyledCheckbox
+                        checked={
+                          staff.filter((user) => (
+                            department.value === user.department)).every(({ id }) => (
+                            isChecked.includes(id)
+                          ))
+                        }
+                        onClick={() => {
+                          const users = staff.filter((user) => (
+                            department.value === user.department)).map(({ id }) => id);
+                          users.every((id) => isChecked.includes(id))
+                            ? setIsChecked(isChecked.filter((num) => !users.includes(num)))
+                            : setIsChecked(Array.from(new Set(isChecked.concat(users))));
+                        }}
+                        style={{ maxHeight: '28px' }}>
+                        <TableItem
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: '500',
+                            lineHeight: '20px',
+                            letterSpacing: '-0.32px',
+                          }}>
+                          {department.value}
+                        </TableItem>
+                      </StyledCheckbox>
+                      <IconWrapper
+                        onClick={() => (
+                          isOpen.includes(i)
+                            ? setIsOpen(isOpen.filter((num) => num !== i))
+                            : setIsOpen([...isOpen, i])
+                        )}>
+                        <ArrowIcon
+                          style={{
+                            transform: `${
+                              !isOpen.includes(i) ? 'rotate(270deg)' : 'rotate(90deg)'
+                            }`,
+                            transition: 'all .3s ease',
+                          }} />
+                      </IconWrapper>
+                    </div>
+                    <StyledExpandedItem isOpen={isOpen} id={i}>
+                      {staffList.length === 0
+                        ? (
+                          <p
+                            style={{
+                              fontSize: '16px',
+                              color: '#818C99',
+                              paddingLeft: '72px',
+                            }}>
+                            По вашему запросу ничего не найдено
+                          </p>
+                        ) : (
+                          staffList.map((user, index) => {
+                            if (department.value === user.department) {
+                              return (
+                                <StyledDivWithCheckbox
+                                  ref={
+                                    index === 0
+                                      ? topRef
+                                      : index === staffList.length - 1
+                                        ? bottomRef
+                                        : null
+                                  }>
+                                  <StyledCheckbox
+                                    checked={!!isChecked.includes(user.id)}
+                                    onClick={() => (
+                                      isChecked.includes(user.id)
+                                        ? setIsChecked(isChecked.filter((num) => num !== user.id))
+                                        : setIsChecked([...isChecked, user.id])
+                                    )}>
+                                    <TableItem style={{ minWidth: '220px' }}>
+                                      {`${user.lastName} ${user.firstName} ${user.patronymic}`}
+                                    </TableItem>
+                                    <TableItem style={{ minWidth: '220px' }}>
+                                      {user.email}
+                                    </TableItem>
+                                    <TableItem
+                                      style={{ minWidth: '100px', textAlign: 'center' }}>
+                                      {user.appounted}
+                                    </TableItem>
+                                    <TableItem
+                                      style={{ minWidth: '100px', textAlign: 'center' }}>
+                                      {user.passed}
+                                    </TableItem>
+                                    <TableItem
+                                      style={{ minWidth: '100px', textAlign: 'center' }}>
+                                      {user.raiting}
+                                    </TableItem>
+                                  </StyledCheckbox>
+                                  <StaffLink mode='link'>
+                                    <Icon24UserOutline />
+                                  </StaffLink>
+                                </StyledDivWithCheckbox>
+                              );
+                            }
+                          }))}
+                    </StyledExpandedItem>
+                  </>
+                ))
+              )}
           </div>
         </FormItem>
       </StyledDiv>

@@ -1,15 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  useState,
+  useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import validator from 'validator';
 import {
-  CustomSelect,
+  Select,
   FormLayout,
   IconButton,
+  FormLayoutGroup,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24CancelOutline } from '@vkontakte/icons';
@@ -19,11 +29,10 @@ import StyledInput from '../StyledInput';
 import StyledFormItem from '../StyledFormItem';
 
 const StyledDiv = styled.div`
-  max-width: 540px;
+  max-width: 1000px;
   width: 100%;
-  max-height: 668px;
-  min-height: min-content;
-  padding: 48px 64px;
+  height: 556px;
+  padding: 48px 48px 52px;
   box-sizing: border-box;
   background: white;
   border-radius: 16px;
@@ -31,39 +40,101 @@ const StyledDiv = styled.div`
     0px 4px 8px 0px rgba(0, 0, 0, 0.04);
 `;
 
+const StyledSelect = styled(Select)`
+  & > .vkuiSelect {
+    min-height: 40px;
+  }
+`;
+
+const StyledFormLayoutGroup = styled(FormLayoutGroup)`
+  padding: 0;
+
+  & > div:last-of-type {
+    margin-left: 48px !important;
+  }
+}
+`;
+
+const FormItemForNewEmployee = styled(StyledFormItem)`
+  & > .vkuiFormItem__top {
+    color: #6F7985;
+  }
+`;
+
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
   setIsNewEmploeePopupOpen: any,
-  type: any,
-  setType: any,
   departments: { label: string; value: string }[],
 }> = ({
   isNewEmployeePopupOpen,
   setIsNewEmploeePopupOpen,
-  type,
-  setType,
   departments,
 }) => {
-  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [patronymic, setPatronymic] = useState('');
+  const [isFirstNameValid, setIsFirstNameValid] = useState(true);
+  const [isLastNameValid, setIsLastNameValid] = useState(true);
+  const [isPatronymicValid, setIsPatronymicValid] = useState(true);
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const [department, setDepartment] = useState('');
+  const [isDepartmentValid, setIsDepartmentValid] = useState(true);
   const [position, setPosition] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isPositionValid, setIsPositionValid] = useState(true);
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    setIsActive(
+      isFirstNameValid && isLastNameValid && isPatronymicValid
+      && isEmailValid && isDepartmentValid && isPositionValid
+      && firstName !== '' && lastName !== '' && patronymic !== ''
+      && email !== '' && department !== '' && position !== '',
+    );
+    console.log(isActive);
+  }, [firstName, lastName, patronymic, email, department, position]);
+
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setPatronymic('');
+    setEmail('');
+    setDepartment('');
+    setPosition('');
+    setIsFirstNameValid(true);
+    setIsLastNameValid(true);
+    setIsPatronymicValid(true);
+    setIsEmailValid(true);
+    setIsDepartmentValid(true);
+    setIsPositionValid(true);
+  };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
-    if (name === 'full-name') {
-      setFullName(value);
-    }
-    if (name === 'email') {
-      setEmail(value);
-    }
-    if (name === 'department') {
-      setDepartment(value);
-    }
-    if (name === 'position') {
-      setPosition(value);
-    }
+    [{ text: 'first-name', method: setFirstName },
+      { text: 'last-name', method: setLastName },
+      { text: 'patronymic', method: setPatronymic },
+      { text: 'email', method: setEmail },
+      { text: 'department', method: setDepartment },
+      { text: 'position', method: setPosition }].map(({ text, method }) => {
+      if (name === text) {
+        method(value);
+      }
+    });
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    console.log({
+      firstName,
+      lastName,
+      patronymic,
+      email,
+      department,
+      position,
+    });
+    resetForm();
+    setIsNewEmploeePopupOpen(false);
   };
 
   return (
@@ -80,6 +151,7 @@ const NewEmployeePopup: FC<{
             alignItems: 'flex-end',
           }}>
           <IconButton
+            aria-label='Закрыть'
             style={{
               width: '28px',
               height: '28px',
@@ -87,8 +159,11 @@ const NewEmployeePopup: FC<{
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onClick={() => setIsNewEmploeePopupOpen(false)}>
-            <Icon24CancelOutline />
+            onClick={() => {
+              setIsNewEmploeePopupOpen(false);
+              resetForm();
+            }}>
+            <Icon24CancelOutline fill='#3F8AE0' />
           </IconButton>
           <div
             style={{
@@ -98,7 +173,7 @@ const NewEmployeePopup: FC<{
               justifyContent: 'space-between',
               alignItems: 'flex-start',
               gap: '16px',
-              margin: '8px 0 30px',
+              margin: '8px 0 28px',
             }}>
             <h2
               style={{
@@ -122,59 +197,134 @@ const NewEmployeePopup: FC<{
             </p>
           </div>
           <FormLayout
+            onSubmit={(e) => onSubmit(e)}
             style={{
               width: '100%',
               padding: '0',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              gap: '24px',
             }}>
-            <StyledFormItem
-              htmlFor='full-name'
-              top='ФИО'>
-              <StyledInput
-                id='full-name'
-                type='text'
-                placeholder='Введите ФИО сотрудника'
-                name='full-name'
-                value={fullName}
-                onChange={onChange} />
-            </StyledFormItem>
-            <StyledFormItem
-              htmlFor='email'
-              top='Email'>
-              <StyledInput
-                id='email'
-                type='email'
-                placeholder='Введите email'
-                name='email'
-                value={email}
-                onChange={onChange} />
-            </StyledFormItem>
-            <StyledFormItem
-              htmlFor='department'
-              top='Отдел'>
-              <CustomSelect
-                selectType={type}
-                options={departments}
-                onChange={(e) => {
-                  console.log(e);
-                  setType(e.target.value);
-                }} />
-            </StyledFormItem>
-            <StyledFormItem
-              htmlFor='position'
-              top='Должность'>
-              <StyledInput
-                id='position'
-                type='text'
-                placeholder='Введите должность'
-                name='position'
-                value={position}
-                onChange={onChange} />
-            </StyledFormItem>
-            <StyledButton disabled={isDisabled} style={{ maxWidth: '198px', marginTop: '16px' }}>
+            <StyledFormLayoutGroup mode='horizontal'>
+              <FormItemForNewEmployee
+                htmlFor='last-name'
+                top='Фамилия'
+                onBlur={() => {
+                  const regex = /^[А-ЯЁA-Z][а-яёa-z'-]+$/;
+                  setIsLastNameValid(regex.test(lastName));
+                }}
+                onChange={() => setIsLastNameValid(true)}
+                status={isLastNameValid ? 'default' : 'error'}
+                bottom={isLastNameValid ? '' : 'Неверно введена фамилия'}
+                style={{ paddingBottom: `${isLastNameValid ? '24px' : '0px'}` }}>
+                <StyledInput
+                  id='last-name'
+                  type='text'
+                  placeholder='Введите Фамилию'
+                  name='last-name'
+                  value={lastName}
+                  onChange={onChange} />
+              </FormItemForNewEmployee>
+              <FormItemForNewEmployee
+                htmlFor='email'
+                top='Email'
+                onBlur={() => {
+                  setIsEmailValid(validator.isEmail(email));
+                }}
+                onChange={() => setIsEmailValid(true)}
+                status={isEmailValid ? 'default' : 'error'}
+                bottom={isEmailValid ? '' : 'Неверно введён email'}
+                style={{ paddingBottom: `${isEmailValid ? '24px' : '0px'}` }}>
+                <StyledInput
+                  id='email'
+                  type='email'
+                  placeholder='Введите email'
+                  name='email'
+                  value={email}
+                  onChange={onChange} />
+              </FormItemForNewEmployee>
+            </StyledFormLayoutGroup>
+            <StyledFormLayoutGroup mode='horizontal'>
+              <FormItemForNewEmployee
+                htmlFor='first-name'
+                top='Имя'
+                onBlur={() => {
+                  const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
+                  setIsFirstNameValid(regex.test(firstName));
+                }}
+                onChange={() => setIsFirstNameValid(true)}
+                status={isFirstNameValid ? 'default' : 'error'}
+                bottom={isFirstNameValid ? '' : 'Неверно введено имя'}
+                style={{ paddingBottom: `${isFirstNameValid ? '24px' : '0px'}` }}>
+                <StyledInput
+                  id='first-name'
+                  type='text'
+                  placeholder='Введите Имя'
+                  name='first-name'
+                  value={firstName}
+                  onChange={onChange} />
+              </FormItemForNewEmployee>
+              <FormItemForNewEmployee
+                htmlFor='department'
+                top='Отдел'
+                onBlur={() => {
+                  setIsDepartmentValid(department !== '');
+                }}
+                onChange={() => setIsFirstNameValid(true)}
+                status={isDepartmentValid ? 'default' : 'error'}
+                bottom={isDepartmentValid ? '' : 'Отдел не выбран'}
+                style={{ paddingBottom: `${isDepartmentValid ? '24px' : '0px'}` }}>
+                <StyledSelect
+                  placeholder='Выберите отдел'
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
+                  options={departments.slice(1)} />
+              </FormItemForNewEmployee>
+            </StyledFormLayoutGroup>
+            <StyledFormLayoutGroup mode='horizontal'>
+              <FormItemForNewEmployee
+                htmlFor='patronymic'
+                top='Отчество'
+                onBlur={() => {
+                  const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
+                  setIsPatronymicValid(regex.test(patronymic));
+                }}
+                onChange={() => setIsPatronymicValid(true)}
+                status={isPatronymicValid ? 'default' : 'error'}
+                bottom={isPatronymicValid ? '' : 'Неверно введено отчество'}
+                style={{ paddingBottom: `${isPatronymicValid ? '24px' : '0px'}` }}>
+                <StyledInput
+                  id='patronymic'
+                  type='text'
+                  placeholder='Введите Отчество'
+                  name='patronymic'
+                  value={patronymic}
+                  onChange={onChange} />
+              </FormItemForNewEmployee>
+              <FormItemForNewEmployee
+                htmlFor='position'
+                top='Должность'
+                onBlur={() => {
+                  const regex = /^[А-ЯЁA-Z][а-яёa-z\s-]+$/;
+                  setIsPositionValid(regex.test(position));
+                }}
+                onChange={() => setIsPositionValid(true)}
+                status={isPositionValid ? 'default' : 'error'}
+                bottom={isPositionValid ? '' : 'Неверно введена должность'}
+                style={{ paddingBottom: `${isPositionValid ? '24px' : '0px'}` }}>
+                <StyledInput
+                  id='position'
+                  type='text'
+                  placeholder='Введите должность'
+                  name='position'
+                  value={position}
+                  onChange={onChange} />
+              </FormItemForNewEmployee>
+            </StyledFormLayoutGroup>
+            <StyledButton
+              type='submit'
+              disabled={!isActive}
+              style={{ maxWidth: '198px', marginTop: '16px' }}>
               Добавить сотрудника
             </StyledButton>
           </FormLayout>

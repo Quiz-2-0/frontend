@@ -107,7 +107,18 @@ const Header: FC = () => {
         <UpdatedLogo to='/' />
         <ToolBar>
           <AvatarWrapper width={60} height={60}>
-            <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
+            {data?.avatar
+              ? (
+                <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, #f2fcfe, #1c92d2)',
+                  }} />
+              )}
           </AvatarWrapper>
           <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>

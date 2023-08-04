@@ -1,15 +1,23 @@
 const departments = [
   {
-    label: 'Все отделы',
-    value: 'all',
+    name: 'Все отделы',
+    id: 0,
   },
   {
-    label: 'Маркетинг',
-    value: 'marketing',
+    name: 'Маркетинг',
+    id: 1,
   },
   {
-    label: 'Финансовый отдел',
-    value: 'finance',
+    name: 'Финансовый отдел',
+    id: 2,
+  },
+  {
+    name: 'Отдел продаж',
+    id: 3,
+  },
+  {
+    name: 'HR',
+    id: 3,
   },
 ];
 
