@@ -1,5 +1,17 @@
 const staff = [
   {
+    id: 1,
+    firstname: 'Самый',
+    surname: 'Первый',
+    patronymic: 'Иванович',
+    email: 'ivan.ivanov@company.com',
+    appounted: 21,
+    passed: 21,
+    raiting: 21,
+    department: 'Маркетинг',
+  },
+  {
+    id: 2,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -10,6 +22,7 @@ const staff = [
     department: 'Маркетинг',
   },
   {
+    id: 3,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -20,6 +33,7 @@ const staff = [
     department: 'Маркетинг',
   },
   {
+    id: 4,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -30,6 +44,7 @@ const staff = [
     department: 'Маркетинг',
   },
   {
+    id: 5,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -40,16 +55,7 @@ const staff = [
     department: 'Маркетинг',
   },
   {
-    firstname: 'Иван',
-    surname: 'Иванов',
-    patronymic: 'Иванович',
-    email: 'ivan.ivanov@company.com',
-    appounted: 21,
-    passed: 21,
-    raiting: 21,
-    department: 'Маркетинг',
-  },
-  {
+    id: 6,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -60,6 +66,7 @@ const staff = [
     department: 'Финансовый отдел',
   },
   {
+    id: 7,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -70,6 +77,7 @@ const staff = [
     department: 'Финансовый отдел',
   },
   {
+    id: 8,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -80,6 +88,7 @@ const staff = [
     department: 'Финансовый отдел',
   },
   {
+    id: 9,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -90,6 +99,7 @@ const staff = [
     department: 'Отдел продаж',
   },
   {
+    id: 10,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -100,6 +110,7 @@ const staff = [
     department: 'Отдел продаж',
   },
   {
+    id: 11,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -110,6 +121,7 @@ const staff = [
     department: 'Отдел продаж',
   },
   {
+    id: 12,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -120,6 +132,7 @@ const staff = [
     department: 'Отдел продаж',
   },
   {
+    id: 13,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -130,6 +143,7 @@ const staff = [
     department: 'HR',
   },
   {
+    id: 14,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -140,6 +154,7 @@ const staff = [
     department: 'HR',
   },
   {
+    id: 15,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -150,6 +165,7 @@ const staff = [
     department: 'HR',
   },
   {
+    id: 16,
     firstname: 'Иван',
     surname: 'Иванов',
     patronymic: 'Иванович',
@@ -160,8 +176,9 @@ const staff = [
     department: 'HR',
   },
   {
-    firstname: 'Иван',
-    surname: 'Иванов',
+    id: 17,
+    firstname: 'Самый',
+    surname: 'Последний',
     patronymic: 'Иванович',
     email: 'ivan.ivanov@company.com',
     appounted: 21,
