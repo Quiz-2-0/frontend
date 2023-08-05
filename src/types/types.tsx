@@ -55,6 +55,7 @@ export type Volume = {
 };
 
 export type TQuize = {
+  directory: string;
   id: number,
   image: string,
   name: string;

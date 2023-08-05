@@ -143,6 +143,18 @@ const Header: FC = () => {
             <AvatarIconWrapper className='avatarIcon' style={{ zIndex: '2' }}><AvatarIcon style={{ zIndex: '2' }} /></AvatarIconWrapper>
             <AvatarOverlay className='overlay' />
             <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
+            {data?.avatar
+              ? (
+                <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, #f2fcfe, #1c92d2)',
+                  }} />
+              )}
           </AvatarWrapper>
           <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>

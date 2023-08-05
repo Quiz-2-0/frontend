@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { Icon28CheckCircleOutline } from '@vkontakte/icons';
 import Background from '../Background';
 import StyledButton from '../StyledButton';
 
 const StyledDiv = styled.div`
-  max-width: 570px;
-  height: 100%;
-  max-height: 228px;
+  max-width: 500px;
+  height: 252px;
   width: 100%;
   padding: 48px;
   box-sizing: border-box;
@@ -25,7 +25,8 @@ const StyledDiv = styled.div`
 const ConfirmationPopup: FC<{
   isConfirmationPopupOpen: boolean,
   setIsConfirmationPopupOpen: any,
-}> = ({ isConfirmationPopupOpen, setIsConfirmationPopupOpen }) => {
+  setIsChooseQuizzesPopupOpen: any,
+}> = ({ isConfirmationPopupOpen, setIsConfirmationPopupOpen, setIsChooseQuizzesPopupOpen }) => {
   const dispatch = useDispatch();
 
   return (
@@ -37,12 +38,17 @@ const ConfirmationPopup: FC<{
       <StyledDiv>
         <h2
           style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '12px',
             margin: '0 0 16px',
             fontSize: '20px',
             fontWeight: 600,
             lineHeight: '24px',
             letterSpacing: '0.38px',
           }}>
+          <Icon28CheckCircleOutline fill='#43A843' />
           Квизы назначены
         </h2>
         <p
@@ -65,7 +71,9 @@ const ConfirmationPopup: FC<{
           }}>
           <StyledButton
             style={{ margin: 0, width: '100%' }}
-            onClick={() => setIsConfirmationPopupOpen(false)}>
+            onClick={() => {
+              setIsConfirmationPopupOpen(false);
+            }}>
             Вернуться к списку
           </StyledButton>
           <StyledButton

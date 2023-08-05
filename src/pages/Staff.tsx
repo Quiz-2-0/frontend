@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import StaffFilter from '../ui-lib/widgets/StaffFilters';
@@ -9,6 +11,9 @@ import ChooseQuizzesPopup from '../ui-lib/widgets/ChooseQuizzesPopup';
 import staff from '../constants/staff';
 import ConfirmationPopup from '../ui-lib/widgets/ConfirmationPopup';
 import NewEmployeePopup from '../ui-lib/widgets/NewEmployeePopup';
+import departments from '../constants/departments';
+import quizzes from '../constants/quizzes';
+import { useGetAllQuizesQuery } from '../api/apiv2';
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -16,45 +21,79 @@ const StyledDiv = styled.div`
 
 const Staff: FC = () => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
-  const [selectType, setSelectType] = useState<any>('all');
+  const [searchEmployee, setSearchEmployee] = useState('');
+  const [searchQuiz, setSearchQuiz] = useState('');
+  const [isEmployeeChecked, setIsEmployeeChecked] = useState<number[]>([]);
+  const [isQuizChecked, setIsQuizChecked] = useState<number[]>([]);
+  const [selectType, setSelectType] = useState('Все отделы');
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
 
-  const departments = [{ label: 'Все отделы', value: 'all' }];
-  for (let i = 0; i < staff.length; i++) {
-    if (!departments.some((dep) => dep.label === staff[i].department)) {
-      departments.push({ label: staff[i].department, value: staff[i].department });
-    }
-  }
+  const [staffOnPage, setStaffOnPage] = useState(staff);
+
+  const staffNameFilter = staffOnPage?.filter(
+    ({ firstName, lastName, patronymic }) => (
+      firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      || lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      || patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+    ),
+  );
+
+  const staffDepartmentFilter = (type: string) => {
+    setSelectType(type);
+    type === 'Все отделы'
+      ? setStaffOnPage(staff)
+      : setStaffOnPage(staff.filter(({ department }) => department === type));
+  };
+
+  const departmentsList: { label: string; value: string; }[] = [];
+  departments.map(({ name }) => departmentsList.push({
+    label: name,
+    value: name,
+  }));
+
+  const quizNameFilter = quizzes?.filter(
+    ({ name }) => name.toLowerCase().indexOf(searchQuiz.toLowerCase()) > -1,
+  );
+
   return (
     <>
       <StyledDiv>
         <StaffFilter
-          departments={departments}
-          setSearch={setSearch}
-          search={search}
+          departments={departmentsList}
+          setSearch={setSearchEmployee}
+          search={searchEmployee}
           type={selectType}
-          setType={setSelectType}
+          setType={staffDepartmentFilter}
           setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
-          setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen} />
+          setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
+          isChecked={isEmployeeChecked} />
         <StaffList
-          departments={departments} />
+          staffList={searchEmployee !== '' ? staffNameFilter : staffOnPage}
+          departments={selectType === 'Все отделы' ? departmentsList : selectType}
+          search={searchEmployee}
+          isChecked={isEmployeeChecked}
+          setIsChecked={setIsEmployeeChecked} />
       </StyledDiv>
       <ChooseQuizzesPopup
+        isChecked={isQuizChecked}
+        setIsChecked={setIsQuizChecked}
+        quizzes={searchQuiz !== '' ? quizNameFilter : quizzes}
+        search={searchQuiz}
+        setSearch={setSearchQuiz}
         setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
-        isChooseQuizzesPopupOpen={isChooseQuizzesPopupOpen} />
+        isChooseQuizzesPopupOpen={isChooseQuizzesPopupOpen}
+        setIsEmployeeChecked={setIsEmployeeChecked} />
       <ConfirmationPopup
+        setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen} />
       <NewEmployeePopup
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
         setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
-        type={selectType}
-        setType={setSelectType}
-        departments={departments} />
+        departments={departmentsList} />
     </>
   );
 };

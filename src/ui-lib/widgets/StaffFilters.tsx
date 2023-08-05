@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Button, CustomSelect, Search } from '@vkontakte/vkui';
+import { Button, Select, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import React, { FC } from 'react';
 import styled from 'styled-components';
@@ -15,7 +15,9 @@ const Buttons = styled.div`
   gap: 20px;
 `;
 
-const StyledCustomSelect = styled(CustomSelect)`
+const StyledSelect = styled(Select)`
+  width: 100%;
+
   & > .vkuiSelect {
     min-height: 40px;
   }
@@ -29,6 +31,7 @@ const StaffFilter: FC<{
   departments: { label: string, value: string }[],
   setIsChooseQuizzesPopupOpen: any,
   setIsNewEmploeePopupOpen: any,
+  isChecked: number[],
 }> = ({
   setSearch,
   search,
@@ -37,8 +40,8 @@ const StaffFilter: FC<{
   departments,
   setIsChooseQuizzesPopupOpen,
   setIsNewEmploeePopupOpen,
+  isChecked,
 }) => {
-  console.log(departments);
   const onChange = (e: { target: { value: any; }; }) => {
     setSearch(e.target.value);
   };
@@ -52,14 +55,10 @@ const StaffFilter: FC<{
           alignItems: 'center',
           gap: '40px',
         }}>
-        <StyledCustomSelect
-          selectType={type}
+        <StyledSelect
           value={type}
-          options={departments}
-          onChange={(e) => {
-            console.log(e);
-            setType(e.target.value);
-          }} />
+          onChange={(e) => setType(e.target.value)}
+          options={departments} />
         <Buttons>
           <StyledButton
             mode='outline'
@@ -68,6 +67,7 @@ const StaffFilter: FC<{
             Добавить сотрудника
           </StyledButton>
           <StyledButton
+            disabled={isChecked.length === 0}
             style={{ margin: 0, width: '220px' }}
             onClick={() => setIsChooseQuizzesPopupOpen(true)}>
             Назначить квиз
