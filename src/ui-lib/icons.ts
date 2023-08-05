@@ -17,6 +17,9 @@ import { ReactComponent as Quiz } from '../images/progress-icons/progress_quiz.s
 import { ReactComponent as True } from '../images/progress-icons/progress_true_answers.svg';
 import { ReactComponent as Time } from '../images/progress-icons/progress_time.svg';
 import { ReactComponent as Battle } from '../images/progress-icons/progress_battle.svg';
+import { ReactComponent as Avatar } from '../images/icons/avatar_icon.svg';
+import { ReactComponent as Close } from '../images/icons/close_button_icon.svg';
+import { ReactComponent as Upload } from '../images/icons/upload.svg';
 
 export const DurationIcon = styled(Duration)`
   width: 14px;
@@ -110,4 +113,23 @@ export const BattleIcon = styled(Battle)`
   width: 24px;
   height: 24px;
   display: block;
+`;
+
+export const AvatarIcon = styled(Avatar)`
+  width: 20px;
+  height: 18px;
+  display: block;
+  z-index: 2;
+`;
+
+export const CloseIcon = styled(Close)`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+
+export const UploadIcon = styled(Upload)`
+  width: 16px;
+  height: 21px;
+  cursor: pointer;
 `;
