@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -7,10 +6,17 @@
 /* eslint-disable ternary/no-unreachable */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  API_ROOT, LOGIN_ROUTE, RESET_PASSWORD, ALL_QUIZES, GET_USER,
+  API_ROOT,
+  LOGIN_ROUTE,
+  RESET_PASSWORD,
+  ALL_QUIZES,
+  GET_USER,
+  GET_ADMIN_QUIZZES,
+  GET_ADMIN_USERS,
+  GET_ADMIN_DEPARTMENTS,
 } from '../constants/api-url';
 import {
-  TUser, TUserLoginRequest, TQuize, TAnswerRequest, Statistic,
+  TUser, TUserLoginRequest, TQuize, TAnswerRequest, Statistic, AdminQuizz,
 } from '../types/types';
 
 export const jwt = {
@@ -42,7 +48,9 @@ export const jwt = {
     return res || '';
   },
   test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),
-  remove: (isRemember: boolean): void => (isRemember ? localStorage.clear() : sessionStorage.clear()),
+  remove: (isRemember: boolean): void => (
+    isRemember ? localStorage.clear() : sessionStorage.clear()
+  ),
 };
 /// вот так выглядит слайс под апи на каждую сущность
 export const userApi = createApi({
@@ -115,6 +123,46 @@ export const quizApi = createApi({
   }),
 });
 
+export const adminApi = createApi({
+  reducerPath: 'adminApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_ROOT,
+  }),
+  endpoints: (build) => ({
+    getUsers: build.query<TUser[], void>({
+      query: () => ({
+        url: GET_ADMIN_USERS,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    getDepartments: build.query<{ id: number; name: string; }[], void>({
+      query: () => ({
+        url: GET_ADMIN_DEPARTMENTS,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    getQuizzes: build.query<AdminQuizz[], void>({
+      query: () => ({
+        url: GET_ADMIN_QUIZZES,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+      keepUnusedDataFor: 0,
+    }),
+
+  }),
+});
+
 export const {
   useLoginMutation,
   useRecoverPasswordMutation,
@@ -127,3 +175,9 @@ export const {
   useSetAnswerMutation,
   useGetStatisticQuery,
 } = quizApi;
+
+export const {
+  useGetDepartmentsQuery,
+  useGetUsersQuery,
+  useGetQuizzesQuery,
+} = adminApi;

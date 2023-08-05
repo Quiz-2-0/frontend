@@ -112,3 +112,40 @@ export type DnDCardProps = {
   backgroundColor: string;
   borderColor: string;
 };
+
+export type AdminQuizz = {
+  id: number;
+  image: string;
+  description: string;
+  directory: string;
+  name: string;
+  duration: number;
+  level: string;
+  question_amount: number;
+  threshold: number;
+  tags: {
+    id: number;
+    name: string;
+    color: string;
+  }[];
+  questions: {
+    id: number;
+    question_type: string;
+    text: string;
+    image: string;
+    answers: {
+      id: number;
+      text: string,
+      image: string,
+      answer_list: {
+        id: number;
+        text: string;
+      }[]
+    }[]
+  }[];
+  volumes: {
+    id: number;
+    name: string;
+    description: string;
+  }[];
+};
