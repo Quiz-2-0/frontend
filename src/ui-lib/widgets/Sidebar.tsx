@@ -71,13 +71,15 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(localStorage.getItem('role'), sessionStorage.getItem('role'), localStorage.getItem('role') || sessionStorage.getItem('role') !== 'AD');
+  const localStorageRole = localStorage.getItem('role') || '';
+  const sessionStorageRole = sessionStorage.getItem('role') || '';
+  const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
   const setUrl = (url: string) => {
     navigate(url);
   };
   return (
     <StyledTabs>
-      {localStorage.getItem('role') || sessionStorage.getItem('role') !== 'AD' ? (
+      {userRole !== 'AD' ? (
         <>
           <StyledTabsItem selected={location.pathname === '/'} onClick={() => setUrl('/')}>
             <Icon24HomeOutline />

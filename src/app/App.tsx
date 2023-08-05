@@ -1,3 +1,5 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable no-param-reassign */
@@ -37,7 +39,9 @@ const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { isLoaderRun } = useSelector((state) => state.all);
-  console.log(localStorage.getItem('role'), sessionStorage.getItem('role'));
+  const localStorageRole = localStorage.getItem('role') || '';
+  const sessionStorageRole = sessionStorage.getItem('role') || '';
+  const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -49,13 +53,15 @@ const App = () => {
             <Route path='/reset-password' element={<LayoutWithColumns />} />
             <Route path='/404' element={<Error />} />
             {routes.map(({ path, Component, role }, index) => (
-              (localStorage.getItem('role') === role || sessionStorage.getItem('role') === role) && (location.pathname === path)
-              && (
+              (userRole === role) ? (
                 <Route element={<MainLayout />} key={index}>
                   <Route path={path} element={Component} />
                 </Route>
+              ) : (
+                userRole === ''
+                  ? <Route path='*' element={<Navigate to='/login' />} />
+                  : <Route path='*' element={<Navigate to={`${(userRole === 'AD' && location.pathname === '/') ? '/staff' : '/404'}`} replace />} />
               )))}
-            <Route path={location.pathname} element={<Navigate to='/404' />} />
           </Routes>
         </React.Suspense>
       </Main>

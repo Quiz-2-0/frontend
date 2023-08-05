@@ -91,7 +91,6 @@ const NewEmployeePopup: FC<{
       && firstName !== '' && lastName !== '' && patronymic !== ''
       && email !== '' && department !== '' && position !== '',
     );
-    console.log(isActive);
   }, [firstName, lastName, patronymic, email, department, position]);
 
   const resetForm = () => {
