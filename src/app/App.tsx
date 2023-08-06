@@ -41,6 +41,7 @@ const App = () => {
   const { isLoaderRun } = useSelector((state) => state.all);
   const localStorageRole = localStorage.getItem('role') || '';
   const sessionStorageRole = sessionStorage.getItem('role') || '';
+
   const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
 
   return (

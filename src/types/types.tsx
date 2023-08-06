@@ -71,6 +71,7 @@ export type TQuize = {
 };
 
 export type QuizCardProps = {
+  setIsConfirmationPopupOpen?: any,
   id: number,
   image: string;
   title: string;

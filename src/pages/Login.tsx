@@ -1,3 +1,5 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -93,7 +95,7 @@ const Login: React.FC = () => {
   const changePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  console.log(role);
+
   const resetForm = () => {
     setRole('EMP');
     setEmail('');
@@ -108,7 +110,6 @@ const Login: React.FC = () => {
   const onSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
     const user = await login({ role, email, password }).unwrap();
-    console.log(role, 'login');
     const { access, ...rest } = user;
     const inMemory = localStorage.getItem('isRemember') === 'true';
     jwt.set(access, inMemory, role);

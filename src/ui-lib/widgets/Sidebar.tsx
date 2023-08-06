@@ -16,8 +16,7 @@ import styled from 'styled-components';
 import { useDispatch } from '../../store/store.types';
 
 const StyledTabs = styled(Tabs)`
-  max-width: 166px;
-  width: 100%;
+  width: 166px;
   min-height: 168px;
 
   & > div {

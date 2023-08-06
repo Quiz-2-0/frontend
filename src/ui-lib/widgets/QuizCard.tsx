@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -12,6 +13,7 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { Icon24DeleteOutline } from '@vkontakte/icons';
 import { useNavigate } from 'react-router';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
 import StyledQuizDetailsWrapper from '../StyledDetailsWrapper';
@@ -20,7 +22,6 @@ import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
 import StyledQuizTag from '../StyledQuizTag';
 import StyledQuizTagContainer from '../StyledQuizTagContainer';
 import { QuizCardProps } from '../../types/types';
-import { setLoaderState } from '../../store/allSlice/allSlice';
 import { useDispatch } from '../../store/store.types';
 
 const StyledQuizContainer = styled.li`
@@ -50,7 +51,7 @@ const StyledQuizContainer = styled.li`
       -ms-transform: translateY(-55px);
     }
     
-    .btn {
+    .btn, .btns {
       opacity: 1;
       visibility: visible;
       transition-delay: 0s;
@@ -90,9 +91,29 @@ const StyledQuizInfoWrapper = styled(Div)`
 const StyledButton = styled(Button)`
   width: 100%;
   height: 40px;
+  box-sizing: border-box;
   border-radius: 4px;
   background-color: #5181B8;
   margin-top: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -webkit-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -moz-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -o-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+  -ms-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
+
+  & > .vkuiButton__in > .vkuiButton__content {
+    padding: 0 !important;
+  }
+`;
+
+const Buttons = styled.div`
+  width: 100%;
+  minHeight: 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
@@ -113,6 +134,7 @@ const QuizCard: React.FC<QuizCardProps> = (
     question_amount,
     tags,
     isPassed,
+    setIsConfirmationPopupOpen,
   },
 ) => {
   const navigate = useNavigate();
@@ -172,7 +194,25 @@ const QuizCard: React.FC<QuizCardProps> = (
             <StyledQuizDetailCaption>{`${question_amount} вопрос${question_amount > 4 ? 'ов' : 'а'}`}</StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
-        <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : 'Начать квиз'}</StyledButton>
+        {isPassed !== ''
+          ? (
+            <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : 'Начать квиз'}</StyledButton>
+          ) : (
+            <Buttons className='btns'>
+              <StyledButton
+                className='btn'
+                style={{ minWidth: '242px', minHeight: '36px' }}
+                onClick={() => navigate(`new-quiz/${id}`)}>
+                Продолжить создание
+              </StyledButton>
+              <StyledButton
+                className='btn'
+                style={{ maxWidth: '48px', minWidth: '40px', minHeight: '36px' }}
+                onClick={() => setIsConfirmationPopupOpen(true)}>
+                <Icon24DeleteOutline fill='#fff' />
+              </StyledButton>
+            </Buttons>
+          )}
       </StyledQuizInfoWrapper>
     </StyledQuizContainer>
   );

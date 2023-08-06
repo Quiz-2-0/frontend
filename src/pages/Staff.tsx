@@ -87,7 +87,11 @@ const Staff: FC = () => {
         isChooseQuizzesPopupOpen={isChooseQuizzesPopupOpen}
         setIsEmployeeChecked={setIsEmployeeChecked} />
       <ConfirmationPopup
-        setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
+        title='Квизы назначены'
+        icon='check'
+        description='Проверить назначение квизов можно в разделе «Назначенные квизы»'
+        blueButton='Вернуться к списку'
+        whiteButton='Проверить'
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen} />
       <NewEmployeePopup

@@ -70,7 +70,7 @@ const Quizzes: FC = () => {
         quizType={quizType}
         quizTypeFilter={quizTypeFilter}
         appointedQuizzes={appointedQuizzes} />
-      <QuizCardList quizList={search !== '' ? quizNameFilter : quizzesOnPage} />
+      <QuizCardList quizList={search !== '' ? quizNameFilter : quizzesOnPage} setIsConfirmationPopupOpen={undefined} />
     </StyledDiv>
   );
 };
