@@ -22,5 +22,5 @@ export const routes = [
   { path: '/achievements', Component: <AchievementsPage />, role: 'EMP' },
   { path: '/staff', Component: <Staff />, role: 'AD' },
   { path: '/new-quiz', Component: <NewQuiz />, role: 'AD' },
-  { path: '/new-quiz/create', Component: <CreateNewQuiz />, role: 'AD' },
+  { path: '/new-quiz/:id', Component: <CreateNewQuiz />, role: 'AD' },
 ];

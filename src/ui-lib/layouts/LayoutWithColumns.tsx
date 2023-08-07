@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import '@vkontakte/vkui/dist/vkui.css';
 import Login from '../../pages/Login';
 import ResetPassword from '../../pages/ResetPassword';
-import Logo from '../Logo';
+import Logo from '../styled-components/Logo';
 import backgroundImage from '../../images/new-login.png';
 
 const LayoutWithColumns: React.FC = () => {

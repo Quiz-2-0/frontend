@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
-import Background from '../Background';
-import StyledButton from '../StyledButton';
+import Background from '../styled-components/Background';
+import StyledButton from '../styled-components/StyledButton';
 
 const StyledDiv = styled.div`
   max-width: 500px;

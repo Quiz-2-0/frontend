@@ -12,7 +12,7 @@ import draculaAvatar from '../../images/avatar/avatar_dracula.png';
 import elfAvatar from '../../images/avatar/avatar_elf.png';
 import genieAvatar from '../../images/avatar/avatar_genie.png';
 import zombieAvatar from '../../images/avatar/avatar_zombie.png';
-import { CloseIcon, UploadIcon, AvatarIcon } from '../icons';
+import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
 
 const Popup = styled.div`
   visibility: visible;

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { CupIcon, SquareIcon, RedBallIcon } from '../icons';
+import { CupIcon, SquareIcon, RedBallIcon } from '../styled-components/icons';
 import achieve1 from '../../images/achievement-icons/icon1.png';
 import achieve2 from '../../images/achievement-icons/icon2.png';
 import achieve3 from '../../images/achievement-icons/icon3.png';

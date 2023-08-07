@@ -6,7 +6,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
-import Dropdown from '../Dropdown';
+import Dropdown from './Dropdown';
 import { StyledTabs, StyledTabsItem } from './QuizMenu';
 import { Volume, Statistic } from '../../types/types';
 import { useGetQuizQuery, useGetStatisticQuery } from '../../api/apiv2';

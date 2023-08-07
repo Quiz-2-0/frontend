@@ -2,13 +2,13 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Navigate, Outlet, useNavigate } from 'react-router';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from '../widgets/Header';
+import Sidebar from '../widgets/Sidebar';
 import { useSelector, useDispatch } from '../../store/store.types';
 import { useGetCurrentUserQuery } from '../../api/apiv2';
 
 import { setLoaderState } from '../../store/allSlice/allSlice';
-import Loader from './Loader';
+import Loader from '../widgets/Loader';
 
 const Section = styled.section`
     width: 100%;

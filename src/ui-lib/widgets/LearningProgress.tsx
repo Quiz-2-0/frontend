@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import CircularProgressBar from './CircularProgressBar';
-import StyledDiv from '../StyledDiv';
+import StyledDiv from '../styled-components/StyledDiv';
 import { StyledNavButton } from './Achievements';
 import {
   ArrowIcon,
@@ -15,7 +15,7 @@ import {
   TrueIcon,
   TimeIcon,
   BattleIcon,
-} from '../icons';
+} from '../styled-components/icons';
 
 const StyledTitle = styled.h3`
   margin: 0;

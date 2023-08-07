@@ -7,8 +7,8 @@ import {
   Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../StyledDiv';
-import { ArrowIcon } from '../icons';
+import StyledDiv from '../styled-components/StyledDiv';
+import { ArrowIcon } from '../styled-components/icons';
 import achieveEasyStart from '../../images/achievements-img/achieve_easy_start.png';
 import achieveSoftKiller from '../../images/achievements-img/achieve_soft_killer.png';
 import achieveSuperSpeed from '../../images/achievements-img/achieve_super_speed.png';

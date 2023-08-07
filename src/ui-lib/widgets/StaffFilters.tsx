@@ -5,8 +5,8 @@ import { Button, Select, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import StyledDiv from '../StyledDiv';
-import StyledButton from '../StyledButton';
+import StyledDiv from '../styled-components/StyledDiv';
+import StyledButton from '../styled-components/StyledButton';
 
 const Buttons = styled.div`
   display: flex;

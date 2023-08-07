@@ -11,10 +11,10 @@ import React, { FC, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Icon24CancelOutline } from '@vkontakte/icons';
-import { TableTitle, TableItem } from '../TableItems';
-import StyledCheckbox from '../StyledCheckbox';
-import StyledButton from '../StyledButton';
-import Background from '../Background';
+import { TableTitle, TableItem } from '../styled-components/TableItems';
+import StyledCheckbox from '../styled-components/StyledCheckbox';
+import StyledButton from '../styled-components/StyledButton';
+import Background from '../styled-components/Background';
 import { TQuize } from '../../types/types';
 
 const StyledDiv = styled.div`

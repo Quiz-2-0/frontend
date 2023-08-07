@@ -32,12 +32,12 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
-import StyledButton from '../ui-lib/StyledButton';
-import StyledFormLayout from '../ui-lib/StyledFormLayout';
-import StyledInput from '../ui-lib/StyledInput';
+import StyledButton from '../ui-lib/styled-components/StyledButton';
+import StyledFormLayout from '../ui-lib/styled-components/StyledFormLayout';
+import StyledInput from '../ui-lib/styled-components/StyledInput';
 import styled from 'styled-components';
 import { setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
-import StyledFormItem from '../ui-lib/StyledFormItem';
+import StyledFormItem from '../ui-lib/styled-components/StyledFormItem';
 
 const StyledResetButton = styled(Button)`
   max-width: fit-content;
@@ -191,9 +191,9 @@ const Login: React.FC = () => {
               setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
             }}
             onChange={() => setIsEmailValid(true)}
-            status={isEmailValid ? 'default' : 'error'}
-            bottom={isEmailValid ? '' : 'Неверный логин, попробуйте ещё раз'}
-            style={{ paddingBottom: `${isEmailValid ? '22px' : '0px'}` }}>
+            status={isEmailValid && !error ? 'default' : 'error'}
+            bottom={isEmailValid ? (error ? 'Проверьте введённый логин' : '') : 'Неверный логин, попробуйте ещё раз'}
+            style={{ paddingBottom: `${isEmailValid && !error ? '22px' : '0px'}` }}>
             <StyledInput
               id='email'
               type='email'
@@ -212,9 +212,9 @@ const Login: React.FC = () => {
                 : setIsPasswordValid(false);
               setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
             }}
-            status={isPasswordValid ? 'default' : 'error'}
-            bottom={isPasswordValid ? '' : 'Введите пароль'}
-            style={{ paddingBottom: `${isPasswordValid ? '22px' : '0px'}` }}>
+            status={isPasswordValid && !error ? 'default' : 'error'}
+            bottom={isPasswordValid ? (error ? 'Проверьте введённый пароль' : '') : 'Введите пароль'}
+            style={{ paddingBottom: `${isPasswordValid && !error ? '22px' : '0px'}` }}>
             <StyledInput
               id='pass'
               type={isPasswordVisible ? 'text' : 'password'}

@@ -6,8 +6,8 @@
 /* eslint-disable ternary/nesting */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { ArrowIcon, CheckIcon, FalseIcon } from './icons';
-import { IconWrapper } from './widgets/Achives';
+import { ArrowIcon, CheckIcon, FalseIcon } from '../styled-components/icons';
+import { IconWrapper } from './Achives';
 
 const Li = styled.li<{ isReview: boolean }>`
   width: 100%;

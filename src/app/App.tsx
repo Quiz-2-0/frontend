@@ -18,8 +18,8 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LayoutWithColumns from '../ui-lib/widgets/LayoutWithColumns';
-import MainLayout from '../ui-lib/widgets/MainLayout';
+import LayoutWithColumns from '../ui-lib/layouts/LayoutWithColumns';
+import MainLayout from '../ui-lib/layouts/MainLayout';
 import { routes } from '../constants/routes';
 import Error from '../pages/Error';
 import Loader from '../ui-lib/widgets/Loader';

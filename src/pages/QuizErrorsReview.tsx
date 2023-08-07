@@ -12,7 +12,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import { useGetQuizQuery, useGetStatisticQuery } from '../api/apiv2';
 import ReviewDetails from '../ui-lib/widgets/ReviewDetails';
-import StyledButton from '../ui-lib/StyledButton';
+import StyledButton from '../ui-lib/styled-components/StyledButton';
 import ErrorParsing from '../ui-lib/widgets/ErrorParsing';
 import { Statistic } from '../types/types';
 

@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import ClickAwayListener from 'react-click-away-listener';
-import Logo from '../Logo';
+import Logo from '../styled-components/Logo';
 import {
   BellIcon,
   RedBallIcon,
   LogOuticon,
   AvatarIcon,
-} from '../icons';
+} from '../styled-components/icons';
 import logoImg from '../../images/logo/header__logo.svg';
 import { useSelector, useDispatch } from '../../store/store.types';
 import AdvBanner from './AdvBanner';

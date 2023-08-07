@@ -15,12 +15,12 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24DeleteOutline } from '@vkontakte/icons';
 import { useNavigate } from 'react-router';
-import { DurationIcon, LevelIcon, QuestionsIcon } from '../icons';
-import StyledQuizDetailsWrapper from '../StyledDetailsWrapper';
-import StyledQuizDetailWrapper from '../StyledQuizDetailWrapper';
-import StyledQuizDetailCaption from '../StyledQuizDeteilCaption';
-import StyledQuizTag from '../StyledQuizTag';
-import StyledQuizTagContainer from '../StyledQuizTagContainer';
+import { DurationIcon, LevelIcon, QuestionsIcon } from '../styled-components/icons';
+import StyledQuizDetailsWrapper from '../styled-components/StyledDetailsWrapper';
+import StyledQuizDetailWrapper from '../styled-components/StyledQuizDetailWrapper';
+import StyledQuizDetailCaption from '../styled-components/StyledQuizDeteilCaption';
+import StyledQuizTag from '../styled-components/StyledQuizTag';
+import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer';
 import { QuizCardProps } from '../../types/types';
 import { useDispatch } from '../../store/store.types';
 

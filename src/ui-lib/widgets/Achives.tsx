@@ -2,8 +2,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import StyledDiv from '../StyledDiv';
-import { ArrowIcon } from '../icons';
+import StyledDiv from '../styled-components/StyledDiv';
+import { ArrowIcon } from '../styled-components/icons';
 import achieve1 from '../../images/achievement-icons/icon1.png';
 import achieve2 from '../../images/achievement-icons/icon2.png';
 import achieve3 from '../../images/achievement-icons/icon3.png';

@@ -4,10 +4,10 @@ import {
   Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../StyledDiv';
+import StyledDiv from '../styled-components/StyledDiv';
 import CircularProgressBar from './CircularProgressBar';
 import { IconWrapper } from './Achives';
-import { ArrowIcon } from '../icons';
+import { ArrowIcon } from '../styled-components/icons';
 
 const Progress: React.FC = () => {
   const progressPercentage = 70;

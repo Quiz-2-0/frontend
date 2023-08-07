@@ -26,9 +26,9 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
-import StyledButton from '../ui-lib/StyledButton';
+import StyledButton from '../ui-lib/styled-components/StyledButton';
 import { useGetQuizQuery, useSetAnswerMutation } from '../api/apiv2';
-import ProgressBar from '../ui-lib/ProgressBar';
+import ProgressBar from '../ui-lib/widgets/ProgressBar';
 import { useDispatch } from '../store/store.types';
 import { setLoaderState } from '../store/allSlice/allSlice';
 import { Answer } from '../types/types';

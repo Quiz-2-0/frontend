@@ -15,15 +15,15 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useGetQuizQuery } from '../api/apiv2';
-import StyledQuizTagContainer from '../ui-lib/StyledQuizTagContainer';
-import StyledQuizTag from '../ui-lib/StyledQuizTag';
-import StyledQuizDetailsWrapper from '../ui-lib/StyledDetailsWrapper';
-import StyledQuizDetailWrapper from '../ui-lib/StyledQuizDetailWrapper';
-import StyledQuizDetailCaption from '../ui-lib/StyledQuizDeteilCaption';
-import BackButton from '../ui-lib/BackButton';
-import ButtonIcon from '../ui-lib/ButtonIcon';
+import StyledQuizTagContainer from '../ui-lib/styled-components/StyledQuizTagContainer';
+import StyledQuizTag from '../ui-lib/styled-components/StyledQuizTag';
+import StyledQuizDetailsWrapper from '../ui-lib/styled-components/StyledDetailsWrapper';
+import StyledQuizDetailWrapper from '../ui-lib/styled-components/StyledQuizDetailWrapper';
+import StyledQuizDetailCaption from '../ui-lib/styled-components/StyledQuizDeteilCaption';
+import BackButton from '../ui-lib/styled-components/BackButton';
+import ButtonIcon from '../ui-lib/styled-components/ButtonIcon';
 import buttonIcon from '../images/icons/button_icon.svg';
-import { DurationIcon, LevelIcon, QuestionsIcon } from '../ui-lib/icons';
+import { DurationIcon, LevelIcon, QuestionsIcon } from '../ui-lib/styled-components/icons';
 import ListForQuiz from '../ui-lib/widgets/ListForQuiz';
 import { setLoaderState } from '../store/allSlice/allSlice';
 
