@@ -46,7 +46,9 @@ const NewQuiz: React.FC = () => {
         icon='delete'
         description='Хотите навсегда удалить черновик квиза?'
         blueButton='Подтвердить'
-        whiteButton='Отменить' />
+        whiteButton='Отменить'
+        blueButtonLink=''
+        whiteButtonLink='' />
     </>
   );
 };

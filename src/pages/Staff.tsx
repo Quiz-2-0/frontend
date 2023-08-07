@@ -93,7 +93,9 @@ const Staff: FC = () => {
         blueButton='Вернуться к списку'
         whiteButton='Проверить'
         isConfirmationPopupOpen={isConfirmationPopupOpen}
-        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen} />
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        blueButtonLink=''
+        whiteButtonLink='/adm-quizzes' />
       <NewEmployeePopup
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
         setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}

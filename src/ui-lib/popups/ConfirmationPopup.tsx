@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -30,6 +32,8 @@ const ConfirmationPopup: FC<{
   description: string,
   blueButton: string,
   whiteButton: string,
+  blueButtonLink: string,
+  whiteButtonLink: string,
 }> = ({
   isConfirmationPopupOpen,
   setIsConfirmationPopupOpen,
@@ -38,8 +42,10 @@ const ConfirmationPopup: FC<{
   description,
   blueButton,
   whiteButton,
+  blueButtonLink,
+  whiteButtonLink,
 }) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Background
@@ -85,12 +91,16 @@ const ConfirmationPopup: FC<{
             style={{ margin: 0, width: '100%' }}
             onClick={() => {
               setIsConfirmationPopupOpen(false);
+              blueButtonLink !== '' && navigate(blueButtonLink);
             }}>
             {blueButton}
           </StyledButton>
           <StyledButton
             style={{ margin: 0, width: '100%' }}
-            onClick={() => setIsConfirmationPopupOpen(false)}
+            onClick={() => {
+              setIsConfirmationPopupOpen(false);
+              whiteButtonLink !== '' && navigate(whiteButtonLink);
+            }}
             mode='outline'>
             {whiteButton}
           </StyledButton>
