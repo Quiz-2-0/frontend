@@ -10,9 +10,9 @@ import {
   Caption,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../StyledDiv';
+import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achives';
-import { ArrowIcon } from '../icons';
+import { ArrowIcon } from '../styled-components/icons';
 import beforeUser from '../../images/avatar/mayakovsky.png';
 import afterUser from '../../images/avatar/dostoevskij.png';
 import { useGetCurrentUserQuery } from '../../api/apiv2';

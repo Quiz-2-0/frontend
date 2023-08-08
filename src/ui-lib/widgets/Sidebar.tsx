@@ -16,8 +16,7 @@ import styled from 'styled-components';
 import { useDispatch } from '../../store/store.types';
 
 const StyledTabs = styled(Tabs)`
-  max-width: 166px;
-  width: 100%;
+  min-width: 166px;
   min-height: 168px;
 
   & > div {
@@ -104,7 +103,7 @@ const Sidebar: React.FC = () => {
             <Icon24Square4Outline />
             Квизы
           </StyledTabsItem>
-          <StyledTabsItem selected={location.pathname === '/new-quiz'} onClick={() => setUrl('/new-quiz')}>
+          <StyledTabsItem selected={location.pathname.includes('/new-quiz')} onClick={() => setUrl('/new-quiz')}>
             <Icon24DocumentPlusOutline />
             Новый квиз
           </StyledTabsItem>

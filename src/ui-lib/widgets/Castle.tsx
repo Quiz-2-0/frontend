@@ -18,7 +18,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
-import StyledDiv from '../StyledDiv';
+import StyledDiv from '../styled-components/StyledDiv';
 import levels from '../../constants/levels';
 import { setFromCastle, setLoaderState } from '../../store/allSlice/allSlice';
 import { useGetAllQuizesQuery } from '../../api/apiv2';

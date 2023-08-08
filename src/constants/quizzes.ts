@@ -38,6 +38,13 @@ const quizzes = [
         ],
       },
     ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
+      },
+    ],
   },
   {
     id: 2,
@@ -75,6 +82,13 @@ const quizzes = [
             ],
           },
         ],
+      },
+    ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
       },
     ],
   },
@@ -116,6 +130,13 @@ const quizzes = [
         ],
       },
     ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
+      },
+    ],
   },
   {
     id: 4,
@@ -153,6 +174,13 @@ const quizzes = [
             ],
           },
         ],
+      },
+    ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
       },
     ],
   },
@@ -194,6 +222,13 @@ const quizzes = [
         ],
       },
     ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
+      },
+    ],
   },
   {
     id: 6,
@@ -231,6 +266,13 @@ const quizzes = [
             ],
           },
         ],
+      },
+    ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
       },
     ],
   },
@@ -272,6 +314,13 @@ const quizzes = [
         ],
       },
     ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
+      },
+    ],
   },
   {
     id: 8,
@@ -311,6 +360,13 @@ const quizzes = [
         ],
       },
     ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
+      },
+    ],
   },
   {
     id: 9,
@@ -348,6 +404,13 @@ const quizzes = [
             ],
           },
         ],
+      },
+    ],
+    volumes: [
+      {
+        id: 0,
+        name: 'Название главы',
+        description: 'Описание главы',
       },
     ],
   },

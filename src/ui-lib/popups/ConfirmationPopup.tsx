@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon28CheckCircleOutline } from '@vkontakte/icons';
-import Background from '../Background';
-import StyledButton from '../StyledButton';
+import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
+import Background from '../styled-components/Background';
+import StyledButton from '../styled-components/StyledButton';
 
 const StyledDiv = styled.div`
   max-width: 500px;
@@ -25,9 +27,25 @@ const StyledDiv = styled.div`
 const ConfirmationPopup: FC<{
   isConfirmationPopupOpen: boolean,
   setIsConfirmationPopupOpen: any,
-  setIsChooseQuizzesPopupOpen: any,
-}> = ({ isConfirmationPopupOpen, setIsConfirmationPopupOpen, setIsChooseQuizzesPopupOpen }) => {
-  const dispatch = useDispatch();
+  title: string,
+  icon: string,
+  description: string,
+  blueButton: string,
+  whiteButton: string,
+  blueButtonLink: string,
+  whiteButtonLink: string,
+}> = ({
+  isConfirmationPopupOpen,
+  setIsConfirmationPopupOpen,
+  title,
+  icon,
+  description,
+  blueButton,
+  whiteButton,
+  blueButtonLink,
+  whiteButtonLink,
+}) => {
+  const navigate = useNavigate();
 
   return (
     <Background
@@ -48,8 +66,8 @@ const ConfirmationPopup: FC<{
             lineHeight: '24px',
             letterSpacing: '0.38px',
           }}>
-          <Icon28CheckCircleOutline fill='#43A843' />
-          Квизы назначены
+          {icon === 'check' ? <Icon28CheckCircleOutline fill='#43A843' /> : <Icon28DeleteOutline fill='#99A2AD' />}
+          {title}
         </h2>
         <p
           style={{
@@ -58,7 +76,7 @@ const ConfirmationPopup: FC<{
             fontWeight: '400',
             lineHeight: '20px',
           }}>
-          Проверить назначение квизов можно в разделе «Назначенные квизы»
+          {description}
         </p>
         <div
           style={{
@@ -73,14 +91,18 @@ const ConfirmationPopup: FC<{
             style={{ margin: 0, width: '100%' }}
             onClick={() => {
               setIsConfirmationPopupOpen(false);
+              blueButtonLink !== '' && navigate(blueButtonLink);
             }}>
-            Вернуться к списку
+            {blueButton}
           </StyledButton>
           <StyledButton
             style={{ margin: 0, width: '100%' }}
-            onClick={() => setIsConfirmationPopupOpen(false)}
+            onClick={() => {
+              setIsConfirmationPopupOpen(false);
+              whiteButtonLink !== '' && navigate(whiteButtonLink);
+            }}
             mode='outline'>
-            Проверить
+            {whiteButton}
           </StyledButton>
         </div>
       </StyledDiv>

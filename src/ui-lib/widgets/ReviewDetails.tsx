@@ -6,7 +6,7 @@ import {
   Subhead,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../StyledDiv';
+import StyledDiv from '../styled-components/StyledDiv';
 
 const StyledDetailWrapper = styled(Div)`
   width: fit-content;

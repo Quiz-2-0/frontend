@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Question } from '../types/types';
+import { Question } from '../../types/types';
 
 const BarElement = styled.li<{ isCurrentBar: boolean, width: number }>`
   width: 100%;
@@ -25,7 +25,6 @@ const Bar = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  max-width: 914px;
   width: 100%;
   display: flex;
   gap: 4px;
@@ -33,7 +32,7 @@ const Bar = styled.ul`
   height: 8px;
 `;
 
-const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined }> = ({ progressObject, questionArr }) => (
+const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined | { id: number, name: string }[] }> = ({ progressObject, questionArr }) => (
   <Bar>
     {questionArr && questionArr.map((el, index) => (
       <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />

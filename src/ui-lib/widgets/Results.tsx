@@ -8,7 +8,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Title, Text, Div } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledButton from '../StyledButton';
+import StyledButton from '../styled-components/StyledButton';
 import image from '../../images/results__image.png';
 import { useGetStatisticQuery } from '../../api/apiv2';
 

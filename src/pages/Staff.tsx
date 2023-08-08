@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import StaffFilter from '../ui-lib/widgets/StaffFilters';
 import StaffList from '../ui-lib/widgets/StaffList';
-import ChooseQuizzesPopup from '../ui-lib/widgets/ChooseQuizzesPopup';
+import ChooseQuizzesPopup from '../ui-lib/popups/ChooseQuizzesPopup';
 import staff from '../constants/staff';
-import ConfirmationPopup from '../ui-lib/widgets/ConfirmationPopup';
-import NewEmployeePopup from '../ui-lib/widgets/NewEmployeePopup';
+import ConfirmationPopup from '../ui-lib/popups/ConfirmationPopup';
+import NewEmployeePopup from '../ui-lib/popups/NewEmployeePopup';
 import departments from '../constants/departments';
 import quizzes from '../constants/quizzes';
 import { useGetAllQuizesQuery } from '../api/apiv2';
@@ -87,9 +87,15 @@ const Staff: FC = () => {
         isChooseQuizzesPopupOpen={isChooseQuizzesPopupOpen}
         setIsEmployeeChecked={setIsEmployeeChecked} />
       <ConfirmationPopup
-        setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
+        title='Квизы назначены'
+        icon='check'
+        description='Проверить назначение квизов можно в разделе «Назначенные квизы»'
+        blueButton='Вернуться к списку'
+        whiteButton='Проверить'
         isConfirmationPopupOpen={isConfirmationPopupOpen}
-        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen} />
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        blueButtonLink=''
+        whiteButtonLink='/adm-quizzes' />
       <NewEmployeePopup
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
         setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}

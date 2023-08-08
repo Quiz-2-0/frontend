@@ -20,11 +20,12 @@ import styled from 'styled-components';
 import { Button, FormItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24UserOutline, Icon20ChevronRight } from '@vkontakte/icons';
-import StyledDiv from '../StyledDiv';
-import StyledButton from '../StyledButton';
-import StyledCheckbox from '../StyledCheckbox';
-import { TableItem, TableTitle } from '../TableItems';
-import { ArrowIcon } from '../icons';
+import StyledDiv from '../styled-components/StyledDiv';
+import StyledButton from '../styled-components/StyledButton';
+import StyledCheckbox from '../styled-components/StyledCheckbox';
+import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwardButton';
+import { TableItem, TableTitle } from '../styled-components/TableItems';
+import { ArrowIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
 import staff from '../../constants/staff';
 
@@ -62,27 +63,6 @@ const StyledDivWithCheckbox = styled.div`
 
   &:pressed {
     background: rgba(63, 138, 224, 0.15));
-  }
-`;
-
-const StyledBackAndForwardButton = styled(Button)`
-  width: min-content;
-  height: 24px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 20px;
-
-  & > .vkuiButton__in > .vkuiButton__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: no-wrap;
-    width: 100%;
-    gap: 8px;
   }
 `;
 

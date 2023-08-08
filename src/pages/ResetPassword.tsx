@@ -19,12 +19,12 @@ import {
 import { useRecoverPasswordMutation } from '../api/apiv2';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useDispatch } from '../store/store.types';
-import StyledButton from '../ui-lib/StyledButton';
-import StyledFormLayout from '../ui-lib/StyledFormLayout';
-import StyledInput from '../ui-lib/StyledInput';
+import StyledButton from '../ui-lib/styled-components/StyledButton';
+import StyledFormLayout from '../ui-lib/styled-components/StyledFormLayout';
+import StyledInput from '../ui-lib/styled-components/StyledInput';
 import buttonIcon from '../images/icons/button_icon.svg';
-import BackButton from '../ui-lib/BackButton';
-import ButtonIcon from '../ui-lib/ButtonIcon';
+import BackButton from '../ui-lib/styled-components/BackButton';
+import ButtonIcon from '../ui-lib/styled-components/ButtonIcon';
 
 const ResendPasswordButton = styled.button`
   margin: 24px 0 0 0;

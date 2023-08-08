@@ -7,6 +7,10 @@ const StyledButton = styled(Button)`
   border-radius: 4px;
 
   & > .vkuiButton__in > .vkuiButton__content {
+    display: flex;
+    justify-content: space-between;
+    alignItems: center;
+    gap: 8px;
     font-size: 15px;
     line-height: 20px;
     font-weight: 500;

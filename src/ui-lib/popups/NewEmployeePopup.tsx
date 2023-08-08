@@ -23,10 +23,10 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24CancelOutline } from '@vkontakte/icons';
-import Background from '../Background';
-import StyledButton from '../StyledButton';
-import StyledInput from '../StyledInput';
-import StyledFormItem from '../StyledFormItem';
+import Background from '../styled-components/Background';
+import StyledButton from '../styled-components/StyledButton';
+import StyledInput from '../styled-components/StyledInput';
+import StyledFormItem from '../styled-components/StyledFormItem';
 
 const StyledDiv = styled.div`
   max-width: 1000px;
