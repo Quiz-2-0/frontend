@@ -17,7 +17,7 @@ import { Icon28DeleteOutline, Icon28InfoCircleOutline } from '@vkontakte/icons';
 import styled from 'styled-components';
 import StyledFormItem from '../styled-components/StyledFormItem';
 import StyledInput from '../styled-components/StyledInput';
-import questionTypes from '../../constants/question-types';
+import questionTypes from '@/constants/question-types';
 import StyledDiv from '../styled-components/StyledDiv';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`

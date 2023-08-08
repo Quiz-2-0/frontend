@@ -4,7 +4,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import styled from 'styled-components';
-import { DnDCardProps } from '../../types/types';
+import { DnDCardProps } from '@/types/types';
 
 const DnDCard = styled.div<{ backgroundColor: string, borderColor: string } >`
   width: 220px;
@@ -16,7 +16,7 @@ const DnDCard = styled.div<{ backgroundColor: string, borderColor: string } >`
   border: ${({ borderColor }) => (`1px solid ${borderColor}`)};
   cursor: pointer;
   background-color: ${({ backgroundColor }) => (backgroundColor)};
-  
+
   &:hover {
     border: 1px solid rgba(63, 138, 224, 0.15);
     background: rgba(63, 138, 224, 0.05);

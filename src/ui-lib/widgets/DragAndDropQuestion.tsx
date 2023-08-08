@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import DragAndDropBoard from './DragAndDropBoard';
 import DragAndDropCard from './DragAndDropCard';
-import { Item } from '../../types/types';
+import { Item } from '@/types/types';
 
 const DnDItemsContainer = styled.div`
   margin-top: 20px;

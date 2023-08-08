@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
 
-import { AdminQuizz, TQuize } from '../../types/types';
+import { AdminQuizz, TQuize } from '@/types/types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;

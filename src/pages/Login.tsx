@@ -18,8 +18,8 @@ import React, {
   useState,
 } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from '../store/store.types';
-import { useLoginMutation, jwt } from '../api/apiv2';
+import { useDispatch, useSelector } from '@/store/store.types';
+import { useLoginMutation, jwt } from '@/api/apiv2';
 import {
   Title,
   Div,
@@ -32,12 +32,12 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
-import StyledButton from '../ui-lib/styled-components/StyledButton';
-import StyledFormLayout from '../ui-lib/styled-components/StyledFormLayout';
-import StyledInput from '../ui-lib/styled-components/StyledInput';
+import StyledButton from '@/ui-lib/styled-components/StyledButton';
+import StyledFormLayout from '@/ui-lib/styled-components/StyledFormLayout';
+import StyledInput from '@/ui-lib/styled-components/StyledInput';
 import styled from 'styled-components';
-import { setRememberMe, setLoaderState } from '../store/allSlice/allSlice';
-import StyledFormItem from '../ui-lib/styled-components/StyledFormItem';
+import { setRememberMe, setLoaderState } from '@/store/allSlice/allSlice';
+import StyledFormItem from '@/ui-lib/styled-components/StyledFormItem';
 
 const StyledResetButton = styled(Button)`
   max-width: fit-content;

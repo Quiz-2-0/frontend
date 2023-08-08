@@ -73,6 +73,9 @@ module.exports = {
             },
         ],
         'default-param-last': 'off',
-        'import/extensions': 'off'
+        'import/extensions': 'off',
+        '@typescript-eslint/quotes': ['error', 'single'],
+        '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
+        '@typescript-eslint/object-curly-spacing': ['error', 'always'],
     },
 };

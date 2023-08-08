@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import StyledDiv from '../styled-components/StyledDiv';
 import { ArrowIcon } from '../styled-components/icons';
-import achieve1 from '../../images/achievement-icons/icon1.png';
-import achieve2 from '../../images/achievement-icons/icon2.png';
-import achieve3 from '../../images/achievement-icons/icon3.png';
+import achieve1 from '@/assets/images/achievement-icons/icon1.png';
+import achieve2 from '@/assets/images/achievement-icons/icon2.png';
+import achieve3 from '@/assets/images/achievement-icons/icon3.png';
 
 const UpdatedDiv = styled(StyledDiv)`
     width: 100%;
@@ -14,7 +14,7 @@ const UpdatedDiv = styled(StyledDiv)`
     display: flex;
     gap: 24px;
     flex-direction: column;
-    
+
 `;
 
 export const IconWrapper = styled.div`
@@ -26,7 +26,7 @@ export const IconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-   
+
     &:hover {
       background-color: rgba(63, 138, 224, 0.15);
     }

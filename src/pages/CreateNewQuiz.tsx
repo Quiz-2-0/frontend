@@ -7,12 +7,12 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { Icon20ChevronRight, Icon24AddOutline } from '@vkontakte/icons';
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router';
-import StyledButton from '../ui-lib/styled-components/StyledButton';
-import StyledDiv from '../ui-lib/styled-components/StyledDiv';
-import ProgressBar from '../ui-lib/widgets/ProgressBar';
-import steps from '../constants/steps';
-import StyledBackAndForwardButton from '../ui-lib/styled-components/StyledBackAndForwardButton';
-import ConfirmationPopup from '../ui-lib/popups/ConfirmationPopup';
+import StyledButton from '@/ui-lib/styled-components/StyledButton';
+import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
+import ProgressBar from '@/ui-lib/widgets/ProgressBar';
+import steps from '@/constants/steps';
+import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
+import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 
 const CreateNewQuiz: FC = () => {
   const navigate = useNavigate();
