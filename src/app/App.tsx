@@ -5,7 +5,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
@@ -18,12 +17,12 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LayoutWithColumns from '../ui-lib/layouts/LayoutWithColumns';
-import MainLayout from '../ui-lib/layouts/MainLayout';
-import { routes } from '../constants/routes';
-import Error from '../pages/Error';
-import Loader from '../ui-lib/widgets/Loader';
-import { useSelector, useDispatch } from '../store/store.types';
+import LayoutWithColumns from '@/ui-lib/layouts/LayoutWithColumns';
+import MainLayout from '@/ui-lib/layouts/MainLayout';
+import { routes } from '@/constants/routes';
+import Error from '@/pages/Error';
+import Loader from '@/ui-lib/widgets/Loader';
+import { useSelector, useDispatch } from '@/store/store.types';
 
 /// потом сделаем переключение темы
 const Main = styled.main`

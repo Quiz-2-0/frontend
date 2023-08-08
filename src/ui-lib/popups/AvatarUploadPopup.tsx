@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
@@ -8,10 +7,10 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import draculaAvatar from '../../images/avatar/avatar_dracula.png';
-import elfAvatar from '../../images/avatar/avatar_elf.png';
-import genieAvatar from '../../images/avatar/avatar_genie.png';
-import zombieAvatar from '../../images/avatar/avatar_zombie.png';
+import draculaAvatar from '@/assets/images/avatar/avatar_dracula.png';
+import elfAvatar from '@/assets/images/avatar/avatar_elf.png';
+import genieAvatar from '@/assets/images/avatar/avatar_genie.png';
+import zombieAvatar from '@/assets/images/avatar/avatar_zombie.png';
 import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
 
 const Popup = styled.div`

@@ -15,9 +15,9 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
-import categories from '../../constants/category';
-import departments from '../../constants/departments';
-import quizLevels from '../../constants/quizLevels';
+import categories from '@/constants/category';
+import departments from '@/constants/departments';
+import quizLevels from '@/constants/quizLevels';
 import StyledDiv from '../styled-components/StyledDiv';
 
 const StyledSelect = styled(Select)`

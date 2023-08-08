@@ -12,16 +12,17 @@ import Logo from '../styled-components/Logo';
 import {
   BellIcon,
   RedBallIcon,
-  LogOuticon,
+  LogOutIcon,
   AvatarIcon,
 } from '../styled-components/icons';
-import logoImg from '../../images/logo/header__logo.svg';
-import { useSelector, useDispatch } from '../../store/store.types';
+import logoImg from '@/assets/images/logo/header__logo.svg';
+import { useSelector, useDispatch } from '@/store/store.types';
 import AdvBanner from './AdvBanner';
-import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '../../api/apiv2';
+import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '@/api/apiv2';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const HeaderWrapper = styled.header`
-  
+
   width: 100%;
   padding: 32px 80px 0;
   box-sizing: border-box;
@@ -59,12 +60,12 @@ const AvatarWrapper = styled.div<{ width: number, height: number }>`
   cursor: pointer;
   position: relative;
   z-index: 2;
-  
+
   &:hover {
     .avatarIcon {
       opacity: 1;
     }
-    
+
     .overlay {
       opacity: 1;
     }
@@ -142,10 +143,9 @@ const Header: FC = () => {
           <AvatarWrapper width={60} height={60}>
             <AvatarIconWrapper className='avatarIcon' style={{ zIndex: '2' }}><AvatarIcon style={{ zIndex: '2' }} /></AvatarIconWrapper>
             <AvatarOverlay className='overlay' />
-            <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
             {data?.avatar
               ? (
-                <Avatar src={`http://80.87.106.133/${data?.avatar}`} alt='тут лицо чувака' />
+                <Avatar src={`${SRC_BASE_URL}/${data?.avatar}`} alt={`${data?.firstName} ${data?.lastName}`} />
               ) : (
                 <div
                   style={{
@@ -161,7 +161,7 @@ const Header: FC = () => {
             <BellIcon onClick={(e: any) => { e.stopPropagation(); openModal(!isOpen); }} />
             {quizes && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
-          <LogOuticon onClick={logOutFunction} />
+          <LogOutIcon onClick={logOutFunction} />
         </ToolBar>
       </HeaderContainer>
     </HeaderWrapper>

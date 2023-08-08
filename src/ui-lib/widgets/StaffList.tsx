@@ -17,7 +17,7 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, FormItem } from '@vkontakte/vkui';
+import { FormItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon24UserOutline, Icon20ChevronRight } from '@vkontakte/icons';
 import StyledDiv from '../styled-components/StyledDiv';
@@ -27,7 +27,7 @@ import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwar
 import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
-import staff from '../../constants/staff';
+import staff from '@/constants/staff';
 
 const StyledExpandedItem = styled.div<{ isOpen: number[]; id: any }>`
   max-height: ${({ isOpen, id }) => (!isOpen.includes(id) ? `${staff.length * 36}px` : '0')};
@@ -58,11 +58,11 @@ const StyledDivWithCheckbox = styled.div`
   gap: 98px;
 
   &:hover {
-    background: rgba(63, 138, 224, 0.05));
+    background: rgba(63, 138, 224, 0.05);
   }
 
   &:pressed {
-    background: rgba(63, 138, 224, 0.15));
+    background: rgba(63, 138, 224, 0.15);
   }
 `;
 

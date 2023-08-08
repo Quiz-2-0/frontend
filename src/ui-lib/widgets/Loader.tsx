@@ -4,7 +4,7 @@ import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import '../LoaderAnimation.css';
 import { useDispatch } from 'react-redux';
-import { setLoaderState } from '../../store/allSlice/allSlice';
+import { setLoaderState } from '@/store/allSlice/allSlice';
 
 const StyledBackground = styled.div`
   position: fixed;

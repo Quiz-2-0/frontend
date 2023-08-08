@@ -1,20 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Div, Title, Text } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import ButtonIcon from '../ui-lib/styled-components/ButtonIcon';
-import buttonIcon from '../images/icons/button_icon.svg';
-import BackButton from '../ui-lib/styled-components/BackButton';
-import achieveEasyStart from '../images/achievements-img/achieve_easy_start.png';
-import achieveSoftKiller from '../images/achievements-img/achieve_soft_killer.png';
-import achieveAugustChallenge from '../images/achievements-img/achieve_august_challenge.png';
-import achievePermanence from '../images/achievements-img/achieve_permanence.png';
-import achieveSuperAccuracy from '../images/achievements-img/achieve_super_accuracy.png';
-import achieveSuperSpeed from '../images/achievements-img/achieve_super_speed.png';
-import achieve5QuizzesInARow from '../images/achievements-img/achieve_5_quizzez_in_a_row.png';
-import achieveSoftSkillsGuru from '../images/achievements-img/achieve_soft_skills_guru.png';
+import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
+import BackButton from '@/ui-lib/styled-components/BackButton';
+import buttonIcon from '@/assets/images/icons/button_icon.svg';
+import achieveEasyStart from '@/assets/images/achievements-img/achieve_easy_start.png';
+import achieveSoftKiller from '@/assets/images/achievements-img/achieve_soft_killer.png';
+import achieveAugustChallenge from '@/assets/images/achievements-img/achieve_august_challenge.png';
+import achievePermanence from '@/assets/images/achievements-img/achieve_permanence.png';
+import achieveSuperAccuracy from '@/assets/images/achievements-img/achieve_super_accuracy.png';
+import achieveSuperSpeed from '@/assets/images/achievements-img/achieve_super_speed.png';
+import achieve5QuizzesInARow from '@/assets/images/achievements-img/achieve_5_quizzez_in_a_row.png';
+import achieveSoftSkillsGuru from '@/assets/images/achievements-img/achieve_soft_skills_guru.png';
 
 const achievements = [
   {
@@ -126,24 +125,24 @@ const AchieveLi = styled.li<{ disabled: boolean }>`
   align-items: center;
   justify-content: flex-start;
   opacity: ${({ disabled }) => (disabled ? '.5' : '1')};
-  
+
   &:hover {
     .counter {
       font-size: 16px;
       line-height: 20px;
     }
-    
+
     .achieveImg {
       width: 120px;
       height: 120px;
       margin: 0 0 12px;
     }
-    
+
     .achieveTitle {
       font-size: 16px;
       line-height: 20px;
     }
-    
+
     .achieveDescription {
       opacity: 1;
       visibility: visible;

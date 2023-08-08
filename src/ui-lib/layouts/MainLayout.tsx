@@ -4,17 +4,17 @@ import styled from 'styled-components';
 import { Navigate, Outlet, useNavigate } from 'react-router';
 import Header from '../widgets/Header';
 import Sidebar from '../widgets/Sidebar';
-import { useSelector, useDispatch } from '../../store/store.types';
-import { useGetCurrentUserQuery } from '../../api/apiv2';
+import { useSelector, useDispatch } from '@/store/store.types';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 
-import { setLoaderState } from '../../store/allSlice/allSlice';
+import { setLoaderState } from '@/store/allSlice/allSlice';
 import Loader from '../widgets/Loader';
 
 const Section = styled.section`
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    display: flex; 
+    display: flex;
     flex-direction: column;
 `;
 const ContentWrapper = styled.div`

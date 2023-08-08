@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NewQuizStep1 = React.lazy(() => import('../ui-lib/widgets/NewQuizStep1'));
-const NewQuizStep2 = React.lazy(() => import('../ui-lib/widgets/NewQuizStep2'));
-const NewQuizStep3 = React.lazy(() => import('../ui-lib/widgets/NewQuizStep3'));
-const NewQuizStep4 = React.lazy(() => import('../ui-lib/widgets/NewQuizStep4'));
+const NewQuizStep1 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep1'));
+const NewQuizStep2 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep2'));
+const NewQuizStep3 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep3'));
+const NewQuizStep4 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep4'));
 
 type Step<T> = {
   id: number;

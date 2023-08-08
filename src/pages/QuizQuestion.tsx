@@ -26,17 +26,17 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
-import StyledButton from '../ui-lib/styled-components/StyledButton';
-import { useGetQuizQuery, useSetAnswerMutation } from '../api/apiv2';
-import ProgressBar from '../ui-lib/widgets/ProgressBar';
-import { useDispatch } from '../store/store.types';
-import { setLoaderState } from '../store/allSlice/allSlice';
-import { Answer } from '../types/types';
-import Results from '../ui-lib/widgets/Results';
-import SingleChoiceQuestion from '../ui-lib/widgets/SingleChoiceQuestion';
-import MultipleChoiceQuestion from '../ui-lib/widgets/MultipleChoiceQuestion';
-import OpenEndedQuestion from '../ui-lib/widgets/OpenEndedQuestion';
-import DragAndDropQuestion from '../ui-lib/widgets/DragAndDropQuestion';
+import StyledButton from '@/ui-lib/styled-components/StyledButton';
+import { useGetQuizQuery, useSetAnswerMutation } from '@/api/apiv2';
+import ProgressBar from '@/ui-lib/widgets/ProgressBar';
+import { useDispatch } from '@/store/store.types';
+import { setLoaderState } from '@/store/allSlice/allSlice';
+import { Answer } from '@/types/types';
+import Results from '@/ui-lib/widgets/Results';
+import SingleChoiceQuestion from '@/ui-lib/widgets/SingleChoiceQuestion';
+import MultipleChoiceQuestion from '@/ui-lib/widgets/MultipleChoiceQuestion';
+import OpenEndedQuestion from '@/ui-lib/widgets/OpenEndedQuestion';
+import DragAndDropQuestion from '@/ui-lib/widgets/DragAndDropQuestion';
 
 const QuizQuestion: React.FC = () => {
   const { id = 0 } = useParams();

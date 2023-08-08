@@ -1,5 +1,7 @@
 export const API_ROOT = 'http://80.87.106.133/api/v1';
 
+export const SRC_BASE_URL = 'http://80.87.106.133';
+
 export const LOGIN_ROUTE = '/users/token/';
 export const RESET_PASSWORD = '/users/reset/';
 export const ALL_QUIZES = '/quizes/';

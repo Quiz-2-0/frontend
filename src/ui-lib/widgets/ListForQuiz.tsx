@@ -8,8 +8,8 @@ import { useParams } from 'react-router';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
 import { StyledTabs, StyledTabsItem } from './QuizMenu';
-import { Volume, Statistic } from '../../types/types';
-import { useGetQuizQuery, useGetStatisticQuery } from '../../api/apiv2';
+import { Volume, Statistic } from '@/types/types';
+import { useGetQuizQuery, useGetStatisticQuery } from '@/api/apiv2';
 import ErrorParsing from './ErrorParsing';
 
 const Div = styled.div`

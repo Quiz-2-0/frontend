@@ -15,7 +15,7 @@ import { TableTitle, TableItem } from '../styled-components/TableItems';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
-import { TQuize } from '../../types/types';
+import { TQuize } from '@/types/types';
 
 const StyledDiv = styled.div`
   max-width: 1080px;

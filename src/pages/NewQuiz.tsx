@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router';
 import { Icon24AddOutline } from '@vkontakte/icons';
 import { Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import StyledDiv from '../ui-lib/styled-components/StyledDiv';
-import StyledButton from '../ui-lib/styled-components/StyledButton';
-import QuizCardList from '../ui-lib/widgets/QuizCardList';
-import quizzes from '../constants/quizzes';
-import ConfirmationPopup from '../ui-lib/popups/ConfirmationPopup';
+import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
+import StyledButton from '@/ui-lib/styled-components/StyledButton';
+import QuizCardList from '@/ui-lib/widgets/QuizCardList';
+import quizzes from '@/constants/quizzes';
+import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 
 const NewQuiz: React.FC = () => {
   const quizId = quizzes.length;

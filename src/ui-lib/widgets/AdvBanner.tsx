@@ -4,9 +4,9 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { CupIcon, SquareIcon, RedBallIcon } from '../styled-components/icons';
-import achieve1 from '../../images/achievement-icons/icon1.png';
-import achieve2 from '../../images/achievement-icons/icon2.png';
-import achieve3 from '../../images/achievement-icons/icon3.png';
+import achieve1 from '@/assets/images/achievement-icons/icon1.png';
+import achieve2 from '@/assets/images/achievement-icons/icon2.png';
+import achieve3 from '@/assets/images/achievement-icons/icon3.png';
 
 const BannerPlate = styled.div<{ isOpen: boolean }>`
     display: flex;
@@ -19,9 +19,8 @@ const BannerPlate = styled.div<{ isOpen: boolean }>`
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transition: opacity ease .3s, visibility ease .3s;
     position: absolute;
-    
     top: 71px;
-    right: 0px;
+    right: 0;
     z-index: 50;
 `;
 

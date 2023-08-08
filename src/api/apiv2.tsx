@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
@@ -14,10 +13,10 @@ import {
   GET_ADMIN_QUIZZES,
   GET_ADMIN_USERS,
   GET_ADMIN_DEPARTMENTS,
-} from '../constants/api-url';
+} from '@/constants/api-url';
 import {
   TUser, TUserLoginRequest, TQuize, TAnswerRequest, Statistic, AdminQuizz,
-} from '../types/types';
+} from '@/types/types';
 
 export const jwt = {
   set: (value: string, isRemember: boolean, role: string): void => {

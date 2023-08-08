@@ -13,7 +13,7 @@ import {
   Icon24PollOutline,
 } from '@vkontakte/icons';
 import styled from 'styled-components';
-import { useDispatch } from '../../store/store.types';
+import { useDispatch } from '@/store/store.types';
 
 const StyledTabs = styled(Tabs)`
   min-width: 166px;

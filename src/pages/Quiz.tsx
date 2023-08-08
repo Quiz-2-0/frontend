@@ -14,18 +14,18 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetQuizQuery } from '../api/apiv2';
-import StyledQuizTagContainer from '../ui-lib/styled-components/StyledQuizTagContainer';
-import StyledQuizTag from '../ui-lib/styled-components/StyledQuizTag';
-import StyledQuizDetailsWrapper from '../ui-lib/styled-components/StyledDetailsWrapper';
-import StyledQuizDetailWrapper from '../ui-lib/styled-components/StyledQuizDetailWrapper';
-import StyledQuizDetailCaption from '../ui-lib/styled-components/StyledQuizDeteilCaption';
-import BackButton from '../ui-lib/styled-components/BackButton';
-import ButtonIcon from '../ui-lib/styled-components/ButtonIcon';
-import buttonIcon from '../images/icons/button_icon.svg';
-import { DurationIcon, LevelIcon, QuestionsIcon } from '../ui-lib/styled-components/icons';
-import ListForQuiz from '../ui-lib/widgets/ListForQuiz';
-import { setLoaderState } from '../store/allSlice/allSlice';
+import { useGetQuizQuery } from '@/api/apiv2';
+import StyledQuizTagContainer from '@/ui-lib/styled-components/StyledQuizTagContainer';
+import StyledQuizTag from '@/ui-lib/styled-components/StyledQuizTag';
+import StyledQuizDetailsWrapper from '@/ui-lib/styled-components/StyledDetailsWrapper';
+import StyledQuizDetailWrapper from '@/ui-lib/styled-components/StyledQuizDetailWrapper';
+import StyledQuizDetailCaption from '@/ui-lib/styled-components/StyledQuizDeteilCaption';
+import BackButton from '@/ui-lib/styled-components/BackButton';
+import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
+import buttonIcon from '@/assets/images/icons/button_icon.svg';
+import { DurationIcon, LevelIcon, QuestionsIcon } from '@/ui-lib/styled-components/icons';
+import ListForQuiz from '@/ui-lib/widgets/ListForQuiz';
+import { setLoaderState } from '@/store/allSlice/allSlice';
 
 const StyledButton = styled(Button)`
   border-radius: 4px;

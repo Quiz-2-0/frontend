@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
+
 export type TUser = {
   firstName: string;
   lastName: string;
@@ -12,7 +13,6 @@ export type TUser = {
   position: string;
   ratingPlace: number;
   appointedCourses: { [key: string]: any };
-
 };
 
 export type TUserLoginRequest = {

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const QuestionWithOneAnswer = React.lazy(() => import('../ui-lib/widgets/QuestionWithOneAnswer'));
-const QuestionWithMoreThenTwoAnswers = React.lazy(() => import('../ui-lib/widgets/QuestionWithMoreThenTwoAnswers'));
-const QestionWithOpenAnswer = React.lazy(() => import('../ui-lib/widgets/QestionWithOpenAnswer'));
-const QuestionWithDragAndDrop = React.lazy(() => import('../ui-lib/widgets/QuestionWithDragAndDrop'));
+const QuestionWithOneAnswer = React.lazy(() => import('@/ui-lib/widgets/QuestionWithOneAnswer'));
+const QuestionWithMoreThenTwoAnswers = React.lazy(() => import('@/ui-lib/widgets/QuestionWithMoreThenTwoAnswers'));
+const QestionWithOpenAnswer = React.lazy(() => import('@/ui-lib/widgets/QestionWithOpenAnswer'));
+const QuestionWithDragAndDrop = React.lazy(() => import('@/ui-lib/widgets/QuestionWithDragAndDrop'));
 
 type QuestionType = {
   id: number;

@@ -19,10 +19,10 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
-import levels from '../../constants/levels';
-import { setFromCastle, setLoaderState } from '../../store/allSlice/allSlice';
-import { useGetAllQuizesQuery } from '../../api/apiv2';
-import { useDispatch } from '../../store/store.types';
+import levels from '@/constants/levels';
+import { setFromCastle, setLoaderState } from '@/store/allSlice/allSlice';
+import { useGetAllQuizesQuery } from '@/api/apiv2';
+import { useDispatch } from '@/store/store.types';
 
 const StyledImage = styled.img`
   max-width: 310px;

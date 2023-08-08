@@ -6,11 +6,11 @@ import { useLocation } from 'react-router';
 import { Div } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
-import QuizCardList from '../ui-lib/widgets/QuizCardList';
-import QuizMenu from '../ui-lib/widgets/QuizMenu';
-import { useGetAllQuizesQuery } from '../api/apiv2';
-import { useSelector, useDispatch } from '../store/store.types';
-import { setFromCastle } from '../store/allSlice/allSlice';
+import QuizCardList from '@/ui-lib/widgets/QuizCardList';
+import QuizMenu from '@/ui-lib/widgets/QuizMenu';
+import { useGetAllQuizesQuery } from '@/api/apiv2';
+import { useSelector, useDispatch } from '@/store/store.types';
+import { setFromCastle } from '@/store/allSlice/allSlice';
 
 const StyledDiv = styled(Div)`
     max-width: 1074px;

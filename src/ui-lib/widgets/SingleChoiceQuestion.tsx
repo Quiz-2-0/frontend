@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import React from 'react';
 import styled from 'styled-components';
-import { SingleChoiceQuestionProps } from '../../types/types';
+import { SingleChoiceQuestionProps } from '@/types/types';
 
 const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
   cursor: pointer;

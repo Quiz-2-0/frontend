@@ -15,13 +15,13 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import useQueryState from '@reduxjs/toolkit/query/react';
-import LearningProgress from '../ui-lib/widgets/LearningProgress';
-import Castle from '../ui-lib/widgets/Castle';
-import Rating from '../ui-lib/widgets/Rating';
-import Achievements from '../ui-lib/widgets/Achievements';
-import IncompleteQuizzes from '../ui-lib/widgets/IncompleteQuizzes';
-import { useSelector } from '../store/store.types';
-import { useLoginMutation, jwt, userApi } from '../api/apiv2';
+import LearningProgress from '@/ui-lib/widgets/LearningProgress';
+import Castle from '@/ui-lib/widgets/Castle';
+import Rating from '@/ui-lib/widgets/Rating';
+import Achievements from '@/ui-lib/widgets/Achievements';
+import IncompleteQuizzes from '@/ui-lib/widgets/IncompleteQuizzes';
+import { useSelector } from '@/store/store.types';
+import { useLoginMutation, jwt, userApi } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   display: flex;

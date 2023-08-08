@@ -4,7 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
-import { Statistic, Question } from '../../types/types';
+import { Statistic, Question } from '@/types/types';
 
 const StyledUl = styled.ul`
   display: flex;

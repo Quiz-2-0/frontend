@@ -21,8 +21,8 @@ import StyledQuizDetailWrapper from '../styled-components/StyledQuizDetailWrappe
 import StyledQuizDetailCaption from '../styled-components/StyledQuizDeteilCaption';
 import StyledQuizTag from '../styled-components/StyledQuizTag';
 import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer';
-import { QuizCardProps } from '../../types/types';
-import { useDispatch } from '../../store/store.types';
+import { QuizCardProps } from '@/types/types';
+import { useDispatch } from '@/store/store.types';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -42,7 +42,7 @@ const StyledQuizContainer = styled.li`
       opacity: 0.5;
       transform: scale(1.3);
     }
-    
+
     .info {
       transform: translateY(-55px);
       -webkit-transform: translateY(-55px);
@@ -50,7 +50,7 @@ const StyledQuizContainer = styled.li`
       -o-transform: translateY(-55px);
       -ms-transform: translateY(-55px);
     }
-    
+
     .btn, .btns {
       opacity: 1;
       visibility: visible;
