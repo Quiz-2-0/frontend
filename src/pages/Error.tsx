@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import { Div, Title } from '@vkontakte/vkui';
 import styled from 'styled-components';
-import StyledButton from '../ui-lib/StyledButton';
+import StyledButton from '../ui-lib/styled-components/StyledButton';
 import imgPage404 from '../images/page_404.svg';
 
 const StyledDiv = styled(Div)`
