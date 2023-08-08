@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Div, Title } from '@vkontakte/vkui';
 import styled from 'styled-components';
 import StyledButton from '../ui-lib/styled-components/StyledButton';
-import imgPage404 from '../images/page_404.svg';
+import imgPage404 from '@/assets/images/page_404.svg';
 
 const StyledDiv = styled(Div)`
   box-sizing: border-box;
@@ -37,7 +37,6 @@ const Error: FC = () => {
   return (
     <Div>
       <StyledDiv>
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Img src={imgPage404} alt='404' />
         <Title
           level='1'>
