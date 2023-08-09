@@ -1,4 +1,16 @@
-const staff = [
+interface IStaff {
+  id: number,
+  firstName: string,
+  lastName: string,
+  patronymic: string,
+  email: string,
+  appounted: number,
+  passed: number,
+  raiting: number,
+  department: string,
+}
+
+const staff: IStaff[] = [
   {
     id: 1,
     firstName: 'Самый',

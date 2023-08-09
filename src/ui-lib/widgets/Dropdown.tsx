@@ -8,6 +8,7 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { ArrowIcon, CheckIcon, FalseIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
+import { Answer } from '@/types/types';
 
 const Li = styled.li<{ isReview: boolean }>`
   width: 100%;
@@ -85,7 +86,7 @@ const Dropdown: FC<{
   index: number | null,
   name: string,
   description: string,
-  answers: [] | { id: number, text: string, image: null | string, isAnswerRight: boolean }[],
+  answers: Partial<Answer>[],
   isReview: boolean,
   isRight?: boolean,
   rightAnswer?: string,

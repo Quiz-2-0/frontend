@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from './QuizCard';
 
-import { AdminQuizz, TQuize } from '@/types/types';
+import { AdminQuizz, IQuiz } from '@/types/types';
 
 const StyledQuizListContainer = styled.ul`
   margin: 0;
@@ -17,7 +17,7 @@ const StyledQuizListContainer = styled.ul`
 `;
 
 const QuizCardList: FC<{
-  quizList: TQuize[] | undefined | AdminQuizz[],
+  quizList: IQuiz[] | undefined | AdminQuizz[],
   setIsConfirmationPopupOpen: any,
 }> = ({ quizList, setIsConfirmationPopupOpen }) => {
   const localStorageRole = localStorage.getItem('role') || '';
@@ -32,7 +32,7 @@ const QuizCardList: FC<{
             <div> </div>
             <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
           </>
-        ) : quizList?.map((quiz: TQuize | AdminQuizz) => (
+        ) : quizList?.map((quiz: IQuiz | AdminQuizz) => (
           <QuizCard
             setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
             id={quiz.id}

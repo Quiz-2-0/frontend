@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import React from 'react';
 
 const NewQuizStep1 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep1'));
@@ -6,7 +5,7 @@ const NewQuizStep2 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep2'));
 const NewQuizStep3 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep3'));
 const NewQuizStep4 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep4'));
 
-export type Step<T> = {
+export interface Step<T> {
   id: number;
   name: string;
   markup: {
@@ -16,22 +15,18 @@ export type Step<T> = {
     name: string;
     icon: string;
   };
-};
+}
 
-export type StepProps = {
+export interface StepProps {
   items: number[];
   setItems: any;
   formElements: FormElements;
   setFormElements: SetFormElements;
-};
+}
 
-export type FormElements = {
-  [key: string]: string[] | boolean[];
-};
+export type FormElements = Record<string, string[] | boolean[]>;
 
-export type SetFormElements = {
-  [key: string]: any;
-};
+export type SetFormElements = Record<string, any>;
 
 const steps: Step<StepProps>[] = [
   {

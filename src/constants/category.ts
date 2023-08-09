@@ -1,4 +1,9 @@
-const categories = [
+interface ICategory {
+  id: number;
+  name: string;
+}
+
+const categories: ICategory[] = [
   {
     id: 0,
     name: 'Корпоративная этика',

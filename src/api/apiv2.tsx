@@ -15,7 +15,7 @@ import {
   GET_ADMIN_DEPARTMENTS,
 } from '@/constants/api-url';
 import {
-  TUser, TUserLoginRequest, TQuize, TAnswerRequest, Statistic, AdminQuizz,
+  IUser, IUserLoginRequest, IQuiz, TAnswerRequest, Statistic, AdminQuizz,
 } from '@/types/types';
 
 export const jwt = {
@@ -57,7 +57,7 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_ROOT }),
   tagTypes: ['user'],
   endpoints: (build) => ({
-    login: build.mutation<TUser, TUserLoginRequest>({
+    login: build.mutation<IUser, IUserLoginRequest>({
       query: (body) => ({
         url: LOGIN_ROUTE,
         method: 'POST',
@@ -72,7 +72,7 @@ export const userApi = createApi({
       }),
 
     }),
-    getCurrentUser: build.query<TUser, void>({
+    getCurrentUser: build.query<IUser, void>({
       query: () => ({
         url: GET_USER,
         method: 'GET',
@@ -98,11 +98,11 @@ export const quizApi = createApi({
   }),
   tagTypes: ['quiz'],
   endpoints: (build) => ({
-    getAllQuizes: build.query<TQuize[], void>({
+    getAllQuizes: build.query<IQuiz[], void>({
       query: () => ALL_QUIZES,
       keepUnusedDataFor: 0,
     }),
-    getQuiz: build.query<TQuize, any>({
+    getQuiz: build.query<IQuiz, any>({
       query: (id: any) => `${ALL_QUIZES}${id}`,
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
@@ -128,7 +128,7 @@ export const adminApi = createApi({
     baseUrl: API_ROOT,
   }),
   endpoints: (build) => ({
-    getUsers: build.query<TUser[], void>({
+    getUsers: build.query<IUser[], void>({
       query: () => ({
         url: GET_ADMIN_USERS,
         method: 'GET',
