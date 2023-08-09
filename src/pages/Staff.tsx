@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -34,9 +35,9 @@ const Staff: FC = () => {
 
   const staffNameFilter = staffOnPage?.filter(
     ({ firstName, lastName, patronymic }) => (
-      firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
-      lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
-      patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      || lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      || patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
     ),
   );
 
