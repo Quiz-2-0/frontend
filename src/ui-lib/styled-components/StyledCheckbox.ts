@@ -7,6 +7,10 @@ const StyledCheckbox = styled(Checkbox)`
   margin-right: 0 !important;
   padding: 0;
 
+  &:hover {
+    background: none;
+  }
+
   & > .vkuiCheckbox__icon {
     margin-right: 24px;
   }

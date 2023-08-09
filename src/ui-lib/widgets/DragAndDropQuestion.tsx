@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import DragAndDropBoard from './DragAndDropBoard';
 import DragAndDropCard from './DragAndDropCard';
@@ -16,7 +18,7 @@ const DnDItemsContainer = styled.div`
   flex-wrap: wrap;
   display: flex;
 `;
-
+/*
 const items = [
   {
     id: 1,
@@ -42,21 +44,41 @@ const items = [
     id: 6,
     text: 'Тамара Французова',
   },
-];
+]; */
 
-const DragAndDropQuestion = () => {
-  const [board, setBoard] = useState<Item[]>([]);
-  const [cards, setCards] = useState<Item[]>(items);
+const DragAndDropQuestion: FC<{
+  boardTitles: { id: number, text: string, items: Item[] }[],
+  answers: { id: number, text: string }[],
+}> = ({ boardTitles, answers }) => {
+  const [boards, setBoards] = useState<{ id: number, text: string, items: Item[] }[]>(boardTitles);
+  const [cards, setCards] = useState<Item[]>(answers);
 
-  const addItemToBoard = (id: number) => {
+  const addItemToBoard = (id: number, boardId: number) => {
+    console.log(cards.filter((card) => card.id !== id));
     setCards((prevCards) => prevCards.filter((card) => card.id !== id));
-    const filteredItems = items.filter((item) => id === item.id);
-    setBoard((currentBoard) => [...currentBoard, filteredItems[0]]);
+    const filteredItem = answers.find((item) => id === item.id);
+    filteredItem
+    && setBoards((currentBoard) => currentBoard.map((board) => (
+      boardId === board.id && !board.items.includes(filteredItem)
+        ? { ...board, items: [...board.items, filteredItem] }
+        : { ...board, items: board.items.filter((item) => item !== filteredItem) }
+    )));
   };
 
   return (
     <div>
-      <DragAndDropBoard title='Название доски' board={board} onItemMove={addItemToBoard} />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+      }}>
+        {boardTitles.map(({ text, id }) => (
+          <DragAndDropBoard
+            title={text}
+            board={boards[id].items}
+            onItemMove={(e) => addItemToBoard(e, id)} />
+        ))}
+      </div>
       <DnDItemsContainer style={{ display: cards.length === 0 ? 'none' : 'flex' }}>
         {cards.map((item) => (
           <DragAndDropCard

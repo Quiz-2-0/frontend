@@ -1,3 +1,6 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable ternary/no-unreachable */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useState } from 'react';
 import {
@@ -7,9 +10,11 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon28AddCircleOutline } from '@vkontakte/icons';
+import { Icon20ChevronRight, Icon28AddCircleOutline } from '@vkontakte/icons';
 import styled from 'styled-components';
 import StyledFormItem from '../styled-components/StyledFormItem';
+import StyledButton from '../styled-components/StyledButton';
+import DragAndDropQuestion from './DragAndDropQuestion';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;
@@ -95,7 +100,10 @@ const AddAnswersOnPage: FC<{
   placeholder: string,
 }> = ({ title, description, placeholder }) => {
   const [answers, setAnswers] = useState<string[]>(['']);
+  const [categories, setCategories] = useState<string[]>(['']);
   const [isAnswerValid, setIsAnswerValid] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <FormItemForNewQuiz
       top={title}>
@@ -118,30 +126,50 @@ const AddAnswersOnPage: FC<{
           {description}
         </Text>
       </div>
-      <AddAnswers>
-        {answers.map((answer, i) => (
-          <StyledCheckbox key={i}>
-            <StyledInput
-              id='answer'
-              type='text'
-              placeholder={placeholder}
-              status={isAnswerValid ? 'default' : 'error'}
-              onBlur={() => setIsAnswerValid(answer !== '')}
-              name='answer'
-              value={answer}
-              onChange={(e) => {
-                setAnswers(answers.map((answ, ind) => (
-                  i === ind ? e.target.value : answ
-                )));
-              }} />
-          </StyledCheckbox>
-        ))}
-        <IconButton
-          aria-label='Добавить ответ'
-          onClick={() => setAnswers([...answers, ''])}>
-          <Icon28AddCircleOutline fill='#3F8AE0' />
-        </IconButton>
-      </AddAnswers>
+      {placeholder !== ''
+        ? (
+          <AddAnswers>
+            {answers.map((answer, i) => (
+              <StyledCheckbox key={i}>
+                <StyledInput
+                  id='answer'
+                  type='text'
+                  placeholder={placeholder}
+                  status={isAnswerValid ? 'default' : 'error'}
+                  onBlur={() => setIsAnswerValid(answer !== '')}
+                  name='answer'
+                  value={answer}
+                  onChange={(e) => {
+                    setAnswers(answers.map((answ, ind) => (
+                      i === ind ? e.target.value : answ
+                    )));
+                  }} />
+              </StyledCheckbox>
+            ))}
+            <IconButton
+              aria-label='Добавить ответ'
+              onClick={() => setAnswers([...answers, ''])}>
+              <Icon28AddCircleOutline fill='#3F8AE0' />
+            </IconButton>
+          </AddAnswers>
+        ) : (
+          isOpen ? (
+            <DragAndDropQuestion boardTitles={[{ id: 0, text: 'Доска 1', items: [] }, { id: 1, text: 'Доска 2', items: [] }, { id: 2, text: 'Доска 3', items: [] }]} answers={[{ id: 1, text: 'Вариант 1' }, { id: 2, text: 'Вариант 2' }, { id: 3, text: 'Вариант 3' }]} />
+          ) : (
+            <StyledButton
+              onClick={() => setIsOpen(true)}
+              mode='link'
+              style={{
+                display: 'flex',
+                gap: '8px',
+                alignItems: 'center',
+                marginTop: '22px',
+              }}>
+              Соотнесите элементы
+              <Icon20ChevronRight />
+            </StyledButton>
+          )
+        )}
     </FormItemForNewQuiz>
   );
 };

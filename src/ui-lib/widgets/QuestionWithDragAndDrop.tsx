@@ -1,7 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Icon20ChevronRight } from '@vkontakte/icons';
 import AddAnswersOnPage from './AddAnswersOnPage';
-import StyledButton from '../styled-components/StyledButton';
 
 const QuestionWithDragAndDrop: FC = () => {
   const [answers, setAnswers] = useState<string[]>([]);
@@ -15,17 +13,10 @@ const QuestionWithDragAndDrop: FC = () => {
         title='Элементы для соотношения с категориями'
         description='Создайте элементы для соотношения с категориями'
         placeholder='Введите название элемента' />
-      <StyledButton
-        mode='link'
-        style={{
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'center',
-          marginTop: '22px',
-        }}>
-        Соотнесите элементы
-        <Icon20ChevronRight />
-      </StyledButton>
+      <AddAnswersOnPage
+        title='Правильное соотношение'
+        description='Создайте элементы для соотношения с категориями'
+        placeholder='' />
     </>
   );
 };
