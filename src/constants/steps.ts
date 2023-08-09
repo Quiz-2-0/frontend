@@ -6,7 +6,7 @@ const NewQuizStep2 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep2'));
 const NewQuizStep3 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep3'));
 const NewQuizStep4 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep4'));
 
-type Step<T> = {
+export type Step<T> = {
   id: number;
   name: string;
   markup: {
@@ -18,6 +18,13 @@ type Step<T> = {
   };
 };
 
+export type StepProps = {
+  items: number[];
+  setItems: any;
+  formElements: FormElements;
+  setFormElements: SetFormElements;
+};
+
 export type FormElements = {
   [key: string]: string[] | boolean[];
 };
@@ -26,12 +33,7 @@ export type SetFormElements = {
   [key: string]: any;
 };
 
-const steps: Step<{
-  items: number[],
-  setItems: any,
-  formElements: FormElements,
-  setFormElements: SetFormElements,
-}>[] = [
+const steps: Step<StepProps>[] = [
   {
     id: 0,
     name: 'Шаг 1. Общая информация о квизе',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -10,7 +11,7 @@ import { useNavigate } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
-import steps from '@/constants/steps';
+import steps, { Step, StepProps } from '@/constants/steps';
 import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 
@@ -42,7 +43,7 @@ const CreateNewQuiz: FC = () => {
   };
 
   const renderStep = () => {
-    const step = steps[currentPage];
+    const step: Step<StepProps> = steps[currentPage];
     return (
       <step.markup.Component
         items={items}
