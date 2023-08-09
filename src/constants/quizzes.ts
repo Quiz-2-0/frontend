@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
-const quizzes = [
+
+import { IQuiz } from '@/types/types';
+
+const quizzes: IQuiz[] = [
   {
     id: 1,
     image: 'http://80.87.106.133/media/quizes/image/Pic.png',

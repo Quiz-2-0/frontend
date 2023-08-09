@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { sliceName } from './selectors';
 
-type TState = {
+interface IState {
   isRememberMe: boolean;
   mistake: string;
   isLogged: boolean;
   fromCastle: boolean;
   isLoaderRun: boolean;
-};
+}
 
-const initialState: TState = {
+const initialState: IState = {
   isRememberMe: false,
   mistake: '',
   isLogged: false,

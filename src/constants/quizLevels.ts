@@ -1,4 +1,9 @@
-const quizLevels = [
+interface IQuizLevel {
+  id: number;
+  name: string;
+}
+
+const quizLevels: IQuizLevel[] = [
   {
     id: 0,
     name: 'Легкий',

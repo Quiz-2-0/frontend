@@ -1,60 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 
-export type TUser = {
+export interface IUser {
   firstName: string;
   lastName: string;
   role: string;
-  courses: { [key: string]: any };
+  courses: Record<string, any>;
   progress: string;
   access: string;
   avatar: string;
-  achievements: { [key: string]: any };
+  achievements: Record<string, any>;
   position: string;
   ratingPlace: number;
-  appointedCourses: { [key: string]: any };
-};
+  appointedCourses: Record<string, any>;
+}
 
-export type TUserLoginRequest = {
+export interface IUserLoginRequest {
   email: string;
   password: string;
   role: string;
-};
+}
 
-type Tag = {
+interface Tag {
   id: number;
   name: string;
   color: string;
-};
+}
 
-export type Answer = {
+export interface Answer {
   id: number;
   text: string;
   image: string;
-  isAnswerRight: boolean;
-};
+  isAnswerRight?: boolean;
+  answer_list?: AnswerItem[];
+}
 
-export type Question = {
+export interface AnswerItem {
+  id: number;
+  text: string;
+}
+
+export interface Question {
   id: number;
   image: string;
   text: string;
   answers: Answer[];
-  is_answered: boolean;
-};
+  is_answered?: boolean;
+  question_type?: string;
+}
 
-export type SingleChoiceQuestionProps = {
+export interface SingleChoiceQuestionProps {
   currentPage: number;
   questions: Question[];
   selectedAnswer: number;
   selectAnswer: (answerId: number) => void;
-};
+}
 
-export type Volume = {
+export interface Volume {
+  id: number;
   name: string;
   description: string;
-};
+}
 
-export type TQuize = {
+export interface IQuiz {
   directory: string;
   id: number,
   image: string,
@@ -66,11 +74,12 @@ export type TQuize = {
   tags: Tag[];
   questions: Question[];
   volumes: Volume[];
-  isPassed: any;
-  appointed: any;
-};
+  isPassed?: any;
+  appointed?: any;
+  threshold?: number;
+}
 
-export type QuizCardProps = {
+export interface QuizCardProps {
   setIsConfirmationPopupOpen?: any,
   id: number,
   image: string;
@@ -81,40 +90,40 @@ export type QuizCardProps = {
   question_amount: number;
   tags: any;
   isPassed: any;
-};
+}
 
-export type TAnswerRequest = {
+export interface TAnswerRequest {
   id: number | string;
   quizId: number | string;
-};
+}
 
-export type Statistic = {
+export interface Statistic {
   explanation: string;
   isRight: boolean;
   question: string;
   right_answer: string;
   user_answer: string;
-};
+}
 
-export type Item = {
+export interface Item {
   id: number;
   text: string;
-};
+}
 
-export type BoardProps = {
+export interface BoardProps {
   title: string;
   board: Item[];
   onItemMove: (itemId: number) => void;
-};
+}
 
-export type DnDCardProps = {
+export interface DnDCardProps {
   id: number;
   text: string;
   backgroundColor: string;
   borderColor: string;
-};
+}
 
-export type AdminQuizz = {
+export interface AdminQuizz {
   id: number;
   image: string;
   description: string;
@@ -149,4 +158,4 @@ export type AdminQuizz = {
     name: string;
     description: string;
   }[];
-};
+}

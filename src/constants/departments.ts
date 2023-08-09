@@ -1,4 +1,9 @@
-const departments = [
+interface IDepartment {
+  id: number;
+  name: string;
+}
+
+const departments: IDepartment[] = [
   {
     name: 'Все отделы',
     id: 0,

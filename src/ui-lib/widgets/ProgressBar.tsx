@@ -34,7 +34,7 @@ const Bar = styled.ul`
 
 const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined | { id: number, name: string }[] }> = ({ progressObject, questionArr }) => (
   <Bar>
-    {questionArr && questionArr.map((el, index) => (
+    {questionArr?.map((el, index) => (
       <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
     ))}
   </Bar>

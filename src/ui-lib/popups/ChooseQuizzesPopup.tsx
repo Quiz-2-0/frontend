@@ -15,7 +15,7 @@ import { TableTitle, TableItem } from '../styled-components/TableItems';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
-import { TQuize } from '@/types/types';
+import { IQuiz } from '@/types/types';
 
 const StyledDiv = styled.div`
   max-width: 1080px;
@@ -25,8 +25,8 @@ const StyledDiv = styled.div`
   box-sizing: border-box;
   background: white;
   border-radius: 16px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.06),
-    0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06),
+    0 4px 8px 0 rgba(0, 0, 0, 0.04);
 `;
 
 const ChooseQuizzesPopup: FC<{
@@ -113,7 +113,7 @@ const ChooseQuizzesPopup: FC<{
                 onClick={() => (
                   isChecked.length === quizzes.length
                     ? setIsChecked([])
-                    : setIsChecked(quizzes.map((quiz: TQuize, i: number) => i + 1))
+                    : setIsChecked(quizzes.map((quiz: IQuiz, i: number) => i + 1))
                 )}>
                 <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
                 <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>
@@ -131,7 +131,7 @@ const ChooseQuizzesPopup: FC<{
                       }}>
                       По вашему запросу ничего не найдено
                     </p>
-                  ) : quizzes.map((quiz: TQuize, i: number) => (
+                  ) : quizzes.map((quiz: IQuiz, i: number) => (
                     <StyledCheckbox
                       style={{ marginTop: '16px' }}
                       key={i}

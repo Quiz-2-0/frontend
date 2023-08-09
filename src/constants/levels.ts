@@ -7,15 +7,15 @@ import level6Img from '@/assets/images/houses/level6.png';
 import level7Img from '@/assets/images/houses/level7.png';
 import level8Img from '@/assets/images/houses/level8.png';
 
-export type TLevel = {
+export interface ILevel {
   level: number;
   image: string;
   title: string;
   numberOfQuizzes: number;
   tiTheNextLevel?: number;
-};
+}
 
-const levels: TLevel[] = [
+const levels: ILevel[] = [
   {
     level: 1,
     image: level1Img,

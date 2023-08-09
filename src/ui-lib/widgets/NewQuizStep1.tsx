@@ -27,7 +27,6 @@ const StyledSelect = styled(Select)`
 `;
 
 const StyledFormLayoutGroup = styled(FormLayoutGroup)`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

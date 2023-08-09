@@ -2,18 +2,18 @@ import React from 'react';
 
 const QuestionWithOneAnswer = React.lazy(() => import('@/ui-lib/widgets/QuestionWithOneAnswer'));
 const QuestionWithMoreThenTwoAnswers = React.lazy(() => import('@/ui-lib/widgets/QuestionWithMoreThenTwoAnswers'));
-const QestionWithOpenAnswer = React.lazy(() => import('@/ui-lib/widgets/QestionWithOpenAnswer'));
+const QuestionWithOpenAnswer = React.lazy(() => import('@/ui-lib/widgets/QuestionWithOpenAnswer'));
 const QuestionWithDragAndDrop = React.lazy(() => import('@/ui-lib/widgets/QuestionWithDragAndDrop'));
 
-type QuestionType = {
+interface IQuestionType {
   id: number;
   name: string;
   markup: {
     Component: React.ComponentType;
   };
-};
+}
 
-const questionTypes: QuestionType[] = [
+const questionTypes: IQuestionType[] = [
   {
     id: 0,
     name: 'Вопрос с одним верным ответом',
@@ -27,7 +27,7 @@ const questionTypes: QuestionType[] = [
   {
     id: 0,
     name: 'Вопрос с открытым ответом',
-    markup: { Component: QestionWithOpenAnswer },
+    markup: { Component: QuestionWithOpenAnswer },
   },
   {
     id: 0,

@@ -36,8 +36,8 @@ const StyledDiv = styled.div`
   box-sizing: border-box;
   background: white;
   border-radius: 16px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.06),
-    0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06),
+    0 4px 8px 0 rgba(0, 0, 0, 0.04);
 `;
 
 const StyledSelect = styled(Select)`
@@ -52,7 +52,6 @@ const StyledFormLayoutGroup = styled(FormLayoutGroup)`
   & > div:last-of-type {
     margin-left: 48px !important;
   }
-}
 `;
 
 const FormItemForNewEmployee = styled(StyledFormItem)`
@@ -86,10 +85,10 @@ const NewEmployeePopup: FC<{
 
   useEffect(() => {
     setIsActive(
-      isFirstNameValid && isLastNameValid && isPatronymicValid
-      && isEmailValid && isDepartmentValid && isPositionValid
-      && firstName !== '' && lastName !== '' && patronymic !== ''
-      && email !== '' && department !== '' && position !== '',
+      isFirstNameValid && isLastNameValid && isPatronymicValid &&
+      isEmailValid && isDepartmentValid && isPositionValid &&
+      firstName !== '' && lastName !== '' && patronymic !== '' &&
+      email !== '' && department !== '' && position !== '',
     );
   }, [firstName, lastName, patronymic, email, department, position]);
 
