@@ -3,7 +3,7 @@ import { Input } from '@vkontakte/vkui';
 
 const StyledInput = styled(Input)`
   font-size: 16px;
-  height: 40px !input;
+  height: 40px !important;
   background-color: #F7F8FA;
 
   &:-webkit-autofill,

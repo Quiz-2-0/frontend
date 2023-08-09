@@ -22,6 +22,11 @@ const CreateNewQuiz: FC = () => {
   const [items, setItems] = useState<number[]>([0]);
   const [isPreviewPopupOpen, setIsPreviewPopupOpen] = useState(false);
 
+  const [questionText, setQuestionText] = useState<string[]>(['']);
+  const [questionType, setQuestionType] = useState<string[]>(['']);
+  const [isQuestionTextValid, setIsQuestionTextValid] = useState<boolean[]>([true]);
+  const [isQuestionTypeValid, setIsQuestionTypeValid] = useState<boolean[]>([true]);
+
   const setNextPage = () => {
     setCurrentPage(currentPage + 1);
     if (currentPage !== steps.length) {
@@ -38,11 +43,35 @@ const CreateNewQuiz: FC = () => {
 
   const renderStep = () => {
     const step = steps[currentPage];
-    return <step.markup.Component items={items} setItems={setItems} />;
+    return (
+      <step.markup.Component
+        items={items}
+        setItems={setItems}
+        formElements={currentPage === 1
+          ? {
+            questionText,
+            questionType,
+            isQuestionTextValid,
+            isQuestionTypeValid,
+          } : {}}
+        setFormElements={currentPage === 1
+          ? {
+            setQuestionText,
+            setQuestionType,
+            setIsQuestionTextValid,
+            setIsQuestionTypeValid,
+          } : []} />
+    );
   };
 
   const addNewItem = () => {
     setItems([...items, items.length]);
+    if (currentPage === 1) {
+      setQuestionText([...questionText, '']);
+      setQuestionType([...questionType, '']);
+      setIsQuestionTextValid([...isQuestionTextValid, true]);
+      setIsQuestionTypeValid([...isQuestionTypeValid, true]);
+    }
   };
 
   return (
@@ -135,7 +164,7 @@ const CreateNewQuiz: FC = () => {
                 {steps[currentPage].button.name}
               </StyledButton>
             )}
-          <StyledButton onClick={() => setNextPage()} style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
+          <StyledButton onClick={() => setNextPage()} type='button' style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
             {currentPage !== 3 ? 'Продолжить' : 'Опубликовать'}
           </StyledButton>
         </div>

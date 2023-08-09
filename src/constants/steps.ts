@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 
 const NewQuizStep1 = React.lazy(() => import('../ui-lib/widgets/NewQuizStep1'));
@@ -17,7 +18,20 @@ type Step<T> = {
   };
 };
 
-const steps: Step<{ items: number[], setItems: any }>[] = [
+export type FormElements = {
+  [key: string]: string[] | boolean[];
+};
+
+export type SetFormElements = {
+  [key: string]: any;
+};
+
+const steps: Step<{
+  items: number[],
+  setItems: any,
+  formElements: FormElements,
+  setFormElements: SetFormElements,
+}>[] = [
   {
     id: 0,
     name: 'Шаг 1. Общая информация о квизе',

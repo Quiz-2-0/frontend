@@ -6,7 +6,8 @@ const QuestionWithOneAnswer: FC = () => {
   return (
     <AddAnswersOnPage
       title='Варианты ответов'
-      description='Введите варианты ответов и отметьте правильные варианты' />
+      description='Введите варианты ответов и отметьте правильные варианты'
+      placeholder='Введите вариант' />
   );
 };
 
