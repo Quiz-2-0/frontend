@@ -69,10 +69,10 @@ export const LogOutIcon = styled(LogOut)`
     cursor: pointer;
 `;
 
-type TIcoPos = {
+interface TIcoPos {
   top?: number | string;
   left?: number | string;
-};
+}
 
 export const RedBallIcon = styled(RedBall)<TIcoPos>`
     width: 6px;

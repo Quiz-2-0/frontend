@@ -146,8 +146,8 @@ const CreateNewQuiz: FC = () => {
             alignItems: 'center',
             gap: '16px',
           }}>
-          {currentPage !== 0
-            && (
+          {currentPage !== 0 &&
+            (
               <StyledButton
                 mode='outline'
                 onClick={() => {

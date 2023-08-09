@@ -14,7 +14,7 @@ const BannerPlate = styled.div<{ isOpen: boolean }>`
     width: 304px;
     border-radius: 4px;
     background: #FFF ;
-    box-shadow: 0px 16px 16px 0px rgba(0, 0, 0, 0.16), 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.16), 0 0 8px 0 rgba(0, 0, 0, 0.12);
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transition: opacity ease .3s, visibility ease .3s;
