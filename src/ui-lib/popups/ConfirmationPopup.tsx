@@ -20,8 +20,8 @@ const StyledDiv = styled.div`
   box-sizing: border-box;
   background: white;
   border-radius: 16px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.06),
-    0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06),
+    0 4px 8px 0 rgba(0, 0, 0, 0.04);
 `;
 
 const ConfirmationPopup: FC<{

@@ -85,7 +85,7 @@ const ProgressBar = styled.span<{ width?: number }>`
     position: relative;
     &::before {
         content: '';
-        border-radius: 8px 0px 0px 8px;
+        border-radius: 8px 0 0 8px;
         background-color:#3F8AE0;
         height: 8px;
         position: absolute;

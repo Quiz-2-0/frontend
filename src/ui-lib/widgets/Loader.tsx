@@ -110,7 +110,7 @@ const Rectangle = styled.div`
 const Intersection = styled.div`
   position: absolute;
   right: 108.5px;
-  bottom: 0px;
+  bottom: 0;
   width: 23.6px;
   height: min-content;
 `;
