@@ -1,14 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import level1Img from '../images/houses/level1.png';
-import level2Img from '../images/houses/level2.png';
-import level3Img from '../images/houses/level3.png';
-import level4Img from '../images/houses/level4.png';
-import level5Img from '../images/houses/level5.png';
-import level6Img from '../images/houses/level6.png';
-import level7Img from '../images/houses/level7.png';
-import level8Img from '../images/houses/level8.png';
+import level1Img from '@/assets/images/houses/level1.png';
+import level2Img from '@/assets/images/houses/level2.png';
+import level3Img from '@/assets/images/houses/level3.png';
+import level4Img from '@/assets/images/houses/level4.png';
+import level5Img from '@/assets/images/houses/level5.png';
+import level6Img from '@/assets/images/houses/level6.png';
+import level7Img from '@/assets/images/houses/level7.png';
+import level8Img from '@/assets/images/houses/level8.png';
 
-const levels = [
+export type TLevel = {
+  level: number;
+  image: string;
+  title: string;
+  numberOfQuizzes: number;
+  tiTheNextLevel?: number;
+};
+
+const levels: TLevel[] = [
   {
     level: 1,
     image: level1Img,

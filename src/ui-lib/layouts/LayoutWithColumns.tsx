@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { SplitLayout, SplitCol, Title } from '@vkontakte/vkui';
 import styled from 'styled-components';
 import '@vkontakte/vkui/dist/vkui.css';
-import Login from '../../pages/Login';
-import ResetPassword from '../../pages/ResetPassword';
+import Login from '@/pages/Login';
+import ResetPassword from '@/pages/ResetPassword';
 import Logo from '../styled-components/Logo';
-import backgroundImage from '../../images/new-login.png';
+import backgroundImage from '@/assets/images/login__image.png';
 
 const LayoutWithColumns: React.FC = () => {
   const location = useLocation();

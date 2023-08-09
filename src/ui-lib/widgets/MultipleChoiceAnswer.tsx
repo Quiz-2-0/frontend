@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react';
 import styled from 'styled-components';
-import checkboxIcon from '../../images/icons/checkbox_checked.svg';
+import checkboxIcon from '@/assets/images/icons/checkbox_checked.svg';
 
 const StyledMultipleChoiceAnswer = styled.li`
   padding: 16px 28px;
@@ -57,7 +57,7 @@ const CheckboxSpan = styled.span<{ isChecked: boolean }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 10px 7px;
-  
+
   &:hover {
     background-color: #F0F2F5;
   }

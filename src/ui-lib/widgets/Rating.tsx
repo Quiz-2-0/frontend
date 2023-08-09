@@ -13,9 +13,10 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achives';
 import { ArrowIcon } from '../styled-components/icons';
-import beforeUser from '../../images/avatar/mayakovsky.png';
-import afterUser from '../../images/avatar/dostoevskij.png';
-import { useGetCurrentUserQuery } from '../../api/apiv2';
+import beforeUser from '@/assets/images/avatar/mayakovsky.png';
+import afterUser from '@/assets/images/avatar/dostoevskij.png';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const UserWrapper = styled.div<{ width: number, height: number }>`
   width:${({ width }) => width}px;
@@ -138,7 +139,7 @@ const Rating: React.FC = () => {
             <Text>20</Text>
           </Div>
           <UserWrapper height={80} width={80}>
-            <User src={`http://80.87.106.133/${data?.avatar}`} alt='Аватар' />
+            <User src={`${SRC_BASE_URL}/${data?.avatar}`} alt='Аватар' />
           </UserWrapper>
           <Subhead>Вы</Subhead>
         </Div>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Button, Select, Search } from '@vkontakte/vkui';
+import { Select, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import React, { FC } from 'react';
 import styled from 'styled-components';

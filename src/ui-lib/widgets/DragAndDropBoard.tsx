@@ -9,7 +9,7 @@ import {
   Headline,
 } from '@vkontakte/vkui';
 import DragAndDropCard from './DragAndDropCard';
-import { Item, BoardProps } from '../../types/types';
+import { Item, BoardProps } from '@/types/types';
 
 const DnDBoard = styled.div`
   width: 100%;

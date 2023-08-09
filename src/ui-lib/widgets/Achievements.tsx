@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
@@ -9,10 +8,10 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { ArrowIcon } from '../styled-components/icons';
-import achieveEasyStart from '../../images/achievements-img/achieve_easy_start.png';
-import achieveSoftKiller from '../../images/achievements-img/achieve_soft_killer.png';
-import achieveSuperSpeed from '../../images/achievements-img/achieve_super_speed.png';
-import achievePermanence from '../../images/achievements-img/achieve_permanence.png';
+import achieveEasyStart from '@/assets/images/achievements-img/achieve_easy_start.png';
+import achieveSoftKiller from '@/assets/images/achievements-img/achieve_soft_killer.png';
+import achieveSuperSpeed from '@/assets/images/achievements-img/achieve_super_speed.png';
+import achievePermanence from '@/assets/images/achievements-img/achieve_permanence.png';
 
 const AchievementImg = styled.img`
   width: 80px;

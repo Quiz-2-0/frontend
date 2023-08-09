@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Question } from '../../types/types';
+import { Question } from '@/types/types';
 
 const BarElement = styled.li<{ isCurrentBar: boolean, width: number }>`
   width: 100%;
   background: rgba(63, 138, 224, 0.15);
   border-radius: 12px;
-  
+
   &:after {
     content: '';
     display: block;

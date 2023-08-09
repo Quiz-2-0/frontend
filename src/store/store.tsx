@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice/userSlice';
 import allReducer from './allSlice/allSlice';
 
-import { userApi, quizApi } from '../api/apiv2';
+import { userApi, quizApi } from '@/api/apiv2';
 
 const store = configureStore({
   reducer: {

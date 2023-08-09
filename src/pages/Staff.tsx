@@ -5,15 +5,15 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import StaffFilter from '../ui-lib/widgets/StaffFilters';
-import StaffList from '../ui-lib/widgets/StaffList';
-import ChooseQuizzesPopup from '../ui-lib/popups/ChooseQuizzesPopup';
-import staff from '../constants/staff';
-import ConfirmationPopup from '../ui-lib/popups/ConfirmationPopup';
-import NewEmployeePopup from '../ui-lib/popups/NewEmployeePopup';
-import departments from '../constants/departments';
-import quizzes from '../constants/quizzes';
-import { useGetAllQuizesQuery } from '../api/apiv2';
+import StaffFilter from '@/ui-lib/widgets/StaffFilters';
+import StaffList from '@/ui-lib/widgets/StaffList';
+import ChooseQuizzesPopup from '@/ui-lib/popups/ChooseQuizzesPopup';
+import staff from '@/constants/staff';
+import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
+import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
+import departments from '@/constants/departments';
+import quizzes from '@/constants/quizzes';
+import { useGetAllQuizesQuery } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   width: 100%;
