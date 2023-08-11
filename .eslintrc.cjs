@@ -79,6 +79,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/prefer-nullish-coalescing': 'warn',
         '@typescript-eslint/prefer-optional-chain': 'warn',
-        'react/jsx-key': 'warn'
+        'react/jsx-key': 'warn',
+        'operator-linebreak': 'off'
     },
 };

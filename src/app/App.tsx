@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-array-index-key */
-import React, { FC, useEffect, useState } from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import {
@@ -17,17 +17,17 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LayoutWithColumns from '@/ui-lib/layouts/LayoutWithColumns';
 import MainLayout from '@/ui-lib/layouts/MainLayout';
 import { routes } from '@/constants/routes';
 import Error from '@/pages/Error';
 import Loader from '@/ui-lib/widgets/Loader';
 import { useSelector, useDispatch } from '@/store/store.types';
+import Login from '@/pages/Login';
+import ResetPassword from '@/pages/ResetPassword';
 
 /// потом сделаем переключение темы
 const Main = styled.main`
-  height: 100%;
-  min-height: 900px;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,8 +49,8 @@ const App = () => {
         {isLoaderRun && <Loader />}
         <React.Suspense>
           <Routes>
-            <Route path='/login' element={<LayoutWithColumns />} />
-            <Route path='/reset-password' element={<LayoutWithColumns />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/404' element={<Error />} />
             {routes.map(({ path, Component, role }, index) => (
               (userRole === role) ? (
