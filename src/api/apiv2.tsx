@@ -21,30 +21,25 @@ import {
 
 export const jwt = {
   set: (value: string, isRemember: boolean, role: string): void => {
-    console.log(isRemember, role);
     if (value) {
       if (isRemember) {
         localStorage.setItem('JWT', `${value}`);
         localStorage.setItem('role', `${role}`);
-        console.log(localStorage.getItem('role'), 1);
         return;
       }
       sessionStorage.setItem('JWT', `${value}`);
       sessionStorage.setItem('role', `${role}`);
-      console.log(sessionStorage.getItem('role'), 2);
     } else {
       if (isRemember) {
         localStorage.removeItem('JWT');
         localStorage.removeItem('role');
-        console.log(localStorage.getItem('role'), 1);
       }
       sessionStorage.removeItem('JWT');
       sessionStorage.removeItem('role');
-      console.log(sessionStorage.getItem('role'), 4);
     }
   },
   get: (): string => {
-    const res = localStorage.getItem('JWT') || sessionStorage.getItem('JWT');
+    const res = localStorage.getItem('JWT') ?? sessionStorage.getItem('JWT');
     return res || '';
   },
   test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),

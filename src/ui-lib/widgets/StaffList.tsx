@@ -179,6 +179,7 @@ const StaffList: FC<{
                   ) : (
                     staffList.map((user, i) => (
                       <StyledDivWithCheckbox
+                        key={user.id}
                         ref={
                           i === 0
                             ? topRef
@@ -284,6 +285,7 @@ const StaffList: FC<{
                             if (department.value === user.department) {
                               return (
                                 <StyledDivWithCheckbox
+                                  key={user.id}
                                   ref={
                                     index === 0
                                       ? topRef

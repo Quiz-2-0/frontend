@@ -85,10 +85,10 @@ const NewEmployeePopup: FC<{
 
   useEffect(() => {
     setIsActive(
-      isFirstNameValid && isLastNameValid && isPatronymicValid
-      && isEmailValid && isDepartmentValid && isPositionValid
-      && firstName !== '' && lastName !== '' && patronymic !== ''
-      && email !== '' && department !== '' && position !== '',
+      isFirstNameValid && isLastNameValid && isPatronymicValid &&
+      isEmailValid && isDepartmentValid && isPositionValid &&
+      firstName !== '' && lastName !== '' && patronymic !== '' &&
+      email !== '' && department !== '' && position !== '',
     );
   }, [firstName, lastName, patronymic, email, department, position]);
 

@@ -146,25 +146,24 @@ const CreateNewQuiz: FC = () => {
             alignItems: 'center',
             gap: '16px',
           }}>
-          {currentPage !== 0
-            && (
-              <StyledButton
-                mode='outline'
-                onClick={() => {
-                  currentPage !== 3 ? addNewItem() : setIsPreviewPopupOpen(true);
-                }}
-                style={{
-                  marginTop: '24px',
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}>
-                {steps[currentPage].button.icon === 'add' && <Icon24AddOutline />}
-                {steps[currentPage].button.name}
-              </StyledButton>
-            )}
+          {currentPage !== 0 && (
+            <StyledButton
+              mode='outline'
+              onClick={() => {
+                currentPage !== 3 ? addNewItem() : setIsPreviewPopupOpen(true);
+              }}
+              style={{
+                marginTop: '24px',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '8px',
+              }}>
+              {steps[currentPage].button.icon === 'add' && <Icon24AddOutline />}
+              {steps[currentPage].button.name}
+            </StyledButton>
+          )}
           <StyledButton onClick={() => setNextPage()} type='button' style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
             {currentPage !== 3 ? 'Продолжить' : 'Опубликовать'}
           </StyledButton>

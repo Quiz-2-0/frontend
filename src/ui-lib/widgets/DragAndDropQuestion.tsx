@@ -57,8 +57,7 @@ const DragAndDropQuestion: FC<{
     console.log(cards.filter((card) => card.id !== id));
     setCards((prevCards) => prevCards.filter((card) => card.id !== id));
     const filteredItem = answers.find((item) => id === item.id);
-    filteredItem
-    && setBoards((currentBoard) => currentBoard.map((board) => (
+    filteredItem && setBoards((currentBoard) => currentBoard.map((board) => (
       boardId === board.id && !board.items.includes(filteredItem)
         ? { ...board, items: [...board.items, filteredItem] }
         : { ...board, items: board.items.filter((item) => item !== filteredItem) }
@@ -74,6 +73,7 @@ const DragAndDropQuestion: FC<{
       }}>
         {boardTitles.map(({ text, id }) => (
           <DragAndDropBoard
+            key={id}
             title={text}
             board={boards[id].items}
             onItemMove={(e) => addItemToBoard(e, id)} />

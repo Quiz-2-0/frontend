@@ -35,9 +35,9 @@ const Staff: FC = () => {
 
   const staffNameFilter = staffOnPage?.filter(
     ({ firstName, lastName, patronymic }) => (
-      firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
-      || lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
-      || patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
+      firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
+      lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
+      patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
     ),
   );
 

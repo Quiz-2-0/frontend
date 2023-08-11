@@ -13,7 +13,6 @@ import {
   Icon24PollOutline,
 } from '@vkontakte/icons';
 import styled from 'styled-components';
-import { useDispatch } from '@/store/store.types';
 
 const StyledTabs = styled(Tabs)`
   min-width: 166px;
@@ -69,9 +68,8 @@ const StyledTabsItem = styled(TabsItem)`
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const localStorageRole = localStorage.getItem('role') || '';
-  const sessionStorageRole = sessionStorage.getItem('role') || '';
+  const localStorageRole = localStorage.getItem('role') ?? '';
+  const sessionStorageRole = sessionStorage.getItem('role') ?? '';
   const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
   const setUrl = (url: string) => {
     navigate(url);
