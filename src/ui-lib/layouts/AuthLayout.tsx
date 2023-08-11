@@ -43,7 +43,7 @@ const AuthLayout: FC<PropsWithChildren> = ({ children }) => (
       }}>
       <>
         <Logo style={{ marginTop: '60px', width: '155px', height: '95px' }} to='/' />
-        { children && <Outlet /> }
+        { children }
       </>
     </SplitCol>
   </SplitLayout>
