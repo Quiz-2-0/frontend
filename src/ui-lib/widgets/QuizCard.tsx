@@ -23,6 +23,7 @@ import StyledQuizTag from '../styled-components/StyledQuizTag';
 import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer';
 import { QuizCardProps } from '@/types/types';
 import { useDispatch } from '@/store/store.types';
+import { pluralsFull } from '@/constants/plurals';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -183,7 +184,9 @@ const QuizCard: React.FC<QuizCardProps> = (
         <StyledQuizDetailsWrapper>
           <StyledQuizDetailWrapper>
             <DurationIcon />
-            <StyledQuizDetailCaption>{`${duration} минут`}</StyledQuizDetailCaption>
+            <StyledQuizDetailCaption>
+              {pluralsFull.minutes(duration)}
+            </StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <LevelIcon />
@@ -191,7 +194,9 @@ const QuizCard: React.FC<QuizCardProps> = (
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <QuestionsIcon />
-            <StyledQuizDetailCaption>{`${question_amount} вопрос${question_amount > 4 ? 'ов' : 'а'}`}</StyledQuizDetailCaption>
+            <StyledQuizDetailCaption>
+              {pluralsFull.questions(question_amount)}
+            </StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
         </StyledQuizDetailsWrapper>
         {isPassed !== ''

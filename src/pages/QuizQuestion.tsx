@@ -40,7 +40,7 @@ import DragAndDropQuestion from '@/ui-lib/widgets/DragAndDropQuestion';
 
 const QuizQuestion: React.FC = () => {
   const { id = 0 } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(id);
+  const { data, error, isLoading } = useGetQuizQuery(Number(id));
   const [setAnswer, result] = useSetAnswerMutation();
   const [progressObject, setProgress] = useState<Record<number, string>>({});
 
