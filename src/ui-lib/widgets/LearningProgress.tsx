@@ -18,6 +18,8 @@ import {
   TimeIcon,
   BattleIcon,
 } from '../styled-components/icons';
+import { plurals } from '@/constants/plurals';
+import { getPluralNoun } from '@/utils/plurals';
 
 const StyledTitle = styled.h3`
   margin: 0;
@@ -115,6 +117,12 @@ const LearningProgress: React.FC = () => {
     setProgressPercentage(currentUser ? currentUser.pass_progress : 0);
   }, [currentUser]);
 
+  // Тестовые данные
+  const progress = {
+    durations: 20,
+    victories: 4,
+  };
+
   return (
     <StyledDiv>
       <div
@@ -148,7 +156,9 @@ const LearningProgress: React.FC = () => {
           <ProgressTextWrapper>
             <ProgressTitleWrapper>
               <StyledTitle>{currentUser?.count_assigned}</StyledTitle>
-              <StyledSubtitle>назначенных квизов</StyledSubtitle>
+              <StyledSubtitle>
+                {getPluralNoun(currentUser?.count_assigned ?? 0, 'назначенный квиз', 'назначенных квиза', 'назначенных квизов')}
+              </StyledSubtitle>
             </ProgressTitleWrapper>
             <StyledCaption>успешно завершено</StyledCaption>
           </ProgressTextWrapper>
@@ -159,7 +169,7 @@ const LearningProgress: React.FC = () => {
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
                 <StyledTitle>{currentUser?.count_passed}</StyledTitle>
-                <StyledSubtitle>квизов</StyledSubtitle>
+                <StyledSubtitle>{plurals.quizzes(currentUser?.count_passed ?? 0)}</StyledSubtitle>
               </ProgressTitleWrapper>
               <StyledCaption>всего пройдено</StyledCaption>
             </ProgressTextWrapper>
@@ -178,8 +188,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><TimeIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>20</Title>
-                <Text>минут</Text>
+                <Title>{progress.durations}</Title>
+                <Text>{plurals.minutes(progress.durations)}</Text>
               </ProgressTitleWrapper>
               <StyledCaption>на прохождение</StyledCaption>
             </ProgressTextWrapper>
@@ -188,8 +198,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><BattleIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>3</Title>
-                <Text>победы</Text>
+                <Title>{progress.victories}</Title>
+                <Text>{plurals.victories(progress.victories)}</Text>
               </ProgressTitleWrapper>
               <StyledCaption>в квиз-баттлах</StyledCaption>
             </ProgressTextWrapper>

@@ -1,9 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/no-unreachable */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   API_ROOT,
@@ -29,38 +23,41 @@ import {
 
 export const jwt = {
   set: (value: string, isRemember: boolean, role: string): void => {
-    console.log(isRemember, role);
+    console.debug('JWT', isRemember, role);
     if (value) {
       if (isRemember) {
         localStorage.setItem('JWT', `${value}`);
         localStorage.setItem('role', `${role}`);
-        console.log(localStorage.getItem('role'), 1);
-        return;
+      } else {
+        sessionStorage.setItem('JWT', `${value}`);
+        sessionStorage.setItem('role', `${role}`);
       }
-      sessionStorage.setItem('JWT', `${value}`);
-      sessionStorage.setItem('role', `${role}`);
-      console.log(sessionStorage.getItem('role'), 2);
     } else {
+      /* eslint-disable-next-line no-lonely-if */
       if (isRemember) {
         localStorage.removeItem('JWT');
         localStorage.removeItem('role');
-        console.log(localStorage.getItem('role'), 1);
+      } else {
+        sessionStorage.removeItem('JWT');
+        sessionStorage.removeItem('role');
       }
-      sessionStorage.removeItem('JWT');
-      sessionStorage.removeItem('role');
-      console.log(sessionStorage.getItem('role'), 4);
     }
   },
-  get: (): string => {
-    const res = localStorage.getItem('JWT') || sessionStorage.getItem('JWT');
-    return res || '';
-  },
-  test: (isRemember: boolean): boolean => (isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')),
-  remove: (isRemember: boolean): void => (
-    isRemember ? localStorage.clear() : sessionStorage.clear()
+  get: (): string => (
+    localStorage.getItem('JWT') ?? sessionStorage.getItem('JWT') ?? ''
   ),
+  test: (isRemember: boolean): boolean => (
+    isRemember ? !!localStorage.getItem('JWT') : !!sessionStorage.getItem('JWT')
+  ),
+  remove: (isRemember: boolean): void => {
+    if (isRemember) {
+      localStorage.clear();
+    } else {
+      sessionStorage.clear();
+    }
+  },
 };
-/// вот так выглядит слайс под апи на каждую сущность
+
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_ROOT }),
@@ -73,7 +70,7 @@ export const userApi = createApi({
         body,
       }),
     }),
-    recoverPassword: build.mutation<string, string | number>({
+    recoverPassword: build.mutation<string, string>({
       query: (email) => ({
         url: RESET_PASSWORD,
         method: 'POST',
@@ -83,7 +80,6 @@ export const userApi = createApi({
     getCurrentUser: build.query<IUser, void>({
       query: () => ({
         url: GET_USER,
-        method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -124,9 +120,8 @@ export const quizApi = createApi({
   reducerPath: 'quizApi',
   baseQuery: fetchBaseQuery({
     baseUrl: API_ROOT,
-    prepareHeaders: (headers, { getState, endpoint }) => {
+    prepareHeaders: (headers) => {
       headers.set('Authorization', `Bearer ${jwt.get()}`);
-
       return headers;
     },
   }),
@@ -136,13 +131,13 @@ export const quizApi = createApi({
       query: () => ALL_QUIZES,
       keepUnusedDataFor: 0,
     }),
-    getQuiz: build.query<IQuiz, any>({
-      query: (id: any) => `${ALL_QUIZES}${id}`,
+    getQuiz: build.query<IQuiz, number>({
+      query: (id: number) => `${ALL_QUIZES}${id}/`,
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
     }),
-    getStatistic: build.query<Statistic[], any>({
-      query: (id: any) => `${ALL_QUIZES}${id}/statistic`,
+    getStatistic: build.query<Statistic[], number>({
+      query: (id: number) => `${ALL_QUIZES}${id}/statistic/`,
       keepUnusedDataFor: 0,
     }),
     setAnswer: build.mutation<void, TAnswerRequest>({
@@ -160,35 +155,27 @@ export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: fetchBaseQuery({
     baseUrl: API_ROOT,
+    prepareHeaders: (headers) => {
+      headers.set('Authorization', `Bearer ${jwt.get()}`);
+      return headers;
+    },
   }),
   endpoints: (build) => ({
     getUsers: build.query<IUser[], void>({
       query: () => ({
         url: GET_ADMIN_USERS,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwt.get()}`,
-        },
       }),
       keepUnusedDataFor: 0,
     }),
     getDepartments: build.query<{ id: number; name: string; }[], void>({
       query: () => ({
         url: GET_ADMIN_DEPARTMENTS,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwt.get()}`,
-        },
       }),
       keepUnusedDataFor: 0,
     }),
     getQuizzes: build.query<AdminQuizz[], void>({
       query: () => ({
         url: GET_ADMIN_QUIZZES,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwt.get()}`,
-        },
       }),
       keepUnusedDataFor: 0,
     }),

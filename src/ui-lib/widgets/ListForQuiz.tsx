@@ -32,8 +32,8 @@ const List = styled.ul`
 const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   const { id } = useParams();
 
-  const { data: quizData } = useGetQuizQuery(id);
-  const { data: statisticsData } = useGetStatisticQuery(id);
+  const { data: quizData } = useGetQuizQuery(Number(id));
+  const { data: statisticsData } = useGetStatisticQuery(Number(id));
   const [questions, setQuestions] = useState(quizData ? quizData.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const [listType, setListType] = useState('about');
