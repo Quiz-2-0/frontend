@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
 import levels from '@/constants/levels';
 import { setFromCastle, setLoaderState } from '@/store/allSlice/allSlice';
-import { useGetAllQuizesQuery } from '@/api/apiv2';
+import { useGetAllQuizesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
 import { useDispatch } from '@/store/store.types';
 
 const StyledImage = styled.img`
@@ -52,6 +52,7 @@ const Castle: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetAllQuizesQuery();
+  const { data: currentUser } = useGetCurrentUserQuery();
 
   const doneQuizzes = data?.filter(({ isPassed }) => isPassed === true).length;
   const userLevel = levels.findIndex(({ numberOfQuizzes }) => (

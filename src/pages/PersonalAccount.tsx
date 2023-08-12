@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import {
@@ -15,11 +15,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useSelector } from '@/store/store.types';
-import {
-  useGetCurrentUserQuery,
-  useGetShortAchievementsQuery,
-  useGetShortRatingsQuery,
-} from '@/api/apiv2';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 import LearningProgress from '@/ui-lib/widgets/LearningProgress';
 import Castle from '@/ui-lib/widgets/Castle';
 import Rating from '@/ui-lib/widgets/Rating';
