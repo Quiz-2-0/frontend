@@ -1,3 +1,6 @@
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
@@ -13,9 +16,14 @@ import genieAvatar from '@/assets/images/avatar/avatar_genie.png';
 import zombieAvatar from '@/assets/images/avatar/avatar_zombie.png';
 import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
 
-const Popup = styled.div`
-  visibility: visible;
-  opacity: 1;
+interface PopupProps {
+  closeAvatarPopup: () => void;
+  isOpen: boolean;
+}
+
+const Popup = styled.div<{ isOpen: boolean }>`
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transition: visibility .5s, opacity .5s ease-out;
   display: flex;
   position: fixed;
@@ -97,10 +105,10 @@ const UploadAvatarPreview = styled.div`
   justify-content: center;
 `;
 
-const AvatarUploadPopup: FC = () => (
-  <Popup>
+const AvatarUploadPopup: FC<PopupProps> = ({ isOpen, closeAvatarPopup }) => (
+  <Popup className='avatarPopup' isOpen={isOpen}>
     <PopupContainer>
-      <CloseButton type='button'><CloseIcon /></CloseButton>
+      <CloseButton type='button' onMouseDown={closeAvatarPopup}><CloseIcon /></CloseButton>
       <Title weight='3' style={{ margin: '24px 0 0 0' }}>Фото профиля</Title>
       <Headline style={{ margin: '10px 0 0 0' }}>Выберите изображение из галереи, либо  загрузите своё фото.</Headline>
       <Headline weight='2' style={{ margin: '24px 0 0 0' }}>Галерея</Headline>
