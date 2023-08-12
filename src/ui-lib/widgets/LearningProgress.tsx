@@ -119,10 +119,6 @@ const LearningProgress: React.FC = () => {
 
   // Тестовые данные
   const progress = {
-    percentage: 71,
-    assignedQuizzes: 5,
-    quizzes: 5,
-    rightAnswers: 80,
     durations: 20,
     victories: 4,
   };
