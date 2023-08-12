@@ -2,17 +2,24 @@
 /* eslint-disable camelcase */
 
 export interface IUser {
-  firstName: string;
-  lastName: string;
-  role: string;
-  courses: Record<string, any>;
-  progress: string;
-  access: string;
-  avatar: string;
-  achievements: Record<string, any>;
-  position: string;
-  ratingPlace: number;
-  appointedCourses: Record<string, any>;
+  id: number,
+  firstName: string,
+  lastName: string,
+  position: string,
+  role: string,
+  patronymic: string,
+  department: string,
+  email: string,
+  avatar: string,
+  pass_progress: number,
+  count_assigned: number,
+  count_passed: number,
+  right_precent: number,
+  level: number,
+  level_description: string,
+  level_image: string,
+  to_next_level: number,
+  access: string,
 }
 
 export interface IUserLoginRequest {
@@ -29,6 +36,19 @@ export interface IAchievement {
   description: string,
   image: string,
   achived: boolean,
+}
+
+export interface IShortAchievement {
+  name: string,
+  image: string,
+}
+
+export interface IShortRating {
+  id: number,
+  firstName: string,
+  lastName: string,
+  avatar: string,
+  user_rating: number,
 }
 
 interface Tag {

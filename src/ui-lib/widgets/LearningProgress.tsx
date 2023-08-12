@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Title,
@@ -6,6 +7,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 import CircularProgressBar from './CircularProgressBar';
 import StyledDiv from '../styled-components/StyledDiv';
 import { StyledNavButton } from './Achievements';
@@ -108,6 +110,13 @@ const StyledCaption = styled(Caption)`
 `;
 
 const LearningProgress: React.FC = () => {
+  const { data: currentUser } = useGetCurrentUserQuery();
+  const [progressPercentage, setProgressPercentage] = useState(0);
+
+  useEffect(() => {
+    setProgressPercentage(currentUser ? currentUser.pass_progress : 0);
+  }, [currentUser]);
+
   // Тестовые данные
   const progress = {
     percentage: 71,
@@ -147,12 +156,12 @@ const LearningProgress: React.FC = () => {
           alignItems: 'center',
         }}>
         <ProgressBarWrapper>
-          <CircularProgressBar percentage={progress.percentage} />
+          <CircularProgressBar percentage={progressPercentage} />
           <ProgressTextWrapper>
             <ProgressTitleWrapper>
-              <StyledTitle>{progress.assignedQuizzes}</StyledTitle>
+              <StyledTitle>{currentUser?.count_assigned}</StyledTitle>
               <StyledSubtitle>
-                {getPluralNoun(progress.assignedQuizzes, 'назначенный квиз', 'назначенных квиза', 'назначенных квизов')}
+                {getPluralNoun(currentUser?.count_assigned ?? 0, 'назначенный квиз', 'назначенных квиза', 'назначенных квизов')}
               </StyledSubtitle>
             </ProgressTitleWrapper>
             <StyledCaption>успешно завершено</StyledCaption>
@@ -163,8 +172,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><QuizIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <StyledTitle>{progress.quizzes}</StyledTitle>
-                <StyledSubtitle>{plurals.quizzes(progress.quizzes)}</StyledSubtitle>
+                <StyledTitle>{currentUser?.count_passed}</StyledTitle>
+                <StyledSubtitle>{plurals.quizzes(currentUser?.count_passed ?? 0)}</StyledSubtitle>
               </ProgressTitleWrapper>
               <StyledCaption>всего пройдено</StyledCaption>
             </ProgressTextWrapper>
@@ -173,7 +182,7 @@ const LearningProgress: React.FC = () => {
             <IconBackground><TrueIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>{progress.rightAnswers}</Title>
+                <Title>{currentUser?.right_precent}</Title>
                 <Text>%</Text>
               </ProgressTitleWrapper>
               <StyledCaption>верных ответов</StyledCaption>
