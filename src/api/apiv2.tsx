@@ -16,7 +16,7 @@ import {
   GET_ADMIN_DEPARTMENTS,
 } from '@/constants/api-url';
 import {
-  IUser, IUserLoginRequest, IQuiz, TAnswerRequest, Statistic, AdminQuizz,
+  IUser, IUserLoginRequest, IQuiz, IAchievement, TAnswerRequest, Statistic, AdminQuizz,
 } from '@/types/types';
 
 export const jwt = {
@@ -71,7 +71,6 @@ export const userApi = createApi({
         method: 'POST',
         body: { email },
       }),
-
     }),
     getCurrentUser: build.query<IUser, void>({
       query: () => ({
@@ -83,7 +82,15 @@ export const userApi = createApi({
       }),
       keepUnusedDataFor: 0,
     }),
-
+    getAchievements: build.query<IAchievement[], void>({
+      query: () => ({
+        url: '/users/achivements/',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -167,6 +174,7 @@ export const {
   useLoginMutation,
   useRecoverPasswordMutation,
   useGetCurrentUserQuery,
+  useGetAchievementsQuery,
 } = userApi;
 
 export const {
