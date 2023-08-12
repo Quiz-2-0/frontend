@@ -11,6 +11,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '../styled-components/StyledButton';
 import image from '@/assets/images/results__image.png';
 import { useGetStatisticQuery } from '@/api/apiv2';
+import { pluralsFull } from '@/constants/plurals';
 
 const Results: FC<{
   questions: number,
@@ -58,7 +59,7 @@ const Results: FC<{
         letterSpacing: '0.38px',
         textAlign: 'center',
       }}>
-        {`Вы ответили правильно на ${isLoading ? '' : rightAnswers} вопрос${rightAnswers === 1 ? '' : (rightAnswers && (rightAnswers > 4 || rightAnswers)) === 0 ? 'ов' : 'а'} из ${questions}`}
+        {`Вы ответили правильно на ${pluralsFull.questions(rightAnswers ?? 0)} из ${questions}`}
       </Text>
       <Div
         style={{

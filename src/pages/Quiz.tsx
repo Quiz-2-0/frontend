@@ -26,6 +26,7 @@ import buttonIcon from '@/assets/images/icons/button_icon.svg';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '@/ui-lib/styled-components/icons';
 import ListForQuiz from '@/ui-lib/widgets/ListForQuiz';
 import { setLoaderState } from '@/store/allSlice/allSlice';
+import { pluralsFull } from '@/constants/plurals';
 
 const StyledButton = styled(Button)`
   border-radius: 4px;
@@ -100,7 +101,7 @@ const Quiz: React.FC = () => {
               <StyledQuizDetailWrapper>
                 <DurationIcon />
                 <StyledQuizDetailCaption>
-                  {`${data?.duration} минут`}
+                  {data?.duration && pluralsFull.minutes(data.duration)}
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
               <StyledQuizDetailWrapper>
@@ -112,7 +113,7 @@ const Quiz: React.FC = () => {
               <StyledQuizDetailWrapper>
                 <QuestionsIcon />
                 <StyledQuizDetailCaption>
-                  {`${data?.question_amount} вопрос${data && data?.question_amount > 4 ? 'ов' : 'а'}`}
+                  {data?.question_amount && pluralsFull.questions(data.question_amount)}
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>
