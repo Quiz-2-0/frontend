@@ -21,6 +21,16 @@ export interface IUserLoginRequest {
   role: string;
 }
 
+export interface IAchievement {
+  id: number,
+  points_now: number,
+  points_to_get: number,
+  name: string,
+  description: string,
+  image: string,
+  achived: boolean,
+}
+
 interface Tag {
   id: number;
   name: string;
