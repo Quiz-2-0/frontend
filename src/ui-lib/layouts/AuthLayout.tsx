@@ -1,7 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { SplitLayout, SplitCol, Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Outlet } from 'react-router';
 import Logo from '../styled-components/Logo';
 import backgroundImage from '@/assets/images/login__image.png';
 

@@ -28,8 +28,8 @@ const StyledButtonWrapper = styled(Div)`
 
 const QuizErrorsReview: React.FC = () => {
   const { id } = useParams();
-  const { data } = useGetQuizQuery(id);
-  const { data: stata } = useGetStatisticQuery(id);
+  const { data } = useGetQuizQuery(Number(id));
+  const { data: stata } = useGetStatisticQuery(Number(id));
   const [questions, setQuestions] = useState(data ? data.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();

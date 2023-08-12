@@ -21,7 +21,7 @@ const Results: FC<{
   const navigate = useNavigate();
   const [rightAnswers, setRightAnswers] = useState<number | undefined>(0);
 
-  const { data, error, isLoading } = useGetStatisticQuery(id);
+  const { data, error, isLoading } = useGetStatisticQuery(Number(id));
   useEffect(() => {
     setRightAnswers(data?.filter((answ) => (answ !== undefined && answ.isRight === true)).length);
   }, [data]);

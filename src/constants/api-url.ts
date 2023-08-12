@@ -5,7 +5,7 @@ export const SRC_BASE_URL = 'http://80.87.106.133';
 export const LOGIN_ROUTE = '/users/token/';
 export const RESET_PASSWORD = '/users/reset/';
 export const ALL_QUIZES = '/quizes/';
-export const GET_USER = '/users/me';
+export const GET_USER = '/users/me/';
 
 export const GET_ADMIN_DEPARTMENTS = '/users/admin/departaments/';
 export const GET_ADMIN_QUIZZES = '/quizes/admin/';

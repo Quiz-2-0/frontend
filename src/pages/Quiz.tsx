@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useEffect } from 'react';
+import React, { FC } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -45,9 +45,9 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Quiz: React.FC = () => {
+const Quiz: FC = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(id);
+  const { data, error, isLoading } = useGetQuizQuery(Number(id));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
