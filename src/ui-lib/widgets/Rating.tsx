@@ -1,38 +1,78 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import {
   Title,
   Div,
-  Text,
-  Subhead,
   Caption,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achives';
 import { ArrowIcon } from '../styled-components/icons';
-import beforeUser from '@/assets/images/avatar/mayakovsky.png';
-import afterUser from '@/assets/images/avatar/dostoevskij.png';
-import { useGetCurrentUserQuery } from '@/api/apiv2';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/apiv2';
 
-const UserWrapper = styled.div<{ width: number, height: number }>`
-  width:${({ width }) => width}px;
-  height:${({ height }) => height}px;
-  border-radius: 50%;
-  overflow: hidden;
+const RatingTitleContainer = styled(Div)`
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 `;
 
-const User = styled.img`
-  width: 100%;
-  height: auto;
+const UsersContainer = styled(Div)`
+  padding: 0;
+  height: 126px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 12px;
+`;
+
+const UserContainer = styled(Div)<{ user: boolean }>`
+  position: relative;
+  padding: 0;
+  width: ${({ user }) => user ? '80px' : '60px'};
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: ${({ user }) => user ? '5px' : '2px'};
+`;
+
+const RatingCircle = styled(Div)<{ user: boolean }>`
+  padding: 0;
+  width: ${({ user }) => user ? '24px' : '21px'};
+  height: ${({ user }) => user ? '24px' : '21px'};
+  border-radius: 50%;
+  background-color: ${({ user }) => user ? '#B2DEFF' : '#FAEFD2'};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const UserPhoto = styled.img<{ user: boolean }>`
+  width: ${({ user }) => user ? '80px' : '60px'};
+  height: ${({ user }) => user ? '80px' : '60px'};
   object-fit: cover;
+  border-radius: 50%;
 `;
 
 const Rating: React.FC = () => {
-  const { data, error } = useGetCurrentUserQuery();
+  const { data: currentUser } = useGetCurrentUserQuery();
+  const { data: shortRatings } = useGetShortRatingsQuery();
 
   return (
     <StyledDiv
@@ -45,143 +85,42 @@ const Rating: React.FC = () => {
         alignItems: 'center',
         gap: '24px',
       }}>
-      <Div
-        style={{
-          width: '100%',
-          padding: '0',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '12px',
-        }}>
+      <RatingTitleContainer>
         <Title
           style={{ textAlign: 'left' }}
           level='2'>
           Рейтинг
         </Title>
         <IconWrapper><ArrowIcon /></IconWrapper>
-      </Div>
-      <Div
-        style={{
-          padding: '0',
-          width: '224px',
-          height: '126px',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-        }}>
-        <Div
-          style={{
-            position: 'relative',
-            width: '60px',
-            padding: '0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2px',
-          }}>
-          <Div style={{
-            padding: '0',
-            width: '21px',
-            height: '21px',
-            borderRadius: '50%',
-            backgroundColor: '#FAEFD2',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-          }}>
-            <Caption>21</Caption>
-          </Div>
-          <UserWrapper height={60} width={60}>
-            <User src={beforeUser} alt='Аватар' />
-          </UserWrapper>
-          <Caption
-            style={{
-              textAlign: 'center',
-              letterSpacing: '0.06px',
-            }}>
-            Владимир Маяковский
-          </Caption>
-        </Div>
-        <Div
-          style={{
-            position: 'relative',
-            width: '80px',
-            padding: '0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            alignSelf: 'flex-start',
-            gap: '5px',
-          }}>
-          <Div style={{
-            padding: '0',
-            width: '24px',
-            height: '24px',
-            borderRadius: '50%',
-            backgroundColor: '#B2DEFF',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-          }}>
-            <Text>20</Text>
-          </Div>
-          <UserWrapper height={80} width={80}>
-            <User src={`${SRC_BASE_URL}/${data?.avatar}`} alt='Аватар' />
-          </UserWrapper>
-          <Subhead>Вы</Subhead>
-        </Div>
-        <Div
-          style={{
-            position: 'relative',
-            width: '60px',
-            padding: '0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2px',
-          }}>
-          <Div style={{
-            padding: '0',
-            width: '21px',
-            height: '21px',
-            borderRadius: '50%',
-            backgroundColor: '#FAEFD2',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-          }}>
-            <Caption>19</Caption>
-          </Div>
-          <UserWrapper height={60} width={60}>
-            <User src={afterUser} alt='Аватар' />
-          </UserWrapper>
-          <Caption
-            style={{
-              textAlign: 'center',
-              letterSpacing: '0.06px',
-            }}>
-            Фёдор Достоевский
-          </Caption>
-        </Div>
-      </Div>
+      </RatingTitleContainer>
+      <UsersContainer>
+        {shortRatings?.map((shortRating) => (
+          <UserContainer
+            key={shortRating.id}
+            user={currentUser?.firstName === shortRating.firstName
+              && currentUser.lastName === shortRating.lastName}>
+            <RatingCircle user={currentUser?.firstName === shortRating.firstName
+              && currentUser.lastName === shortRating.lastName}>
+              <Caption>{shortRating.user_rating}</Caption>
+            </RatingCircle>
+            <UserPhoto
+              src={`http://80.87.106.133${shortRating.avatar}`}
+              alt='Аватар'
+              user={currentUser?.firstName === shortRating.firstName
+                && currentUser.lastName === shortRating.lastName} />
+            <Caption
+              style={{
+                textAlign: 'center',
+                letterSpacing: '0.06px',
+              }}>
+              {currentUser?.firstName === shortRating.firstName
+              && currentUser.lastName === shortRating.lastName
+                ? 'Вы'
+                : `${shortRating.firstName} ${shortRating.lastName}`}
+            </Caption>
+          </UserContainer>
+        ))}
+      </UsersContainer>
     </StyledDiv>
   );
 };

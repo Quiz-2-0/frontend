@@ -16,7 +16,15 @@ import {
   GET_ADMIN_DEPARTMENTS,
 } from '@/constants/api-url';
 import {
-  IUser, IUserLoginRequest, IQuiz, IAchievement, TAnswerRequest, Statistic, AdminQuizz,
+  IUser,
+  IUserLoginRequest,
+  IQuiz,
+  IAchievement,
+  IShortAchievement,
+  IShortRating,
+  TAnswerRequest,
+  Statistic,
+  AdminQuizz,
 } from '@/types/types';
 
 export const jwt = {
@@ -85,6 +93,24 @@ export const userApi = createApi({
     getAchievements: build.query<IAchievement[], void>({
       query: () => ({
         url: '/users/achivements/',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+    }),
+    getShortAchievements: build.query<IShortAchievement[], void>({
+      query: () => ({
+        url: '/users/achivements/short',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+    }),
+    getShortRatings: build.query<IShortRating[], void>({
+      query: () => ({
+        url: '/users/ratings/short',
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
@@ -175,6 +201,8 @@ export const {
   useRecoverPasswordMutation,
   useGetCurrentUserQuery,
   useGetAchievementsQuery,
+  useGetShortAchievementsQuery,
+  useGetShortRatingsQuery,
 } = userApi;
 
 export const {

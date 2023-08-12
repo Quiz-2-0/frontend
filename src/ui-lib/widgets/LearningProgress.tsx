@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Title,
@@ -6,6 +7,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 import CircularProgressBar from './CircularProgressBar';
 import StyledDiv from '../styled-components/StyledDiv';
 import { StyledNavButton } from './Achievements';
@@ -106,7 +108,12 @@ const StyledCaption = styled(Caption)`
 `;
 
 const LearningProgress: React.FC = () => {
-  const progressPercentage = 70;
+  const { data: currentUser } = useGetCurrentUserQuery();
+  const [progressPercentage, setProgressPercentage] = useState(0);
+
+  useEffect(() => {
+    setProgressPercentage(currentUser ? currentUser.pass_progress : 0);
+  }, [currentUser]);
 
   return (
     <StyledDiv>
@@ -140,7 +147,7 @@ const LearningProgress: React.FC = () => {
           <CircularProgressBar percentage={progressPercentage} />
           <ProgressTextWrapper>
             <ProgressTitleWrapper>
-              <StyledTitle>5</StyledTitle>
+              <StyledTitle>{currentUser?.count_assigned}</StyledTitle>
               <StyledSubtitle>назначенных квизов</StyledSubtitle>
             </ProgressTitleWrapper>
             <StyledCaption>успешно завершено</StyledCaption>
@@ -151,7 +158,7 @@ const LearningProgress: React.FC = () => {
             <IconBackground><QuizIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <StyledTitle>5</StyledTitle>
+                <StyledTitle>{currentUser?.count_passed}</StyledTitle>
                 <StyledSubtitle>квизов</StyledSubtitle>
               </ProgressTitleWrapper>
               <StyledCaption>всего пройдено</StyledCaption>
@@ -161,7 +168,7 @@ const LearningProgress: React.FC = () => {
             <IconBackground><TrueIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>80</Title>
+                <Title>{currentUser?.right_precent}</Title>
                 <Text>%</Text>
               </ProgressTitleWrapper>
               <StyledCaption>верных ответов</StyledCaption>
