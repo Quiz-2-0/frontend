@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable react/require-default-props */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable ternary/no-unreachable */
-/* eslint-disable react/no-array-index-key */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
   Checkbox,
   IconButton,
@@ -10,7 +15,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon20ChevronRight, Icon28AddCircleOutline } from '@vkontakte/icons';
+import { Icon16CancelCircleOutline, Icon20ChevronRight, Icon28AddCircleOutline } from '@vkontakte/icons';
 import styled from 'styled-components';
 import StyledFormItem from '../styled-components/StyledFormItem';
 import StyledButton from '../styled-components/StyledButton';
@@ -28,18 +33,21 @@ const FormItemForNewQuiz = styled(StyledFormItem)`
   }
 `;
 
-const StyledInput = styled(Input)`
+const StyledInput = styled(Input)<{ value: string, placeholder: string }>`
   width: min-content;
   background-color: #fff;
   min-height: 20px;
 
   & > .vkuiInput__el {
+    transition: all .3s ease;
     padding: 0;
     font-size: 15px;
     font-weight: 400;
     line-height: 20px;
     height: 20px;
-    min-width: 118px;
+    min-width: ${({ value, placeholder }) => (
+    value === '' ? placeholder.length * 15 * 0.55 : value.length * 15 * 0.55
+  )}px;
   }
   & > .vkuiFormField__border {
     border: none;
@@ -57,7 +65,7 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const StyledCheckbox = styled(Checkbox)`
+const StyledCheckbox = styled(Checkbox)<{ questionType: string }>`
   width: min-content !important;
   min-height: 52px;
   box-sizing: border-box !important;
@@ -76,11 +84,18 @@ const StyledCheckbox = styled(Checkbox)`
   }
 
   & > .vkuiCheckbox__icon {
+    display: ${({ questionType }) => (questionType === 'DAD' ? 'none' : 'block')};
     margin-right: 8px;
   }
 
   & > .vkuiCheckbox__content > .vkuiCheckbox__title {
     margin: 0;
+  }
+
+  & > .vkuiCheckbox__content > .vkuiCheckbox__title > span {
+    display: flex;
+    gap: 8px;
+    alignItems: center;
   }
 `;
 
@@ -95,14 +110,30 @@ const AddAnswers = styled.div`
 `;
 
 const AddAnswersOnPage: FC<{
+  questionId: number,
+  questionType: string,
   title: string,
   description: string,
   placeholder: string,
-}> = ({ title, description, placeholder }) => {
-  const [answers, setAnswers] = useState<string[]>(['']);
-  const [categories, setCategories] = useState<string[]>(['']);
-  const [isAnswerValid, setIsAnswerValid] = useState(true);
+  answers: { id: number, text: string, isRight?: boolean }[],
+  setAnswers?: any,
+  isAnswerValid?: { id: number, isValid: boolean }[],
+  setIsAnswerValid?: any,
+  categories?: { id: number, text: string, items: { id: number, text: string }[] }[],
+}> = ({
+  questionId,
+  questionType,
+  title,
+  description,
+  placeholder,
+  answers,
+  setAnswers,
+  isAnswerValid,
+  setIsAnswerValid,
+  categories,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteButtonDisable, setIsDeleteButtonDisabled] = useState(true);
 
   return (
     <FormItemForNewQuiz
@@ -129,32 +160,76 @@ const AddAnswersOnPage: FC<{
       {placeholder !== ''
         ? (
           <AddAnswers>
-            {answers.map((answer, i) => (
-              <StyledCheckbox key={i}>
+            {answers.map((answer) => (
+              <StyledCheckbox
+                questionType={questionType}
+                checked={answer.isRight}
+                onClick={() => {
+                  console.log(questionType, answer.isRight, answers);
+                  questionType === 'ONE'
+                    ? setAnswers(answers.map((answ) => (
+                      answ.id === answer.id
+                        ? { ...answ, isRight: !answer.isRight }
+                        : { ...answ, isRight: answer.isRight })))
+                    : setAnswers(answers.map((answ) => (
+                      answ.id === answer.id
+                        ? { ...answ, isRight: !answer.isRight } : answ)));
+                }}
+                key={answer.id}>
                 <StyledInput
                   id='answer'
                   type='text'
                   placeholder={placeholder}
-                  status={isAnswerValid ? 'default' : 'error'}
-                  onBlur={() => setIsAnswerValid(answer !== '')}
+                  status={isAnswerValid && isAnswerValid[answer.id].isValid ? 'default' : 'error'}
+                  onBlur={() => {
+                    setIsAnswerValid(isAnswerValid?.map((valid) => (
+                      valid.id === answer.id ? { ...valid, isValid: answer.text !== '' } : valid)));
+                    setIsDeleteButtonDisabled(false);
+                  }}
                   name='answer'
-                  value={answer}
+                  value={answer.text}
+                  onFocus={() => setIsDeleteButtonDisabled(true)}
                   onChange={(e) => {
-                    setAnswers(answers.map((answ, ind) => (
-                      i === ind ? e.target.value : answ
+                    setIsDeleteButtonDisabled(true);
+                    setAnswers(answers.map((answ) => (
+                      answer.id === answ.id ? { ...answ, text: e.target.value } : answ
                     )));
                   }} />
+                {answer.text !== '' && (
+                  <IconButton
+                    disabled={isDeleteButtonDisable}
+                    style={{ width: '16px', height: '16px', paddingTop: '2px' }}
+                    aria-label='Удалить ответ'
+                    onClick={() => {
+                      const arrWithoutVariant = answers.filter((answ) => answ.id !== answer.id);
+                      const arrValidationWithoutVariant = isAnswerValid?.filter((valid) => (
+                        valid.id !== answer.id));
+                      setAnswers(arrWithoutVariant.map((answ, ind) => ({ ...answ, id: ind })));
+                      setIsAnswerValid(arrValidationWithoutVariant?.map((val, ind: number) => (
+                        { ...val, id: ind })));
+                    }}>
+                    <Icon16CancelCircleOutline fill='#99A2AD' />
+                  </IconButton>
+                )}
               </StyledCheckbox>
             ))}
             <IconButton
+              disabled={answers.some(({ text }) => text === '')}
               aria-label='Добавить ответ'
-              onClick={() => setAnswers([...answers, ''])}>
+              onClick={() => {
+                setAnswers([...answers, { id: answers.length, text: '', isRight: false }]);
+                isAnswerValid && setIsAnswerValid(
+                  [...isAnswerValid, { id: isAnswerValid?.length, isValid: true }],
+                );
+              }}>
               <Icon28AddCircleOutline fill='#3F8AE0' />
             </IconButton>
           </AddAnswers>
         ) : (
           isOpen ? (
-            <DragAndDropQuestion boardTitles={[{ id: 0, text: 'Доска 1', items: [] }, { id: 1, text: 'Доска 2', items: [] }, { id: 2, text: 'Доска 3', items: [] }]} answers={[{ id: 1, text: 'Вариант 1' }, { id: 2, text: 'Вариант 2' }, { id: 3, text: 'Вариант 3' }]} />
+            <DragAndDropQuestion
+              boardTitles={categories ?? [{ id: 0, text: '', items: [] }]}
+              answers={answers} />
           ) : (
             <StyledButton
               onClick={() => setIsOpen(true)}

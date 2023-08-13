@@ -50,6 +50,7 @@ const DragAndDropQuestion: FC<{
   boardTitles: { id: number, text: string, items: Item[] }[],
   answers: { id: number, text: string }[],
 }> = ({ boardTitles, answers }) => {
+  console.log(boardTitles, answers);
   const [boards, setBoards] = useState<{ id: number, text: string, items: Item[] }[]>(boardTitles);
   const [cards, setCards] = useState<Item[]>(answers);
 
