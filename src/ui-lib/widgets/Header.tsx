@@ -139,7 +139,7 @@ const Header: FC = () => {
       if (e.target!.closest('.banner') === null) { openModal(false); }
     });
     document.addEventListener('click', (e: any) => {
-      if (e.target!.closest('.avatarPopup') === null) { openAvatarPopup(true); }
+      if (e.target!.closest('.avatarPopup') === null) { openAvatarPopup(false); }
     });
   }, []);
 
@@ -150,7 +150,10 @@ const Header: FC = () => {
         <AvatarUploadPopup closeAvatarPopup={closeAvatarPopup} isOpen={isAvatarPopupOpen} />
         <UpdatedLogo to='/' />
         <ToolBar>
-          <AvatarWrapper width={60} height={60}>
+          <AvatarWrapper
+            width={60}
+            height={60}
+            onClick={(e: any) => { e.stopPropagation(); openAvatarPopup(!isOpen); }}>
             <AvatarIconWrapper className='avatarIcon' style={{ zIndex: '2' }}><AvatarIcon style={{ zIndex: '2' }} /></AvatarIconWrapper>
             <AvatarOverlay className='overlay' />
             {data?.avatar
