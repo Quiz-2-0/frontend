@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import {
@@ -14,14 +14,13 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import useQueryState from '@reduxjs/toolkit/query/react';
+import { useSelector } from '@/store/store.types';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 import LearningProgress from '@/ui-lib/widgets/LearningProgress';
 import Castle from '@/ui-lib/widgets/Castle';
 import Rating from '@/ui-lib/widgets/Rating';
 import Achievements from '@/ui-lib/widgets/Achievements';
 import IncompleteQuizzes from '@/ui-lib/widgets/IncompleteQuizzes';
-import { useSelector } from '@/store/store.types';
-import { useLoginMutation, jwt, userApi } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -38,6 +37,8 @@ const Div = styled.div`
 const PersonalAccount: FC = () => {
   const navigate = useNavigate();
   const { isLoaderRun } = useSelector((state) => state.all);
+  const { data: currentUser } = useGetCurrentUserQuery();
+
   return (
     <div
       style={{
@@ -59,7 +60,7 @@ const PersonalAccount: FC = () => {
             lineHeight: '28px',
             letterSpacing: '0.326px',
           }}>
-          Лев, привет!
+          {`${currentUser?.firstName}, привет!`}
         </Title>
         <Text
           style={{

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, {
-  FunctionComponent,
+  FC,
   useState,
   useEffect,
   FormEvent,
@@ -25,6 +25,7 @@ import StyledInput from '@/ui-lib/styled-components/StyledInput';
 import buttonIcon from '@/assets/images/icons/button_icon.svg';
 import BackButton from '@/ui-lib/styled-components/BackButton';
 import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
+import AuthLayout from '@/ui-lib/layouts/AuthLayout';
 
 const ResendPasswordButton = styled.button`
   margin: 24px 0 0 0;
@@ -38,7 +39,7 @@ const ResendPasswordButton = styled.button`
   cursor: pointer;
 `;
 
-const ResetPassword: FunctionComponent = () => {
+const ResetPassword: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -47,7 +48,7 @@ const ResetPassword: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailSchema = z.string().email();
-  const [recoverPassword, { isLoading, isError }] = useRecoverPasswordMutation();
+  const [recoverPassword, { isLoading, error }] = useRecoverPasswordMutation();
   const buttonText = isSubmitted ? 'Войти' : 'Отправить пароль'; // eslint-disable-line ternary/no-unreachable
 
   const isButtonDisabled = !isEmailValid || email === '';
@@ -102,7 +103,7 @@ const ResetPassword: FunctionComponent = () => {
     try {
       emailSchema.parse(email);
       setIsEmailValid(true);
-    } catch (error) {
+    } catch (err) {
       setIsEmailValid(false);
     }
   };
@@ -116,102 +117,104 @@ const ResetPassword: FunctionComponent = () => {
   };
 
   return (
-    <StyledFormLayout
-      onSubmit={handleSubmit}>
-      <BackButton type='button' onClick={handleBackButtonClick}>
-        <ButtonIcon src={buttonIcon} alt='Стрелочка назад' />
-        Назад
-      </BackButton>
-      {isSubmitted ? ( // eslint-disable-line ternary/no-unreachable
-        <>
-          <Text
-            weight='3'
-            style={{
-              marginTop: '24px',
-              fontSize: '15px',
-              lineHeight: '20px',
-              letterSpacing: '-0.7px',
-            }}>
-            Новый пароль был отправлен на почту
-          </Text>
-          <Title
-            style={{
-              marginTop: '8px',
-              fontSize: '20px',
-              lineHeight: '24px',
-            }}>
-            {email}
-          </Title>
-          {isTimerActive ? (
+    <AuthLayout>
+      <StyledFormLayout
+        onSubmit={handleSubmit}>
+        <BackButton type='button' onClick={handleBackButtonClick}>
+          <ButtonIcon src={buttonIcon} alt='Стрелочка назад' />
+          Назад
+        </BackButton>
+        {isSubmitted ? ( // eslint-disable-line ternary/no-unreachable
+          <>
             <Text
+              weight='3'
               style={{
                 marginTop: '24px',
-                fontSize: '13px',
-                lineHeight: '16px',
+                fontSize: '15px',
+                lineHeight: '20px',
                 letterSpacing: '-0.7px',
               }}>
-              {`отправить пароль ещё раз через ${formatTime(timer)}`}
+              Новый пароль был отправлен на почту
             </Text>
-          ) : (
-            <ResendPasswordButton type='submit'>
-              отправить пароль ещё раз
-            </ResendPasswordButton>
-          )}
-        </>
-      ) : (
-        <>
-          <Title
-            level='1'
-            style={{
-              marginTop: '24px',
-              fontWeight: 600,
-              fontSize: '20px',
-              lineHeight: '24px',
-              textAlign: 'left',
-              color: '#21272A',
-            }}>
-            Сброс пароля
-          </Title>
-          <Text
-            weight='3'
-            style={{
-              marginTop: '8px',
-              fontSize: '14px',
-              lineHeight: '20px',
-            }}>
-            Введите рабочую почту, которая подключена к образовательной
-            платформе.
-          </Text>
-          <FormItem
-            htmlFor='passwordReset'
-            style={{
-              marginTop: '24px',
-              padding: '0',
-            }}
-            onBlur={handleBlur}
-            status={isEmailValid ? 'default' : 'error'}
-            bottom={
-              isEmailValid // eslint-disable-line ternary/no-unreachable
-                ? ''
-                : 'Неправильный формат почты'
-            }>
-            <StyledInput
-              id='passwordReset'
-              type='email'
-              value={email}
-              placeholder='e-mail'
-              onChange={handleEmailChange} />
-          </FormItem>
-        </>
-      )}
-      <StyledButton
-        type='submit'
-        size='l'
-        stretched
-        disabled={isButtonDisabled}>
-        {buttonText}
-      </StyledButton>
-    </StyledFormLayout>
+            <Title
+              style={{
+                marginTop: '8px',
+                fontSize: '20px',
+                lineHeight: '24px',
+              }}>
+              {email}
+            </Title>
+            {isTimerActive ? (
+              <Text
+                style={{
+                  marginTop: '24px',
+                  fontSize: '13px',
+                  lineHeight: '16px',
+                  letterSpacing: '-0.7px',
+                }}>
+                {`отправить пароль ещё раз через ${formatTime(timer)}`}
+              </Text>
+            ) : (
+              <ResendPasswordButton type='submit'>
+                отправить пароль ещё раз
+              </ResendPasswordButton>
+            )}
+          </>
+        ) : (
+          <>
+            <Title
+              level='1'
+              style={{
+                marginTop: '24px',
+                fontWeight: 600,
+                fontSize: '20px',
+                lineHeight: '24px',
+                textAlign: 'left',
+                color: '#21272A',
+              }}>
+              Сброс пароля
+            </Title>
+            <Text
+              weight='3'
+              style={{
+                marginTop: '8px',
+                fontSize: '14px',
+                lineHeight: '20px',
+              }}>
+              Введите рабочую почту, которая подключена к образовательной
+              платформе.
+            </Text>
+            <FormItem
+              htmlFor='passwordReset'
+              style={{
+                marginTop: '24px',
+                padding: '0',
+              }}
+              onBlur={handleBlur}
+              status={isEmailValid ? 'default' : 'error'}
+              bottom={
+                isEmailValid // eslint-disable-line ternary/no-unreachable
+                  ? ''
+                  : 'Неправильный формат почты'
+              }>
+              <StyledInput
+                id='passwordReset'
+                type='email'
+                value={email}
+                placeholder='e-mail'
+                onChange={handleEmailChange} />
+            </FormItem>
+          </>
+        )}
+        <StyledButton
+          type='submit'
+          size='l'
+          stretched
+          disabled={isButtonDisabled}>
+          {buttonText}
+        </StyledButton>
+      </StyledFormLayout>
+    </AuthLayout>
   );
 };
 

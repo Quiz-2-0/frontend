@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Title,
@@ -6,6 +7,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { useGetCurrentUserQuery } from '@/api/apiv2';
 import CircularProgressBar from './CircularProgressBar';
 import StyledDiv from '../styled-components/StyledDiv';
 import { StyledNavButton } from './Achievements';
@@ -16,6 +18,8 @@ import {
   TimeIcon,
   BattleIcon,
 } from '../styled-components/icons';
+import { plurals } from '@/constants/plurals';
+import { getPluralNoun } from '@/utils/plurals';
 
 const StyledTitle = styled.h3`
   margin: 0;
@@ -106,7 +110,18 @@ const StyledCaption = styled(Caption)`
 `;
 
 const LearningProgress: React.FC = () => {
-  const progressPercentage = 70;
+  const { data: currentUser } = useGetCurrentUserQuery();
+  const [progressPercentage, setProgressPercentage] = useState(0);
+
+  useEffect(() => {
+    setProgressPercentage(currentUser ? currentUser.pass_progress : 0);
+  }, [currentUser]);
+
+  // Тестовые данные
+  const progress = {
+    durations: 20,
+    victories: 4,
+  };
 
   return (
     <StyledDiv>
@@ -140,8 +155,10 @@ const LearningProgress: React.FC = () => {
           <CircularProgressBar percentage={progressPercentage} />
           <ProgressTextWrapper>
             <ProgressTitleWrapper>
-              <StyledTitle>5</StyledTitle>
-              <StyledSubtitle>назначенных квизов</StyledSubtitle>
+              <StyledTitle>{currentUser?.count_assigned}</StyledTitle>
+              <StyledSubtitle>
+                {getPluralNoun(currentUser?.count_assigned ?? 0, 'назначенный квиз', 'назначенных квиза', 'назначенных квизов')}
+              </StyledSubtitle>
             </ProgressTitleWrapper>
             <StyledCaption>успешно завершено</StyledCaption>
           </ProgressTextWrapper>
@@ -151,8 +168,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><QuizIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <StyledTitle>5</StyledTitle>
-                <StyledSubtitle>квизов</StyledSubtitle>
+                <StyledTitle>{currentUser?.count_passed}</StyledTitle>
+                <StyledSubtitle>{plurals.quizzes(currentUser?.count_passed ?? 0)}</StyledSubtitle>
               </ProgressTitleWrapper>
               <StyledCaption>всего пройдено</StyledCaption>
             </ProgressTextWrapper>
@@ -161,7 +178,7 @@ const LearningProgress: React.FC = () => {
             <IconBackground><TrueIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>80</Title>
+                <Title>{currentUser?.right_precent}</Title>
                 <Text>%</Text>
               </ProgressTitleWrapper>
               <StyledCaption>верных ответов</StyledCaption>
@@ -171,8 +188,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><TimeIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>20</Title>
-                <Text>минут</Text>
+                <Title>{progress.durations}</Title>
+                <Text>{plurals.minutes(progress.durations)}</Text>
               </ProgressTitleWrapper>
               <StyledCaption>на прохождение</StyledCaption>
             </ProgressTextWrapper>
@@ -181,8 +198,8 @@ const LearningProgress: React.FC = () => {
             <IconBackground><BattleIcon /></IconBackground>
             <ProgressTextWrapper>
               <ProgressTitleWrapper>
-                <Title>3</Title>
-                <Text>победы</Text>
+                <Title>{progress.victories}</Title>
+                <Text>{plurals.victories(progress.victories)}</Text>
               </ProgressTitleWrapper>
               <StyledCaption>в квиз-баттлах</StyledCaption>
             </ProgressTextWrapper>

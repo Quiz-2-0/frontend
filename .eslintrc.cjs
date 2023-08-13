@@ -45,6 +45,7 @@ module.exports = {
         'config-overrides.js'
     ],
     rules: {
+        'spaced-comment': 'off',
         'linebreak-style': 'off',
         'no-underscore-dangle': ['error', {
             allow: ['_id', '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'],
@@ -79,6 +80,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/prefer-nullish-coalescing': 'warn',
         '@typescript-eslint/prefer-optional-chain': 'warn',
-        'react/jsx-key': 'warn'
+        'react/jsx-key': 'warn',
+        'operator-linebreak': 'off',
     },
 };

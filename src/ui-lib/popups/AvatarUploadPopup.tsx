@@ -1,4 +1,10 @@
-import React, { FC } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import React, { FC, useRef, useState } from 'react';
 import styled from 'styled-components';
 import {
   Title,
@@ -7,15 +13,19 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import draculaAvatar from '@/assets/images/avatar/avatar_dracula.png';
-import elfAvatar from '@/assets/images/avatar/avatar_elf.png';
-import genieAvatar from '@/assets/images/avatar/avatar_genie.png';
-import zombieAvatar from '@/assets/images/avatar/avatar_zombie.png';
+import { useGetDefaultAvatarsQuery, useUploadAvatarMutation } from '@/api/apiv2';
 import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
+import { IAvatar } from '@/types/types';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
-const Popup = styled.div`
-  visibility: visible;
-  opacity: 1;
+interface PopupProps {
+  closeAvatarPopup: () => void;
+  isOpen: boolean;
+}
+
+const Popup = styled.div<{ isOpen: boolean }>`
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transition: visibility .5s, opacity .5s ease-out;
   display: flex;
   position: fixed;
@@ -56,6 +66,10 @@ const AvatarGallery = styled.ul`
 const AvatarGalleryItem = styled.li`
   list-style: none;
   cursor: pointer;
+
+  &:hover {
+    opacity: .5;
+  }
 `;
 
 const AvatarGalleryImg = styled.img`
@@ -97,40 +111,94 @@ const UploadAvatarPreview = styled.div`
   justify-content: center;
 `;
 
-const AvatarUploadPopup: FC = () => (
-  <Popup>
-    <PopupContainer>
-      <CloseButton type='button'><CloseIcon /></CloseButton>
-      <Title weight='3' style={{ margin: '24px 0 0 0' }}>Фото профиля</Title>
-      <Headline style={{ margin: '10px 0 0 0' }}>Выберите изображение из галереи, либо  загрузите своё фото.</Headline>
-      <Headline weight='2' style={{ margin: '24px 0 0 0' }}>Галерея</Headline>
-      <AvatarGallery>
-        <AvatarGalleryItem>
-          <AvatarGalleryImg src={draculaAvatar} alt='Дракула' />
-        </AvatarGalleryItem>
-        <AvatarGalleryItem>
-          <AvatarGalleryImg src={elfAvatar} alt='Ельф' />
-        </AvatarGalleryItem>
-        <AvatarGalleryItem>
-          <AvatarGalleryImg src={genieAvatar} alt='Джин' />
-        </AvatarGalleryItem>
-        <AvatarGalleryItem>
-          <AvatarGalleryImg src={zombieAvatar} alt='Зомби' />
-        </AvatarGalleryItem>
-      </AvatarGallery>
-      <Headline weight='2' style={{ margin: '24px 0 0 0' }}>Ваше фото</Headline>
-      <UploadInputWrapper>
-        <UploadAvatarPreview>
-          <AvatarIcon />
-        </UploadAvatarPreview>
-        <UploadIcon />
-      </UploadInputWrapper>
-      <Caption style={{ whiteSpace: 'pre-wrap', margin: '8px 0 0 0' }}>
-        {'Допустимый формат изображения JPG, GIF или PNG.\nМаксимальный размер файл 2 MB.'}
-      </Caption>
-      <Button style={{ margin: '32px 0 0 0' }}>Применить</Button>
-    </PopupContainer>
-  </Popup>
-);
+const UploadedImgPreview = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+`;
+
+const AvatarUploadPopup: FC<PopupProps> = ({ isOpen, closeAvatarPopup }) => {
+  const [uploadAvatar, { data, error, isLoading }] = useUploadAvatarMutation();
+  const { data: avatars } = useGetDefaultAvatarsQuery();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedAvatarUrl, setUploadedAvatarUrl] = useState<string>('');
+
+  const handleFileSelect = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const convertFileToBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      if (reader.result !== null && typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject(new Error('Failed to convert file to Base64.'));
+      }
+    };
+
+    reader.onerror = (err) => {
+      reject(err);
+    };
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      convertFileToBase64(selectedFile)
+        .then((base64String) => uploadAvatar(base64String).unwrap())
+        .then((avatar: IAvatar) => {
+          const avatarUrl = SRC_BASE_URL + avatar.avatar;
+          setUploadedAvatarUrl(avatarUrl);
+          return avatar;
+        })
+        .catch((err) => {
+          console.error('Произошла ошибка:', err);
+        });
+    }
+  };
+
+  return (
+    <Popup className='avatarPopup' isOpen={isOpen}>
+      <PopupContainer>
+        <CloseButton type='button' onMouseDown={closeAvatarPopup}><CloseIcon /></CloseButton>
+        <Title weight='3' style={{ margin: '24px 0 0 0' }}>Фото профиля</Title>
+        <Headline style={{ margin: '10px 0 0 0' }}>Выберите изображение из галереи, либо загрузите своё фото.</Headline>
+        <Headline weight='2' style={{ margin: '24px 0 0 0' }}>Галерея</Headline>
+        <AvatarGallery>
+          {avatars?.map((avatar) => (
+            <AvatarGalleryItem key={avatar.id}>
+              <AvatarGalleryImg src={avatar.avatar} alt={avatar.description} />
+            </AvatarGalleryItem>
+          ))}
+        </AvatarGallery>
+        <Headline weight='2' style={{ margin: '24px 0 0 0' }}>Ваше фото</Headline>
+        <UploadInputWrapper>
+          {uploadedAvatarUrl !== ''
+            ? <UploadedImgPreview src={uploadedAvatarUrl} />
+            : (
+              <UploadAvatarPreview>
+                <AvatarIcon />
+              </UploadAvatarPreview>
+            )}
+          <UploadIcon onClick={handleFileSelect} />
+          <input
+            ref={fileInputRef}
+            type='file'
+            style={{ display: 'none' }}
+            onChange={handleFileChange} />
+        </UploadInputWrapper>
+        <Caption style={{ whiteSpace: 'pre-wrap', margin: '8px 0 0 0' }}>
+          {'Допустимый формат изображения JPG, GIF или PNG.\nМаксимальный размер файл 2 MB.'}
+        </Caption>
+        <Button style={{ margin: '32px 0 0 0' }}>Применить</Button>
+      </PopupContainer>
+    </Popup>
+  );
+};
 
 export default AvatarUploadPopup;

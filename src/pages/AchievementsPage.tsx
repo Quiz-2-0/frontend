@@ -1,94 +1,16 @@
-import React, { FC } from 'react';
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Div, Title, Text } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { useGetAchievementsQuery } from '@/api/apiv2';
 import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
 import BackButton from '@/ui-lib/styled-components/BackButton';
 import buttonIcon from '@/assets/images/icons/button_icon.svg';
-import achieveEasyStart from '@/assets/images/achievements-img/achieve_easy_start.png';
-import achieveSoftKiller from '@/assets/images/achievements-img/achieve_soft_killer.png';
-import achieveAugustChallenge from '@/assets/images/achievements-img/achieve_august_challenge.png';
-import achievePermanence from '@/assets/images/achievements-img/achieve_permanence.png';
-import achieveSuperAccuracy from '@/assets/images/achievements-img/achieve_super_accuracy.png';
-import achieveSuperSpeed from '@/assets/images/achievements-img/achieve_super_speed.png';
-import achieve5QuizzesInARow from '@/assets/images/achievements-img/achieve_5_quizzez_in_a_row.png';
-import achieveSoftSkillsGuru from '@/assets/images/achievements-img/achieve_soft_skills_guru.png';
-
-const achievements = [
-  {
-    id: 0,
-    counterTotal: 1,
-    counterAchieved: 1,
-    name: 'Лёгкий старт',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveEasyStart,
-    disabled: false,
-  },
-  {
-    id: 1,
-    counterTotal: 5,
-    counterAchieved: 5,
-    name: 'Софт киллер',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveSoftKiller,
-    disabled: false,
-  },
-  {
-    id: 2,
-    counterTotal: 10,
-    counterAchieved: 0,
-    name: 'Вызов августа',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveAugustChallenge,
-    disabled: true,
-  },
-  {
-    id: 3,
-    counterTotal: 5,
-    counterAchieved: 5,
-    name: 'Постоянство',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achievePermanence,
-    disabled: false,
-  },
-  {
-    id: 4,
-    counterTotal: 3,
-    counterAchieved: 0,
-    name: 'Супер точность',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveSuperAccuracy,
-    disabled: true,
-  },
-  {
-    id: 5,
-    counterTotal: 1,
-    counterAchieved: 1,
-    name: 'Супер скорость',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveSuperSpeed,
-    disabled: false,
-  },
-  {
-    id: 6,
-    counterTotal: 100,
-    counterAchieved: 0,
-    name: '5 квизов подряд',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieve5QuizzesInARow,
-    disabled: true,
-  },
-  {
-    id: 7,
-    counterTotal: 100,
-    counterAchieved: 0,
-    name: 'Гуру по софтам',
-    description: 'Первый раз пройти квиз из назначенных',
-    img: achieveSoftSkillsGuru,
-    disabled: true,
-  },
-];
 
 const Container = styled(Div)`
     max-width: 1074px;
@@ -110,7 +32,7 @@ const AchievementsWrapper = styled.ul`
   align-content: start;
 `;
 
-const AchieveLi = styled.li<{ disabled: boolean }>`
+const AchieveLi = styled.li<{ achieved: boolean }>`
   width: 232px;
   height: 274px;
   padding: 24px;
@@ -124,7 +46,7 @@ const AchieveLi = styled.li<{ disabled: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  opacity: ${({ disabled }) => (disabled ? '.5' : '1')};
+  opacity: ${({ achieved }) => (achieved ? '1' : '.5')};
 
   &:hover {
     .counter {
@@ -193,7 +115,13 @@ const AchieveDescription = styled(Text)`
 `;
 
 const AchievementsPage: FC = () => {
+  const { data } = useGetAchievementsQuery();
   const navigate = useNavigate();
+  const [achievements, setAchievements] = useState(data ? data : []);
+
+  useEffect(() => {
+    setAchievements(data ? data : []);
+  }, [data]);
 
   return (
     <Container>
@@ -204,9 +132,9 @@ const AchievementsPage: FC = () => {
       <Title level='2' style={{ margin: '32px 0' }}>Ачивки</Title>
       <AchievementsWrapper>
         {achievements.map((achievement) => (
-          <AchieveLi key={achievement.id} disabled={achievement.disabled}>
-            <AchieveCounter level='3' className='counter'>{`${achievement.counterAchieved}/${achievement.counterTotal}`}</AchieveCounter>
-            <AchieveImg src={achievement.img} alt='Ачивка Легкий старт' className='achieveImg' />
+          <AchieveLi key={achievement.id} achieved={achievement.achived}>
+            <AchieveCounter level='3' className='counter'>{`${achievement.points_now}/${achievement.points_to_get}`}</AchieveCounter>
+            <AchieveImg src={`http://80.87.106.133/media/${achievement.image}`} alt={achievement.name} className='achieveImg' />
             <AchieveTitle level='3' className='achieveTitle'>{achievement.name}</AchieveTitle>
             <AchieveDescription weight='3' className='achieveDescription'>{achievement.description}</AchieveDescription>
           </AchieveLi>

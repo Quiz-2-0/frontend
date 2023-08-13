@@ -18,6 +18,7 @@ import {
 import logoImg from '@/assets/images/logo/header__logo.svg';
 import { useSelector, useDispatch } from '@/store/store.types';
 import AdvBanner from './AdvBanner';
+import AvatarUploadPopup from '@/ui-lib/popups/AvatarUploadPopup';
 import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '@/api/apiv2';
 import { SRC_BASE_URL } from '@/constants/api-url';
 
@@ -121,6 +122,7 @@ const Header: FC = () => {
   /// нужно убрать этот ранний запрос за квизами
   const { data: quizes } = useGetAllQuizesQuery();
   const [isOpen, openModal] = useState(false);
+  const [isAvatarPopupOpen, openAvatarPopup] = useState(false);
   const logOutFunction = () => {
     const isRemember = localStorage.getItem('isRemember') === 'true';
     jwt.remove(isRemember);
@@ -128,9 +130,16 @@ const Header: FC = () => {
     navigate('/login');
   };
 
+  const closeAvatarPopup = () => {
+    openAvatarPopup(false);
+  };
+
   useEffect(() => {
     document.addEventListener('click', (e: any) => {
       if (e.target!.closest('.banner') === null) { openModal(false); }
+    });
+    document.addEventListener('click', (e: any) => {
+      if (e.target!.closest('.avatarPopup') === null) { openAvatarPopup(false); }
     });
   }, []);
 
@@ -138,9 +147,13 @@ const Header: FC = () => {
     <HeaderWrapper>
       <HeaderContainer>
         <AdvBanner isOpen={isOpen} />
+        <AvatarUploadPopup closeAvatarPopup={closeAvatarPopup} isOpen={isAvatarPopupOpen} />
         <UpdatedLogo to='/' />
         <ToolBar>
-          <AvatarWrapper width={60} height={60}>
+          <AvatarWrapper
+            width={60}
+            height={60}
+            onClick={(e: any) => { e.stopPropagation(); openAvatarPopup(!isOpen); }}>
             <AvatarIconWrapper className='avatarIcon' style={{ zIndex: '2' }}><AvatarIcon style={{ zIndex: '2' }} /></AvatarIconWrapper>
             <AvatarOverlay className='overlay' />
             {data?.avatar

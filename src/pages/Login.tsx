@@ -12,13 +12,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
 import React, {
+  FC,
   ChangeEvent,
   FormEvent,
-  useEffect,
   useState,
 } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from '@/store/store.types';
+import { useDispatch } from '@/store/store.types';
 import { useLoginMutation, jwt } from '@/api/apiv2';
 import {
   Title,
@@ -38,6 +38,7 @@ import StyledInput from '@/ui-lib/styled-components/StyledInput';
 import styled from 'styled-components';
 import { setRememberMe, setLoaderState } from '@/store/allSlice/allSlice';
 import StyledFormItem from '@/ui-lib/styled-components/StyledFormItem';
+import AuthLayout from '@/ui-lib/layouts/AuthLayout';
 
 const StyledResetButton = styled(Button)`
   max-width: fit-content;
@@ -63,7 +64,6 @@ const StyledTabsItem = styled(TabsItem)`
     right: 5px;
   }
   & > span {
-    width: min-content;
     font-family: 'SFProDisplay';
     font-size: 16px;
     width: 114px;
@@ -76,11 +76,11 @@ const StyledTabsItem = styled(TabsItem)`
   }
 `;
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   /// /// это хук который у нас содержит все данные о запросе к серверу
   /// / в теории можно и в редакт ничего не толкать ,так как в хуке все сохраняется да
   // еще и кэшируется, поэтому как будет у нас сервер и реальные запросы я попробую настроить
-  const [login, { data, error }] = useLoginMutation({
+  const [login, { data, error, isLoading }] = useLoginMutation({
     fixedCacheKey: 'shared-update-post',
   });
   const dispatch = useDispatch();
@@ -109,16 +109,19 @@ const Login: React.FC = () => {
 
   const onSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
-    const user = await login({ role, email, password }).unwrap();
-    const { access, ...rest } = user;
-    const inMemory = localStorage.getItem('isRemember') === 'true';
-    jwt.set(access, inMemory, role);
+    try {
+      const user = await login({ role, email, password }).unwrap();
+      const { access } = user;
+      const inMemory = localStorage.getItem('isRemember') === 'true';
+      jwt.set(access, inMemory, role);
 
-    resetForm();
-
-    if (user) {
-      navigate(`${role === 'EMP' ? '/' : '/staff'}`);
-      dispatch(setLoaderState(true));
+      if (user) {
+        resetForm();
+        navigate(`${role === 'EMP' ? '/' : '/staff'}`);
+        dispatch(setLoaderState(true));
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -141,138 +144,143 @@ const Login: React.FC = () => {
     localStorage.setItem('isRemember', 'true');
   };
 
+  if (localStorage.getItem('JWT') || sessionStorage.getItem('JWT')) {
+    return (
+      <Navigate to={localStorage.getItem('role') || sessionStorage.getItem('role') === 'EMP' ? '/' : '/staff'} />
+    );
+  }
+
   return (
-    localStorage.getItem('JWT') || sessionStorage.getItem('JWT')
-      ? <Navigate to={localStorage.getItem('role') || sessionStorage.getItem('role') === 'EMP' ? '/' : '/staff'} />
-      : (
-        <StyledFormLayout
-          style={{ fontFamily: 'SFProDisplay' }}
-          onSubmit={(e) => onSubmit(e)}>
-          <Title
-            level='1'
-            style={{
-              paddingBottom: '24px',
-              fontWeight: 600,
-              fontSize: '20px',
-              lineHeight: '24px',
-              textAlign: 'center',
-              letterSpacing: '0.38px',
-              fontFamily: 'SFProDisplay',
-              color: '#21272A',
-            }}>
-            Вход в личный кабинет
-          </Title>
+    <AuthLayout>
+      <StyledFormLayout
+        disabled={isLoading}
+        style={{ fontFamily: 'SFProDisplay' }}
+        onSubmit={(e) => onSubmit(e)}>
+        <Title
+          level='1'
+          style={{
+            paddingBottom: '24px',
+            fontWeight: 600,
+            fontSize: '20px',
+            lineHeight: '24px',
+            textAlign: 'center',
+            letterSpacing: '0.38px',
+            fontFamily: 'SFProDisplay',
+            color: '#21272A',
+          }}>
+          Вход в личный кабинет
+        </Title>
 
-          <Tabs
-            style={{
-              fontSize: '16px',
-              fontWeight: '500',
-              lineHeight: '20px',
-              letterSpacing: '-0.32px',
-              paddingBottom: '20px',
-            }}>
-            <StyledTabsItem
-              selected={role === 'EMP'}
-              onClick={() => setRole('EMP')}>
-              Сотрудник
-            </StyledTabsItem>
-            <StyledTabsItem
-              selected={role === 'AD'}
-              onClick={() => setRole('AD')}>
-              Администратор
-            </StyledTabsItem>
-          </Tabs>
+        <Tabs
+          style={{
+            fontSize: '16px',
+            fontWeight: '500',
+            lineHeight: '20px',
+            letterSpacing: '-0.32px',
+            paddingBottom: '20px',
+          }}>
+          <StyledTabsItem
+            selected={role === 'EMP'}
+            onClick={() => setRole('EMP')}>
+            Сотрудник
+          </StyledTabsItem>
+          <StyledTabsItem
+            selected={role === 'AD'}
+            onClick={() => setRole('AD')}>
+            Администратор
+          </StyledTabsItem>
+        </Tabs>
 
-          <StyledFormItem
-            htmlFor='email'
-            top='Логин'
-            onBlur={() => {
-              setIsEmailValid(validator.isEmail(email));
-              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
-            }}
-            onChange={() => setIsEmailValid(true)}
-            status={isEmailValid && !error ? 'default' : 'error'}
-            bottom={isEmailValid ? (error ? 'Проверьте введённый логин' : '') : 'Неверный логин, попробуйте ещё раз'}
-            style={{ paddingBottom: `${isEmailValid && !error ? '22px' : '0px'}` }}>
-            <StyledInput
-              id='email'
-              type='email'
-              placeholder='e-mail'
-              name='email'
-              value={email}
-              onChange={onChange} />
-          </StyledFormItem>
-          <StyledFormItem
-            top='Пароль'
-            htmlFor='pass'
-            onChange={() => setIsPasswordValid(true)}
-            onBlur={() => {
-              password.length >= 6
-                ? setIsPasswordValid(true)
-                : setIsPasswordValid(false);
-              setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
-            }}
-            status={isPasswordValid && !error ? 'default' : 'error'}
-            bottom={isPasswordValid ? (error ? 'Проверьте введённый пароль' : '') : 'Введите пароль'}
-            style={{ paddingBottom: `${isPasswordValid && !error ? '22px' : '0px'}` }}>
-            <StyledInput
-              id='pass'
-              type={isPasswordVisible ? 'text' : 'password'}
-              placeholder='пароль'
-              name='password'
-              value={password}
-              after={
-                isPasswordVisible ? (
-                  <Icon16View
-                    width={16}
-                    height={16}
-                    onClick={changePasswordVisibility} />
-                ) : (
-                  <Icon12EyeSlashOutline
-                    width={16}
-                    height={16}
-                    onClick={changePasswordVisibility} />
-                )
-              }
-              onChange={onChange} />
-          </StyledFormItem>
-          <Div
-            style={{
-              padding: 0,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+        <StyledFormItem
+          htmlFor='email'
+          top='Логин'
+          onBlur={() => {
+            setIsEmailValid(validator.isEmail(email));
+            setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
+          }}
+          onChange={() => setIsEmailValid(true)}
+          status={isEmailValid && !error ? 'default' : 'error'}
+          bottom={isEmailValid ? (error ? 'Проверьте введённый логин' : '') : 'Неверный логин, попробуйте ещё раз'}
+          style={{ paddingBottom: `${isEmailValid && !error ? '22px' : '0px'}` }}>
+          <StyledInput
+            id='email'
+            type='email'
+            placeholder='e-mail'
+            name='email'
+            value={email}
+            onChange={onChange} />
+        </StyledFormItem>
+        <StyledFormItem
+          top='Пароль'
+          htmlFor='pass'
+          onChange={() => setIsPasswordValid(true)}
+          onBlur={() => {
+            password.length >= 6
+              ? setIsPasswordValid(true)
+              : setIsPasswordValid(false);
+            setIsDisabled(!(validator.isEmail(email) && password.length >= 6));
+          }}
+          status={isPasswordValid && !error ? 'default' : 'error'}
+          bottom={isPasswordValid ? (error ? 'Проверьте введённый пароль' : '') : 'Введите пароль'}
+          style={{ paddingBottom: `${isPasswordValid && !error ? '22px' : '0px'}` }}>
+          <StyledInput
+            id='pass'
+            type={isPasswordVisible ? 'text' : 'password'}
+            placeholder='пароль'
+            name='password'
+            value={password}
+            after={
+              isPasswordVisible ? (
+                <Icon16View
+                  width={16}
+                  height={16}
+                  onClick={changePasswordVisibility} />
+              ) : (
+                <Icon12EyeSlashOutline
+                  width={16}
+                  height={16}
+                  onClick={changePasswordVisibility} />
+              )
+            }
+            onChange={onChange} />
+        </StyledFormItem>
+        <Div
+          style={{
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Checkbox
+            style={{ padding: 0, fontSize: '13px' }}
+            onClick={() => {
+              setUserInMemory();
             }}>
-            <Checkbox
-              style={{ padding: 0, fontSize: '13px' }}
-              onClick={() => {
-                setUserInMemory();
-              }}>
-              Запомнить меня
-            </Checkbox>
-            <StyledResetButton
-              type='button'
-              size='s'
-              mode='link'
-              onClick={() => {
-                navigate('/reset-password');
-                resetForm();
-              }}
-              stretched>
-              Сбросить пароль
-            </StyledResetButton>
-          </Div>
-          <FormItem style={{ padding: 0 }}>
-            <CustomButton
-              type='submit'
-              size='l'
-              disabled={isButtonDisabled}
-              stretched>
-              Войти
-            </CustomButton>
-          </FormItem>
-        </StyledFormLayout>
-      )
+            Запомнить меня
+          </Checkbox>
+          <StyledResetButton
+            type='button'
+            size='s'
+            mode='link'
+            onClick={() => {
+              navigate('/reset-password');
+              resetForm();
+            }}
+            stretched>
+            Сбросить пароль
+          </StyledResetButton>
+        </Div>
+        <FormItem style={{ padding: 0 }}>
+          <CustomButton
+            type='submit'
+            size='l'
+            disabled={isButtonDisabled || isLoading}
+            stretched>
+            Войти
+          </CustomButton>
+        </FormItem>
+      </StyledFormLayout>
+    </AuthLayout>
   );
 };
 

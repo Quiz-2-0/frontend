@@ -2,23 +2,65 @@
 /* eslint-disable camelcase */
 
 export interface IUser {
-  firstName: string;
-  lastName: string;
-  role: string;
-  courses: Record<string, any>;
-  progress: string;
-  access: string;
-  avatar: string;
-  achievements: Record<string, any>;
-  position: string;
-  ratingPlace: number;
-  appointedCourses: Record<string, any>;
+  id: number,
+  firstName: string,
+  lastName: string,
+  position: string,
+  role: string,
+  patronymic: string,
+  department: string,
+  email: string,
+  avatar: string,
+  pass_progress: number,
+  count_assigned: number,
+  count_passed: number,
+  right_precent: number,
+  level: number,
+  level_description: string,
+  level_image: string,
+  to_next_level: number,
+  in_this_level: number,
+  earned_in_level: number,
+  access: string,
 }
 
 export interface IUserLoginRequest {
   email: string;
   password: string;
   role: string;
+}
+
+export interface IAchievement {
+  id: number,
+  points_now: number,
+  points_to_get: number,
+  name: string,
+  description: string,
+  image: string,
+  achived: boolean,
+}
+
+export interface IShortAchievement {
+  name: string,
+  image: string,
+}
+
+export interface IShortRating {
+  id: number,
+  firstName: string,
+  lastName: string,
+  avatar: string,
+  user_rating: number,
+}
+
+export interface IDefaultAvatar {
+  id: number,
+  avatar: string,
+  description: string,
+}
+
+export interface IAvatar {
+  avatar: string,
 }
 
 interface Tag {

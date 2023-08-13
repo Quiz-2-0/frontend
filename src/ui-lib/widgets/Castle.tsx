@@ -7,26 +7,24 @@
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import {
   Title,
-  Div,
-  FormItem,
-  Progress,
+  Text,
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
-import levels from '@/constants/levels';
 import { setFromCastle, setLoaderState } from '@/store/allSlice/allSlice';
-import { useGetAllQuizesQuery } from '@/api/apiv2';
+import { useGetAllQuizesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
 import { useDispatch } from '@/store/store.types';
+import { plurals } from '@/constants/plurals';
 
 const StyledImage = styled.img`
   max-width: 310px;
-  height: max-content;
+  height: 200px;
   width: 100%;
   background: none;
   padding: 0;
@@ -35,7 +33,7 @@ const StyledImage = styled.img`
 
 const StyledButton = styled(Button)`
   max-width: 286px;
-  margin: 0 auto;
+  margin: 30px auto 0;
   height: 40px;
   border-radius: 4px;
 
@@ -48,25 +46,23 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledText = styled(Text)`
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #000000;
+  white-space: pre-wrap;
+`;
+
 const Castle: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetAllQuizesQuery();
-
-  const doneQuizzes = data?.filter(({ isPassed }) => isPassed === true).length;
-  const userLevel = levels.findIndex(({ numberOfQuizzes }) => (
-    numberOfQuizzes > doneQuizzes!
-  )) - 1;
-  const numberOfQuizzesToTheNextLevel = levels[Math.abs(userLevel) + 1].numberOfQuizzes - doneQuizzes!;
-  const progressArr = [];
-
-  for (let i = 0; i < levels[Math.abs(userLevel)].level + 1; i++) {
-    i < (levels[Math.abs(userLevel)].level + 1 - numberOfQuizzesToTheNextLevel)
-      ? progressArr.push(100) : progressArr.push(0);
-  }
+  const { data: currentUser } = useGetCurrentUserQuery();
 
   const onButtonClick = () => {
-    console.log(data?.find(({ appointed }) => appointed === true));
     dispatch(data?.find(({ appointed }) => appointed === true)
       ? setFromCastle(true)
       : setFromCastle(false));
@@ -75,44 +71,17 @@ const Castle: React.FC = () => {
 
   return (
     <StyledDiv style={{
-      maxWidth: '358px', width: '100%', height: '446px',
+      maxWidth: '358px', width: '100%', height: '450px',
     }}>
+      <StyledText>{`Осталось пройти ${currentUser?.to_next_level} ${plurals.quizzes(currentUser?.to_next_level ?? 0)}\nдо следующего уровня`}</StyledText>
       <Title
-        style={{ textAlign: 'center', paddingBottom: '16px' }}
-        level='2'>
-        {levels[Math.abs(userLevel)].title}
+        style={{ textAlign: 'center', padding: '24px 0 16px' }}
+        level='1'>
+        {currentUser?.level_description}
       </Title>
       <StyledImage
-        src={levels[Math.abs(userLevel)].image}
+        src={`http://80.87.106.133/media/${currentUser?.level_image}`}
         style={{}} />
-      <FormItem
-        style={{ padding: '24px 16px', textAlign: 'center' }}
-        top={`квизов до следующего уровня: ${numberOfQuizzesToTheNextLevel} шт.`}>
-        <Div
-          style={{
-            padding: '0',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: '8px',
-            gap: '1px',
-          }}>
-          {progressArr.map((progressValue: number, i: number) => (
-            <Progress
-              key={i}
-              aria-labelledby='progresslabel'
-              value={progressValue}
-              style={{
-                width: '100%',
-                height: '100%',
-                borderTopLeftRadius: `${i === 0 ? '8px' : '0'}`,
-                borderBottomLeftRadius: `${i === 0 ? '8px' : '0'}`,
-                borderTopRightRadius: `${i === progressArr.length - 1 ? '8px' : '0'}`,
-                borderBottomRightRadius: `${i === progressArr.length - 1 ? '8px' : '0'}`,
-              }} />
-          ))}
-        </Div>
-      </FormItem>
       <StyledButton
         type='button'
         size='l'

@@ -1,24 +1,53 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import {
   Title,
+  Headline,
   Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { ArrowIcon } from '../styled-components/icons';
-import achieveEasyStart from '@/assets/images/achievements-img/achieve_easy_start.png';
-import achieveSoftKiller from '@/assets/images/achievements-img/achieve_soft_killer.png';
-import achieveSuperSpeed from '@/assets/images/achievements-img/achieve_super_speed.png';
-import achievePermanence from '@/assets/images/achievements-img/achieve_permanence.png';
+import { useGetShortAchievementsQuery } from '@/api/apiv2';
+
+const AchievementsTitleWrapper = styled(Div)`
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const AchievementContainer = styled(Div)`
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AchievementImgWrapper = styled(Div)`
+  padding: 0;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 const AchievementImg = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  position: absolute;
   transition: transform 0.5s;
+  margin: 0 -8px;
+`;
+
+const StyledHeadline = styled(Headline)`
+  color: #818C99;
 `;
 
 export const StyledNavButton = styled.button`
@@ -41,6 +70,8 @@ export const StyledNavButton = styled.button`
 
 const Achievements: React.FC = () => {
   const navigate = useNavigate();
+  const { data: shortAchievements } = useGetShortAchievementsQuery();
+
   return (
     <StyledDiv
       style={{
@@ -48,37 +79,29 @@ const Achievements: React.FC = () => {
         height: '202px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        gap: '40px',
+        gap: '38px',
       }}>
-      <Div
-        style={{
-          width: '100%',
-          padding: '0',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-        }}>
+      <AchievementsTitleWrapper>
         <Title
           style={{ textAlign: 'left' }}
           level='2'>
           Ачивки
         </Title>
         <StyledNavButton type='button' onClick={() => navigate('/achievements')}><ArrowIcon /></StyledNavButton>
-      </Div>
-      <Div
-        style={{
-          padding: '0',
-          position: 'relative',
-          height: '80px',
-        }}>
-        <AchievementImg src={achieveEasyStart} alt='Ачивка Легкий старт' style={{ left: '0', zIndex: 3 }} />
-        <AchievementImg src={achieveSoftKiller} alt='Ачивка Софт киллер' style={{ left: '64px', zIndex: 2 }} />
-        <AchievementImg src={achieveSuperSpeed} alt='Ачивка Супер скорость' style={{ left: '128px', zIndex: 1 }} />
-        <AchievementImg src={achievePermanence} alt='Ачивка Постоянство' style={{ left: '190px', zIndex: 0 }} />
-      </Div>
+      </AchievementsTitleWrapper>
+      <AchievementContainer>
+        {shortAchievements && shortAchievements.length === 0 ? (
+          <StyledHeadline>У вас пока нет ачивок</StyledHeadline>
+        ) : (
+          <AchievementImgWrapper>
+            {shortAchievements?.map((shortAchievement) => (
+              <AchievementImg src={`http://80.87.106.133${shortAchievement.image}`} alt={shortAchievement.name} />
+            ))}
+          </AchievementImgWrapper>
+        )}
+      </AchievementContainer>
     </StyledDiv>
   );
 };

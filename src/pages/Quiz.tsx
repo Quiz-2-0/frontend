@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useEffect } from 'react';
+import React, { FC } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ import buttonIcon from '@/assets/images/icons/button_icon.svg';
 import { DurationIcon, LevelIcon, QuestionsIcon } from '@/ui-lib/styled-components/icons';
 import ListForQuiz from '@/ui-lib/widgets/ListForQuiz';
 import { setLoaderState } from '@/store/allSlice/allSlice';
+import { pluralsFull } from '@/constants/plurals';
 
 const StyledButton = styled(Button)`
   border-radius: 4px;
@@ -44,9 +45,9 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Quiz: React.FC = () => {
+const Quiz: FC = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(id);
+  const { data, error, isLoading } = useGetQuizQuery(Number(id));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -100,7 +101,7 @@ const Quiz: React.FC = () => {
               <StyledQuizDetailWrapper>
                 <DurationIcon />
                 <StyledQuizDetailCaption>
-                  {`${data?.duration} минут`}
+                  {data?.duration && pluralsFull.minutes(data.duration)}
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
               <StyledQuizDetailWrapper>
@@ -112,7 +113,7 @@ const Quiz: React.FC = () => {
               <StyledQuizDetailWrapper>
                 <QuestionsIcon />
                 <StyledQuizDetailCaption>
-                  {`${data?.question_amount} вопрос${data && data?.question_amount > 4 ? 'ов' : 'а'}`}
+                  {data?.question_amount && pluralsFull.questions(data.question_amount)}
                 </StyledQuizDetailCaption>
               </StyledQuizDetailWrapper>
             </StyledQuizDetailsWrapper>
