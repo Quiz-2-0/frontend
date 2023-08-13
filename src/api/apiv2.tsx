@@ -16,9 +16,10 @@ import {
   IAchievement,
   IShortAchievement,
   IShortRating,
+  IDefaultAvatar,
   TAnswerRequest,
   Statistic,
-  AdminQuizz,
+  AdminQuizz, IAvatar,
 } from '@/types/types';
 
 export const jwt = {
@@ -84,6 +85,7 @@ export const userApi = createApi({
           Authorization: `Bearer ${jwt.get()}`,
         },
       }),
+      providesTags: ['user'],
       keepUnusedDataFor: 0,
     }),
     getAchievements: build.query<IAchievement[], void>({
@@ -112,6 +114,26 @@ export const userApi = createApi({
           Authorization: `Bearer ${jwt.get()}`,
         },
       }),
+    }),
+    getDefaultAvatars: build.query<IDefaultAvatar[], void>({
+      query: () => ({
+        url: '/users/avatar',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+      }),
+    }),
+    uploadAvatar: build.mutation<IAvatar, string>({
+      query: (avatar) => ({
+        url: '/users/avatar/',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${jwt.get()}`,
+        },
+        body: { avatar },
+      }),
+      invalidatesTags: ['user'],
     }),
   }),
 });
@@ -190,6 +212,8 @@ export const {
   useGetAchievementsQuery,
   useGetShortAchievementsQuery,
   useGetShortRatingsQuery,
+  useGetDefaultAvatarsQuery,
+  useUploadAvatarMutation,
 } = userApi;
 
 export const {

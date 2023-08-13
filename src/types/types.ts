@@ -53,6 +53,16 @@ export interface IShortRating {
   user_rating: number,
 }
 
+export interface IDefaultAvatar {
+  id: number,
+  avatar: string,
+  description: string,
+}
+
+export interface IAvatar {
+  avatar: string,
+}
+
 interface Tag {
   id: number;
   name: string;
