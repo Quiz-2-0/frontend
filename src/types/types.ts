@@ -19,6 +19,8 @@ export interface IUser {
   level_description: string,
   level_image: string,
   to_next_level: number,
+  in_this_level: number,
+  earned_in_level: number,
   access: string,
 }
 
