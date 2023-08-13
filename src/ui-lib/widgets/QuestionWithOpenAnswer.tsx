@@ -1,23 +1,36 @@
 import React, { FC, useState } from 'react';
 import { FormLayoutGroup } from '@vkontakte/vkui';
-import AddAnswersOnPage from './AddAnswersOnPage';
 import StyledInput from '../styled-components/StyledInput';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
 
 const QuestionWithOpenAnswer: FC = () => {
-  const [answer, setAnswer] = useState('');
-  const [isAnswerValid, setIsAnswerValid] = useState(true);
-  const [help, setHelp] = useState('');
-  const [isHelpValid, setIsHelpValid] = useState(true);
+  const [answers, setAnswers] = useState<{
+    id: number,
+    text: string,
+    isRight: boolean,
+  }>({ id: 0, text: '', isRight: false });
+  const [isAnswerValid, setIsAnswerValid] = useState<{
+    isValid: boolean,
+    id: number,
+  }>({ isValid: true, id: 0 });
+  const [help, setHelp] = useState<{
+    id: number,
+    text: string,
+  }>({ id: 0, text: '' });
+  const [isHelpValid, setIsHelpValid] = useState<{
+    isValid: boolean,
+    id: number,
+  }>({ isValid: true, id: 0 });
+
   return (
     <FormLayoutGroup mode='horizontal' style={{ padding: 0, marginTop: '28px' }}>
       <FormItemForNewQuiz
         htmlFor='question-text'
         top='Текст ответа'
         onBlur={() => {
-          setIsAnswerValid(answer !== '');
+          setIsAnswerValid({ ...answers, isValid: answers.text !== '' });
         }}
-        onChange={() => setIsAnswerValid(true)}
+        onChange={() => setIsAnswerValid({ ...answers, isValid: true })}
         status={isAnswerValid ? 'default' : 'error'}
         style={{ maxWidth: '546px' }}>
         <StyledInput
@@ -26,18 +39,18 @@ const QuestionWithOpenAnswer: FC = () => {
           type='text'
           placeholder='Введите текст'
           name='question-text'
-          value={answer}
+          value={answers.text}
           onChange={(e) => {
-            setAnswer(e.target.value);
+            setAnswers({ ...answers, text: e.target.value });
           }} />
       </FormItemForNewQuiz>
       <FormItemForNewQuiz
         htmlFor='question-text'
         top='Подсказка'
         onBlur={() => {
-          setIsHelpValid(help !== '');
+          setIsHelpValid({ ...help, isValid: help.text !== '' });
         }}
-        onChange={() => setIsAnswerValid(true)}
+        onChange={() => setIsHelpValid({ ...help, isValid: true })}
         status={isHelpValid ? 'default' : 'error'}
         style={{ width: '100%' }}>
         <StyledInput
@@ -46,9 +59,9 @@ const QuestionWithOpenAnswer: FC = () => {
           type='text'
           placeholder='Введите текст'
           name='question-text'
-          value={answer}
+          value={help.text}
           onChange={(e) => {
-            setHelp(e.target.value);
+            setHelp({ ...help, text: e.target.value });
           }} />
       </FormItemForNewQuiz>
     </FormLayoutGroup>

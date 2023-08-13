@@ -1,9 +1,8 @@
 import React from 'react';
-
-const NewQuizStep1 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep1'));
-const NewQuizStep2 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep2'));
-const NewQuizStep3 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep3'));
-const NewQuizStep4 = React.lazy(() => import('@/ui-lib/widgets/NewQuizStep4'));
+import NewQuizStep1 from '@/ui-lib/widgets/NewQuizStep1';
+import NewQuizStep2 from '@/ui-lib/widgets/NewQuizStep2';
+import NewQuizStep3 from '@/ui-lib/widgets/NewQuizStep3';
+import NewQuizStep4 from '@/ui-lib/widgets/NewQuizStep4';
 
 export interface Step<T> {
   id: number;
@@ -24,7 +23,12 @@ export interface StepProps {
   setFormElements: SetFormElements;
 }
 
-export type FormElements = Record<string, string[] | boolean[]>;
+export type FormElements = Record<
+string, {
+  id: number,
+  text: string,
+  isRight?: boolean,
+}[] | { id: number, isValid: boolean }[]>;
 
 export type SetFormElements = Record<string, any>;
 

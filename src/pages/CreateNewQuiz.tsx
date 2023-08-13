@@ -6,7 +6,7 @@
 import { Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon20ChevronRight, Icon24AddOutline } from '@vkontakte/icons';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
@@ -23,10 +23,25 @@ const CreateNewQuiz: FC = () => {
   const [items, setItems] = useState<number[]>([0]);
   const [isPreviewPopupOpen, setIsPreviewPopupOpen] = useState(false);
 
-  const [questionText, setQuestionText] = useState<string[]>(['']);
-  const [questionType, setQuestionType] = useState<string[]>(['']);
-  const [isQuestionTextValid, setIsQuestionTextValid] = useState<boolean[]>([true]);
-  const [isQuestionTypeValid, setIsQuestionTypeValid] = useState<boolean[]>([true]);
+  const [questionText, setQuestionText] = useState<{ id: number, text: string }[]>([{ id: 0, text: '' }]);
+  const [questionType, setQuestionType] = useState<{ id: number, text: string }[]>([{ id: 0, text: '' }]);
+  const [isQuestionTextValid, setIsQuestionTextValid] = useState<{
+    id: number,
+    isValid: boolean,
+  }[]>([{ id: 0, isValid: true }]);
+  const [isQuestionTypeValid, setIsQuestionTypeValid] = useState<{
+    id: number,
+    isValid: boolean,
+  }[]>([{ id: 0, isValid: true }]);
+
+  useEffect(() => {
+    if (questionText.length === 0 || questionType.length === 0) {
+      setQuestionText([{ id: 0, text: '' }]);
+      setQuestionType([{ id: 0, text: '' }]);
+      setIsQuestionTextValid([{ id: 0, isValid: true }]);
+      setIsQuestionTypeValid([{ id: 0, isValid: true }]);
+    }
+  }, [questionText, questionType]);
 
   const setNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -68,10 +83,16 @@ const CreateNewQuiz: FC = () => {
   const addNewItem = () => {
     setItems([...items, items.length]);
     if (currentPage === 1) {
-      setQuestionText([...questionText, '']);
-      setQuestionType([...questionType, '']);
-      setIsQuestionTextValid([...isQuestionTextValid, true]);
-      setIsQuestionTypeValid([...isQuestionTypeValid, true]);
+      setQuestionText([...questionText, { id: questionText.length, text: '' }]);
+      setQuestionType([...questionType, { id: questionType.length, text: '' }]);
+      setIsQuestionTextValid([
+        ...isQuestionTextValid,
+        { id: isQuestionTextValid.length, isValid: true },
+      ]);
+      setIsQuestionTypeValid([
+        ...isQuestionTypeValid,
+        { id: isQuestionTypeValid.length, isValid: true },
+      ]);
     }
   };
 
