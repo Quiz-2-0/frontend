@@ -1,3 +1,4 @@
+/* eslint-disable ternary/no-dupe */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/require-default-props */
@@ -83,8 +84,12 @@ const StyledCheckbox = styled(Checkbox)<{ questionType: string }>`
     }
   }
 
+  & > .vkuiCheckbox__input:checked~.vkuiCheckbox__icon--on {
+    ${({ questionType }) => (questionType === 'DAD' ? 'display: none;' : '')}
+  }
+
   & > .vkuiCheckbox__icon {
-    display: ${({ questionType }) => (questionType === 'DAD' ? 'none' : 'block')};
+    ${({ questionType }) => (questionType === 'DAD' ? 'display: none;' : '')}
     margin-right: 8px;
   }
 
@@ -134,6 +139,11 @@ const AddAnswersOnPage: FC<{
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteButtonDisable, setIsDeleteButtonDisabled] = useState(true);
+  useEffect(() => {
+    if (categories?.length === 0 || answers.length === 0) {
+      setIsOpen(false);
+    }
+  }, [categories, answers]);
 
   return (
     <FormItemForNewQuiz
@@ -165,14 +175,13 @@ const AddAnswersOnPage: FC<{
                 questionType={questionType}
                 checked={answer.isRight}
                 onClick={() => {
-                  console.log(questionType, answer.isRight, answers);
                   questionType === 'ONE'
                     ? setAnswers(answers.map((answ) => (
                       answ.id === answer.id
                         ? { ...answ, isRight: !answer.isRight }
                         : { ...answ, isRight: answer.isRight })))
                     : setAnswers(answers.map((answ) => (
-                      answ.id === answer.id
+                      answ.id === answer.id && questionType !== 'DAD'
                         ? { ...answ, isRight: !answer.isRight } : answ)));
                 }}
                 key={answer.id}>
@@ -217,7 +226,11 @@ const AddAnswersOnPage: FC<{
               disabled={answers.some(({ text }) => text === '')}
               aria-label='Добавить ответ'
               onClick={() => {
-                setAnswers([...answers, { id: answers.length, text: '', isRight: false }]);
+                setAnswers(questionType !== 'DAD'
+                  ? [...answers, { id: answers.length, text: '' }]
+                  : title === 'Категории для соотношений'
+                    ? [...answers, { id: answers.length, text: '', items: [] }]
+                    : [...answers, { id: answers.length, text: '' }]);
                 isAnswerValid && setIsAnswerValid(
                   [...isAnswerValid, { id: isAnswerValid?.length, isValid: true }],
                 );
@@ -232,7 +245,10 @@ const AddAnswersOnPage: FC<{
               answers={answers} />
           ) : (
             <StyledButton
-              onClick={() => setIsOpen(true)}
+              onClick={() => {
+                setIsOpen(true);
+                setIsDeleteButtonDisabled(true);
+              }}
               mode='link'
               style={{
                 display: 'flex',

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
 import { QuestionTypeProps } from '@/constants/question-types';
 
@@ -24,18 +24,19 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
     id: number,
   }[]>([{ isValid: true, id: 0 }]);
 
+  useEffect(() => {
+    if (categories.length === 0) {
+      setCategories([{ id: 0, text: '', items: [] }]);
+      setIsCategoryValid([{ isValid: true, id: 0 }]);
+    }
+    if (answers.length === 0) {
+      setAnswers([{ id: 0, text: '' }]);
+      setIsAnswerValid([{ isValid: true, id: 0 }]);
+    }
+  }, [categories, answers]);
+
   return (
     <>
-      <AddAnswersOnPage
-        questionId={questionId}
-        questionType='DAD'
-        answers={answers}
-        setAnswers={setAnswers}
-        isAnswerValid={isAnswerValid}
-        setIsAnswerValid={setIsAnswerValid}
-        title='Категории для соотношений'
-        description='Создайте 2 или 3 категории, с которыми будут соотноситься ответы'
-        placeholder='Введите название категории' />
       <AddAnswersOnPage
         questionId={questionId}
         questionType='DAD'
@@ -43,6 +44,16 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
         setAnswers={setCategories}
         isAnswerValid={isCategoryValid}
         setIsAnswerValid={setIsCategoryValid}
+        title='Категории для соотношений'
+        description='Создайте 2 или 3 категории, с которыми будут соотноситься ответы'
+        placeholder='Введите название категории' />
+      <AddAnswersOnPage
+        questionId={questionId}
+        questionType='DAD'
+        answers={answers}
+        setAnswers={setAnswers}
+        isAnswerValid={isAnswerValid}
+        setIsAnswerValid={setIsAnswerValid}
         title='Элементы для соотношения с категориями'
         description='Создайте элементы для соотношения с категориями'
         placeholder='Введите название элемента' />

@@ -122,7 +122,13 @@ const NewQuizStep2: FC<{
                 {`Вопрос №${question + 1}`}
               </Text>
               <IconButton
-                style={{ width: '28px', height: '28px' }}
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  visibility: `${questionText[question].text !== '' && questionType[question].text !== '' ? 'visible' : 'hidden'}`,
+                  opacity: `${questionText[question].text !== '' && questionType[question].text !== '' ? '1' : '0'}`,
+                  transition: 'all .3s ease',
+                }}
                 aria-label='Удалить вопрос'
                 onClick={() => {
                   setQuestionText((questionText.filter(({ id }) => (

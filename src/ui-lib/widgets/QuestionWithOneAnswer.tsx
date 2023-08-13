@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
 import { QuestionTypeProps } from '@/constants/question-types';
 
@@ -13,6 +13,13 @@ const QuestionWithOneAnswer: FC<QuestionTypeProps> = ({ questionId }) => {
     isValid: boolean,
     id: number,
   }[]>([{ isValid: true, id: 0 }]);
+
+  useEffect(() => {
+    if (answers.length === 0) {
+      setAnswers([{ id: 0, text: '', isRight: false }]);
+      setIsAnswerValid([{ isValid: true, id: 0 }]);
+    }
+  }, [answers]);
 
   return (
     <AddAnswersOnPage
