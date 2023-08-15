@@ -3,11 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DragAndDropBoard from './DragAndDropBoard';
 import DragAndDropCard from './DragAndDropCard';
-import { Item } from '@/types/types';
+import { DragAndDropQuestionProps, Item } from '@/types/types';
 
 const DnDItemsContainer = styled.div`
   margin-top: 20px;
@@ -19,10 +20,13 @@ const DnDItemsContainer = styled.div`
   display: flex;
 `;
 
-const DragAndDropQuestion: FC<{
-  boardTitles: { id: number, text: string, items: Item[] }[],
-  answers: { id: number, text: string }[],
-}> = ({ boardTitles, answers }) => {
+const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
+  {
+    boardTitles,
+    answers,
+    selectListAnswers,
+  },
+) => {
   const [boards, setBoards] = useState<{ id: number, text: string, items: Item[] }[]>(boardTitles);
   const [cards, setCards] = useState<Item[]>(answers);
   useEffect(() => {
@@ -31,16 +35,24 @@ const DragAndDropQuestion: FC<{
   }, [boardTitles, answers]);
 
   const addItemToBoard = (id: number, boardId: number) => {
-    setCards((prevCards) => prevCards.filter((card) => card.id !== id));
+    let b = boards;
+    const c = cards.filter((card) => card.id !== id);
     const filteredItem = answers.find((item) => id === item.id);
-    filteredItem && setBoards((currentBoard) => currentBoard.map((board) => (
-      boardId === board.id && !board.items.includes(filteredItem)
-        ? { ...board, items: [...board.items, filteredItem] }
-        : { ...board, items: board.items.filter((item) => item !== filteredItem) }
-    )));
-  };
+    if (filteredItem) {
+      b = boards.map((board) => (
+        boardId === board.id && !board.items.includes(filteredItem)
+          ? { ...board, items: [...board.items, filteredItem] }
+          : { ...board, items: board.items.filter((item) => item !== filteredItem) }
+      ));
+    }
 
-  console.log(boards);
+    setCards(c);
+    setBoards(b);
+
+    if (selectListAnswers !== undefined) {
+      selectListAnswers(b);
+    }
+  };
 
   return (
     <div>

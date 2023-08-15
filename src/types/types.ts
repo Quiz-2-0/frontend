@@ -74,7 +74,7 @@ export interface Answer {
   text: string;
   image: string;
   isAnswerRight?: boolean;
-  answer_list?: AnswerItem[];
+  answers_list?: AnswerItem[];
 }
 
 export interface AnswerItem {
@@ -107,6 +107,12 @@ export interface MultipleChoiceQuestionProps {
 
 export interface OpenEndedQuestionProps {
   selectAnswerText: (text: string) => void;
+}
+
+export interface DragAndDropQuestionProps {
+  boardTitles: BoardTitlesProps[];
+  answers: BoardAnswersProps[];
+  selectListAnswers?: (boards: BoardTitlesProps[]) => void
 }
 
 export interface Volume {
@@ -157,7 +163,7 @@ export interface TAnswerItem {
   answer?: number;
   answer_text?: string;
   answer_list: {
-    answer_list:number
+    answer_list: number
   }[];
 }
 
@@ -170,6 +176,17 @@ export interface Statistic {
 }
 
 export interface Item {
+  id: number;
+  text: string;
+}
+
+export interface BoardTitlesProps {
+  id: number;
+  text: string;
+  items: Item[];
+}
+
+export interface BoardAnswersProps {
   id: number;
   text: string;
 }

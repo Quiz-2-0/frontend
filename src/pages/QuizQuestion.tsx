@@ -16,6 +16,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable spaced-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import {
@@ -29,9 +30,7 @@ import { useParams } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import { useGetQuizQuery, useSetAnswerMutation } from '@/api/apiv2';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
-import { useDispatch } from '@/store/store.types';
-import { setLoaderState } from '@/store/allSlice/allSlice';
-import { TAnswerItem } from '@/types/types';
+import { TAnswerItem, BoardTitlesProps, BoardAnswersProps, Answer, AnswerItem, Item } from '@/types/types';
 import Results from '@/ui-lib/widgets/Results';
 import SingleChoiceQuestion from '@/ui-lib/widgets/SingleChoiceQuestion';
 import MultipleChoiceQuestion from '@/ui-lib/widgets/MultipleChoiceQuestion';
@@ -48,7 +47,7 @@ const QuizQuestion: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<TAnswerItem[]>([]);
   const [questions, setQuestions] = useState(data ? data.questions : []);
 
-  console.log(data);
+  const [selectedBoards, setSelectedBoards] = useState<BoardTitlesProps[]>([]);
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
@@ -68,7 +67,7 @@ const QuizQuestion: React.FC = () => {
     answerIds.forEach((id) => {
       answers.push({
         answer: id,
-        answer_list: [], //todo Что это?
+        answer_list: [],
       });
     });
     setSelectedAnswers(answers);
@@ -88,8 +87,75 @@ const QuizQuestion: React.FC = () => {
     setSelectedAnswers([{
       answer: answerId,
       answer_text: text,
-      answer_list: [], //todo Что это?
+      answer_list: [],
     }]);
+  };
+
+  const getBoardTitles = (): BoardTitlesProps[] => {
+    const boardTitles: BoardTitlesProps[] = [];
+    questions[currentPage].answers.forEach((answer) => {
+      let items: Item[] = [];
+      selectedBoards.forEach((b) => {
+        if (b.id === answer.id) {
+          items = b.items;
+        }
+      });
+
+      boardTitles[answer.id] = {
+        id: answer.id,
+        text: answer.text,
+        items,
+      };
+    });
+    return boardTitles;
+  };
+
+  const getBoardAnswers = (): BoardAnswersProps[] => {
+    const boardAnswers: BoardAnswersProps[] = [];
+    questions[currentPage].answers.forEach((answer: Answer) => {
+      if (answer.answers_list !== undefined) {
+        const selectedItems: Item[] = [];
+        selectedBoards.forEach((b) => {
+          selectedItems.push(...b.items);
+        });
+        answer.answers_list.forEach((item: AnswerItem) => {
+          let found = false;
+          selectedItems.forEach((i) => {
+            if (i.id === item.id) {
+              found = true;
+            }
+          });
+
+          if (found) {
+            return;
+          }
+
+          boardAnswers.push({
+            id: item.id,
+            text: item.text,
+          });
+        });
+      }
+    });
+    return boardAnswers;
+  };
+
+  const selectListAnswers = (boards:BoardTitlesProps[]) => {
+    const answers: TAnswerItem[] = [];
+    boards.forEach((board) => {
+      const answer: TAnswerItem = {
+        answer: board.id,
+        answer_list: [],
+      };
+      board.items.forEach((item) => {
+        answer.answer_list.push({
+          answer_list: item.id,
+        });
+      });
+      answers.push(answer);
+    });
+    setSelectedAnswers(answers);
+    setSelectedBoards(boards);
   };
 
   const setNextPage = async () => {
@@ -166,15 +232,9 @@ const QuizQuestion: React.FC = () => {
                 case 'LST':
                   return (
                     <DragAndDropQuestion
-                      boardTitles={
-                      [
-                        {
-                          id: 0,
-                          text: '123',
-                          items: [{ id: 0, text: '123' }],
-                        }]
-                    }
-                      answers={[{ id: 0, text: '123' }]} />
+                      boardTitles={getBoardTitles()}
+                      answers={getBoardAnswers()}
+                      selectListAnswers={selectListAnswers} />
                   );
                 default:
                   return null;
