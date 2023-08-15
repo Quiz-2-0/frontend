@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 
+export type TRole = 'EMP' | 'AD';
+
 export interface IUser {
   id: number,
   firstName: string,
   lastName: string,
   position: string,
-  role: string,
+  role: TRole,
   patronymic: string,
   department: string,
   email: string,
@@ -24,10 +26,20 @@ export interface IUser {
   access: string,
 }
 
+export interface IUserCreate {
+  firstName: string;
+  lastName: string;
+  patronymic: string;
+  position: string;
+  department: number;
+  email: string;
+  role: TRole;
+}
+
 export interface IUserLoginRequest {
   email: string;
   password: string;
-  role: string;
+  role: TRole;
 }
 
 export interface IAchievement {
@@ -63,10 +75,14 @@ export interface IAvatar {
   avatar: string,
 }
 
-interface Tag {
+export interface Tag {
   id: number;
   name: string;
   color: string;
+}
+
+export interface TagQuiz {
+  id: number;
 }
 
 export interface Answer {
@@ -77,10 +93,16 @@ export interface Answer {
   answers_list?: AnswerItem[];
 }
 
+export type AnswerCreate = Omit<Answer, 'id'>;
+
 export interface AnswerItem {
   id: number;
   text: string;
 }
+
+export type AnswerItemCreate = Omit<AnswerItem, 'id'>;
+
+export type TQuestionType = 'ONE' | 'MNY' | 'LST' | 'OPN';
 
 export interface Question {
   id: number;
@@ -88,7 +110,7 @@ export interface Question {
   text: string;
   answers: Answer[];
   is_answered?: boolean;
-  question_type?: string;
+  question_type?: TQuestionType;
 }
 
 export interface SingleChoiceQuestionProps {
@@ -115,11 +137,23 @@ export interface DragAndDropQuestionProps {
   selectListAnswers?: (boards: BoardTitlesProps[]) => void
 }
 
+export interface IQuestionAdmin {
+  id: number;
+  question_type: TQuestionType;
+  text: string;
+  image: string;
+  answers: Answer[];
+}
+
+export type QuestionAdminCreate = Omit<IQuestionAdmin, 'id'>;
+
 export interface Volume {
   id: number;
   name: string;
   description: string;
 }
+
+export type VolumeCreate = Omit<Volume, 'id'>;
 
 export interface IQuiz {
   directory: string;
@@ -214,29 +248,20 @@ export interface AdminQuizz {
   level: string;
   question_amount: number;
   threshold: number;
-  tags: {
-    id: number;
-    name: string;
-    color: string;
-  }[];
-  questions: {
-    id: number;
-    question_type: string;
-    text: string;
-    image: string;
-    answers: {
-      id: number;
-      text: string,
-      image: string,
-      answer_list: {
-        id: number;
-        text: string;
-      }[]
-    }[]
-  }[];
-  volumes: {
-    id: number;
-    name: string;
-    description: string;
-  }[];
+  tags: Tag[];
+  questions: IQuestionAdmin[];
+  volumes: Volume[];
+}
+
+export interface ILevel {
+  id: number;
+  name: number;
+  description: number;
+}
+
+export type LevelCreate = Omit<ILevel, 'id'>;
+
+export interface IDepartment {
+  id: number;
+  name: string;
 }

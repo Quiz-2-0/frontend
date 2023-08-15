@@ -1,7 +1,4 @@
-interface IDepartment {
-  id: number;
-  name: string;
-}
+import { IDepartment } from '@/types/types';
 
 const departments: IDepartment[] = [
   {
