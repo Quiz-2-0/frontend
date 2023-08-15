@@ -12,6 +12,9 @@ import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
 import { useGetDepartmentsQuery, useGetQuizzesQuery, useGetUsersQuery } from '@/api/apiv2';
 import { IUser } from '@/types/types';
+import staff, { IStaff } from '@/constants/staff';
+import quizzes from '@/constants/quizzes';
+import departments from '@/constants/departments';
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -29,13 +32,13 @@ const Staff: FC = () => {
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
-
+  /*
   const { data: staff } = useGetUsersQuery();
   const { data: quizzes } = useGetQuizzesQuery();
-  const { data: departments } = useGetDepartmentsQuery();
+  const { data: departments } = useGetDepartmentsQuery(); */
   const [staffOnPage, setStaffOnPage] = useState(staff);
 
-  let staffNameFilter: IUser[] | undefined = staffOnPage?.filter(
+  let staffNameFilter: IUser[] | IStaff[] | undefined = staffOnPage?.filter(
     ({ firstName, lastName, patronymic }) => (
       firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
       lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||

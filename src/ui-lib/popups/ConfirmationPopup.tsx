@@ -2,11 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
-import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import Background from '../styled-components/Background';

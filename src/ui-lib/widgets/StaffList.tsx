@@ -28,7 +28,7 @@ import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwar
 import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
-import staff from '@/constants/staff';
+import staff, { IStaff } from '@/constants/staff';
 import { IUser } from '@/types/types';
 
 const StyledExpandedItem = styled.div<{ isOpen: number[]; id: any }>`
@@ -70,7 +70,7 @@ const StyledDivWithCheckbox = styled.div`
 
 const StaffList: FC<{
   departments: { label: string; value: string }[] | string | undefined,
-  staffList: IUser[] | undefined,
+  staffList: IStaff[] | IUser[] | undefined,
   isChecked: number[],
   setIsChecked: any,
   search: string,
@@ -194,15 +194,15 @@ const StaffList: FC<{
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.count_assigned}
+                            0
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.count_passed}
+                            0
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.pass_progress}
+                            0
                           </TableItem>
                         </StyledCheckbox>
                         <StaffLink mode='link'>
@@ -300,15 +300,15 @@ const StaffList: FC<{
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.count_assigned}
+                                      0
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.count_passed}
+                                      0
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.pass_progress}
+                                      0
                                     </TableItem>
                                   </StyledCheckbox>
                                   <StaffLink mode='link'>
