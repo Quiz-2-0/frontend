@@ -5,9 +5,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import React from 'react';
 import styled from 'styled-components';
-import { SingleChoiceQuestionProps } from '@/types/types';
+import { SingleChoiceQuestionProps, TAnswerItem } from '@/types/types';
 
-const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
+const Answers = styled.li<{ selectedAnswer: TAnswerItem, cardId: number }>`
   cursor: pointer;
   padding: 16px;
   list-style: none;
@@ -22,12 +22,12 @@ const Answers = styled.li<{ selectedAnswer: number, cardId: number }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? '#3F8AE0' : '#DCE1E6')};
-  background: ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? 'rgba(63, 138, 224, 0.15)' : 'none')};
+  border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer?.answer === cardId ? '#3F8AE0' : '#DCE1E6')};
+  background: ${({ selectedAnswer, cardId }) => (selectedAnswer?.answer === cardId ? 'rgba(63, 138, 224, 0.15)' : 'none')};
 
   &:hover {
-    border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? '#3F8AE0' : 'rgba(63, 138, 224, 0.15)')};
-    background: ${({ selectedAnswer, cardId }) => (selectedAnswer === cardId ? 'rgba(63, 138, 224, 0.2)' : 'rgba(63, 138, 224, 0.05)')};
+    border: 1px solid ${({ selectedAnswer, cardId }) => (selectedAnswer?.answer === cardId ? '#3F8AE0' : 'rgba(63, 138, 224, 0.15)')};
+    background: ${({ selectedAnswer, cardId }) => (selectedAnswer?.answer === cardId ? 'rgba(63, 138, 224, 0.2)' : 'rgba(63, 138, 224, 0.05)')};
   }
 `;
 

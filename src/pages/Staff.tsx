@@ -10,7 +10,6 @@ import StaffList from '@/ui-lib/widgets/StaffList';
 import ChooseQuizzesPopup from '@/ui-lib/popups/ChooseQuizzesPopup';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
-import { useGetDepartmentsQuery, useGetQuizzesQuery, useGetUsersQuery } from '@/api/apiv2';
 import { IUser } from '@/types/types';
 import staff, { IStaff } from '@/constants/staff';
 import quizzes from '@/constants/quizzes';
