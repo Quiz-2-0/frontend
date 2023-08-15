@@ -25,7 +25,6 @@ const DragAndDropQuestion: FC<{
 }> = ({ boardTitles, answers }) => {
   const [boards, setBoards] = useState<{ id: number, text: string, items: Item[] }[]>(boardTitles);
   const [cards, setCards] = useState<Item[]>(answers);
-  console.log(boardTitles, answers);
   useEffect(() => {
     setBoards(boardTitles);
     setCards(answers);
@@ -40,6 +39,8 @@ const DragAndDropQuestion: FC<{
         : { ...board, items: board.items.filter((item) => item !== filteredItem) }
     )));
   };
+
+  console.log(boards);
 
   return (
     <div>

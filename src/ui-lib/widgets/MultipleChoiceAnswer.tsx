@@ -70,8 +70,8 @@ interface Question {
 
 interface MultipleChoiceAnswerProps {
   question: Question;
-  selectedAnswers: string[];
-  onCheckboxChange: (questionId: number, option: string) => void;
+  selectedAnswers: number[];
+  onCheckboxChange: (questionId: number) => void;
 }
 
 const MultipleChoiceAnswer: React.FC<MultipleChoiceAnswerProps> = (
@@ -80,26 +80,19 @@ const MultipleChoiceAnswer: React.FC<MultipleChoiceAnswerProps> = (
     selectedAnswers,
     onCheckboxChange,
   },
-) => {
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const option = event.target.value;
-    onCheckboxChange(question.id, option);
-  };
-
-  return (
-    <StyledMultipleChoiceAnswer>
-      <Label htmlFor={question.id.toString()}>
-        <HiddenCheckboxInput
-          id={question.id.toString()}
-          type='checkbox'
-          value={question.text}
-          checked={selectedAnswers.includes(question.text)}
-          onChange={handleCheckboxChange} />
-        <CheckboxSpan isChecked={selectedAnswers.includes(question.text)} />
-        {question.text}
-      </Label>
-    </StyledMultipleChoiceAnswer>
-  );
-};
+) => (
+  <StyledMultipleChoiceAnswer>
+    <Label htmlFor={question.id.toString()}>
+      <HiddenCheckboxInput
+        id={question.id.toString()}
+        type='checkbox'
+        value={question.text}
+        checked={selectedAnswers.includes(question.id)}
+        onChange={() => onCheckboxChange(question.id)} />
+      <CheckboxSpan isChecked={selectedAnswers.includes(question.id)} />
+      {question.text}
+    </Label>
+  </StyledMultipleChoiceAnswer>
+);
 
 export default MultipleChoiceAnswer;

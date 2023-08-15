@@ -16,8 +16,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable spaced-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import {
   Div,
   Title,
@@ -31,7 +31,7 @@ import { useGetQuizQuery, useSetAnswerMutation } from '@/api/apiv2';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import { useDispatch } from '@/store/store.types';
 import { setLoaderState } from '@/store/allSlice/allSlice';
-import { Answer } from '@/types/types';
+import { TAnswerItem } from '@/types/types';
 import Results from '@/ui-lib/widgets/Results';
 import SingleChoiceQuestion from '@/ui-lib/widgets/SingleChoiceQuestion';
 import MultipleChoiceQuestion from '@/ui-lib/widgets/MultipleChoiceQuestion';
@@ -45,25 +45,67 @@ const QuizQuestion: React.FC = () => {
   const [progressObject, setProgress] = useState<Record<number, string>>({});
 
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<TAnswerItem[]>([]);
   const [questions, setQuestions] = useState(data ? data.questions : []);
+
+  console.log(data);
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
   }, [data]);
 
+  const selectAnswer = (answerId: number) => {
+    setSelectedAnswers([
+      {
+        answer: answerId,
+        answer_list: [],
+      },
+    ]);
+  };
+
+  const selectAnswers = (answerIds: number[]) => {
+    const answers: TAnswerItem[] = [];
+    answerIds.forEach((id) => {
+      answers.push({
+        answer: id,
+        answer_list: [], //todo Что это?
+      });
+    });
+    setSelectedAnswers(answers);
+  };
+
+  const getMultipleChoiceAnswerIds = () => {
+    const ids:number[] = [];
+    selectedAnswers.forEach((answer) => {
+      ids.push(answer.answer ?? 0);
+    });
+    return ids;
+  };
+
+  const selectAnswerText = (text:string) => {
+    const answerId = questions[currentPage].answers[0].id;
+
+    setSelectedAnswers([{
+      answer: answerId,
+      answer_text: text,
+      answer_list: [], //todo Что это?
+    }]);
+  };
+
   const setNextPage = async () => {
-    const requestObject = { quizId: id, id: selectedAnswer };
+    const requestObject = {
+      quizId: id,
+      id: questions[currentPage].id,
+      question_type: questions[currentPage].question_type,
+      response_time: 0, // todo Что это?
+      answers: selectedAnswers,
+    };
     await setAnswer(requestObject);
     setCurrentPage(currentPage + 1);
-    setSelectedAnswer(0);
+    selectAnswers([]);
     if (currentPage !== questions.length) {
       setProgress({ ...progressObject, [currentPage]: ' ' });
     }
-  };
-
-  const selectAnswer = (answerId: number) => {
-    setSelectedAnswer(answerId);
   };
 
   return (
@@ -99,12 +141,46 @@ const QuizQuestion: React.FC = () => {
               }}>
               Текст для подсказки
             </Subhead>
-            <SingleChoiceQuestion
-              currentPage={currentPage}
-              questions={questions}
-              selectedAnswer={selectedAnswer}
-              selectAnswer={selectAnswer} />
-            <StyledButton onClick={setNextPage} disabled={selectedAnswer === 0} style={{ width: '167px', margin: '32px auto 0' }}>Дальше</StyledButton>
+            {(() => {
+              switch (questions[currentPage].question_type) {
+                case 'ONE':
+                  return (
+                    <SingleChoiceQuestion
+                      currentPage={currentPage}
+                      questions={questions}
+                      selectedAnswer={selectedAnswers[0]}
+                      selectAnswer={selectAnswer} />
+                  );
+                case 'MNY':
+                  return (
+                    <MultipleChoiceQuestion
+                      currentPage={currentPage}
+                      questions={questions}
+                      selectAnswers={selectAnswers}
+                      selectedAnswers={getMultipleChoiceAnswerIds()} />
+                  );
+                case 'OPN':
+                  return (
+                    <OpenEndedQuestion selectAnswerText={selectAnswerText} />
+                  );
+                case 'LST':
+                  return (
+                    <DragAndDropQuestion
+                      boardTitles={
+                      [
+                        {
+                          id: 0,
+                          text: '123',
+                          items: [{ id: 0, text: '123' }],
+                        }]
+                    }
+                      answers={[{ id: 0, text: '123' }]} />
+                  );
+                default:
+                  return null;
+              }
+            })()}
+            <StyledButton onClick={setNextPage} disabled={selectedAnswers.length === 0} style={{ width: '167px', margin: '32px auto 0' }}>Дальше</StyledButton>
           </>
         )}
     </Div>

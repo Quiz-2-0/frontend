@@ -94,8 +94,19 @@ export interface Question {
 export interface SingleChoiceQuestionProps {
   currentPage: number;
   questions: Question[];
-  selectedAnswer: number;
+  selectedAnswer: TAnswerItem;
   selectAnswer: (answerId: number) => void;
+}
+
+export interface MultipleChoiceQuestionProps {
+  currentPage: number;
+  questions: Question[];
+  selectAnswers: (answerIds: number[]) => void;
+  selectedAnswers: number[];
+}
+
+export interface OpenEndedQuestionProps {
+  selectAnswerText: (text: string) => void;
 }
 
 export interface Volume {
@@ -135,8 +146,19 @@ export interface QuizCardProps {
 }
 
 export interface TAnswerRequest {
-  id: number | string;
-  quizId: number | string;
+  quizId: number | string,
+  id: number;
+  question_type?: string;
+  response_time: number;
+  answers: TAnswerItem[];
+}
+
+export interface TAnswerItem {
+  answer?: number;
+  answer_text?: string;
+  answer_list: {
+    answer_list:number
+  }[];
 }
 
 export interface Statistic {
