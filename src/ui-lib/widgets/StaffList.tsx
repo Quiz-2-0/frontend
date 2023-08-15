@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable ternary/nesting */
@@ -28,6 +29,7 @@ import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
 import staff from '@/constants/staff';
+import { IUser } from '@/types/types';
 
 const StyledExpandedItem = styled.div<{ isOpen: number[]; id: any }>`
   max-height: ${({ isOpen, id }) => (!isOpen.includes(id) ? `${staff.length * 36}px` : '0')};
@@ -67,18 +69,8 @@ const StyledDivWithCheckbox = styled.div`
 `;
 
 const StaffList: FC<{
-  departments: { label: string; value: string }[] | string,
-  staffList: {
-    id: number,
-    firstName: string,
-    lastName: string,
-    patronymic: string,
-    email: string,
-    appounted: number,
-    passed: number,
-    raiting: number,
-    department: string,
-  }[],
+  departments: { label: string; value: string }[] | string | undefined,
+  staffList: IUser[] | undefined,
   isChecked: number[],
   setIsChecked: any,
   search: string,
@@ -149,13 +141,13 @@ const StaffList: FC<{
               ? (
                 <StyledButton
                   onClick={() => (
-                    isOpen.length === departments.length - 1
+                    isOpen.length === (departments?.length ?? 0) - 1
                       ? setIsOpen([])
-                      : setIsOpen(departments.slice(1).map((dep, i) => i))
+                      : setIsOpen(departments?.slice(1).map((dep, i) => i) ?? [])
                   )}
                   style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }}
                   mode='link'>
-                  {isOpen.length === departments.length - 1
+                  {isOpen.length === (departments?.length ?? 0) - 1
                     ? 'Развернуть'
                     : 'Свернуть всё'}
                 </StyledButton>
@@ -166,7 +158,7 @@ const StaffList: FC<{
           <div style={{ height: '397px', overflow: 'scroll', zIndex: '-1000' }}>
             {typeof departments === 'string' || search !== ''
               ? (
-                staffList.length === 0
+                staffList?.length === 0
                   ? (
                     <p
                       style={{
@@ -177,7 +169,7 @@ const StaffList: FC<{
                       По вашему запросу ничего не найдено
                     </p>
                   ) : (
-                    staffList.map((user, i) => (
+                    staffList?.map((user, i) => (
                       <StyledDivWithCheckbox
                         key={user.id}
                         ref={
@@ -202,15 +194,15 @@ const StaffList: FC<{
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.appounted}
+                            {user.count_assigned}
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.passed}
+                            {user.count_passed}
                           </TableItem>
                           <TableItem
                             style={{ minWidth: '100px', textAlign: 'center' }}>
-                            {user.raiting}
+                            {user.pass_progress}
                           </TableItem>
                         </StyledCheckbox>
                         <StaffLink mode='link'>
@@ -218,7 +210,7 @@ const StaffList: FC<{
                         </StaffLink>
                       </StyledDivWithCheckbox>
                     )))) : (
-                departments.slice(1).map((department, i) => (
+                departments?.slice(1).map((department, i) => (
                   <>
                     <div
                       style={{
@@ -270,7 +262,7 @@ const StaffList: FC<{
                       </IconWrapper>
                     </div>
                     <StyledExpandedItem isOpen={isOpen} id={i}>
-                      {staffList.length === 0
+                      {staffList?.length === 0
                         ? (
                           <p
                             style={{
@@ -281,7 +273,7 @@ const StaffList: FC<{
                             По вашему запросу ничего не найдено
                           </p>
                         ) : (
-                          staffList.map((user, index) => {
+                          staffList?.map((user, index) => {
                             if (department.value === user.department) {
                               return (
                                 <StyledDivWithCheckbox
@@ -289,7 +281,7 @@ const StaffList: FC<{
                                   ref={
                                     index === 0
                                       ? topRef
-                                      : index === staffList.length - 1
+                                      : index === staffList?.length - 1
                                         ? bottomRef
                                         : null
                                   }>
@@ -308,15 +300,15 @@ const StaffList: FC<{
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.appounted}
+                                      {user.count_assigned}
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.passed}
+                                      {user.count_passed}
                                     </TableItem>
                                     <TableItem
                                       style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      {user.raiting}
+                                      {user.pass_progress}
                                     </TableItem>
                                   </StyledCheckbox>
                                   <StaffLink mode='link'>

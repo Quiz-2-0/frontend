@@ -63,7 +63,7 @@ const FormItemForNewEmployee = styled(StyledFormItem)`
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
   setIsNewEmploeePopupOpen: any,
-  departments: { label: string; value: string }[],
+  departments: { label: string; value: string }[] | undefined,
 }> = ({
   isNewEmployeePopupOpen,
   setIsNewEmploeePopupOpen,
@@ -276,7 +276,7 @@ const NewEmployeePopup: FC<{
                   placeholder='Выберите отдел'
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  options={departments.slice(1)} />
+                  options={departments?.slice(1) ?? []} />
               </FormItemForNewEmployee>
             </StyledFormLayoutGroup>
             <StyledFormLayoutGroup mode='horizontal'>

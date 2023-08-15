@@ -28,7 +28,7 @@ const StaffFilter: FC<{
   setSearch: any,
   type: any,
   setType: any,
-  departments: { label: string, value: string }[],
+  departments: { label: string, value: string }[] | undefined,
   setIsChooseQuizzesPopupOpen: any,
   setIsNewEmploeePopupOpen: any,
   isChecked: number[],
@@ -58,7 +58,7 @@ const StaffFilter: FC<{
         <StyledSelect
           value={type}
           onChange={(e) => setType(e.target.value)}
-          options={departments} />
+          options={departments ?? []} />
         <Buttons>
           <StyledButton
             mode='outline'

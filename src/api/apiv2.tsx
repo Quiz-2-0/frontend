@@ -8,6 +8,7 @@ import {
   GET_ADMIN_QUIZZES,
   GET_ADMIN_USERS,
   GET_ADMIN_DEPARTMENTS,
+  POST_ADMIN_NEW_USER,
 } from '@/constants/api-url';
 import {
   IUser,
@@ -19,7 +20,8 @@ import {
   IDefaultAvatar,
   TAnswerRequest,
   Statistic,
-  AdminQuizz, IAvatar,
+  AdminQuizz,
+  IAvatar,
 } from '@/types/types';
 
 export const jwt = {
@@ -182,23 +184,26 @@ export const adminApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['admin'],
   endpoints: (build) => ({
     getUsers: build.query<IUser[], void>({
-      query: () => ({
-        url: GET_ADMIN_USERS,
-      }),
+      query: () => GET_ADMIN_USERS,
       keepUnusedDataFor: 0,
     }),
-    getDepartments: build.query<{ id: number; name: string; }[], void>({
-      query: () => ({
-        url: GET_ADMIN_DEPARTMENTS,
+    setNewUser: build.mutation<void, IUser>({
+      query: (data) => ({
+        url: POST_ADMIN_NEW_USER,
+        method: 'POST',
+        body: data,
       }),
+      invalidatesTags: ['admin'],
+    }),
+    getDepartments: build.query<{ id: number; name: string; }[], void>({
+      query: () => GET_ADMIN_DEPARTMENTS,
       keepUnusedDataFor: 0,
     }),
     getQuizzes: build.query<AdminQuizz[], void>({
-      query: () => ({
-        url: GET_ADMIN_QUIZZES,
-      }),
+      query: () => GET_ADMIN_QUIZZES,
       keepUnusedDataFor: 0,
     }),
 
@@ -224,7 +229,7 @@ export const {
 } = quizApi;
 
 export const {
-  useGetDepartmentsQuery,
   useGetUsersQuery,
+  useGetDepartmentsQuery,
   useGetQuizzesQuery,
 } = adminApi;
