@@ -1,58 +1,37 @@
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable no-else-return */
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React from 'react';
 import { AnswersList } from './SingleChoiceQuestion';
 import MultipleChoiceAnswer from './MultipleChoiceAnswer';
+import { MultipleChoiceQuestionProps } from '@/types/types';
 
-const questions = [
-  {
-    id: 1,
-    text: 'Backend Developers',
+const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = (
+  { currentPage,
+    questions,
+    selectAnswers,
+    selectedAnswers,
   },
-  {
-    id: 2,
-    text: 'QA',
-  },
-  {
-    id: 3,
-    text: 'Product Analytics',
-  },
-  {
-    id: 4,
-    text: 'Project Management',
-  },
-  {
-    id: 5,
-    text: 'UX исследователь',
-  },
-  {
-    id: 6,
-    text: 'Data science',
-  },
-];
-
-const MultipleChoiceQuestion: React.FC = () => {
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-
-  const handleCheckboxChange = (questionId: number, option: string) => {
-    setSelectedAnswers((prevSelectedAnswers) => {
-      if (prevSelectedAnswers.includes(option)) {
-        // Если выбранный вариант уже есть в массиве выбранных ответов, удаляем его
-        return prevSelectedAnswers.filter((answer) => answer !== option);
-      } else {
-        // Иначе добавляем выбранный вариант в массив выбранных ответов
-        return [...prevSelectedAnswers, option];
-      }
-    });
+) => {
+  const handleCheckboxChange = (answerId: number) => {
+    let answerIds = [];
+    if (selectedAnswers.includes(answerId)) {
+      answerIds = selectedAnswers.filter((answer) => answer !== answerId);
+    } else {
+      answerIds = [...selectedAnswers, answerId];
+    }
+    selectAnswers(answerIds);
   };
 
   return (
     <AnswersList>
       {
-        questions.map((question) => (
+        questions[currentPage].answers.map((answer) => (
           <MultipleChoiceAnswer
-            key={question.id}
-            question={question}
+            key={answer.id}
+            question={answer}
             selectedAnswers={selectedAnswers}
             onCheckboxChange={handleCheckboxChange} />
         ))
