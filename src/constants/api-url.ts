@@ -12,3 +12,5 @@ export const GET_ADMIN_QUIZZES = '/admin/quizes/';
 export const GET_ADMIN_USERS = '/admin/users/';
 
 export const POST_ADMIN_NEW_USER = '/admin/users/create/';
+
+export const ADMIN_LEVELS_ROUTE = '/admin/levels/';
