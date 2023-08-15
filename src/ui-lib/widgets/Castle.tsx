@@ -20,7 +20,8 @@ import StyledDiv from '../styled-components/StyledDiv';
 import { setFromCastle, setLoaderState } from '@/store/allSlice/allSlice';
 import { useGetAllQuizesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
 import { useDispatch } from '@/store/store.types';
-import { plurals } from '@/constants/plurals';
+import { pluralsFull } from '@/constants/plurals';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -73,14 +74,14 @@ const Castle: React.FC = () => {
     <StyledDiv style={{
       maxWidth: '358px', width: '100%', height: '450px',
     }}>
-      <StyledText>{`Осталось пройти ${currentUser?.to_next_level} ${plurals.quizzes(currentUser?.to_next_level ?? 0)}\nдо следующего уровня`}</StyledText>
+      <StyledText>{`Осталось пройти ${pluralsFull.quizzes(currentUser?.to_next_level ?? 0)}\nдо следующего уровня`}</StyledText>
       <Title
         style={{ textAlign: 'center', padding: '24px 0 16px' }}
         level='1'>
         {currentUser?.level_description}
       </Title>
       <StyledImage
-        src={`http://80.87.106.133/media/${currentUser?.level_image}`}
+        src={`${SRC_BASE_URL}/media/${currentUser?.level_image}`}
         style={{}} />
       <StyledButton
         type='button'
