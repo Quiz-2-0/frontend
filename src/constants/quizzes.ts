@@ -31,7 +31,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -77,7 +77,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -123,7 +123,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -169,7 +169,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -215,7 +215,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -261,7 +261,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -307,7 +307,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -353,7 +353,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
@@ -399,7 +399,7 @@ const quizzes: IQuiz[] = [
             id: 0,
             text: 'ответ пользователя',
             image: 'http://80.87.106.133/media/answer/image/Pic.png',
-            answer_list: [
+            answers_list: [
               {
                 id: 0,
                 text: 'ответ пользователя из списка',
