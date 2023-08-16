@@ -14,6 +14,10 @@ const StyledQuizListContainer = styled.ul`
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  justify-items: start;
+  align-items: start;
+  justify-content: space-between;
+  align-content: start;
   gap: 42px;
 `;
 
