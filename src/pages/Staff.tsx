@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-plusplus */
@@ -10,8 +11,8 @@ import StaffList from '@/ui-lib/widgets/StaffList';
 import ChooseQuizzesPopup from '@/ui-lib/popups/ChooseQuizzesPopup';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
-import { useGetDepartmentsQuery, useGetQuizzesQuery, useGetUsersQuery } from '@/api/apiv2';
 import { IUser } from '@/types/types';
+import { useGetQuizzesQuery, useGetDepartmentsQuery, useGetUsersQuery } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -24,7 +25,7 @@ const Staff: FC = () => {
   const [isEmployeeChecked, setIsEmployeeChecked] = useState<number[]>([]);
   const [isQuizChecked, setIsQuizChecked] = useState<number[]>([]);
 
-  const [selectType, setSelectType] = useState('Все отделы');
+  const [selectType, setSelectType] = useState<{ id: number, name: string }[]>([{ id: 0, name: 'Все отделы' }]);
 
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
@@ -33,26 +34,32 @@ const Staff: FC = () => {
   const { data: staff } = useGetUsersQuery();
   const { data: quizzes } = useGetQuizzesQuery();
   const { data: departments } = useGetDepartmentsQuery();
-  const [staffOnPage, setStaffOnPage] = useState(staff);
 
-  let staffNameFilter: IUser[] | undefined = staffOnPage?.filter(
+  const [staffOnPage, setStaffOnPage] = useState(staff?.filter(({ role }) => role !== 'AD'));
+  const [staffNameFilter, setStaffNameFilter] = useState<IUser[] | undefined>(staffOnPage?.filter(
     ({ firstName, lastName, patronymic }) => (
       firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
       lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
       patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
     ),
-  );
-  let departmentsList: { label: string; value: string; }[] | undefined =
-  departments?.map(({ name }) => ({
+  ));
+  const [departmentsList, setDepartmentsList] = useState<{
+    label: string,
+    value: number,
+  }[] | undefined>(departments?.filter(({ name }) => (
+    staff?.filter(({ department }) => department === name).length !== 0
+  )).map(({ id, name }) => ({
     label: name,
-    value: name,
-  }));
+    value: id,
+  })));
 
-  const staffDepartmentFilter = (type: string) => {
-    setSelectType(type);
-    type === 'Все отделы'
+  const staffDepartmentFilter = (type: number) => {
+    const newType = departments?.filter(({ id }) => id === type) ?? [{ name: 'Все отделы', id: 0 }];
+    setSelectType(newType.length === 0 ? [{ name: 'Все отделы', id: 0 }] : newType);
+    type === 0
       ? setStaffOnPage(staff)
-      : setStaffOnPage(staff?.filter(({ department }) => department === type));
+      : setStaffOnPage(staff?.filter(({ department }) => department === newType[0].name));
+    console.log(type, newType, selectType);
   };
 
   const quizNameFilter = quizzes?.filter(
@@ -60,26 +67,27 @@ const Staff: FC = () => {
   );
 
   useEffect(() => {
-    console.log(staff, quizzes, departments);
     setStaffOnPage(staff);
-    staffNameFilter = staffOnPage?.filter(
+    setStaffNameFilter(staffOnPage?.filter(
       ({ firstName, lastName, patronymic }) => (
         firstName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
         lastName.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1 ||
         patronymic.toLowerCase().indexOf(searchEmployee.toLowerCase()) > -1
       ),
-    );
-    departmentsList = departments?.map(({ name }) => ({
+    ));
+    setDepartmentsList(departments?.filter(({ name }) => (
+      staff?.filter(({ department }) => department === name).length !== 0
+    )).map(({ id, name }) => ({
       label: name,
-      value: name,
-    }));
+      value: id,
+    })));
   }, [staff, quizzes, departments, searchEmployee]);
 
   return (
     <>
       <StyledDiv>
         <StaffFilter
-          departments={departmentsList}
+          departments={[{ label: 'Все отделы', value: 0 }].concat(departmentsList ?? [])}
           setSearch={setSearchEmployee}
           search={searchEmployee}
           type={selectType}
@@ -89,7 +97,9 @@ const Staff: FC = () => {
           isChecked={isEmployeeChecked} />
         <StaffList
           staffList={searchEmployee !== '' ? staffNameFilter : staffOnPage}
-          departments={selectType === 'Все отделы' ? departmentsList : selectType}
+          departments={selectType[0].name === 'Все отделы'
+            ? departmentsList
+            : [{ label: selectType[0].name, value: selectType[0].id }]}
           search={searchEmployee}
           isChecked={isEmployeeChecked}
           setIsChecked={setIsEmployeeChecked} />
@@ -103,7 +113,8 @@ const Staff: FC = () => {
         setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
         isChooseQuizzesPopupOpen={isChooseQuizzesPopupOpen}
-        setIsEmployeeChecked={setIsEmployeeChecked} />
+        setIsEmployeeChecked={setIsEmployeeChecked}
+        isEmployeeChecked={isEmployeeChecked} />
       <ConfirmationPopup
         title='Квизы назначены'
         icon='check'

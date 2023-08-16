@@ -1,12 +1,12 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
-import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { Button, FormItem, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import Background from '../styled-components/Background';
@@ -66,7 +66,11 @@ const ConfirmationPopup: FC<{
             lineHeight: '24px',
             letterSpacing: '0.38px',
           }}>
-          {icon === 'check' ? <Icon28CheckCircleOutline fill='#43A843' /> : <Icon28DeleteOutline fill='#99A2AD' />}
+          {icon === 'check'
+            ? <Icon28CheckCircleOutline fill='#43A843' />
+            : icon === ''
+              ? <div />
+              : <Icon28DeleteOutline fill='#99A2AD' />}
           {title}
         </h2>
         <p
