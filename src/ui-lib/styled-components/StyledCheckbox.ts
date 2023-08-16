@@ -3,6 +3,7 @@ import { Checkbox } from '@vkontakte/vkui';
 
 const StyledCheckbox = styled(Checkbox)`
   min-height: 24px;
+  height: 24px;
   margin-left: 0 !important;
   margin-right: 0 !important;
   padding: 0;

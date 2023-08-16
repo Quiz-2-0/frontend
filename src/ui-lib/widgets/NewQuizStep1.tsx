@@ -90,7 +90,6 @@ const NewQuizStep1: FC = () => {
       level,
       description,
     });
-    resetForm();
   };
 
   const categoriesList: { label: string; value: string }[] = [];

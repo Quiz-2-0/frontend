@@ -24,6 +24,8 @@ export interface IUser {
   in_this_level: number,
   earned_in_level: number,
   access: string,
+  assigned: number,
+  rating: number,
 }
 
 export interface IUserCreate {

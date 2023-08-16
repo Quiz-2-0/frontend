@@ -1,3 +1,5 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -64,7 +66,11 @@ const ConfirmationPopup: FC<{
             lineHeight: '24px',
             letterSpacing: '0.38px',
           }}>
-          {icon === 'check' ? <Icon28CheckCircleOutline fill='#43A843' /> : <Icon28DeleteOutline fill='#99A2AD' />}
+          {icon === 'check'
+            ? <Icon28CheckCircleOutline fill='#43A843' />
+            : icon === ''
+              ? <div />
+              : <Icon28DeleteOutline fill='#99A2AD' />}
           {title}
         </h2>
         <p

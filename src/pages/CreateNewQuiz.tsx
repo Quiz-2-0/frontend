@@ -185,7 +185,12 @@ const CreateNewQuiz: FC = () => {
               {steps[currentPage].button.name}
             </StyledButton>
           )}
-          <StyledButton onClick={() => setNextPage()} type='button' style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
+          <StyledButton
+            onClick={() => {
+              currentPage !== 3 ? setNextPage() : setIsConfirmationPopupOpen(true);
+            }}
+            type='button'
+            style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
             {currentPage !== 3 ? 'Продолжить' : 'Опубликовать'}
           </StyledButton>
         </div>
@@ -200,6 +205,17 @@ const CreateNewQuiz: FC = () => {
         whiteButton='Выйти'
         blueButtonLink=''
         whiteButtonLink='/new-quiz' />
+      {/* <ConfirmationPopup
+        isConfirmationPopupOpen={isConfirmationPopupOpen}
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        title='Публикация'
+        icon='none'
+        description='После подтверждения публикации квиз появится в разделе
+        «Квизы» и будет доступен для назначения сотрудникам'
+        blueButton='Подтвердить'
+        whiteButton='Отменить'
+        blueButtonLink='/new-quiz'
+        whiteButtonLink='' /> */}
     </>
   );
 };

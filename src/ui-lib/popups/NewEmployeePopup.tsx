@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -27,6 +28,7 @@ import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
+import { useCreateUserMutation } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   max-width: 1000px;
@@ -63,12 +65,13 @@ const FormItemForNewEmployee = styled(StyledFormItem)`
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
   setIsNewEmploeePopupOpen: any,
-  departments: { label: string; value: string }[] | undefined,
+  departments: { label: string; value: number }[] | undefined,
 }> = ({
   isNewEmployeePopupOpen,
   setIsNewEmploeePopupOpen,
   departments,
 }) => {
+  const [createUser, result] = useCreateUserMutation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -77,7 +80,7 @@ const NewEmployeePopup: FC<{
   const [isPatronymicValid, setIsPatronymicValid] = useState(true);
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
-  const [department, setDepartment] = useState('');
+  const [department, setDepartment] = useState(-1);
   const [isDepartmentValid, setIsDepartmentValid] = useState(true);
   const [position, setPosition] = useState('');
   const [isPositionValid, setIsPositionValid] = useState(true);
@@ -88,7 +91,7 @@ const NewEmployeePopup: FC<{
       isFirstNameValid && isLastNameValid && isPatronymicValid &&
       isEmailValid && isDepartmentValid && isPositionValid &&
       firstName !== '' && lastName !== '' && patronymic !== '' &&
-      email !== '' && department !== '' && position !== '',
+      email !== '' && department !== -1 && position !== '',
     );
   }, [firstName, lastName, patronymic, email, department, position]);
 
@@ -97,7 +100,7 @@ const NewEmployeePopup: FC<{
     setLastName('');
     setPatronymic('');
     setEmail('');
-    setDepartment('');
+    setDepartment(-1);
     setPosition('');
     setIsFirstNameValid(true);
     setIsLastNameValid(true);
@@ -113,7 +116,6 @@ const NewEmployeePopup: FC<{
       { text: 'last-name', method: setLastName },
       { text: 'patronymic', method: setPatronymic },
       { text: 'email', method: setEmail },
-      { text: 'department', method: setDepartment },
       { text: 'position', method: setPosition }].map(({ text, method }) => {
       if (name === text) {
         method(value);
@@ -121,15 +123,16 @@ const NewEmployeePopup: FC<{
     });
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log({
+    await createUser({
       firstName,
       lastName,
-      patronymic,
-      email,
-      department,
       position,
+      patronymic,
+      department,
+      email,
+      role: 'EMP',
     });
     resetForm();
     setIsNewEmploeePopupOpen(false);
@@ -195,7 +198,7 @@ const NewEmployeePopup: FC<{
             </p>
           </div>
           <FormLayout
-            onSubmit={(e) => onSubmit(e)}
+            onSubmit={onSubmit}
             style={{
               width: '100%',
               padding: '0',
@@ -266,7 +269,7 @@ const NewEmployeePopup: FC<{
                 htmlFor='department'
                 top='Отдел'
                 onBlur={() => {
-                  setIsDepartmentValid(department !== '');
+                  setIsDepartmentValid(department !== -1);
                 }}
                 onChange={() => setIsFirstNameValid(true)}
                 status={isDepartmentValid ? 'default' : 'error'}
@@ -275,8 +278,8 @@ const NewEmployeePopup: FC<{
                 <StyledSelect
                   placeholder='Выберите отдел'
                   value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  options={departments?.slice(1) ?? []} />
+                  onChange={(e) => setDepartment(Number(e.target.value))}
+                  options={departments ?? []} />
               </FormItemForNewEmployee>
             </StyledFormLayoutGroup>
             <StyledFormLayoutGroup mode='horizontal'>

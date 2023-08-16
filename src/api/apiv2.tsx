@@ -484,6 +484,7 @@ export const adminUsersApi = createApi({
   endpoints: (build) => ({
     getUsers: build.query<IUser[], void>({
       query: () => GET_ADMIN_USERS,
+      keepUnusedDataFor: 0,
     }),
     createUser: build.mutation<IUser, IUserCreate>({
       query: (body) => ({
@@ -549,7 +550,7 @@ export const {
 } = adminLevelsApi;
 
 export const {
-  // useGetDepartmentsQuery,
+  useGetDepartmentsQuery,
   useCreateDepartmentMutation,
   useGetDepartmentQuery,
   useUpdateDepartmentMutation,
@@ -557,7 +558,7 @@ export const {
 } = adminDepartmentsApi;
 
 export const {
-  // useGetQuizzesQuery,
+  useGetQuizzesQuery,
   useCreateQuizMutation,
   useAssignQuizzesToUsersMutation,
   // useGetQuizQuery,
@@ -582,7 +583,7 @@ export const {
 } = adminVolumesApi;
 
 export const {
-  // useGetUsersQuery,
+  useGetUsersQuery,
   useCreateUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,

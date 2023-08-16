@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable react/no-array-index-key */
@@ -9,14 +10,14 @@
 import { FormItem, IconButton, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import React, { FC, SetStateAction, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Icon24CancelOutline } from '@vkontakte/icons';
 import { TableTitle, TableItem } from '../styled-components/TableItems';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
-import { IQuiz } from '@/types/types';
+import { AdminQuizz } from '@/types/types';
+import { useAssignQuizzesToUsersMutation } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   max-width: 1080px;
@@ -34,12 +35,13 @@ const ChooseQuizzesPopup: FC<{
   setIsChooseQuizzesPopupOpen: any,
   setIsConfirmationPopupOpen: any,
   isChooseQuizzesPopupOpen: boolean,
-  quizzes: any,
+  quizzes: AdminQuizz[] | undefined,
   search: string,
   setSearch: any,
   isChecked: number[],
   setIsChecked: any,
   setIsEmployeeChecked: any,
+  isEmployeeChecked: number[],
 }> = ({
   setIsChooseQuizzesPopupOpen,
   isChooseQuizzesPopupOpen,
@@ -50,10 +52,18 @@ const ChooseQuizzesPopup: FC<{
   isChecked,
   setIsChecked,
   setIsEmployeeChecked,
+  isEmployeeChecked,
 }) => {
-  const dispatch = useDispatch();
-  const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
-    setSearch(e.target.value);
+  const [assignQuizzesToUsers] = useAssignQuizzesToUsersMutation();
+  const assignQuizzes = async () => {
+    await assignQuizzesToUsers({
+      users: isEmployeeChecked.map((userId) => ({ id: userId })),
+      quizes: isChecked.map((quizId) => ({ id: quizId })),
+    });
+    setIsConfirmationPopupOpen(true);
+    setIsChooseQuizzesPopupOpen(false);
+    setIsChecked([]);
+    setIsEmployeeChecked([]);
   };
 
   return (
@@ -104,17 +114,17 @@ const ChooseQuizzesPopup: FC<{
                 padding: '0',
               }}
               value={search}
-              onChange={onChange} />
+              onChange={(e) => setSearch(e.target.value)} />
           </div>
           <StyledDiv style={{ height: '396px', margin: 0, padding: '24px' }}>
             <FormItem style={{ padding: '0' }}>
               <StyledCheckbox
                 style={{ marginBottom: '20px' }}
-                checked={isChecked.length === quizzes.length && quizzes.length !== 0}
+                checked={isChecked.length === quizzes?.length && quizzes?.length !== 0}
                 onClick={() => (
-                  isChecked.length === quizzes.length
+                  isChecked.length === quizzes?.length
                     ? setIsChecked([])
-                    : setIsChecked(quizzes.map((quiz: IQuiz, i: number) => i + 1))
+                    : setIsChecked(quizzes?.map((quiz: AdminQuizz) => quiz.id))
                 )}>
                 <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
                 <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>
@@ -122,7 +132,7 @@ const ChooseQuizzesPopup: FC<{
                 <TableTitle style={{ maxWidth: '100px' }}>Уровень</TableTitle>
               </StyledCheckbox>
               <div style={{ height: '328px', overflow: 'scroll' }}>
-                {quizzes.length === 0 || quizzes === undefined
+                {quizzes?.length === 0 || quizzes === undefined
                   ? (
                     <p
                       style={{
@@ -132,7 +142,7 @@ const ChooseQuizzesPopup: FC<{
                       }}>
                       По вашему запросу ничего не найдено
                     </p>
-                  ) : quizzes.map((quiz: IQuiz, i: number) => (
+                  ) : quizzes.map((quiz: AdminQuizz, i: number) => (
                     <StyledCheckbox
                       style={{ marginTop: '16px' }}
                       key={i}
@@ -149,7 +159,7 @@ const ChooseQuizzesPopup: FC<{
                         {quiz.directory || 'Для всех отделов'}
                       </TableItem>
                       <TableItem style={{ maxWidth: '152px' }}>
-                        {quiz.tags[0].name}
+                        {quiz.tags[0]?.name ?? null}
                       </TableItem>
                       <TableItem style={{ maxWidth: '100px' }}>{quiz.level}</TableItem>
                     </StyledCheckbox>
@@ -160,12 +170,7 @@ const ChooseQuizzesPopup: FC<{
           <StyledButton
             disabled={isChecked.length === 0}
             style={{ minWidth: '167px', marginTop: '28px' }}
-            onClick={() => {
-              setIsConfirmationPopupOpen(true);
-              setIsChooseQuizzesPopupOpen(false);
-              setIsChecked([]);
-              setIsEmployeeChecked([]);
-            }}>
+            onClick={assignQuizzes}>
             Назначить
           </StyledButton>
         </div>
