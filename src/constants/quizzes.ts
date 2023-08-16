@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 
 import { IQuiz } from '@/types/types';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const quizzes: IQuiz[] = [
   {
     id: 1,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -25,12 +26,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -51,7 +52,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 2,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -71,12 +72,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -97,7 +98,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 3,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -117,12 +118,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -143,7 +144,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 4,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -163,12 +164,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -189,7 +190,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 5,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -209,12 +210,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -235,7 +236,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 6,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -255,12 +256,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -281,7 +282,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 7,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -301,12 +302,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -327,7 +328,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 8,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -347,12 +348,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,
@@ -373,7 +374,7 @@ const quizzes: IQuiz[] = [
   },
   {
     id: 9,
-    image: 'http://80.87.106.133/media/quizes/image/Pic.png',
+    image: `${SRC_BASE_URL}/media/quizes/image/Pic.png`,
     description: 'Описание квиза',
     directory: 'Подразделение',
     name: 'Наименование квиза',
@@ -393,12 +394,12 @@ const quizzes: IQuiz[] = [
         id: 0,
         question_type: 'ONE',
         text: 'ответ пользователя',
-        image: 'http://80.87.106.133/media/question/image/Pic.png',
+        image: `${SRC_BASE_URL}/media/question/image/Pic.png`,
         answers: [
           {
             id: 0,
             text: 'ответ пользователя',
-            image: 'http://80.87.106.133/media/answer/image/Pic.png',
+            image: `${SRC_BASE_URL}/media/answer/image/Pic.png`,
             answers_list: [
               {
                 id: 0,

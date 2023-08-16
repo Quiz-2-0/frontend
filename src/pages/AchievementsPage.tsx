@@ -134,7 +134,7 @@ const AchievementsPage: FC = () => {
         {achievements.map((achievement) => (
           <AchieveLi key={achievement.id} achieved={achievement.achived}>
             <AchieveCounter level='3' className='counter'>{`${achievement.points_now}/${achievement.points_to_get}`}</AchieveCounter>
-            <AchieveImg src={`http://80.87.106.133/media/${achievement.image}`} alt={achievement.name} className='achieveImg' />
+            <AchieveImg src={achievement.image} alt={achievement.name} className='achieveImg' />
             <AchieveTitle level='3' className='achieveTitle'>{achievement.name}</AchieveTitle>
             <AchieveDescription weight='3' className='achieveDescription'>{achievement.description}</AchieveDescription>
           </AchieveLi>
