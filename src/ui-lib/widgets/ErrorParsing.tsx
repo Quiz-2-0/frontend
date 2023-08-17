@@ -16,7 +16,24 @@ const StyledUl = styled.ul`
 `;
 
 const ErrorParsing: React.FC<{
-  statistics: Statistic[] | undefined,
+  statistics: {
+    question_type: string,
+    question: string,
+    explanation: string,
+    answer: string,
+    user_answer: string,
+    is_right: boolean,
+    answers: {
+      answer_text: string,
+      answered: boolean,
+      answer_right: boolean,
+      is_right: boolean,
+      answer_list: {
+        text: string,
+        answer_right: boolean,
+      }[],
+    }[],
+  }[] | undefined,
   questions: Question[],
 }> = ({ statistics, questions }) => (
   <StyledUl>
@@ -26,16 +43,16 @@ const ErrorParsing: React.FC<{
           <div> </div>
           <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
         </>
-      ) : questions.map((question, i) => (
+      ) : statistics.map((statistic, i) => (
         <Dropdown
           index={i + 1}
-          name={question.text}
-          description={statistics[i]?.explanation}
-          answers={question.answers}
+          name={statistic.question}
+          description={statistic.explanation}
+          answers={statistic.answers}
           isReview
-          isRight={statistics[i]?.isRight}
-          rightAnswer={statistics[i]?.right_answer}
-          userAnswer={statistics[i]?.user_answer} />
+          isRight={statistic.is_right}
+          rightAnswer={statistic.answer}
+          userAnswer={statistic.user_answer} />
       ))}
   </StyledUl>
 );

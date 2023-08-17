@@ -4,27 +4,37 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-import React, { FC, useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable ternary/no-unreachable */
+import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Title, Text, Div } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '../styled-components/StyledButton';
-import image from '@/assets/images/results__image.png';
+import successImage from '@/assets/images/results_success.png';
+import failImage from '@/assets/images/results_fail.png';
 import { useGetStatisticQuery } from '@/api/apiv2';
-import { pluralsFull } from '@/constants/plurals';
 
 const Results: FC<{
-  questions: number,
   quizName: string | undefined,
-}> = ({ questions, quizName }) => {
+}> = ({ quizName }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [rightAnswers, setRightAnswers] = useState<number | undefined>(0);
-
   const { data, error, isLoading } = useGetStatisticQuery(Number(id));
-  useEffect(() => {
-    setRightAnswers(data?.filter((answ) => (answ !== undefined && answ.isRight === true)).length);
-  }, [data]);
+
+  const handleFirstButtonClick = () => {
+    if (data && data.result === false) {
+      navigate(`/quizzes/${id}`);
+    } else {
+      navigate(`/quizzes/${id}/review`);
+    }
+  };
+  const handleSecondButtonClick = () => {
+    navigate(`/quizzes/${id}`);
+  };
 
   return (
     <Div style={{
@@ -39,8 +49,8 @@ const Results: FC<{
       margin: '40px auto 0',
     }}>
       <img
-        src={image}
-        alt='Поздравляем!'
+        src={data?.result ? successImage : failImage}
+        alt={data?.result ? 'Поздравляем!' : 'Квиз не пройден'}
         style={{
           width: '400px',
           borderRadius: '8px',
@@ -51,7 +61,7 @@ const Results: FC<{
       <Title
         weight='3'
         style={{ paddingTop: '8px', fontWeight: 500, textAlign: 'center' }}>
-        {`Квиз «${quizName}» пройден!`}
+        {data?.result ? `Квиз «${quizName}» пройден!` : `Квиз «${quizName}» не пройден!`}
       </Title>
       <Text style={{
         fontSize: '20px',
@@ -59,7 +69,7 @@ const Results: FC<{
         letterSpacing: '0.38px',
         textAlign: 'center',
       }}>
-        {`Вы ответили правильно на ${pluralsFull.questions(rightAnswers ?? 0)} из ${questions}`}
+        {data?.info}
       </Text>
       <Div
         style={{
@@ -68,30 +78,30 @@ const Results: FC<{
           display: 'flex',
           gap: '12px',
         }}>
-        {rightAnswers !== questions && (
-          <StyledButton
-            mode='outline'
-            onClick={() => navigate(`/quizzes/${id}/review`)}
-            style={{
-              width: '167px',
-              margin: 0,
-              fontSize: '15px',
-              lineHeight: '20px',
-              letterSpacing: '-0.24px',
-            }}>
-            Разобрать ошибки
-          </StyledButton>
-        )}
         <StyledButton
-          onClick={() => navigate(`/quizzes/${id}`)}
+          onClick={handleFirstButtonClick}
           style={{
-            width: '167px',
+            minWidth: '167px',
+            width: 'fit-content',
             margin: 0,
             fontSize: '15px',
             lineHeight: '20px',
             letterSpacing: '-0.24px',
           }}>
-          Пройти заново
+          {data?.result ? 'Разобрать ошибки' : 'Пройти заново'}
+        </StyledButton>
+        <StyledButton
+          mode='outline'
+          onClick={handleSecondButtonClick}
+          style={{
+            minWidth: '167px',
+            width: 'fit-content',
+            margin: 0,
+            fontSize: '15px',
+            lineHeight: '20px',
+            letterSpacing: '-0.24px',
+          }}>
+          {data?.result ? 'Пройти заново' : 'Справочный материал'}
         </StyledButton>
       </Div>
     </Div>

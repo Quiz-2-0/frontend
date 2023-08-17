@@ -188,7 +188,7 @@ export const quizApi = createApi({
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
     }),
-    getStatistic: build.query<Statistic[], number>({
+    getStatistic: build.query<Statistic, number>({
       query: (id: number) => `${ALL_QUIZES}${id}/statistic/`,
       keepUnusedDataFor: 0,
     }),

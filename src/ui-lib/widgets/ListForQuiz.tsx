@@ -3,6 +3,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
@@ -35,7 +36,24 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   const { data: quizData } = useGetQuizQuery(Number(id));
   const { data: statisticsData } = useGetStatisticQuery(Number(id));
   const [questions, setQuestions] = useState(quizData ? quizData.questions : []);
-  const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
+  const [statistics, setStatistics] = useState<{
+    question_type: string;
+    question: string;
+    explanation: string;
+    answer: string;
+    user_answer: string;
+    is_right: boolean;
+    answers: {
+      answer_text: string;
+      answered: boolean;
+      answer_right: boolean;
+      is_right: boolean;
+      answer_list: {
+        text: string;
+        answer_right: boolean
+      }[];
+    }[];
+  }[] | undefined>([]);
   const [listType, setListType] = useState('about');
   const quizTypeFilter = (type: string) => {
     setListType(type);
@@ -46,7 +64,9 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
   }, [quizData]);
 
   useEffect(() => {
-    setStatistics(statisticsData);
+    if (statisticsData) {
+      setStatistics(statisticsData.statistics);
+    }
   }, [statisticsData]);
 
   return (
