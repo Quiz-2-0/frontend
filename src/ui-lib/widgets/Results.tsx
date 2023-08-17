@@ -23,7 +23,7 @@ const Results: FC<{
 
   const { data, error, isLoading } = useGetStatisticQuery(Number(id));
   useEffect(() => {
-    setRightAnswers(data?.filter((answ) => (answ !== undefined && answ.isRight === true)).length);
+    setRightAnswers(data?.filter((answer) => (answer !== undefined && answer.is_right)).length);
   }, [data]);
 
   return (

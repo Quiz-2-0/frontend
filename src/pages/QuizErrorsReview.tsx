@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
   Div,
@@ -33,7 +32,6 @@ const QuizErrorsReview: React.FC = () => {
   const [questions, setQuestions] = useState(data ? data.questions : []);
   const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
@@ -57,9 +55,9 @@ const QuizErrorsReview: React.FC = () => {
         {data?.name}
       </Title>
       <ReviewDetails
-        data='14 июля 2023'
-        questionsAmount={data?.questions.length || 0}
-        rightQuestionsAmount={stata?.filter((el) => el.isRight === true).length || 0} />
+        data='18 августа 2023'
+        questionsAmount={data?.questions.length ?? 0}
+        rightQuestionsAmount={stata?.filter((el) => el.is_right).length ?? 0} />
       <ErrorParsing statistics={statistics} questions={questions} />
       <StyledButtonWrapper>
         <StyledButton onClick={() => navigate(`/quizzes/${id}`)}>Пройти снова</StyledButton>

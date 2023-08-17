@@ -74,7 +74,7 @@ const StyledAnswersList = styled.ul <{ isReview: boolean }>`
   flex-wrap: wrap;
 `;
 
-const StyledAnswerItem = styled.li <{ isRight: '#FFD6CC' | '#DEF0D3' | 'transparent' }>`
+const StyledAnswerItem = styled.li <{ isRight: '#DEF0D3' | '#FFD6CC' | 'transparent' }>`
   margin: 0;
   padding: 16px;
   border: ${({ isRight }) => (isRight === 'transparent' ? '1px solid #DCE1E6' : 'none')};
@@ -86,7 +86,15 @@ const Dropdown: FC<{
   index: number | null,
   name: string,
   description: string,
-  answers: Partial<Answer>[],
+  answers: {
+    answer_text: string,
+    answered: boolean,
+    answer_right: boolean,
+    answer_list: {
+      text: string,
+      answer_right: boolean
+    }[],
+  }[],
   isReview: boolean,
   isRight?: boolean,
   rightAnswer?: string,
@@ -121,11 +129,15 @@ const Dropdown: FC<{
           ? null
           : (
             <StyledAnswersList isReview={isReview}>
-              {answers.map((answer) => (
-                <StyledAnswerItem isRight={rightAnswer === answer.text ? '#DEF0D3' : (userAnswer === answer.text ? '#FFD6CC' : 'transparent')}>
-                  {answer.text}
-                </StyledAnswerItem>
-              ))}
+              {answers.map((answer) => {
+                console.log(answer);
+                return (
+                  <StyledAnswerItem
+                    isRight={answer.answer_right ? '#DEF0D3' : answer.answered ? '#FFD6CC' : 'transparent'}>
+                    {answer.answer_text}
+                  </StyledAnswerItem>
+                );
+              })}
             </StyledAnswersList>
           )}
         <TextDiv>

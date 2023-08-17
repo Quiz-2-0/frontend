@@ -204,11 +204,21 @@ export interface TAnswerItem {
 }
 
 export interface Statistic {
-  explanation: string;
-  isRight: boolean;
+  question_type: string;
   question: string;
-  right_answer: string;
+  explanation: string;
+  answer: string;
   user_answer: string;
+  is_right: boolean;
+  answers: {
+    answer_text: string;
+    answered: boolean;
+    answer_right: boolean;
+    answer_list: {
+      text: string;
+      answer_right: boolean
+    }[];
+  }[];
 }
 
 export interface Item {
