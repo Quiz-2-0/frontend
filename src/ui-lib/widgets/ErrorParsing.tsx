@@ -16,7 +16,24 @@ const StyledUl = styled.ul`
 `;
 
 const ErrorParsing: React.FC<{
-  statistics: Statistic[] | undefined,
+  statistics: {
+    question_type: string,
+    question: string,
+    explanation: string,
+    answer: string,
+    user_answer: string,
+    is_right: boolean,
+    answers: {
+      answer_text: string,
+      answered: boolean,
+      answer_right: boolean,
+      is_right: boolean,
+      answer_list: {
+        text: string,
+        answer_right: boolean,
+      }[],
+    }[],
+  }[] | undefined,
   questions: Question[],
 }> = ({ statistics, questions }) => (
   <StyledUl>

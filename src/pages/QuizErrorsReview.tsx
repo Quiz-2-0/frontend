@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
@@ -13,7 +17,6 @@ import { useGetQuizQuery, useGetStatisticQuery } from '@/api/apiv2';
 import ReviewDetails from '@/ui-lib/widgets/ReviewDetails';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import ErrorParsing from '@/ui-lib/widgets/ErrorParsing';
-import { Statistic } from '@/types/types';
 
 const StyledButtonWrapper = styled(Div)`
   margin: 0;
@@ -30,16 +33,11 @@ const QuizErrorsReview: React.FC = () => {
   const { data } = useGetQuizQuery(Number(id));
   const { data: stata } = useGetStatisticQuery(Number(id));
   const [questions, setQuestions] = useState(data ? data.questions : []);
-  const [statistics, setStatistics] = useState<Statistic[] | undefined>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     setQuestions(data ? data.questions : []);
   }, [data]);
-
-  useEffect(() => {
-    setStatistics(stata);
-  }, [stata]);
 
   return (
     <Div style={{
@@ -57,8 +55,8 @@ const QuizErrorsReview: React.FC = () => {
       <ReviewDetails
         data='18 августа 2023'
         questionsAmount={data?.questions.length ?? 0}
-        rightQuestionsAmount={stata?.filter((el) => el.is_right).length ?? 0} />
-      <ErrorParsing statistics={statistics} questions={questions} />
+        rightQuestionsAmount={stata?.statistics.filter((el) => el.is_right).length ?? 0} />
+      <ErrorParsing statistics={stata?.statistics} questions={questions} />
       <StyledButtonWrapper>
         <StyledButton onClick={() => navigate(`/quizzes/${id}`)}>Пройти снова</StyledButton>
         <StyledButton

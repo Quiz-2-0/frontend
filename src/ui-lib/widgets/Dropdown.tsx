@@ -90,6 +90,7 @@ const Dropdown: FC<{
     answer_text: string,
     answered: boolean,
     answer_right: boolean,
+    is_right: boolean;
     answer_list: {
       text: string,
       answer_right: boolean
@@ -129,15 +130,12 @@ const Dropdown: FC<{
           ? null
           : (
             <StyledAnswersList isReview={isReview}>
-              {answers.map((answer) => {
-                console.log(answer);
-                return (
-                  <StyledAnswerItem
-                    isRight={answer.answer_right ? '#DEF0D3' : answer.answered ? '#FFD6CC' : 'transparent'}>
-                    {answer.answer_text}
-                  </StyledAnswerItem>
-                );
-              })}
+              {answers.map((answer) => (
+                <StyledAnswerItem
+                  isRight={answer.is_right ? '#DEF0D3' : answer.answered ? '#FFD6CC' : 'transparent'}>
+                  {answer.answer_text}
+                </StyledAnswerItem>
+              ))}
             </StyledAnswersList>
           )}
         <TextDiv>
