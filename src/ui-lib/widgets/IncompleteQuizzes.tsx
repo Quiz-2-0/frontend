@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import {
   Title,
@@ -11,8 +13,6 @@ import QuizCard from './QuizCard';
 
 const IncompleteQuizzes: React.FC = () => {
   const { data: incompleteQuizzes } = useGetIncompleteQuizzesQuery();
-
-  console.log(incompleteQuizzes);
 
   return (
     <StyledDiv
@@ -46,7 +46,8 @@ const IncompleteQuizzes: React.FC = () => {
       ) : (
         <QuizCardList
           quizList={incompleteQuizzes}
-          setIsConfirmationPopupOpen={undefined} />
+          setIsConfirmationPopupOpen={undefined}
+          isCompleted />
       )}
     </StyledDiv>
   );
