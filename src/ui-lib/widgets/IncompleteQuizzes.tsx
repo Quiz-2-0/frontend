@@ -47,7 +47,7 @@ const IncompleteQuizzes: React.FC = () => {
         <QuizCardList
           quizList={incompleteQuizzes}
           setIsConfirmationPopupOpen={undefined}
-          isCompleted />
+          isIncomplete />
       )}
     </StyledDiv>
   );

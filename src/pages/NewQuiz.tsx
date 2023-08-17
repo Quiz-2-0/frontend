@@ -37,7 +37,7 @@ const NewQuiz: React.FC = () => {
           <QuizCardList
             quizList={quizzes}
             setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
-            isCompleted={false} />
+            isIncomplete={false} />
         </StyledDiv>
       </div>
       <ConfirmationPopup
