@@ -72,7 +72,7 @@ const Quizzes: FC = () => {
       <QuizCardList
         quizList={search !== '' ? quizNameFilter : quizzesOnPage}
         setIsConfirmationPopupOpen={undefined}
-        isCompleted={false} />
+        isIncomplete={false} />
     </StyledDiv>
   );
 };

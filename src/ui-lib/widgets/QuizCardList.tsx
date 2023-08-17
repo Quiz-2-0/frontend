@@ -7,7 +7,7 @@ import QuizCard from './QuizCard';
 
 import { AdminQuizz, IQuiz } from '@/types/types';
 
-const StyledQuizListContainer = styled.ul<{ isCompleted: boolean }>`
+const StyledQuizListContainer = styled.ul<{ isIncomplete: boolean }>`
   margin: 0;
   padding: 0;
   width: 100%;
@@ -18,20 +18,20 @@ const StyledQuizListContainer = styled.ul<{ isCompleted: boolean }>`
   align-items: start;
   justify-content: space-between;
   align-content: start;
-  gap: ${({ isCompleted }) => (isCompleted ? '18px 24px' : '42px')};;
+  gap: ${({ isIncomplete }) => (isIncomplete ? '18px 24px' : '42px')};;
 `;
 
 const QuizCardList: FC<{
   quizList: IQuiz[] | undefined | AdminQuizz[],
   setIsConfirmationPopupOpen: any,
-  isCompleted: boolean,
-}> = ({ quizList, setIsConfirmationPopupOpen, isCompleted }) => {
+  isIncomplete: boolean,
+}> = ({ quizList, setIsConfirmationPopupOpen, isIncomplete }) => {
   const localStorageRole = localStorage.getItem('role') || '';
   const sessionStorageRole = sessionStorage.getItem('role') || '';
   const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
 
   return (
-    <StyledQuizListContainer isCompleted={isCompleted}>
+    <StyledQuizListContainer isIncomplete={isIncomplete}>
       {quizList?.length === 0 || quizList === undefined
         ? (
           <>
