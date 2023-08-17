@@ -7,26 +7,31 @@ import QuizCard from './QuizCard';
 
 import { AdminQuizz, IQuiz } from '@/types/types';
 
-const StyledQuizListContainer = styled.ul`
+const StyledQuizListContainer = styled.ul<{ isCompleted: boolean }>`
   margin: 0;
   padding: 0;
   width: 100%;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 42px;
+  justify-items: start;
+  align-items: start;
+  justify-content: space-between;
+  align-content: start;
+  gap: ${({ isCompleted }) => (isCompleted ? '18px 24px' : '42px')};;
 `;
 
 const QuizCardList: FC<{
   quizList: IQuiz[] | undefined | AdminQuizz[],
   setIsConfirmationPopupOpen: any,
-}> = ({ quizList, setIsConfirmationPopupOpen }) => {
+  isCompleted: boolean,
+}> = ({ quizList, setIsConfirmationPopupOpen, isCompleted }) => {
   const localStorageRole = localStorage.getItem('role') || '';
   const sessionStorageRole = sessionStorage.getItem('role') || '';
   const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
 
   return (
-    <StyledQuizListContainer>
+    <StyledQuizListContainer isCompleted={isCompleted}>
       {quizList?.length === 0 || quizList === undefined
         ? (
           <>

@@ -36,7 +36,8 @@ const NewQuiz: React.FC = () => {
           <Title level='1' style={{ marginBottom: '28px' }}>Черновики</Title>
           <QuizCardList
             quizList={quizzes}
-            setIsConfirmationPopupOpen={setIsConfirmationPopupOpen} />
+            setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+            isCompleted={false} />
         </StyledDiv>
       </div>
       <ConfirmationPopup
