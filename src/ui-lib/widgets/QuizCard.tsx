@@ -5,6 +5,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable camelcase */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable ternary/nesting */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
@@ -135,6 +137,7 @@ const QuizCard: React.FC<QuizCardProps> = (
     question_amount,
     tags,
     isPassed,
+    isIncomplete,
   },
 ) => {
   const navigate = useNavigate();
@@ -200,7 +203,7 @@ const QuizCard: React.FC<QuizCardProps> = (
         </StyledQuizDetailsWrapper>
         {isPassed !== ''
           ? (
-            <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : 'Начать квиз'}</StyledButton>
+            <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : isIncomplete ? 'Продолжить квиз' : 'Начать квиз'}</StyledButton>
           ) : (
             <Buttons className='btns'>
               <StyledButton

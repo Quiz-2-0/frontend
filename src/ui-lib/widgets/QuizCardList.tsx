@@ -42,7 +42,8 @@ const QuizCardList: FC<{
           level={quiz.level}
           isPassed={'isPassed' in quiz ? quiz.isPassed : ''}
           question_amount={quiz.question_amount}
-          tags={quiz.tags} />
+          tags={quiz.tags}
+          isIncomplete={isIncomplete} />
       ))}
   </StyledQuizListContainer>
 );
