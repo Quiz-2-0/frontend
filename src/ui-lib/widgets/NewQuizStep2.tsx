@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable import/no-cycle */
@@ -24,7 +25,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import { FormElements, SetFormElements, StepProps } from '../../constants/steps';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
 import { IQuestionAdmin } from '@/types/types';
-import { useCreateQuestionMutation } from '@/api/apiv2';
+import { useCreateQuestionMutation, useCreateQuestionsListMutation } from '@/api/apiv2';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
@@ -85,6 +86,7 @@ const NewQuizStep2: FC<StepProps> = ({
   const { isQuestionTypeValid } = formElements;
   const { setIsQuestionTypeValid } = setFormElements;
   const { setQuestionsList } = setFormElements;
+  const [createQuestionsList] = useCreateQuestionsListMutation();
 
   const renderElement = (typeName: string, question: IQuestionAdmin) => {
     const type = questionTypes.find(({ shortname }) => (typeName === shortname)) ?? { id: -1, name: '', markup: { Component: () => null } };
@@ -96,19 +98,26 @@ const NewQuizStep2: FC<StepProps> = ({
     );
   };
 
+  const onSubmit = async () => {
+    await createQuestionsList({
+      quizId,
+      questions: questionsList,
+    });
+    setNextPage();
+    setIsSubmit([false, false, false, false]);
+  };
+
   useEffect(() => {
     const isDisabled: boolean = questionsList.some(({ text, question_type, answers }) => (
       text !== '' && question_type !== '' && answers?.some((answer) => answer.text !== '')
       && answers.length > 0
-      /* && answers?.some(({ isRight }) => isRight === true) */
     ));
     setIsButtonDisabled(isDisabled);
   }, [questionsList]);
 
   useEffect(() => {
     if (isSubmit[1]) {
-      setNextPage();
-      setIsSubmit([false, false, false, false]);
+      onSubmit();
     }
   }, [isSubmit]);
   console.log(questionsList);

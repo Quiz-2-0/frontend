@@ -1,3 +1,5 @@
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -30,6 +32,7 @@ const Staff: FC = () => {
 
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [isNewEmployeeAdd, setIsNewEmployeeAdd] = useState(false);
   const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
 
   const { data: staff } = useGetUsersQuery(undefined, {
@@ -112,6 +115,7 @@ const Staff: FC = () => {
           setIsChecked={setIsEmployeeChecked} />
       </StyledDiv>
       <ChooseQuizzesPopup
+        setIsNewEmployeeAdd={setIsNewEmployeeAdd}
         isChecked={isQuizChecked}
         setIsChecked={setIsQuizChecked}
         quizzes={searchQuiz !== '' ? quizNameFilter : quizzes}
@@ -123,30 +127,30 @@ const Staff: FC = () => {
         setIsEmployeeChecked={setIsEmployeeChecked}
         isEmployeeChecked={isEmployeeChecked} />
       <ConfirmationPopup
-        quizId={isQuizChecked.length === 1 ? isQuizChecked[0] : NaN}
-        title={isQuizChecked.length === 1 ? 'Квиз назначен' : 'Квизы назначены'}
+        quizId={isNewEmployeeAdd
+          ? NaN
+          : (isQuizChecked.length === 1 ? isQuizChecked[0] : NaN)}
+        title={isNewEmployeeAdd
+          ? 'Новый сотрудник добавлен'
+          : (isQuizChecked.length === 1 ? 'Квиз назначен' : 'Квизы назначены')}
         icon='check'
-        description='Проверить назначение квизов можно в разделе «Назначенные квизы»'
-        blueButton='Вернуться к списку'
-        whiteButton='Проверить'
+        description={isNewEmployeeAdd
+          ? 'Новому сотруднику можно назначить квиз'
+          : 'Проверить назначение квизов можно в разделе «Назначенные квизы»'}
+        blueButton={isNewEmployeeAdd
+          ? 'Назначить квиз'
+          : 'Вернуться к списку'}
+        whiteButton={isNewEmployeeAdd
+          ? 'Вернуться к списку'
+          : 'Проверить'}
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
-        setIsChooseQuizzesPopupOpen={NaN}
+        setIsChooseQuizzesPopupOpen={isNewEmployeeAdd ? setIsChooseQuizzesPopupOpen : NaN}
         blueButtonLink=''
-        whiteButtonLink='/adm-quizzes' />
-      <ConfirmationPopup
-        quizId={NaN}
-        title='Новый сотрудник добавлен'
-        icon='check'
-        description='Новому сотруднику можно назначить квиз'
-        blueButton='Назначить квиз'
-        whiteButton='Вернуться к списку'
-        isConfirmationPopupOpen={isConfirmationPopupOpen}
-        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
-        setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
-        blueButtonLink=''
-        whiteButtonLink='/adm-quizzes' />
+        whiteButtonLink={isNewEmployeeAdd ? '' : '/adm-quizzes'} />
       <NewEmployeePopup
+        setIsNewEmployeeAdd={setIsNewEmployeeAdd}
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
         setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
         departments={departmentsList} />

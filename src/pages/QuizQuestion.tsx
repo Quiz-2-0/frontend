@@ -223,7 +223,7 @@ const QuizQuestion: React.FC = () => {
                   return (
                     <DragAndDropQuestion
                       boardTitles={getBoardTitles()}
-                      answers={getBoardAnswers()}
+                      answersList={getBoardAnswers()}
                       selectListAnswers={selectListAnswers} />
                   );
                 default:

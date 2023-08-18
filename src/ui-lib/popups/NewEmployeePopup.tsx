@@ -65,11 +65,15 @@ const FormItemForNewEmployee = styled(StyledFormItem)`
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
   setIsNewEmploeePopupOpen: any,
+  setIsNewEmployeeAdd: any,
+  setIsConfirmationPopupOpen: any,
   departments: { label: string; value: number }[] | undefined,
 }> = ({
   isNewEmployeePopupOpen,
   setIsNewEmploeePopupOpen,
   departments,
+  setIsNewEmployeeAdd,
+  setIsConfirmationPopupOpen,
 }) => {
   const [createUser] = useCreateUserMutation();
   const [firstName, setFirstName] = useState('');
@@ -135,6 +139,8 @@ const NewEmployeePopup: FC<{
     }).then((data: any) => console.log(data));
     resetForm();
     setIsNewEmploeePopupOpen(false);
+    setIsNewEmployeeAdd(true);
+    setIsConfirmationPopupOpen(true);
   };
 
   return (

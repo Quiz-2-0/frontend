@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -26,26 +27,26 @@ const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
     questionsList,
     setQuestionsList,
     boardTitles,
-    answers,
+    answersList,
     selectListAnswers,
   },
 ) => {
   const [boards, setBoards] = useState<{ id: number, text: string, items: Item[] }[]>(boardTitles);
-  const [cards, setCards] = useState<Item[]>(answers);
+  const [cards, setCards] = useState<Item[]>(answersList);
   useEffect(() => {
     setBoards(boardTitles);
-    setCards(answers);
-  }, [boardTitles, answers]);
+    setCards(answersList);
+  }, [boardTitles, answersList]);
 
   const addItemToBoard = (id: number, boardId: number) => {
     let b = boards;
     const c = cards.filter((card) => card.id !== id);
-    const filteredItem = answers.find((item) => id === item.id);
+    const filteredItem = answersList.find((item) => id === item.id);
     if (filteredItem) {
       b = boards.map((board) => (
-        boardId === board.id && !board.items.includes(filteredItem)
+        boardId === board.id && !board.items?.includes(filteredItem)
           ? { ...board, items: [...board.items, filteredItem] }
-          : { ...board, items: board.items.filter((item) => item !== filteredItem) }
+          : { ...board, items: board.items?.filter((item) => item !== filteredItem) }
       ));
     }
 
@@ -58,10 +59,16 @@ const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
   };
 
   useEffect(() => {
-    console.log(boards, question, questionsList);
     if (question !== undefined && questionsList !== undefined) {
       setQuestionsList(questionsList.map((quest) => (
-        quest.id === question.id ? { ...quest, answers: boards } : quest)));
+        quest.id === question.id ? { ...quest,
+          answers: boards.map((board) => ({
+            text: board.text,
+            answers: board.items?.map((item) => ({
+              text: item.text,
+            })),
+            answers_list: [],
+          })) } : quest)));
     }
   }, [boards]);
 

@@ -40,7 +40,7 @@ const DragAndDropBoard: React.FC<BoardProps> = ({ title, board, onItemMove }) =>
   return (
     <DnDBoard ref={drop}>
       <Headline weight='2' style={{ padding: '8px' }}>{title}</Headline>
-      {board.map((item) => (
+      {board?.map((item) => (
         <DragAndDropCard
           key={item.id}
           id={item.id}

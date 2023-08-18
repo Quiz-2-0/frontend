@@ -7,7 +7,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable ternary/nesting */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   Headline,
@@ -26,6 +26,7 @@ import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer'
 import { QuizCardProps } from '@/types/types';
 import { pluralsFull } from '@/constants/plurals';
 import ConfirmationPopup from '../popups/ConfirmationPopup';
+import { useGetLevelsQuery } from '@/api/apiv2';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -140,11 +141,16 @@ const QuizCard: React.FC<QuizCardProps> = (
     isIncomplete,
   },
 ) => {
+  const { data: quizLevels } = useGetLevelsQuery();
+  const [levels, setLevels] = useState(quizLevels ?? []);
   const navigate = useNavigate();
   const onButtonClick = () => {
     navigate(`/quizzes/${id}`);
   };
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  useEffect(() => {
+    setLevels(quizLevels ?? []);
+  });
 
   return (
     <StyledQuizContainer>

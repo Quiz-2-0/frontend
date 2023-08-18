@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
@@ -15,8 +16,9 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
   const [categories, setCategories] = useState<{
     id: number,
     text: string,
-    items: { id: number, text: string }[],
-  }[]>([{ id: 0, text: '', items: [] }]);
+    answers: { id: number, text: string }[],
+    answers_list: any,
+  }[]>([{ id: 0, text: '', answers: [], answers_list: [] }]);
   const [isAnswerValid, setIsAnswerValid] = useState<{
     isValid: boolean,
     id: number,
@@ -28,7 +30,7 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
 
   useEffect(() => {
     if (categories.length === 0) {
-      setCategories([{ id: 0, text: '', items: [] }]);
+      setCategories([{ id: 0, text: '', answers: [], answers_list: [] }]);
       setIsCategoryValid([{ isValid: true, id: 0 }]);
     }
     if (answers.length === 0) {
@@ -69,7 +71,11 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
         setQuestionsList={setQuestionsList}
         questionType='LST'
         answers={answers}
-        categories={categories}
+        categories={categories.map((category) => ({
+          id: category.id,
+          text: category.text,
+          items: [],
+        }))}
         title='Правильное соотношение'
         description='Создайте элементы для соотношения с категориями'
         placeholder='' />

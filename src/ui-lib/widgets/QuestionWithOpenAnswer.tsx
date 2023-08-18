@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { FC, useState } from 'react';
 import { FormLayoutGroup } from '@vkontakte/vkui';
@@ -44,7 +45,7 @@ const QuestionWithOpenAnswer: FC<QuestionTypeProps> = ({
           onChange={(e) => {
             setQuestionsList(questionsList.map((quest) => (
               quest.id === question.id
-                ? { ...quest, answers: [{ id: 0, text: e.target.value }] }
+                ? { ...quest, answers: [{ id: 0, text: e.target.value, answers_list: [] }] }
                 : quest
             )));
           }} />

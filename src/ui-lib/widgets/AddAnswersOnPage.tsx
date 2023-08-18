@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable ternary/no-dupe */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -20,7 +21,7 @@ import { Icon16CancelCircleOutline, Icon20ChevronRight, Icon28AddCircleOutline }
 import styled from 'styled-components';
 import StyledFormItem from '../styled-components/StyledFormItem';
 import StyledButton from '../styled-components/StyledButton';
-import DragAndDropQuestion from './DragAndDropQuestion';
+import DragAndDropQuestion from '@/ui-lib/widgets/DragAndDropQuestion';
 import { IQuestionAdmin } from '@/types/types';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
@@ -123,7 +124,7 @@ const AddAnswersOnPage: FC<{
   title: string,
   description: string,
   placeholder: string,
-  answers: { id: number, text: string, isRight?: boolean }[],
+  answers: { id: number, text: string, is_right?: boolean }[],
   setAnswers?: any,
   isAnswerValid?: { id: number, isValid: boolean }[],
   setIsAnswerValid?: any,
@@ -149,7 +150,7 @@ const AddAnswersOnPage: FC<{
       setIsOpen(false);
     }
   }, [categories, answers]);
-
+  console.log(answers);
   return (
     <FormItemForNewQuiz
       top={title}>
@@ -178,16 +179,16 @@ const AddAnswersOnPage: FC<{
             {answers.map((answer) => (
               <StyledCheckbox
                 questionType={questionType}
-                checked={answer.isRight}
+                checked={answer.is_right}
                 onClick={() => {
                   questionType === 'ONE'
                     ? setAnswers(answers.map((answ) => (
                       answ.id === answer.id
-                        ? { ...answ, isRight: !answer.isRight }
-                        : { ...answ, isRight: answer.isRight })))
+                        ? { ...answ, is_right: !answer.is_right }
+                        : { ...answ, is_right: answer.is_right })))
                     : setAnswers(answers.map((answ) => (
                       answ.id === answer.id && questionType !== 'LST'
-                        ? { ...answ, isRight: !answer.isRight } : answ)));
+                        ? { ...answ, is_right: !answer.is_right } : answ)));
                 }}
                 key={answer.id}>
                 <StyledInput
@@ -250,7 +251,7 @@ const AddAnswersOnPage: FC<{
               questionsList={questionsList}
               setQuestionsList={setQuestionsList}
               boardTitles={categories ?? [{ id: 0, text: '', items: [] }]}
-              answers={answers} />
+              answersList={answers} />
           ) : (
             (categories?.length ?? 0) > 1 && answers.length > 1 && (
               <StyledButton

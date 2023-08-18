@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import QuizCard from './QuizCard';
+import QuizCard from '@/ui-lib/widgets/QuizCard';
 import { AdminQuizz, IQuiz } from '@/types/types';
 
 const StyledQuizListContainer = styled.ul<{ isIncomplete: boolean }>`

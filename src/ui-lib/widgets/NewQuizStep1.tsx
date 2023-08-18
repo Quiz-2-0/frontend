@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -102,7 +103,7 @@ const NewQuizStep1: FC<StepProps> = ({
     })) ?? [],
   );
 
-  const [createQuiz, result] = useCreateQuizMutation();
+  const [createQuiz, data] = useCreateQuizMutation();
   const [updateQuiz] = useUpdateQuizMutation();
 
   const onSubmit = async () => {
@@ -117,6 +118,9 @@ const NewQuizStep1: FC<StepProps> = ({
           { id: category },
         ],
       });
+      if (data?.data?.id !== undefined) {
+        setQuizId(data?.data?.id);
+      }
     } else {
       await updateQuiz({
         quizId: Number(id) ?? 0,
@@ -178,12 +182,6 @@ const NewQuizStep1: FC<StepProps> = ({
       && !Number.isNaN(level) && department !== '' && description.length > 20,
     );
   }, [quizName, category, department, level, description]);
-
-  useEffect(() => {
-    if (result.data?.id !== undefined) {
-      setQuizId(result.data?.id);
-    }
-  }, [result]);
 
   return (
     <StyledDiv style={{ height: 'min-content' }}>

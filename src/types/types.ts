@@ -139,7 +139,7 @@ export interface DragAndDropQuestionProps {
   questionsList?: IQuestionAdmin[] | undefined,
   setQuestionsList?: any,
   boardTitles: BoardTitlesProps[];
-  answers: BoardAnswersProps[];
+  answersList: BoardAnswersProps[];
   selectListAnswers?: (boards: BoardTitlesProps[]) => void
 }
 

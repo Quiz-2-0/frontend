@@ -54,7 +54,6 @@ const NewQuizStep4: FC<StepProps> = ({
   quizId,
   isSubmit,
   setIsSubmit,
-  setNextPage,
 }) => {
   const { data: quiz, error } = useGetAdminQuizQuery(quizId, {
     refetchOnMountOrArgChange: true,
@@ -78,9 +77,11 @@ const NewQuizStep4: FC<StepProps> = ({
   }, [quiz]);
 
   const onSubmit = async () => {
+    console.log('update');
     await updateQuiz({
       quizId,
       quiz: {
+        image,
         description: quiz?.description,
         directory: quiz?.directory,
         duration: time,
@@ -90,7 +91,6 @@ const NewQuizStep4: FC<StepProps> = ({
         tags: quiz?.tags,
       },
     });
-    setNextPage();
     setIsSubmit([false, false, false, false]);
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -13,8 +14,9 @@ const QuestionWithMoreThenTwoAnswers: FC<QuestionTypeProps> = ({
   const [answers, setAnswers] = useState<{
     id: number,
     text: string,
-    isRight: boolean,
-  }[]>([{ id: 0, text: '', isRight: false }]);
+    is_right: boolean,
+    answers_list: any,
+  }[]>([{ id: 0, text: '', is_right: false, answers_list: [] }]);
   const [isAnswerValid, setIsAnswerValid] = useState<{
     isValid: boolean,
     id: number,
@@ -23,12 +25,17 @@ const QuestionWithMoreThenTwoAnswers: FC<QuestionTypeProps> = ({
   useEffect(() => {
     if (answers.length === 0) {
       setQuestionsList(questionsList.map((quest) => (
-        quest.id === question.id ? { ...quest, answers: [{ id: 0, text: '' }] } : quest
+        quest.id === question.id ? { ...quest, answers: [{ text: '', is_right: false, answers_list: [] }] } : quest
       )));
       setIsAnswerValid([{ isValid: true, id: 0 }]);
     } else {
       setQuestionsList(questionsList.map((quest) => (
-        quest.id === question.id ? { ...quest, answers } : quest
+        quest.id === question.id ? { ...quest,
+          answers: answers.map((answer) => ({
+            text: answer.text,
+            is_right: answer.is_right,
+            answers_list: [],
+          })) } : quest
       )));
     }
   }, [answers]);

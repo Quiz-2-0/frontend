@@ -21,7 +21,7 @@ import { IQuestionAdmin } from '@/types/types';
 const CreateNewQuiz: FC = () => {
   const { id } = useParams();
   const { data: questions } = useGetQuestionsQuery(Number(id));
-  console.log(questions);
+  const [isPublished, setIsPublished] = useState(false);
   const [questionsList, setQuestionsList] = useState<IQuestionAdmin[]>(questions ?? [{
     id: 0,
     question_type: '',
@@ -162,7 +162,10 @@ const CreateNewQuiz: FC = () => {
             <StyledButton
               mode='outline'
               style={{ margin: 0 }}
-              onClick={() => setIsConfirmationPopupOpen(true)}>
+              onClick={() => {
+                setIsConfirmationPopupOpen(true);
+                setIsPublished(false);
+              }}>
               Сохранить черновик
             </StyledButton>
           </div>
@@ -223,9 +226,6 @@ const CreateNewQuiz: FC = () => {
               mode='outline'
               onClick={() => {
                 if (currentPage !== 3) {
-                  if (currentPage === 1) {
-                    setIsSubmit(isSubmit.map((val, i) => (i === currentPage ? true : val)));
-                  }
                   addNewItem();
                 } else {
                   setIsPreviewPopupOpen(true);
@@ -245,10 +245,10 @@ const CreateNewQuiz: FC = () => {
           )}
           <StyledButton
             onClick={() => {
-              if (currentPage !== 3) {
-                setIsSubmit(isSubmit.map((val, i) => (i === currentPage ? true : val)));
-              } else {
+              setIsSubmit(isSubmit.map((val, i) => (i === currentPage ? true : val)));
+              if (currentPage === 3) {
                 setIsConfirmationPopupOpen(true);
+                setIsPublished(true);
               }
             }}
             type='button'
@@ -258,31 +258,20 @@ const CreateNewQuiz: FC = () => {
           </StyledButton>
         </div>
       </div>
-      {/* <ConfirmationPopup
-        quizId={quizId}
-        isConfirmationPopupOpen={isConfirmationPopupOpen}
-        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
-        setIsChooseQuizzesPopupOpen={NaN}
-        title='Черновик сохранён'
-        icon='check'
-        description='Вернуться к черновику и продолжить создание квиза можно в любой момент'
-        blueButton='Продолжить'
-        whiteButton='Выйти'
-        blueButtonLink=''
-        whiteButtonLink='/new-quiz' /> */}
       <ConfirmationPopup
         quizId={quizId}
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
         setIsChooseQuizzesPopupOpen={NaN}
-        title='Публикация'
-        icon='none'
-        description='После подтверждения публикации квиз появится в разделе
-        «Квизы» и будет доступен для назначения сотрудникам'
-        blueButton='Подтвердить'
-        whiteButton='Отменить'
-        blueButtonLink='/new-quiz'
-        whiteButtonLink='' />
+        title={isPublished ? 'Публикация' : 'Черновик сохранён'}
+        icon={isPublished ? 'none' : 'check'}
+        description={isPublished
+          ? 'После подтверждения публикации квиз появится в разделе «Квизы» и будет доступен для назначения сотрудникам'
+          : 'Вернуться к черновику и продолжить создание квиза можно в любой момент'}
+        blueButton={isPublished ? 'Подтвердить' : 'Продолжить'}
+        whiteButton={isPublished ? 'Отменить' : 'Выйти'}
+        blueButtonLink={isPublished ? '/new-quiz' : ''}
+        whiteButtonLink={isPublished ? '' : '/new-quiz'} />
     </>
   );
 };
