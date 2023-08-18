@@ -48,11 +48,12 @@ const ErrorParsing: React.FC<{
           index={i + 1}
           name={statistic.question}
           description={statistic.explanation}
-          answers={statistic.answers}
           isReview
           isRight={statistic.is_right}
-          rightAnswer={statistic.answer}
-          userAnswer={statistic.user_answer} />
+          questionType={statistic.question_type}
+          answer={statistic.answer}
+          userAnswer={statistic.user_answer}
+          answers={statistic.answers} />
       ))}
   </StyledUl>
 );
