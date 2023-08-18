@@ -44,9 +44,9 @@ const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
     const filteredItem = answersList.find((item) => id === item.id);
     if (filteredItem) {
       b = boards.map((board) => (
-        boardId === board.id && !board.items.includes(filteredItem)
+        boardId === board.id && !board.items?.includes(filteredItem)
           ? { ...board, items: [...board.items, filteredItem] }
-          : { ...board, items: board.items.filter((item) => item !== filteredItem) }
+          : { ...board, items: board.items?.filter((item) => item !== filteredItem) }
       ));
     }
 
@@ -59,7 +59,6 @@ const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
   };
 
   useEffect(() => {
-    console.log(boards, question, questionsList);
     if (question !== undefined && questionsList !== undefined) {
       setQuestionsList(questionsList.map((quest) => (
         quest.id === question.id ? { ...quest,

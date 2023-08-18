@@ -150,7 +150,7 @@ const AddAnswersOnPage: FC<{
       setIsOpen(false);
     }
   }, [categories, answers]);
-
+  console.log(answers);
   return (
     <FormItemForNewQuiz
       top={title}>

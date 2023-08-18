@@ -74,7 +74,7 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
         categories={categories.map((category) => ({
           id: category.id,
           text: category.text,
-          items: category.answers,
+          items: [],
         }))}
         title='Правильное соотношение'
         description='Создайте элементы для соотношения с категориями'
