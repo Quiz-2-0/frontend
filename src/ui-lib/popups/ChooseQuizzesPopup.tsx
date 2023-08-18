@@ -34,6 +34,7 @@ const StyledDiv = styled.div`
 const ChooseQuizzesPopup: FC<{
   setIsChooseQuizzesPopupOpen: any,
   setIsConfirmationPopupOpen: any,
+  setIsNewEmployeeAdd: any,
   isChooseQuizzesPopupOpen: boolean,
   quizzes: AdminQuizz[] | undefined,
   search: string,
@@ -53,6 +54,7 @@ const ChooseQuizzesPopup: FC<{
   setIsChecked,
   setIsEmployeeChecked,
   isEmployeeChecked,
+  setIsNewEmployeeAdd,
 }) => {
   const [assignQuizzesToUsers] = useAssignQuizzesToUsersMutation();
   const assignQuizzes = async () => {
@@ -60,6 +62,7 @@ const ChooseQuizzesPopup: FC<{
       users: isEmployeeChecked.map((userId) => ({ id: userId })),
       quizes: isChecked.map((quizId) => ({ id: quizId })),
     });
+    setIsNewEmployeeAdd(false);
     setIsConfirmationPopupOpen(true);
     setIsChooseQuizzesPopupOpen(false);
     setIsChecked([]);
