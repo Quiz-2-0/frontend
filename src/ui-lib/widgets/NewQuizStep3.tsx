@@ -29,22 +29,16 @@ const NewQuizStep3: FC<StepProps> = ({
   setNextPage,
   setIsSubmit,
 }) => {
-  useEffect(() => {
-    if (isSubmit[2]) {
-      setNextPage();
-      setIsSubmit([false, false, false, false]);
-    }
-  }, [isSubmit]);
-
-  const [newVolumeIdx, setNewVolumeIdx] = useState(-1);
-
   const urlParams = useParams();
   const quizId = Number(urlParams.id);
+
   const { data: volumes } = useGetVolumesQuery(quizId);
-  const [volumeItems, setVolumeItems] = useState<IVolumeItem[]>([]);
   const [removeVolumeRun] = useDeleteVolumeMutation();
   const [updateVolumeRun] = useUpdateVolumeMutation();
   const [createVolumeRun] = useCreateVolumeMutation();
+
+  const [volumeItems, setVolumeItems] = useState<IVolumeItem[]>([]);
+  const [newVolumeIdx, setNewVolumeIdx] = useState(-1);
 
   const createOrUpdateVolume = async (volumeItem: IVolumeItem) => {
     const { volume } = volumeItem;
@@ -92,8 +86,7 @@ const NewQuizStep3: FC<StepProps> = ({
     }
   };
 
-  const addVolume = async () => {
-    setNewVolumeIdx(newVolumeIdx - 1);
+  const saveDrafts = async () => {
     // eslint-disable-next-line no-restricted-syntax
     for (const volumeItem of volumeItems) {
       if (volumeItem.isChanged) {
@@ -101,6 +94,11 @@ const NewQuizStep3: FC<StepProps> = ({
         await createOrUpdateVolume(volumeItem);
       }
     }
+  };
+
+  const addVolume = async () => {
+    await saveDrafts();
+    setNewVolumeIdx(newVolumeIdx - 1);
     setVolumeItems([...volumeItems, {
       volume: {
         id: newVolumeIdx,
@@ -155,6 +153,18 @@ const NewQuizStep3: FC<StepProps> = ({
       })));
     }
   }, [volumes]);
+
+  useEffect(() => {
+    if (isSubmit[2]) {
+      // eslint-disable-next-line promise/catch-or-return
+      saveDrafts()
+        .catch((err) => console.error(err))
+        .finally(() => {
+          setNextPage();
+          setIsSubmit([false, false, false, false]);
+        });
+    }
+  }, [isSubmit]);
 
   return (
     <>
