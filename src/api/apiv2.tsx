@@ -53,7 +53,6 @@ import {
 
 export const jwt = {
   set: (value: string, isRemember: boolean, role: string): void => {
-    console.debug('JWT', isRemember, role);
     if (value) {
       if (isRemember) {
         localStorage.setItem('JWT', `${value}`);
@@ -182,12 +181,16 @@ export const quizApi = createApi({
       query: () => ALL_QUIZES,
       keepUnusedDataFor: 0,
     }),
+    getIncompleteQuizzes: build.query<IQuiz[], void>({
+      query: () => '/quizes/not_complited/',
+      keepUnusedDataFor: 0,
+    }),
     getQuiz: build.query<IQuiz, number>({
       query: (id: number) => `${ALL_QUIZES}${id}/`,
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
     }),
-    getStatistic: build.query<Statistic[], number>({
+    getStatistic: build.query<Statistic, number>({
       query: (id: number) => `${ALL_QUIZES}${id}/statistic/`,
       keepUnusedDataFor: 0,
     }),
@@ -535,6 +538,7 @@ export const {
 
 export const {
   useGetAllQuizesQuery,
+  useGetIncompleteQuizzesQuery,
   useGetQuizQuery,
   useSetAnswerMutation,
   useGetStatisticQuery,

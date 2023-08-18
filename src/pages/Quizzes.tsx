@@ -57,7 +57,6 @@ const Quizzes: FC = () => {
       quizTypeFilter('appointed');
     } else {
       setQuizzesOnPage(data);
-      console.log(data);
       setAppointedQuizzes(data?.some(({ appointed }) => appointed === true));
     }
   }, [data, location]);
@@ -70,7 +69,9 @@ const Quizzes: FC = () => {
         quizType={quizType}
         quizTypeFilter={quizTypeFilter}
         appointedQuizzes={appointedQuizzes} />
-      <QuizCardList quizList={search !== '' ? quizNameFilter : quizzesOnPage} />
+      <QuizCardList
+        quizList={search !== '' ? quizNameFilter : quizzesOnPage}
+        isIncomplete={false} />
     </StyledDiv>
   );
 };
