@@ -1,4 +1,4 @@
-import { IUserCreate, LevelCreate, QuestionAdminCreate, TagQuiz, VolumeCreate } from '@/types/types';
+import { IUserCreate, LevelCreate, IQuestionAdmin, Tag, TagQuiz, VolumeCreate } from '@/types/types';
 
 export interface TAnswerRequest {
   id: number | string;
@@ -30,14 +30,29 @@ export interface IAssignedQuiz {
 }
 
 export interface IAdminCreateQuizRequest {
+  id?: number;
+  question_amount?: number;
+  questions?: IAdminCreateQuestionRequest[];
+  volumes?: IAdminGetVolumeRequest[];
+  image?: string;
+  description?: string;
+  directory?: string;
+  name?: string;
+  duration?: number;
+  level?: number;
+  threshold?: number;
+  tags?: TagQuiz[];
+}
+
+export interface IAdminGetQuizRequest {
   image: string;
   description: string;
   directory: string;
   name: string;
   duration: number;
-  level: string;
+  level: number;
   threshold: number;
-  tags: TagQuiz[];
+  tags: Tag[];
 }
 
 export interface IAdminAssignQuizzesToUsersRequest {
@@ -52,18 +67,18 @@ export interface IAdminUpdateQuizRequest {
 
 export interface IAdminCreateQuestionRequest {
   quizId: number;
-  question: QuestionAdminCreate;
+  question: IQuestionAdmin;
 }
 
 export interface IAdminCreateQuestionsListRequest {
   quizId: number;
-  questions: QuestionAdminCreate[];
+  questions: IQuestionAdmin[];
 }
 
 export interface IAdminUpdateQuestionRequest {
   quizId: number;
   questionId: number;
-  question: QuestionAdminCreate;
+  question: IQuestionAdmin;
 }
 
 export interface IAdminRemoveQuestionRequest {

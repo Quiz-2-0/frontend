@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable ternary/nesting */
@@ -6,7 +8,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FormItem, IconButton } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -14,8 +16,8 @@ import { Icon20ChevronRight, Icon24CancelOutline } from '@vkontakte/icons';
 import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwardButton';
 import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
-import gallery from '@/constants/gallery';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
+import { useGetImagesForQuizzesQuery } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   max-width: 832px;
@@ -41,7 +43,7 @@ const GalleryCheckbox = styled(StyledCheckbox)`
 const GalleryPopup: FC<{
   isGalleryPopupOpen: boolean,
   setIsGalleryPopupOpen: any,
-  image: number,
+  image: string,
   setImage: any,
 }> = ({
   isGalleryPopupOpen,
@@ -49,6 +51,9 @@ const GalleryPopup: FC<{
   image,
   setImage,
 }) => {
+  const { data: images } = useGetImagesForQuizzesQuery();
+  const [gallery, setGallery] = useState(images ?? []);
+  console.log(images);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -63,6 +68,10 @@ const GalleryPopup: FC<{
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    setGallery(images ?? []);
+  }, [images]);
 
   return (
     <Background
@@ -82,7 +91,7 @@ const GalleryPopup: FC<{
             style={{ width: '28px', height: '28px' }}
             onClick={() => {
               setIsGalleryPopupOpen(false);
-              setImage(-1);
+              setImage('');
             }}>
             <Icon24CancelOutline fill='#3F8AE0' />
           </IconButton>
@@ -136,7 +145,7 @@ const GalleryPopup: FC<{
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
               }}
-              onClick={() => setImage(item.id)}
+              onClick={() => setImage(item.image)}
               ref={
                 i === 0
                   ? topRef
@@ -145,7 +154,7 @@ const GalleryPopup: FC<{
                     : null
               }>
               <GalleryCheckbox
-                checked={image === item.id} />
+                checked={image === item.image} />
             </div>
           ))}
         </FormItem>
@@ -157,7 +166,7 @@ const GalleryPopup: FC<{
             alignItems: 'center',
           }}>
           <StyledButton
-            disabled={image === -1}
+            disabled={image === ''}
             style={{ minWidth: '167px', marginTop: '28px' }}
             onClick={() => {
               setIsGalleryPopupOpen(false);

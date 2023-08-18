@@ -90,8 +90,9 @@ export interface TagQuiz {
 export interface Answer {
   id: number;
   text: string;
-  image: string;
+  image?: string;
   isAnswerRight?: boolean;
+  answers?: Answer[];
   answers_list?: AnswerItem[];
 }
 
@@ -104,7 +105,7 @@ export interface AnswerItem {
 
 export type AnswerItemCreate = Omit<AnswerItem, 'id'>;
 
-export type TQuestionType = 'ONE' | 'MNY' | 'LST' | 'OPN';
+export type TQuestionType = 'ONE' | 'MNY' | 'LST' | 'OPN' | '';
 
 export interface Question {
   id: number;
@@ -134,6 +135,9 @@ export interface OpenEndedQuestionProps {
 }
 
 export interface DragAndDropQuestionProps {
+  question?: IQuestionAdmin | undefined,
+  questionsList?: IQuestionAdmin[] | undefined,
+  setQuestionsList?: any,
   boardTitles: BoardTitlesProps[];
   answers: BoardAnswersProps[];
   selectListAnswers?: (boards: BoardTitlesProps[]) => void
@@ -143,11 +147,10 @@ export interface IQuestionAdmin {
   id: number;
   question_type: TQuestionType;
   text: string;
-  image: string;
-  answers: Answer[];
+  image?: string;
+  answers?: Answer[];
+  answers_list?: Answer[];
 }
-
-export type QuestionAdminCreate = Omit<IQuestionAdmin, 'id'>;
 
 export interface Volume {
   id: number;
@@ -255,10 +258,16 @@ export interface AdminQuizz {
   volumes: Volume[];
 }
 
+export interface AdminImage {
+  id: number;
+  image: string;
+  description: string;
+}
+
 export interface ILevel {
   id: number;
-  name: number;
-  description: number;
+  name: string;
+  description: string;
 }
 
 export type LevelCreate = Omit<ILevel, 'id'>;

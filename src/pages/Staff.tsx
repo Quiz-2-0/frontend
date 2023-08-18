@@ -1,3 +1,4 @@
+/* eslint-disable ternary/no-unreachable */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -31,9 +32,15 @@ const Staff: FC = () => {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
 
-  const { data: staff } = useGetUsersQuery();
-  const { data: quizzes } = useGetQuizzesQuery();
-  const { data: departments } = useGetDepartmentsQuery();
+  const { data: staff } = useGetUsersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: quizzes } = useGetQuizzesQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: departments } = useGetDepartmentsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const [staffOnPage, setStaffOnPage] = useState(staff?.filter(({ role }) => role !== 'AD'));
   const [staffNameFilter, setStaffNameFilter] = useState<IUser[] | undefined>(staffOnPage?.filter(
@@ -116,13 +123,27 @@ const Staff: FC = () => {
         setIsEmployeeChecked={setIsEmployeeChecked}
         isEmployeeChecked={isEmployeeChecked} />
       <ConfirmationPopup
-        title='Квизы назначены'
+        quizId={isQuizChecked.length === 1 ? isQuizChecked[0] : NaN}
+        title={isQuizChecked.length === 1 ? 'Квиз назначен' : 'Квизы назначены'}
         icon='check'
         description='Проверить назначение квизов можно в разделе «Назначенные квизы»'
         blueButton='Вернуться к списку'
         whiteButton='Проверить'
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        setIsChooseQuizzesPopupOpen={NaN}
+        blueButtonLink=''
+        whiteButtonLink='/adm-quizzes' />
+      <ConfirmationPopup
+        quizId={NaN}
+        title='Новый сотрудник добавлен'
+        icon='check'
+        description='Новому сотруднику можно назначить квиз'
+        blueButton='Назначить квиз'
+        whiteButton='Вернуться к списку'
+        isConfirmationPopupOpen={isConfirmationPopupOpen}
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
         blueButtonLink=''
         whiteButtonLink='/adm-quizzes' />
       <NewEmployeePopup

@@ -31,7 +31,7 @@ import { IUser } from '@/types/types';
 import ListItemForStaffTable from './ListItemForStaffTable';
 
 const StyledExpandedItem = styled.div<{ isOpen: number[]; index: number; staffList: IUser[] | undefined }>`
-  max-height: ${({ isOpen, index, staffList }) => (!isOpen.includes(index) ? `${(staffList?.length ?? 0) * 36}px` : '0')};
+  min-height: ${({ isOpen, index, staffList }) => (!isOpen.includes(index) ? `${(staffList?.length ?? 0) * 36}px` : '0')};
   overflow: hidden;
   padding: 0;
   position: relative;

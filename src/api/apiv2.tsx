@@ -13,6 +13,7 @@ import {
   RESET_PASSWORD,
 } from '@/constants/api-url';
 import {
+  AdminImage,
   AdminQuizz,
   IAchievement,
   IAvatar,
@@ -36,6 +37,7 @@ import {
   IAdminCreateQuestionsListRequest,
   IAdminCreateQuizRequest,
   IAdminCreateVolumeRequest,
+  IAdminGetQuizRequest,
   IAdminGetVolumeRequest,
   IAdminRemoveQuestionRequest,
   IAdminRemoveVolumeRequest,
@@ -343,7 +345,10 @@ export const adminQuizzesApi = createApi({
     getQuizzes: build.query<AdminQuizz[], void>({
       query: () => GET_ADMIN_QUIZZES,
     }),
-    createQuiz: build.mutation<AdminQuizz, IAdminCreateQuizRequest>({
+    getImagesForQuizzes: build.query<AdminImage[], void>({
+      query: () => `${GET_ADMIN_QUIZZES}images/`,
+    }),
+    createQuiz: build.mutation<IAdminCreateQuizRequest, IAdminCreateQuizRequest>({
       query: (quiz) => ({
         url: GET_ADMIN_QUIZZES,
         method: 'POST',
@@ -359,10 +364,11 @@ export const adminQuizzesApi = createApi({
       }),
       invalidatesTags: ['adminQuiz'],
     }),
-    getQuiz: build.query<AdminQuizz, number>({
+    getAdminQuiz: build.query<IAdminGetQuizRequest, number>({
       query: (quizId) => `${GET_ADMIN_QUIZZES}${quizId}/`,
+      keepUnusedDataFor: 0,
     }),
-    updateQuiz: build.mutation<AdminQuizz, IAdminUpdateQuizRequest>({
+    updateQuiz: build.mutation<IAdminCreateQuizRequest, IAdminUpdateQuizRequest>({
       query: ({ quizId, quiz }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/`,
         method: 'PUT',
@@ -413,7 +419,7 @@ export const adminQuestionsApi = createApi({
     updateQuestion: build.mutation<IQuestionAdmin, IAdminUpdateQuestionRequest>({
       query: ({ quizId, questionId, question }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/questions/${questionId}/`,
-        method: 'PUT',
+        method: 'PATCH',
         body: question,
       }),
       invalidatesTags: ['adminQuestion'],
@@ -496,6 +502,7 @@ export const adminUsersApi = createApi({
     }),
     getUser: build.query<IUser, number>({
       query: (id) => `${GET_ADMIN_USERS}${id}/`,
+      keepUnusedDataFor: 0,
     }),
     updateUser: build.mutation<IUser, IAdminUpdateUserRequest>({
       query: ({ userId, user }) => ({
@@ -559,9 +566,10 @@ export const {
 
 export const {
   useGetQuizzesQuery,
+  useGetImagesForQuizzesQuery,
   useCreateQuizMutation,
   useAssignQuizzesToUsersMutation,
-  // useGetQuizQuery,
+  useGetAdminQuizQuery,
   useUpdateQuizMutation,
   useDeleteQuizMutation,
 } = adminQuizzesApi;

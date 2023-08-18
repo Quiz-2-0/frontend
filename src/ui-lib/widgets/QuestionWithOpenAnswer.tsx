@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { FC, useState } from 'react';
 import { FormLayoutGroup } from '@vkontakte/vkui';
 import StyledInput from '../styled-components/StyledInput';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
+import { QuestionTypeProps } from '@/constants/question-types';
 
-const QuestionWithOpenAnswer: FC = () => {
-  const [answers, setAnswers] = useState<{
-    id: number,
-    text: string,
-    isRight: boolean,
-  }>({ id: 0, text: '', isRight: false });
+const QuestionWithOpenAnswer: FC<QuestionTypeProps> = ({
+  question,
+  questionsList,
+  setQuestionsList,
+}) => {
   const [isAnswerValid, setIsAnswerValid] = useState<{
     isValid: boolean,
     id: number,
@@ -28,9 +29,9 @@ const QuestionWithOpenAnswer: FC = () => {
         htmlFor='question-text'
         top='Текст ответа'
         onBlur={() => {
-          setIsAnswerValid({ ...answers, isValid: answers.text !== '' });
+          setIsAnswerValid({ ...isAnswerValid, isValid: question.answers?.[0]?.text !== '' ?? false });
         }}
-        onChange={() => setIsAnswerValid({ ...answers, isValid: true })}
+        onChange={() => setIsAnswerValid({ ...isAnswerValid, isValid: true })}
         status={isAnswerValid ? 'default' : 'error'}
         style={{ maxWidth: '546px' }}>
         <StyledInput
@@ -39,9 +40,13 @@ const QuestionWithOpenAnswer: FC = () => {
           type='text'
           placeholder='Введите текст'
           name='question-text'
-          value={answers.text}
+          value={question.answers?.[0]?.text}
           onChange={(e) => {
-            setAnswers({ ...answers, text: e.target.value });
+            setQuestionsList(questionsList.map((quest) => (
+              quest.id === question.id
+                ? { ...quest, answers: [{ id: 0, text: e.target.value }] }
+                : quest
+            )));
           }} />
       </FormItemForNewQuiz>
       <FormItemForNewQuiz
