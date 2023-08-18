@@ -81,6 +81,7 @@ const NewQuizStep4: FC<StepProps> = ({
     await updateQuiz({
       quizId,
       quiz: {
+        image,
         description: quiz?.description,
         directory: quiz?.directory,
         duration: time,
