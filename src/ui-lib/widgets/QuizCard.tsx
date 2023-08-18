@@ -198,7 +198,9 @@ const QuizCard: React.FC<QuizCardProps> = (
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <LevelIcon />
-            <StyledQuizDetailCaption>{level}</StyledQuizDetailCaption>
+            <StyledQuizDetailCaption>
+              {levels.find((item) => item.id === Number(level))?.name ?? ''}
+            </StyledQuizDetailCaption>
           </StyledQuizDetailWrapper>
           <StyledQuizDetailWrapper>
             <QuestionsIcon />

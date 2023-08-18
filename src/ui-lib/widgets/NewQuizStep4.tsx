@@ -18,6 +18,7 @@ import StyledButton from '../styled-components/StyledButton';
 import GalleryPopup from '../popups/GalleryPopup';
 import { StepProps } from '@/constants/steps';
 import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/apiv2';
+import { API_ROOT } from '@/constants/api-url';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;
@@ -75,13 +76,10 @@ const NewQuizStep4: FC<StepProps> = ({
     setIsImageValid(true);
     setIsGalleryPopupOpen(false);
   }, [quiz]);
-
   const onSubmit = async () => {
-    console.log('update');
     await updateQuiz({
       quizId,
       quiz: {
-        image,
         description: quiz?.description,
         directory: quiz?.directory,
         duration: time,
