@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -7,41 +8,76 @@ import { Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon20ChevronRight, Icon24AddOutline } from '@vkontakte/icons';
 import React, { FC, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import steps, { Step, StepProps } from '@/constants/steps';
 import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
+import { useGetQuestionsQuery } from '@/api/apiv2';
+import { IQuestionAdmin } from '@/types/types';
 
 const CreateNewQuiz: FC = () => {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const { data: questions } = useGetQuestionsQuery(Number(id));
+  console.log(questions);
+  const [questionsList, setQuestionsList] = useState<IQuestionAdmin[]>(questions ?? [{
+    id: 0,
+    question_type: '',
+    text: '',
+    answers: [{
+      id: 0,
+      text: '',
+      answers: [],
+      answers_list: [],
+    }],
+  }]);
+  const [quizId, setQuizId] = useState(Number(id));
   const [progressObject, setProgress] = useState<number[]>([0]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [items, setItems] = useState<number[]>([0]);
   const [isPreviewPopupOpen, setIsPreviewPopupOpen] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isSubmit, setIsSubmit] = useState([false, false, false, false]);
 
-  const [questionText, setQuestionText] = useState<{ id: number, text: string }[]>([{ id: 0, text: '' }]);
-  const [questionType, setQuestionType] = useState<{ id: number, text: string }[]>([{ id: 0, text: '' }]);
   const [isQuestionTextValid, setIsQuestionTextValid] = useState<{
     id: number,
     isValid: boolean,
-  }[]>([{ id: 0, isValid: true }]);
+  }[]>(questions?.map((question) => (
+    { id: question.id, isValid: true })) ?? [{ id: 0, isValid: true }]);
   const [isQuestionTypeValid, setIsQuestionTypeValid] = useState<{
     id: number,
     isValid: boolean,
-  }[]>([{ id: 0, isValid: true }]);
+  }[]>(questions?.map((question) => (
+    { id: question.id, isValid: true })) ?? [{ id: 0, isValid: true }]);
+  useEffect(() => {
+    setQuestionsList(questions ?? [{
+      id: 0,
+      question_type: '',
+      text: '',
+      answers: [{
+        id: 0,
+        text: '',
+        answers: [],
+        answers_list: [],
+      }],
+    }]);
+  }, [questions]);
 
   useEffect(() => {
-    if (questionText.length === 0 || questionType.length === 0) {
-      setQuestionText([{ id: 0, text: '' }]);
-      setQuestionType([{ id: 0, text: '' }]);
+    if (questionsList.length === 0) {
+      setQuestionsList([{
+        id: 0,
+        question_type: '',
+        text: '',
+        answers: [],
+      }]);
       setIsQuestionTextValid([{ id: 0, isValid: true }]);
       setIsQuestionTypeValid([{ id: 0, isValid: true }]);
     }
-  }, [questionText, questionType]);
+  }, [questionsList]);
 
   const setNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -61,21 +97,25 @@ const CreateNewQuiz: FC = () => {
     const step: Step<StepProps> = steps[currentPage];
     return (
       <step.markup.Component
+        setNextPage={setNextPage}
         items={items}
+        quizId={quizId}
+        questionsList={questionsList}
         setItems={setItems}
+        isSubmit={isSubmit}
+        setIsSubmit={setIsSubmit}
+        setIsButtonDisabled={setIsButtonDisabled}
         formElements={currentPage === 1
           ? {
-            questionText,
-            questionType,
             isQuestionTextValid,
             isQuestionTypeValid,
           } : {}}
         setFormElements={currentPage === 1
           ? {
-            setQuestionText,
-            setQuestionType,
+            setQuestionsList,
             setIsQuestionTextValid,
             setIsQuestionTypeValid,
+            setQuizId,
           } : []} />
     );
   };
@@ -83,8 +123,16 @@ const CreateNewQuiz: FC = () => {
   const addNewItem = () => {
     setItems([...items, items.length]);
     if (currentPage === 1) {
-      setQuestionText([...questionText, { id: questionText.length, text: '' }]);
-      setQuestionType([...questionType, { id: questionType.length, text: '' }]);
+      setQuestionsList([...questionsList, {
+        id: questionsList.length,
+        question_type: '',
+        text: '',
+        answers: [{
+          id: 0,
+          text: '',
+          answers_list: [],
+        }],
+      }]);
       setIsQuestionTextValid([
         ...isQuestionTextValid,
         { id: isQuestionTextValid.length, isValid: true },
@@ -95,7 +143,6 @@ const CreateNewQuiz: FC = () => {
       ]);
     }
   };
-
   return (
     <>
       <div style={{ width: '100%' }}>
@@ -148,7 +195,10 @@ const CreateNewQuiz: FC = () => {
               )}
               {currentPage !== 3 && (
                 <StyledBackAndForwardButton
-                  onClick={() => setNextPage()}
+                  disabled={!isButtonDisabled}
+                  onClick={() => setIsSubmit(
+                    isSubmit.map((val, i) => (i === currentPage ? true : val)),
+                  )}
                   mode='link'>
                   Следующий шаг
                   <Icon20ChevronRight />
@@ -169,9 +219,17 @@ const CreateNewQuiz: FC = () => {
           }}>
           {currentPage !== 0 && (
             <StyledButton
+              disabled={!isButtonDisabled}
               mode='outline'
               onClick={() => {
-                currentPage !== 3 ? addNewItem() : setIsPreviewPopupOpen(true);
+                if (currentPage !== 3) {
+                  if (currentPage === 1) {
+                    setIsSubmit(isSubmit.map((val, i) => (i === currentPage ? true : val)));
+                  }
+                  addNewItem();
+                } else {
+                  setIsPreviewPopupOpen(true);
+                }
               }}
               style={{
                 marginTop: '24px',
@@ -185,21 +243,46 @@ const CreateNewQuiz: FC = () => {
               {steps[currentPage].button.name}
             </StyledButton>
           )}
-          <StyledButton onClick={() => setNextPage()} type='button' style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
+          <StyledButton
+            onClick={() => {
+              if (currentPage !== 3) {
+                setIsSubmit(isSubmit.map((val, i) => (i === currentPage ? true : val)));
+              } else {
+                setIsConfirmationPopupOpen(true);
+              }
+            }}
+            type='button'
+            disabled={!isButtonDisabled}
+            style={{ marginTop: '24px', width: '100%', maxWidth: '210px' }}>
             {currentPage !== 3 ? 'Продолжить' : 'Опубликовать'}
           </StyledButton>
         </div>
       </div>
-      <ConfirmationPopup
+      {/* <ConfirmationPopup
+        quizId={quizId}
         isConfirmationPopupOpen={isConfirmationPopupOpen}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        setIsChooseQuizzesPopupOpen={NaN}
         title='Черновик сохранён'
         icon='check'
         description='Вернуться к черновику и продолжить создание квиза можно в любой момент'
         blueButton='Продолжить'
         whiteButton='Выйти'
         blueButtonLink=''
-        whiteButtonLink='/new-quiz' />
+        whiteButtonLink='/new-quiz' /> */}
+      <ConfirmationPopup
+        quizId={quizId}
+        isConfirmationPopupOpen={isConfirmationPopupOpen}
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        setIsChooseQuizzesPopupOpen={NaN}
+        title='Публикация'
+        icon='none'
+        description='После подтверждения публикации квиз появится в разделе
+        «Квизы» и будет доступен для назначения сотрудникам'
+        blueButton='Подтвердить'
+        whiteButton='Отменить'
+        blueButtonLink='/new-quiz'
+        whiteButtonLink='' />
     </>
   );
 };

@@ -4,7 +4,9 @@ import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
 import { QuestionTypeProps } from '@/constants/question-types';
 
 const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
-  questionId,
+  question,
+  questionsList,
+  setQuestionsList,
 }) => {
   const [answers, setAnswers] = useState<{
     id: number,
@@ -38,8 +40,10 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
   return (
     <>
       <AddAnswersOnPage
-        questionId={questionId}
-        questionType='DAD'
+        question={undefined}
+        questionsList={undefined}
+        setQuestionsList={undefined}
+        questionType='LST'
         answers={categories}
         setAnswers={setCategories}
         isAnswerValid={isCategoryValid}
@@ -48,8 +52,10 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
         description='Создайте 2 или 3 категории, с которыми будут соотноситься ответы'
         placeholder='Введите название категории' />
       <AddAnswersOnPage
-        questionId={questionId}
-        questionType='DAD'
+        question={undefined}
+        questionsList={undefined}
+        setQuestionsList={undefined}
+        questionType='LST'
         answers={answers}
         setAnswers={setAnswers}
         isAnswerValid={isAnswerValid}
@@ -58,8 +64,10 @@ const QuestionWithDragAndDrop: FC<QuestionTypeProps> = ({
         description='Создайте элементы для соотношения с категориями'
         placeholder='Введите название элемента' />
       <AddAnswersOnPage
-        questionId={questionId}
-        questionType='DAD'
+        question={question}
+        questionsList={questionsList}
+        setQuestionsList={setQuestionsList}
+        questionType='LST'
         answers={answers}
         categories={categories}
         title='Правильное соотношение'

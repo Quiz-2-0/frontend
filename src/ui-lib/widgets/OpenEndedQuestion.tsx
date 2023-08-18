@@ -5,7 +5,7 @@ import { Input } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { OpenEndedQuestionProps } from '@/types/types';
 
-const StyledInput = styled(Input)`
+export const StyledInput = styled(Input)`
   width: 400px;
   height: 40px;
 `;

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable ternary/nesting */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -9,10 +12,11 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
+import { useDeleteQuizMutation } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   max-width: 500px;
-  height: 252px;
+  height: min-content;
   width: 100%;
   padding: 48px;
   box-sizing: border-box;
@@ -23,6 +27,7 @@ const StyledDiv = styled.div`
 `;
 
 const ConfirmationPopup: FC<{
+  quizId: number,
   isConfirmationPopupOpen: boolean,
   setIsConfirmationPopupOpen: any,
   title: string,
@@ -32,7 +37,9 @@ const ConfirmationPopup: FC<{
   whiteButton: string,
   blueButtonLink: string,
   whiteButtonLink: string,
+  setIsChooseQuizzesPopupOpen: any,
 }> = ({
+  quizId,
   isConfirmationPopupOpen,
   setIsConfirmationPopupOpen,
   title,
@@ -42,8 +49,13 @@ const ConfirmationPopup: FC<{
   whiteButton,
   blueButtonLink,
   whiteButtonLink,
+  setIsChooseQuizzesPopupOpen,
 }) => {
   const navigate = useNavigate();
+  const [deleteQuiz] = useDeleteQuizMutation();
+  const deleteQuizById = async () => {
+    await deleteQuiz(quizId);
+  };
 
   return (
     <Background
@@ -64,7 +76,11 @@ const ConfirmationPopup: FC<{
             lineHeight: '24px',
             letterSpacing: '0.38px',
           }}>
-          {icon === 'check' ? <Icon28CheckCircleOutline fill='#43A843' /> : <Icon28DeleteOutline fill='#99A2AD' />}
+          {icon === 'check'
+            ? <Icon28CheckCircleOutline fill='#43A843' />
+            : icon === ''
+              ? <div />
+              : <Icon28DeleteOutline fill='#99A2AD' />}
           {title}
         </h2>
         <p
@@ -88,6 +104,11 @@ const ConfirmationPopup: FC<{
           <StyledButton
             style={{ margin: 0, width: '100%' }}
             onClick={() => {
+              if (icon === 'delete') {
+                deleteQuizById();
+              } else if (blueButton === 'Назначить квиз') {
+                setIsChooseQuizzesPopupOpen(true);
+              }
               setIsConfirmationPopupOpen(false);
               blueButtonLink !== '' && navigate(blueButtonLink);
             }}>

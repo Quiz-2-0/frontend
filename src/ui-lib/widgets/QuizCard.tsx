@@ -5,7 +5,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable camelcase */
-import React from 'react';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable ternary/nesting */
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   Headline,
@@ -22,8 +24,8 @@ import StyledQuizDetailCaption from '../styled-components/StyledQuizDeteilCaptio
 import StyledQuizTag from '../styled-components/StyledQuizTag';
 import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer';
 import { QuizCardProps } from '@/types/types';
-import { useDispatch } from '@/store/store.types';
 import { pluralsFull } from '@/constants/plurals';
+import ConfirmationPopup from '../popups/ConfirmationPopup';
 
 const StyledQuizContainer = styled.li`
   list-style: none;
@@ -135,14 +137,14 @@ const QuizCard: React.FC<QuizCardProps> = (
     question_amount,
     tags,
     isPassed,
-    setIsConfirmationPopupOpen,
+    isIncomplete,
   },
 ) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const onButtonClick = () => {
     navigate(`/quizzes/${id}`);
   };
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
 
   return (
     <StyledQuizContainer>
@@ -201,13 +203,13 @@ const QuizCard: React.FC<QuizCardProps> = (
         </StyledQuizDetailsWrapper>
         {isPassed !== ''
           ? (
-            <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : 'Начать квиз'}</StyledButton>
+            <StyledButton className='btn' onClick={onButtonClick}>{isPassed ? 'Пройти снова' : isIncomplete ? 'Продолжить квиз' : 'Начать квиз'}</StyledButton>
           ) : (
             <Buttons className='btns'>
               <StyledButton
                 className='btn'
                 style={{ minWidth: '242px', minHeight: '36px' }}
-                onClick={() => navigate(`new-quiz/${id}`)}>
+                onClick={() => navigate(`/new-quiz/${id}`)}>
                 Продолжить создание
               </StyledButton>
               <StyledButton
@@ -219,6 +221,18 @@ const QuizCard: React.FC<QuizCardProps> = (
             </Buttons>
           )}
       </StyledQuizInfoWrapper>
+      <ConfirmationPopup
+        quizId={id}
+        isConfirmationPopupOpen={isConfirmationPopupOpen}
+        setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
+        setIsChooseQuizzesPopupOpen={NaN}
+        title='Удаление черновика'
+        icon='delete'
+        description='Хотите навсегда удалить черновик квиза?'
+        blueButton='Подтвердить'
+        whiteButton='Отменить'
+        blueButtonLink=''
+        whiteButtonLink='' />
     </StyledQuizContainer>
   );
 };

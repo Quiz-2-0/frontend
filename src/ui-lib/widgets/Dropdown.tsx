@@ -1,14 +1,14 @@
-/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable import/no-named-as-default */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable ternary/nesting */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
+import DropdownOneAnswersList from '@/ui-lib/widgets/DropdownOneAnswersList';
+import DropdownMnyAnswersList from '@/ui-lib/widgets/DropdownMnyAnswersList';
+import DropdownOpnAnswersList from '@/ui-lib/widgets/DropdownOpnAnswersList';
+import DropdownLstAnswersList from '@/ui-lib/widgets/DropdownLstAnswersList';
 import { ArrowIcon, CheckIcon, FalseIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
-import { Answer } from '@/types/types';
 
 const Li = styled.li<{ isReview: boolean }>`
   width: 100%;
@@ -53,8 +53,7 @@ const TextDiv = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  margin: 0;
-  margin-top: 14px;
+  margin: 14px 0 0 0;
 `;
 
 const Text = styled.p`
@@ -62,45 +61,36 @@ const Text = styled.p`
   min-height: 8px;
 `;
 
-const StyledAnswersList = styled.ul <{ isReview: boolean }>`
-  display: ${({ isReview }) => (isReview ? 'flex' : 'none')};
-  margin: 28px 0 20px;
-  padding: 0;
-  list-style: none;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-`;
-
-const StyledAnswerItem = styled.li <{ isRight: '#FFD6CC' | '#DEF0D3' | 'transparent' }>`
-  margin: 0;
-  padding: 16px;
-  border: ${({ isRight }) => (isRight === 'transparent' ? '1px solid #DCE1E6' : 'none')};
-  border-radius: 4px;
-  background-color: ${({ isRight }) => (isRight)};
-`;
-
 const Dropdown: FC<{
   index: number | null,
   name: string,
   description: string,
-  answers: Partial<Answer>[],
   isReview: boolean,
   isRight?: boolean,
-  rightAnswer?: string,
+  questionType?: string,
+  answer?: string,
   userAnswer?: string,
+  answers?: {
+    answer_text: string,
+    answered: boolean,
+    answer_right: boolean,
+    is_right: boolean;
+    answer_list: {
+      text: string,
+      answer_right: boolean
+    }[],
+  }[],
 }> = (
   {
     index,
     name,
     description,
-    answers,
     isReview,
     isRight,
-    rightAnswer,
+    questionType,
+    answer,
     userAnswer,
+    answers,
   },
 ) => {
   const [isOpen, open] = useState(false);
@@ -117,17 +107,31 @@ const Dropdown: FC<{
         </IconWrapper>
       </HeaderBlock>
       <StyledExpandedItem isOpen={isOpen} isReview={isReview}>
-        {answers === null
-          ? null
-          : (
-            <StyledAnswersList isReview={isReview}>
-              {answers.map((answer) => (
-                <StyledAnswerItem isRight={rightAnswer === answer.text ? '#DEF0D3' : (userAnswer === answer.text ? '#FFD6CC' : 'transparent')}>
-                  {answer.text}
-                </StyledAnswerItem>
-              ))}
-            </StyledAnswersList>
-          )}
+        {(() => {
+          switch (questionType) {
+            case 'ONE':
+              return (
+                <DropdownOneAnswersList isReview={isReview} answers={answers} />
+              );
+            case 'MNY':
+              return (
+                <DropdownMnyAnswersList isReview={isReview} answers={answers} />
+              );
+            case 'OPN':
+              return (
+                <DropdownOpnAnswersList
+                  isReview={isReview}
+                  userAnswer={userAnswer}
+                  isRight={isRight} />
+              );
+            case 'LST':
+              return (
+                <DropdownLstAnswersList isReview={isReview} answers={answers} />
+              );
+            default:
+              return null;
+          }
+        })()}
         <TextDiv>
           {description.split('<br>').map((line) => (
             <Text>{line}</Text>
@@ -140,8 +144,10 @@ const Dropdown: FC<{
 
 Dropdown.defaultProps = {
   isRight: false,
-  rightAnswer: '',
-  userAnswer: '',
+  questionType: undefined,
+  answer: undefined,
+  userAnswer: undefined,
+  answers: undefined,
 };
 
 export default Dropdown;

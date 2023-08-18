@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import checkboxIcon from '@/assets/images/icons/checkbox_checked.svg';
 
-const StyledMultipleChoiceAnswer = styled.li`
+export const StyledMultipleChoiceAnswer = styled.li`
   padding: 16px 28px;
   list-style: none;
   width: 100%;
@@ -21,7 +21,7 @@ const StyledMultipleChoiceAnswer = styled.li`
   position: relative;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   font-size: 15px;
   line-height: 20px;
   font-weight: 400;

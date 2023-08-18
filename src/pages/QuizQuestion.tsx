@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-return-assign */
@@ -163,7 +162,7 @@ const QuizQuestion: React.FC = () => {
       quizId: id,
       id: questions[currentPage].id,
       question_type: questions[currentPage].question_type,
-      response_time: 0, // todo Что это?
+      response_time: 0,
       answers: selectedAnswers,
     };
     await setAnswer(requestObject);
@@ -184,14 +183,13 @@ const QuizQuestion: React.FC = () => {
       {currentPage === questions.length
         ? (
           <Results
-            questions={questions.length}
             quizName={data?.name} />
         ) : (
           <>
             <ProgressBar questionArr={questions} progressObject={progressObject} />
             <Headline weight='3' style={{ marginTop: '32px' }}>{`Вопрос ${currentPage + 1}/${data?.question_amount}`}</Headline>
             <Title style={{
-              margin: '20px 0 0 0',
+              margin: '20px 0',
               fontSize: '20px',
               fontWeight: 600,
               lineHeight: '24px',
@@ -199,14 +197,6 @@ const QuizQuestion: React.FC = () => {
             }}>
               {questions[currentPage].text}
             </Title>
-            <Subhead
-              weight='2'
-              style={{
-                margin: '8px 0 20px',
-                color: '#818C99',
-              }}>
-              Текст для подсказки
-            </Subhead>
             {(() => {
               switch (questions[currentPage].question_type) {
                 case 'ONE':

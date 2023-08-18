@@ -12,6 +12,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { ArrowIcon } from '../styled-components/icons';
 import { useGetShortAchievementsQuery } from '@/api/apiv2';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const AchievementsTitleWrapper = styled(Div)`
   width: 100%;
@@ -97,7 +98,10 @@ const Achievements: React.FC = () => {
         ) : (
           <AchievementImgWrapper>
             {shortAchievements?.map((shortAchievement) => (
-              <AchievementImg src={`http://80.87.106.133${shortAchievement.image}`} alt={shortAchievement.name} />
+              <AchievementImg
+                key={shortAchievement.name}
+                src={`${SRC_BASE_URL}${shortAchievement.image}`}
+                alt={shortAchievement.name} />
             ))}
           </AchievementImgWrapper>
         )}

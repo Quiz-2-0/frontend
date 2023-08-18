@@ -13,6 +13,7 @@ import {
   RESET_PASSWORD,
 } from '@/constants/api-url';
 import {
+  AdminImage,
   AdminQuizz,
   IAchievement,
   IAvatar,
@@ -36,6 +37,7 @@ import {
   IAdminCreateQuestionsListRequest,
   IAdminCreateQuizRequest,
   IAdminCreateVolumeRequest,
+  IAdminGetQuizRequest,
   IAdminGetVolumeRequest,
   IAdminRemoveQuestionRequest,
   IAdminRemoveVolumeRequest,
@@ -51,7 +53,6 @@ import {
 
 export const jwt = {
   set: (value: string, isRemember: boolean, role: string): void => {
-    console.debug('JWT', isRemember, role);
     if (value) {
       if (isRemember) {
         localStorage.setItem('JWT', `${value}`);
@@ -180,12 +181,16 @@ export const quizApi = createApi({
       query: () => ALL_QUIZES,
       keepUnusedDataFor: 0,
     }),
+    getIncompleteQuizzes: build.query<IQuiz[], void>({
+      query: () => '/quizes/not_complited/',
+      keepUnusedDataFor: 0,
+    }),
     getQuiz: build.query<IQuiz, number>({
       query: (id: number) => `${ALL_QUIZES}${id}/`,
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
     }),
-    getStatistic: build.query<Statistic[], number>({
+    getStatistic: build.query<Statistic, number>({
       query: (id: number) => `${ALL_QUIZES}${id}/statistic/`,
       keepUnusedDataFor: 0,
     }),
@@ -343,7 +348,10 @@ export const adminQuizzesApi = createApi({
     getQuizzes: build.query<AdminQuizz[], void>({
       query: () => GET_ADMIN_QUIZZES,
     }),
-    createQuiz: build.mutation<AdminQuizz, IAdminCreateQuizRequest>({
+    getImagesForQuizzes: build.query<AdminImage[], void>({
+      query: () => `${GET_ADMIN_QUIZZES}images/`,
+    }),
+    createQuiz: build.mutation<IAdminCreateQuizRequest, IAdminCreateQuizRequest>({
       query: (quiz) => ({
         url: GET_ADMIN_QUIZZES,
         method: 'POST',
@@ -359,10 +367,11 @@ export const adminQuizzesApi = createApi({
       }),
       invalidatesTags: ['adminQuiz'],
     }),
-    getQuiz: build.query<AdminQuizz, number>({
+    getAdminQuiz: build.query<IAdminGetQuizRequest, number>({
       query: (quizId) => `${GET_ADMIN_QUIZZES}${quizId}/`,
+      keepUnusedDataFor: 0,
     }),
-    updateQuiz: build.mutation<AdminQuizz, IAdminUpdateQuizRequest>({
+    updateQuiz: build.mutation<IAdminCreateQuizRequest, IAdminUpdateQuizRequest>({
       query: ({ quizId, quiz }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/`,
         method: 'PUT',
@@ -413,7 +422,7 @@ export const adminQuestionsApi = createApi({
     updateQuestion: build.mutation<IQuestionAdmin, IAdminUpdateQuestionRequest>({
       query: ({ quizId, questionId, question }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/questions/${questionId}/`,
-        method: 'PUT',
+        method: 'PATCH',
         body: question,
       }),
       invalidatesTags: ['adminQuestion'],
@@ -484,6 +493,7 @@ export const adminUsersApi = createApi({
   endpoints: (build) => ({
     getUsers: build.query<IUser[], void>({
       query: () => GET_ADMIN_USERS,
+      keepUnusedDataFor: 0,
     }),
     createUser: build.mutation<IUser, IUserCreate>({
       query: (body) => ({
@@ -495,6 +505,7 @@ export const adminUsersApi = createApi({
     }),
     getUser: build.query<IUser, number>({
       query: (id) => `${GET_ADMIN_USERS}${id}/`,
+      keepUnusedDataFor: 0,
     }),
     updateUser: build.mutation<IUser, IAdminUpdateUserRequest>({
       query: ({ userId, user }) => ({
@@ -527,6 +538,7 @@ export const {
 
 export const {
   useGetAllQuizesQuery,
+  useGetIncompleteQuizzesQuery,
   useGetQuizQuery,
   useSetAnswerMutation,
   useGetStatisticQuery,
@@ -549,7 +561,7 @@ export const {
 } = adminLevelsApi;
 
 export const {
-  // useGetDepartmentsQuery,
+  useGetDepartmentsQuery,
   useCreateDepartmentMutation,
   useGetDepartmentQuery,
   useUpdateDepartmentMutation,
@@ -557,10 +569,11 @@ export const {
 } = adminDepartmentsApi;
 
 export const {
-  // useGetQuizzesQuery,
+  useGetQuizzesQuery,
+  useGetImagesForQuizzesQuery,
   useCreateQuizMutation,
   useAssignQuizzesToUsersMutation,
-  // useGetQuizQuery,
+  useGetAdminQuizQuery,
   useUpdateQuizMutation,
   useDeleteQuizMutation,
 } = adminQuizzesApi;
@@ -582,7 +595,7 @@ export const {
 } = adminVolumesApi;
 
 export const {
-  // useGetUsersQuery,
+  useGetUsersQuery,
   useCreateUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,

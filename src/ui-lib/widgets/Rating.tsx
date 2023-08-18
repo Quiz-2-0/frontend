@@ -16,6 +16,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achives';
 import { ArrowIcon } from '../styled-components/icons';
 import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/apiv2';
+import { SRC_BASE_URL } from '@/constants/api-url';
 
 const RatingTitleContainer = styled(Div)`
   width: 100%;
@@ -68,6 +69,7 @@ const UserPhoto = styled.img<{ user: boolean }>`
   height: ${({ user }) => user ? '80px' : '60px'};
   object-fit: cover;
   border-radius: 50%;
+  overflow: hidden;
 `;
 
 const Rating: React.FC = () => {
@@ -104,8 +106,8 @@ const Rating: React.FC = () => {
               <Caption>{shortRating.user_rating}</Caption>
             </RatingCircle>
             <UserPhoto
-              src={`http://80.87.106.133${shortRating.avatar}`}
-              alt='Аватар'
+              src={`${SRC_BASE_URL}${shortRating.avatar}`}
+              alt={`${shortRating.firstName} ${shortRating.lastName}`}
               user={currentUser?.firstName === shortRating.firstName
                 && currentUser.lastName === shortRating.lastName} />
             <Caption

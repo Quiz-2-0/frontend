@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -11,14 +13,21 @@ import {
   Textarea,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
-import categories from '@/constants/category';
-import departments from '@/constants/departments';
-import quizLevels from '@/constants/quizLevels';
 import StyledDiv from '../styled-components/StyledDiv';
+import {
+  useGetAdminQuizQuery,
+  useCreateQuizMutation,
+  useUpdateQuizMutation,
+  useGetDepartmentsQuery,
+  useGetTagsQuery,
+  useGetLevelsQuery,
+} from '@/api/apiv2';
+import { StepProps } from '@/constants/steps';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
@@ -41,75 +50,140 @@ const StyledFormItemForNewQuiz = styled(StyledFormItem)`
   }
 `;
 
-const NewQuizStep1: FC = () => {
-  const [quizName, setQuizName] = useState('');
+const NewQuizStep1: FC<StepProps> = ({
+  setIsButtonDisabled,
+  isSubmit,
+  setIsSubmit,
+  setNextPage,
+  setFormElements,
+}) => {
+  const { id } = useParams();
+  const { data: quiz, error } = useGetAdminQuizQuery(Number(id), {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: departments } = useGetDepartmentsQuery();
+  const { data: categories } = useGetTagsQuery();
+  const { data: quizLevels } = useGetLevelsQuery();
+
+  const { setQuizId } = setFormElements;
+  const [quizName, setQuizName] = useState(error ? '' : quiz?.name ?? '');
   const [isQuizNameValid, setIsQuizNameValid] = useState(true);
-  const [category, setCategory] = useState('');
+
+  const [category, setCategory] = useState(error ? NaN : quiz?.tags.find(({ name }) => name !== 'Новый')?.id ?? NaN);
   const [isCategoryValid, setIsCategoryValid] = useState(true);
-  const [department, setDepartment] = useState('');
+
+  const [department, setDepartment] = useState(error ? '' : quiz?.directory ?? '');
   const [isDepartmentValid, setIsDepartmentValid] = useState(true);
-  const [level, setLevel] = useState('');
+
+  const [level, setLevel] = useState(error ? NaN : quiz?.level ?? NaN);
   const [isLevelValid, setIsLevelValid] = useState(true);
-  const [description, setDescription] = useState('');
+
+  const [description, setDescription] = useState(error ? '' : quiz?.description ?? '');
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
-  const onChange = (e: { currentTarget: { name: any; value: any } }) => {
-    const { name, value } = e.currentTarget;
-    [
-      { text: 'quiz-name', method: setQuizName },
-      { text: 'category', method: setCategory },
-      { text: 'department', method: setDepartment },
-      { text: 'level', method: setLevel },
-      { text: 'descriptin', method: setDescription },
-    ].map(({ text, method }) => {
-      if (name === text) {
-        method(value);
-      }
-    });
+  const [categoriesList, setCategoriesList] = useState<{ label: string; value: number }[]>(
+    categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
+      label: categ.name,
+      value: categ.id,
+    })) ?? [],
+  );
+
+  const [departmentsList, setDepartmentsList] = useState<{ label: string; value: number }[]>(
+    departments?.map((dep: { name: string, id: number }) => ({
+      label: dep.name,
+      value: dep.id,
+    })) ?? [],
+  );
+
+  const [levelsList, setLevelsList] = useState<{ label: string; value: number }[]>(
+    quizLevels?.map((ql: { name: string, id: number }) => ({
+      label: ql.name,
+      value: ql.id,
+    })) ?? [],
+  );
+
+  const [createQuiz, result] = useCreateQuizMutation();
+  const [updateQuiz] = useUpdateQuizMutation();
+
+  const onSubmit = async () => {
+    if (error) {
+      await createQuiz({
+        description,
+        directory: department,
+        duration: 0,
+        name: quizName,
+        level,
+        tags: [
+          { id: category },
+        ],
+      });
+    } else {
+      await updateQuiz({
+        quizId: Number(id) ?? 0,
+        quiz: {
+          description,
+          directory: department,
+          duration: quiz?.duration ?? 0,
+          threshold: quiz?.threshold ?? 70,
+          name: quizName,
+          level,
+          tags: [{ id: category }],
+        },
+      });
+    }
+    setNextPage();
   };
 
-  const resetForm = () => {
-    setQuizName('');
-    setCategory('');
-    setDescription('');
-    setDepartment('');
-    setLevel('');
+  useEffect(() => {
+    setQuizName(error ? '' : quiz?.name ?? '');
+    setCategory(error ? NaN : quiz?.tags.find(({ name }) => name !== 'Новый')?.id ?? NaN);
+    setDepartment(error ? '' : quiz?.directory ?? '');
+    setLevel(error ? NaN : quiz?.level ?? NaN);
+    setDescription(error ? '' : quiz?.description ?? '');
+    setCategoriesList(
+      categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
+        label: categ.name,
+        value: categ.id,
+      })) ?? [],
+    );
+    setDepartmentsList(
+      departments?.map((dep: { name: string, id: number }) => ({
+        label: dep.name,
+        value: dep.id,
+      })) ?? [],
+    );
+    setLevelsList(
+      quizLevels?.map((ql: { name: string, id: number }) => ({
+        label: ql.name,
+        value: ql.id,
+      })) ?? [],
+    );
     setIsQuizNameValid(true);
     setIsCategoryValid(true);
     setIsDescriptionValid(true);
     setIsDepartmentValid(true);
     setIsLevelValid(true);
-  };
+  }, [quiz, departments, categories, quizLevels]);
 
-  const onSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    console.log({
-      quizName,
-      category,
-      department,
-      level,
-      description,
-    });
-    resetForm();
-  };
+  useEffect(() => {
+    if (isSubmit[0]) {
+      onSubmit();
+      setIsSubmit([false, false, false, false]);
+    }
+  }, [isSubmit[0]]);
 
-  const categoriesList: { label: string; value: string }[] = [];
-  categories.map(({ name }: { name: string }) => categoriesList.push({
-    label: name,
-    value: name,
-  }));
+  useEffect(() => {
+    setIsButtonDisabled(
+      quizName.length > 3 && quizName?.length < 30 && !Number.isNaN(category)
+      && !Number.isNaN(level) && department !== '' && description.length > 20,
+    );
+  }, [quizName, category, department, level, description]);
 
-  const departmentsList: { label: string; value: string }[] = [];
-  departments.map(({ name }: { name: string }) => departmentsList.push({
-    label: name,
-    value: name,
-  }));
-
-  const levelsList: { label: string; value: string }[] = [];
-  quizLevels.map(({ name }: { name: string }) => levelsList.push({
-    label: name,
-    value: name,
-  }));
+  useEffect(() => {
+    if (result.data?.id !== undefined) {
+      setQuizId(result.data?.id);
+    }
+  }, [result]);
 
   return (
     <StyledDiv style={{ height: 'min-content' }}>
@@ -125,7 +199,7 @@ const NewQuizStep1: FC = () => {
             htmlFor='quiz-name'
             top='Название'
             onBlur={() => {
-              setIsQuizNameValid(quizName.length > 3 && quizName.length < 30);
+              setIsQuizNameValid(quizName?.length > 3 && quizName?.length < 30);
             }}
             onChange={() => setIsQuizNameValid(true)}
             status={isQuizNameValid ? 'default' : 'error'}>
@@ -135,20 +209,20 @@ const NewQuizStep1: FC = () => {
               placeholder='Введите название'
               name='quiz-name'
               value={quizName}
-              onChange={onChange} />
+              onChange={(e) => setQuizName(e.target.value)} />
           </StyledFormItemForNewQuiz>
           <StyledFormItemForNewQuiz
             htmlFor='category'
             top='Категория'
             onBlur={() => {
-              setIsCategoryValid(category !== '');
+              setIsCategoryValid(!Number.isNaN(category));
             }}
             onChange={() => setIsCategoryValid(true)}
             status={isCategoryValid ? 'default' : 'error'}>
             <StyledSelect
               placeholder='Выберите категорию'
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setCategory(Number(e.target.value))}
               options={categoriesList} />
           </StyledFormItemForNewQuiz>
           <StyledFormItemForNewQuiz
@@ -169,14 +243,14 @@ const NewQuizStep1: FC = () => {
             htmlFor='level'
             top='Уровень'
             onBlur={() => {
-              setIsLevelValid(level !== '');
+              setIsLevelValid(!Number.isNaN(level));
             }}
             onChange={() => setIsLevelValid(true)}
             status={isLevelValid ? 'default' : 'error'}>
             <StyledSelect
-              placeholder='Выберите отдел'
+              placeholder='Выберите уровень'
               value={level}
-              onChange={(e) => setLevel(e.target.value)}
+              onChange={(e) => setLevel(Number(e.target.value))}
               options={levelsList} />
           </StyledFormItemForNewQuiz>
         </StyledFormLayoutGroup>
@@ -185,7 +259,7 @@ const NewQuizStep1: FC = () => {
             htmlFor='description'
             top='Описание'
             onBlur={() => {
-              setIsDescriptionValid(description.length > 100);
+              setIsDescriptionValid(description.length > 20);
             }}
             onChange={() => setIsDescriptionValid(true)}
             status={isDescriptionValid ? 'default' : 'error'}

@@ -24,6 +24,8 @@ export interface IUser {
   in_this_level: number,
   earned_in_level: number,
   access: string,
+  assigned: number,
+  rating: number,
 }
 
 export interface IUserCreate {
@@ -88,8 +90,9 @@ export interface TagQuiz {
 export interface Answer {
   id: number;
   text: string;
-  image: string;
+  image?: string;
   isAnswerRight?: boolean;
+  answers?: Answer[];
   answers_list?: AnswerItem[];
 }
 
@@ -102,7 +105,7 @@ export interface AnswerItem {
 
 export type AnswerItemCreate = Omit<AnswerItem, 'id'>;
 
-export type TQuestionType = 'ONE' | 'MNY' | 'LST' | 'OPN';
+export type TQuestionType = 'ONE' | 'MNY' | 'LST' | 'OPN' | '';
 
 export interface Question {
   id: number;
@@ -132,6 +135,9 @@ export interface OpenEndedQuestionProps {
 }
 
 export interface DragAndDropQuestionProps {
+  question?: IQuestionAdmin | undefined,
+  questionsList?: IQuestionAdmin[] | undefined,
+  setQuestionsList?: any,
   boardTitles: BoardTitlesProps[];
   answers: BoardAnswersProps[];
   selectListAnswers?: (boards: BoardTitlesProps[]) => void
@@ -141,11 +147,10 @@ export interface IQuestionAdmin {
   id: number;
   question_type: TQuestionType;
   text: string;
-  image: string;
-  answers: Answer[];
+  image?: string;
+  answers?: Answer[];
+  answers_list?: Answer[];
 }
-
-export type QuestionAdminCreate = Omit<IQuestionAdmin, 'id'>;
 
 export interface Volume {
   id: number;
@@ -183,6 +188,7 @@ export interface QuizCardProps {
   question_amount: number;
   tags: any;
   isPassed: any;
+  isIncomplete: boolean,
 }
 
 export interface TAnswerRequest {
@@ -202,11 +208,26 @@ export interface TAnswerItem {
 }
 
 export interface Statistic {
-  explanation: string;
-  isRight: boolean;
-  question: string;
-  right_answer: string;
-  user_answer: string;
+  result: boolean;
+  info: string;
+  statistics: {
+    question_type: string;
+    question: string;
+    explanation: string;
+    answer: string;
+    user_answer: string;
+    is_right: boolean;
+    answers: {
+      answer_text: string;
+      answered: boolean;
+      answer_right: boolean;
+      is_right: boolean;
+      answer_list: {
+        text: string;
+        answer_right: boolean
+      }[];
+    }[];
+  }[];
 }
 
 export interface Item {
@@ -253,10 +274,16 @@ export interface AdminQuizz {
   volumes: Volume[];
 }
 
+export interface AdminImage {
+  id: number;
+  image: string;
+  description: string;
+}
+
 export interface ILevel {
   id: number;
-  name: number;
-  description: number;
+  name: string;
+  description: string;
 }
 
 export type LevelCreate = Omit<ILevel, 'id'>;

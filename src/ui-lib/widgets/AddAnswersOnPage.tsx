@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import StyledFormItem from '../styled-components/StyledFormItem';
 import StyledButton from '../styled-components/StyledButton';
 import DragAndDropQuestion from './DragAndDropQuestion';
+import { IQuestionAdmin } from '@/types/types';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;
@@ -85,11 +86,11 @@ const StyledCheckbox = styled(Checkbox)<{ questionType: string }>`
   }
 
   & > .vkuiCheckbox__input:checked~.vkuiCheckbox__icon--on {
-    ${({ questionType }) => (questionType === 'DAD' ? 'display: none;' : '')}
+    ${({ questionType }) => (questionType === 'LST' ? 'display: none;' : '')}
   }
 
   & > .vkuiCheckbox__icon {
-    ${({ questionType }) => (questionType === 'DAD' ? 'display: none;' : '')}
+    ${({ questionType }) => (questionType === 'LST' ? 'display: none;' : '')}
     margin-right: 8px;
   }
 
@@ -115,7 +116,9 @@ const AddAnswers = styled.div`
 `;
 
 const AddAnswersOnPage: FC<{
-  questionId: number,
+  question: IQuestionAdmin | undefined,
+  questionsList: IQuestionAdmin[] | undefined,
+  setQuestionsList: any,
   questionType: string,
   title: string,
   description: string,
@@ -126,7 +129,9 @@ const AddAnswersOnPage: FC<{
   setIsAnswerValid?: any,
   categories?: { id: number, text: string, items: { id: number, text: string }[] }[],
 }> = ({
-  questionId,
+  question,
+  questionsList,
+  setQuestionsList,
   questionType,
   title,
   description,
@@ -181,7 +186,7 @@ const AddAnswersOnPage: FC<{
                         ? { ...answ, isRight: !answer.isRight }
                         : { ...answ, isRight: answer.isRight })))
                     : setAnswers(answers.map((answ) => (
-                      answ.id === answer.id && questionType !== 'DAD'
+                      answ.id === answer.id && questionType !== 'LST'
                         ? { ...answ, isRight: !answer.isRight } : answ)));
                 }}
                 key={answer.id}>
@@ -226,7 +231,7 @@ const AddAnswersOnPage: FC<{
               disabled={answers.some(({ text }) => text === '')}
               aria-label='Добавить ответ'
               onClick={() => {
-                setAnswers(questionType !== 'DAD'
+                setAnswers(questionType !== 'LST'
                   ? [...answers, { id: answers.length, text: '' }]
                   : title === 'Категории для соотношений'
                     ? [...answers, { id: answers.length, text: '', items: [] }]
@@ -241,24 +246,29 @@ const AddAnswersOnPage: FC<{
         ) : (
           isOpen ? (
             <DragAndDropQuestion
+              question={question}
+              questionsList={questionsList}
+              setQuestionsList={setQuestionsList}
               boardTitles={categories ?? [{ id: 0, text: '', items: [] }]}
               answers={answers} />
           ) : (
-            <StyledButton
-              onClick={() => {
-                setIsOpen(true);
-                setIsDeleteButtonDisabled(true);
-              }}
-              mode='link'
-              style={{
-                display: 'flex',
-                gap: '8px',
-                alignItems: 'center',
-                marginTop: '22px',
-              }}>
-              Соотнесите элементы
-              <Icon20ChevronRight />
-            </StyledButton>
+            (categories?.length ?? 0) > 1 && answers.length > 1 && (
+              <StyledButton
+                onClick={() => {
+                  setIsOpen(true);
+                  setIsDeleteButtonDisabled(true);
+                }}
+                mode='link'
+                style={{
+                  display: 'flex',
+                  gap: '8px',
+                  alignItems: 'center',
+                  marginTop: '22px',
+                }}>
+                Соотнесите элементы
+                <Icon20ChevronRight />
+              </StyledButton>
+            )
           )
         )}
     </FormItemForNewQuiz>

@@ -171,7 +171,7 @@ const LearningProgress: React.FC = () => {
                 <StyledTitle>{currentUser?.count_passed}</StyledTitle>
                 <StyledSubtitle>{plurals.quizzes(currentUser?.count_passed ?? 0)}</StyledSubtitle>
               </ProgressTitleWrapper>
-              <StyledCaption>всего пройдено</StyledCaption>
+              <StyledCaption>{getPluralNoun(currentUser?.count_passed ?? 0, 'всего пройден', 'всего пройдено')}</StyledCaption>
             </ProgressTextWrapper>
           </IndexWrapper>
           <IndexWrapper>

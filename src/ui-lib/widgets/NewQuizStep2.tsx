@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -6,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable array-callback-return */
 /* eslint-disable ternary/no-unreachable */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
   FormLayout,
   FormLayoutGroup,
@@ -20,9 +21,10 @@ import styled from 'styled-components';
 import StyledInput from '../styled-components/StyledInput';
 import questionTypes from '@/constants/question-types';
 import StyledDiv from '../styled-components/StyledDiv';
-import { FormElements, SetFormElements } from '../../constants/steps';
+import { FormElements, SetFormElements, StepProps } from '../../constants/steps';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
-import { IQuestionType, QuestionTypeProps } from '@/constants/question-types';
+import { IQuestionAdmin } from '@/types/types';
+import { useCreateQuestionMutation } from '@/api/apiv2';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
@@ -60,48 +62,61 @@ const HiddenInfo = styled.div`
 `;
 
 const questionTypesList: { label: string; value: string }[] = [];
-questionTypes.map(({ name }: { name: string }) => questionTypesList.push({
+questionTypes.map(({ name, shortname }: {
+  name: string,
+  shortname: string,
+}) => questionTypesList.push({
   label: name,
-  value: name,
+  value: shortname,
 }));
 
-const NewQuizStep2: FC<{
-  items: number[],
-  setItems: any,
-  formElements: FormElements,
-  setFormElements: SetFormElements,
-}> = ({
-  items,
-  setItems,
+const NewQuizStep2: FC<StepProps> = ({
+  questionsList,
   formElements,
   setFormElements,
+  quizId,
+  setNextPage,
+  isSubmit,
+  setIsSubmit,
+  setIsButtonDisabled,
 }) => {
-  const questionText = formElements.questionText as { id: number, text: string }[];
-  const { setQuestionText } = setFormElements;
-  const questionType = formElements.questionType as { id: number, text: string }[];
-  const { setQuestionType } = setFormElements;
-  const isQuestionTextValid = formElements.isQuestionTextValid as {
-    id: number, isValid: boolean
-  }[];
+  const { isQuestionTextValid } = formElements;
   const { setIsQuestionTextValid } = setFormElements;
-  const isQuestionTypeValid = formElements.isQuestionTypeValid as {
-    id: number, isValid: boolean
-  }[];
+  const { isQuestionTypeValid } = formElements;
   const { setIsQuestionTypeValid } = setFormElements;
+  const { setQuestionsList } = setFormElements;
 
-  const renderElement = (typeName: string, questionId: number) => {
-    const type: IQuestionType<QuestionTypeProps> =
-    questionTypes.find(({ name }) => (typeName === name)) ?? { id: -1, name: '', markup: { Component: () => null } };
+  const renderElement = (typeName: string, question: IQuestionAdmin) => {
+    const type = questionTypes.find(({ shortname }) => (typeName === shortname)) ?? { id: -1, name: '', markup: { Component: () => null } };
     return (
       <type.markup.Component
-        questionId={questionId} />
+        question={question}
+        questionsList={questionsList}
+        setQuestionsList={setQuestionsList} />
     );
   };
 
+  useEffect(() => {
+    const isDisabled: boolean = questionsList.some(({ text, question_type, answers }) => (
+      text !== '' && question_type !== '' && answers?.some((answer) => answer.text !== '')
+      && answers.length > 0
+      /* && answers?.some(({ isRight }) => isRight === true) */
+    ));
+    setIsButtonDisabled(isDisabled);
+  }, [questionsList]);
+
+  useEffect(() => {
+    if (isSubmit[1]) {
+      setNextPage();
+      setIsSubmit([false, false, false, false]);
+    }
+  }, [isSubmit]);
+  console.log(questionsList);
+
   return (
     <>
-      {items.map((question) => (
-        <StyledDiv key={question} style={{ height: 'min-content', marginTop: '24px' }}>
+      {questionsList.map((question, i) => (
+        <StyledDiv key={question.id} style={{ height: 'min-content', marginTop: '24px' }}>
           <FormLayout>
             <div
               style={{
@@ -119,31 +134,27 @@ const NewQuizStep2: FC<{
                   lineHeight: '20px',
                   letterSpacing: '-0.32px',
                 }}>
-                {`Вопрос №${question + 1}`}
+                {`Вопрос №${i + 1}`}
               </Text>
               <IconButton
                 style={{
                   width: '28px',
                   height: '28px',
-                  visibility: `${questionText[question].text !== '' && questionType[question].text !== '' ? 'visible' : 'hidden'}`,
-                  opacity: `${questionText[question].text !== '' && questionType[question].text !== '' ? '1' : '0'}`,
+                  visibility: `${question.text !== '' && question.question_type !== '' ? 'visible' : 'hidden'}`,
+                  opacity: `${question.text !== '' && question.question_type !== '' ? '1' : '0'}`,
                   transition: 'all .3s ease',
                 }}
                 aria-label='Удалить вопрос'
                 onClick={() => {
-                  setQuestionText((questionText.filter(({ id }) => (
-                    id !== question
-                  ))).map((quest, ind) => ({ ...quest, id: ind })));
-                  setQuestionType((questionType.filter(({ id }) => (
-                    id !== question
+                  setQuestionsList((questionsList.filter(({ id }) => (
+                    id !== question.id
                   ))).map((quest, ind) => ({ ...quest, id: ind })));
                   setIsQuestionTextValid((isQuestionTextValid.filter(({ id }) => (
-                    id !== question
-                  ))).map((quest, ind) => ({ ...quest, id: ind })));
+                    id !== question.id
+                  ))).map((val, ind) => ({ ...val, id: ind })));
                   setIsQuestionTypeValid((isQuestionTypeValid.filter(({ id }) => (
-                    id !== question
-                  ))).map((quest, ind) => ({ ...quest, id: ind })));
-                  setItems((items.filter((item) => item !== question)).map((num, ind) => ind));
+                    id !== question.id
+                  ))).map((val, ind) => ({ ...val, id: ind })));
                 }}>
                 <Icon28DeleteOutline fill='#99A2AD' />
               </IconButton>
@@ -154,14 +165,14 @@ const NewQuizStep2: FC<{
                 top='Текст вопроса'
                 onBlur={() => {
                   setIsQuestionTextValid(isQuestionTextValid.map((valid) => (
-                    valid.id === question ? { ...valid, text: questionText[question].text !== '' } : valid
+                    valid.id === question.id ? { ...valid, isValid: question.text !== '' } : valid
                   )));
                 }}
                 onChange={() => (
                   setIsQuestionTextValid(isQuestionTextValid.map((valid) => (
-                    valid.id === question ? { ...valid, isValid: true } : valid
+                    valid.id === question.id ? { ...valid, isValid: true } : valid
                   ))))}
-                status={isQuestionTextValid[question] ? 'default' : 'error'}
+                status={isQuestionTextValid[question.id].isValid ? 'default' : 'error'}
                 style={{ maxWidth: '546px' }}>
                 <StyledInput
                   style={{ minHeight: '40px' }}
@@ -169,11 +180,11 @@ const NewQuizStep2: FC<{
                   type='text'
                   placeholder='Введите вопрос'
                   name='question-text'
-                  value={questionText[question].text}
+                  value={question.text}
                   onChange={(e) => {
-                    setQuestionText(
-                      questionText.map((quest) => (
-                        quest.id === question ? { ...quest, text: e.target.value } : quest)),
+                    setQuestionsList(
+                      questionsList.map((quest) => (
+                        quest.id === question.id ? { ...quest, text: e.target.value } : quest)),
                     );
                   }} />
               </FormItemForNewQuiz>
@@ -182,14 +193,14 @@ const NewQuizStep2: FC<{
                 top='Тип вопроса'
                 onBlur={() => {
                   setIsQuestionTypeValid(isQuestionTypeValid.map((valid) => (
-                    valid.id === question ? { ...valid, isValid: questionType[question].text !== '' } : valid
+                    valid.id === question.id ? { ...valid, isValid: question.question_type !== '' } : valid
                   )));
                 }}
                 onChange={() => (
                   setIsQuestionTypeValid(isQuestionTypeValid.map((valid) => (
-                    valid.id === question ? { ...valid, isValid: true } : valid
+                    valid.id === question.id ? { ...valid, isValid: true } : valid
                   ))))}
-                status={isQuestionTypeValid[question].isValid ? 'default' : 'error'}>
+                status={isQuestionTypeValid[question.id].isValid ? 'default' : 'error'}>
                 <div
                   style={{
                     display: 'flex',
@@ -200,11 +211,13 @@ const NewQuizStep2: FC<{
                   <StyledSelect
                     style={{ width: '100%' }}
                     placeholder='Выберите тип вопроса'
-                    value={questionType[question].text}
+                    value={question.question_type}
                     onChange={(e) => {
-                      setQuestionType(
-                        questionType.map((type) => (
-                          type.id === question ? { ...type, text: e.target.value } : type)),
+                      setQuestionsList(
+                        questionsList.map((type) => (
+                          type.id === question.id ? {
+                            ...type, question_type: e.target.value,
+                          } : type)),
                       );
                     }}
                     options={questionTypesList} />
@@ -212,15 +225,17 @@ const NewQuizStep2: FC<{
                     <Icon28InfoCircleOutline fill='#3F8AE0' />
                     <HiddenInfo className='hidden_info'>
                       <Text>
-                        Вопрос с открытым ответом — это.... Вопрос на соотношение —
-                        это....
+                        {question.question_type === ''
+                          ? 'Выберите тип вопроса из списка и введите текст вопроса'
+                          : questionTypes.find(({ shortname }) => (
+                            question.question_type === shortname))?.hiddeninfo}
                       </Text>
                     </HiddenInfo>
                   </Info>
                 </div>
               </FormItemForNewQuiz>
             </FormLayoutGroup>
-            {questionType[question].text !== '' && renderElement(questionType[question].text, question)}
+            {question.question_type !== '' && question.text !== '' && renderElement(question.question_type, question)}
           </FormLayout>
         </StyledDiv>
       ))}

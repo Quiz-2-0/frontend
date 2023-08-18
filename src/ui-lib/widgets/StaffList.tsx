@@ -16,11 +16,10 @@ import React, {
   useState,
   useRef,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FormItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon24UserOutline, Icon20ChevronRight } from '@vkontakte/icons';
+import { Icon20ChevronRight } from '@vkontakte/icons';
 import StyledDiv from '../styled-components/StyledDiv';
 import StyledButton from '../styled-components/StyledButton';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
@@ -28,13 +27,13 @@ import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwar
 import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
 import { IconWrapper } from './Achives';
-import staff, { IStaff } from '@/constants/staff';
 import { IUser } from '@/types/types';
+import ListItemForStaffTable from './ListItemForStaffTable';
 
-const StyledExpandedItem = styled.div<{ isOpen: number[]; id: any }>`
-  max-height: ${({ isOpen, id }) => (!isOpen.includes(id) ? `${staff.length * 36}px` : '0')};
+const StyledExpandedItem = styled.div<{ isOpen: number[]; index: number; staffList: IUser[] | undefined }>`
+  min-height: ${({ isOpen, index, staffList }) => (!isOpen.includes(index) ? `${(staffList?.length ?? 0) * 36}px` : '0')};
+  overflow: hidden;
   padding: 0;
-  overflow: auto;
   position: relative;
   transition: all ease 0.7s;
   &::-webkit-scrollbar {
@@ -42,35 +41,9 @@ const StyledExpandedItem = styled.div<{ isOpen: number[]; id: any }>`
   }
 `;
 
-const StaffLink = styled(StyledButton)`
-  margin: 0;
-  height: 24px;
-  width: 24px;
-
-  & > .vkuiButton__in {
-    justify-content: flex-end;
-  }
-`;
-
-const StyledDivWithCheckbox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-  padding: 0 24px;
-  gap: 98px;
-
-  &:hover {
-    background: rgba(63, 138, 224, 0.05);
-  }
-
-  &:pressed {
-    background: rgba(63, 138, 224, 0.15);
-  }
-`;
-
 const StaffList: FC<{
-  departments: { label: string; value: string }[] | string | undefined,
-  staffList: IStaff[] | IUser[] | undefined,
+  departments: { label: string; value: number }[] | undefined,
+  staffList: IUser[] | undefined,
   isChecked: number[],
   setIsChecked: any,
   search: string,
@@ -113,17 +86,17 @@ const StaffList: FC<{
               display: 'flex',
               background: '#fff',
               zIndex: '1',
-              gap: `${typeof departments === 'string' ? '98px' : '0'}`,
+              gap: `${departments?.length !== 1 ? '0' : '98px'}`,
               justifyContent: 'space-between',
               position: 'sticky',
               top: '0',
             }}>
             <StyledCheckbox
-              checked={isChecked.length === staff.length && staff.length !== 0}
+              checked={isChecked.length === staffList?.length && staffList.length !== 0}
               onClick={() => (
-                isChecked.length === staff.length
+                isChecked.length === staffList?.length
                   ? setIsChecked([])
-                  : setIsChecked(staff.map((emp, i) => i + 1))
+                  : setIsChecked(staffList?.map(({ id }) => id))
               )}>
               <TableTitle style={{ minWidth: '220px' }}>Сотрудники</TableTitle>
               <TableTitle style={{ minWidth: '220px' }}>Email</TableTitle>
@@ -137,17 +110,17 @@ const StaffList: FC<{
                 Рейтинг
               </TableTitle>
             </StyledCheckbox>
-            {typeof departments !== 'string'
+            {(departments?.length ?? 0) > 1
               ? (
                 <StyledButton
                   onClick={() => (
-                    isOpen.length === (departments?.length ?? 0) - 1
+                    isOpen.length === (departments?.length ?? 0)
                       ? setIsOpen([])
-                      : setIsOpen(departments?.slice(1).map((dep, i) => i) ?? [])
+                      : setIsOpen(departments?.map(({ value }) => value) ?? [])
                   )}
                   style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }}
                   mode='link'>
-                  {isOpen.length === (departments?.length ?? 0) - 1
+                  {isOpen.length === (departments?.length ?? 0)
                     ? 'Развернуть'
                     : 'Свернуть всё'}
                 </StyledButton>
@@ -156,7 +129,7 @@ const StaffList: FC<{
               )}
           </div>
           <div style={{ height: '397px', overflow: 'scroll', zIndex: '-1000' }}>
-            {typeof departments === 'string' || search !== ''
+            {departments?.length === 1 || search !== ''
               ? (
                 staffList?.length === 0
                   ? (
@@ -170,49 +143,22 @@ const StaffList: FC<{
                     </p>
                   ) : (
                     staffList?.map((user, i) => (
-                      <StyledDivWithCheckbox
+                      <ListItemForStaffTable
                         key={user.id}
-                        ref={
-                          i === 0
-                            ? topRef
-                            : i === staffList.length - 1
-                              ? bottomRef
-                              : null
-                        }>
-                        <StyledCheckbox
-                          checked={!!isChecked.includes(user.id)}
-                          onClick={() => (
-                            isChecked.includes(user.id)
-                              ? setIsChecked(isChecked.filter((num) => num !== user.id))
-                              : setIsChecked([...isChecked, user.id])
-                          )}>
-                          <TableItem style={{ minWidth: '220px' }}>
-                            {`${user.lastName} ${user.firstName} ${user.patronymic}`}
-                          </TableItem>
-                          <TableItem style={{ minWidth: '220px' }}>
-                            {user.email}
-                          </TableItem>
-                          <TableItem
-                            style={{ minWidth: '100px', textAlign: 'center' }}>
-                            0
-                          </TableItem>
-                          <TableItem
-                            style={{ minWidth: '100px', textAlign: 'center' }}>
-                            0
-                          </TableItem>
-                          <TableItem
-                            style={{ minWidth: '100px', textAlign: 'center' }}>
-                            0
-                          </TableItem>
-                        </StyledCheckbox>
-                        <StaffLink mode='link'>
-                          <Icon24UserOutline />
-                        </StaffLink>
-                      </StyledDivWithCheckbox>
+                        user={user}
+                        userInd={i}
+                        depInd={-1}
+                        topRef={topRef}
+                        bottomRef={bottomRef}
+                        staffList={staffList}
+                        departmentsNumber={0}
+                        isChecked={isChecked}
+                        setIsChecked={setIsChecked} />
                     )))) : (
-                departments?.slice(1).map((department, i) => (
+                departments?.map((department, i) => (
                   <>
                     <div
+                      key={department.value}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -223,17 +169,17 @@ const StaffList: FC<{
                       }}>
                       <StyledCheckbox
                         checked={
-                          staff.filter((user) => (
-                            department.value === user.department)).every(({ id }) => (
+                          staffList?.filter((user) => (
+                            department.label === user.department)).every(({ id }) => (
                             isChecked.includes(id)
                           ))
                         }
                         onClick={() => {
-                          const users = staff.filter((user) => (
-                            department.value === user.department)).map(({ id }) => id);
-                          users.every((id) => isChecked.includes(id))
-                            ? setIsChecked(isChecked.filter((num) => !users.includes(num)))
-                            : setIsChecked(Array.from(new Set(isChecked.concat(users))));
+                          const users = staffList?.filter((user) => (
+                            department.label === user.department)).map(({ id }) => id);
+                          users?.every((id) => isChecked.includes(id))
+                            ? setIsChecked(isChecked.filter((num) => !users?.includes(num)))
+                            : setIsChecked(Array.from(new Set(isChecked.concat(users ?? []))));
                         }}
                         style={{ maxHeight: '28px' }}>
                         <TableItem
@@ -243,81 +189,45 @@ const StaffList: FC<{
                             lineHeight: '20px',
                             letterSpacing: '-0.32px',
                           }}>
-                          {department.value}
+                          {department.label}
                         </TableItem>
                       </StyledCheckbox>
                       <IconWrapper
                         onClick={() => (
-                          isOpen.includes(i)
-                            ? setIsOpen(isOpen.filter((num) => num !== i))
-                            : setIsOpen([...isOpen, i])
+                          isOpen.includes(department.value)
+                            ? setIsOpen(isOpen.filter((num) => num !== department.value))
+                            : setIsOpen([...isOpen, department.value])
                         )}>
                         <ArrowIcon
                           style={{
                             transform: `${
-                              !isOpen.includes(i) ? 'rotate(270deg)' : 'rotate(90deg)'
+                              !isOpen.includes(department.value) ? 'rotate(270deg)' : 'rotate(90deg)'
                             }`,
                             transition: 'all .3s ease',
                           }} />
                       </IconWrapper>
                     </div>
-                    <StyledExpandedItem isOpen={isOpen} id={i}>
-                      {staffList?.length === 0
-                        ? (
-                          <p
-                            style={{
-                              fontSize: '16px',
-                              color: '#818C99',
-                              paddingLeft: '72px',
-                            }}>
-                            По вашему запросу ничего не найдено
-                          </p>
-                        ) : (
-                          staffList?.map((user, index) => {
-                            if (department.value === user.department) {
-                              return (
-                                <StyledDivWithCheckbox
-                                  key={user.id}
-                                  ref={
-                                    index === 0
-                                      ? topRef
-                                      : index === staffList?.length - 1
-                                        ? bottomRef
-                                        : null
-                                  }>
-                                  <StyledCheckbox
-                                    checked={!!isChecked.includes(user.id)}
-                                    onClick={() => (
-                                      isChecked.includes(user.id)
-                                        ? setIsChecked(isChecked.filter((num) => num !== user.id))
-                                        : setIsChecked([...isChecked, user.id])
-                                    )}>
-                                    <TableItem style={{ minWidth: '220px' }}>
-                                      {`${user.lastName} ${user.firstName} ${user.patronymic}`}
-                                    </TableItem>
-                                    <TableItem style={{ minWidth: '220px' }}>
-                                      {user.email}
-                                    </TableItem>
-                                    <TableItem
-                                      style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      0
-                                    </TableItem>
-                                    <TableItem
-                                      style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      0
-                                    </TableItem>
-                                    <TableItem
-                                      style={{ minWidth: '100px', textAlign: 'center' }}>
-                                      0
-                                    </TableItem>
-                                  </StyledCheckbox>
-                                  <StaffLink mode='link'>
-                                    <Icon24UserOutline />
-                                  </StaffLink>
-                                </StyledDivWithCheckbox>
-                              );
-                            }
-                          }))}
+                    <StyledExpandedItem
+                      isOpen={isOpen}
+                      index={department.value}
+                      staffList={staffList?.filter((user) => (
+                        department.label === user.department
+                      ))}>
+                      {staffList?.filter((user) => (
+                        department.label === user.department
+                      )).map((user, ind) => (
+                        <ListItemForStaffTable
+                          key={user.id}
+                          user={user}
+                          userInd={ind}
+                          depInd={i}
+                          topRef={topRef}
+                          bottomRef={bottomRef}
+                          staffList={staffList}
+                          departmentsNumber={departments.length}
+                          isChecked={isChecked}
+                          setIsChecked={setIsChecked} />
+                      ))}
                     </StyledExpandedItem>
                   </>
                 ))
