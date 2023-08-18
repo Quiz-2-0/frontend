@@ -188,6 +188,7 @@ export interface QuizCardProps {
   question_amount: number;
   tags: any;
   isPassed: any;
+  isIncomplete: boolean,
 }
 
 export interface TAnswerRequest {

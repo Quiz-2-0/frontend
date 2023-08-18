@@ -126,7 +126,7 @@ const Dropdown: FC<{
               );
             case 'LST':
               return (
-                <DropdownLstAnswersList />
+                <DropdownLstAnswersList isReview={isReview} answers={answers} />
               );
             default:
               return null;
