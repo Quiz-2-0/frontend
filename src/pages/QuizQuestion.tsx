@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-return-assign */
@@ -163,7 +162,7 @@ const QuizQuestion: React.FC = () => {
       quizId: id,
       id: questions[currentPage].id,
       question_type: questions[currentPage].question_type,
-      response_time: 0, // todo Что это?
+      response_time: 0,
       answers: selectedAnswers,
     };
     await setAnswer(requestObject);
