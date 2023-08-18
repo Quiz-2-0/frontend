@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { FormLayout, FormLayoutGroup, Select, Text } from '@vkontakte/vkui';
 import { Icon56GalleryOutline } from '@vkontakte/icons';
 import styled from 'styled-components';
@@ -14,7 +16,8 @@ import thresholdList from '@/constants/threshold';
 import StyledDiv from '../styled-components/StyledDiv';
 import StyledButton from '../styled-components/StyledButton';
 import GalleryPopup from '../popups/GalleryPopup';
-import gallery from '@/constants/gallery';
+import { StepProps } from '@/constants/steps';
+import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/apiv2';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;
@@ -34,7 +37,7 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-const DownloadCover = styled.div<{ background: number }>`
+const DownloadCover = styled.div<{ background: string }>`
   margin-top: 12px;
   max-width: 330px;
   width: 100%;
@@ -42,18 +45,60 @@ const DownloadCover = styled.div<{ background: number }>`
   padding: 20px;
   box-sizing: border-box;
   border-radius: 8px;
-  background: ${({ background }) => (background === -1 ? '#EDEEF0;' : `url(${gallery[background].image});
+  background: ${({ background }) => (background === '' ? '#EDEEF0;' : `url(${background});
   background-position: center;
   background-size: cover;`)}
 `;
 
-const NewQuizStep4: FC = () => {
-  const [time, setTime] = useState('0');
+const NewQuizStep4: FC<StepProps> = ({
+  quizId,
+  isSubmit,
+  setIsSubmit,
+  setNextPage,
+}) => {
+  const { data: quiz, error } = useGetAdminQuizQuery(quizId, {
+    refetchOnMountOrArgChange: true,
+  });
+  const [time, setTime] = useState(error ? 0 : quiz?.duration ?? 0);
   const [isTimeValid, setIsTimeValid] = useState(true);
-  const [threshold, setThreshold] = useState(70);
-  const [image, setImage] = useState(-1);
+  const [threshold, setThreshold] = useState(error ? 70 : quiz?.threshold ?? 70);
+  const [image, setImage] = useState(error ? '' : quiz?.image ?? '');
   const [isImageValid, setIsImageValid] = useState(true);
   const [isGalleryPopupOpen, setIsGalleryPopupOpen] = useState(false);
+
+  const [updateQuiz] = useUpdateQuizMutation();
+
+  useEffect(() => {
+    setTime(error ? 0 : quiz?.duration ?? 0);
+    setIsTimeValid(true);
+    setThreshold(error ? 70 : quiz?.threshold ?? 70);
+    setImage(error ? '' : quiz?.image ?? '');
+    setIsImageValid(true);
+    setIsGalleryPopupOpen(false);
+  }, [quiz]);
+
+  const onSubmit = async () => {
+    await updateQuiz({
+      quizId,
+      quiz: {
+        description: quiz?.description,
+        directory: quiz?.directory,
+        duration: time,
+        threshold,
+        name: quiz?.name,
+        level: quiz?.level,
+        tags: quiz?.tags,
+      },
+    });
+    setNextPage();
+    setIsSubmit([false, false, false, false]);
+  };
+
+  useEffect(() => {
+    if (isSubmit[3]) {
+      onSubmit();
+    }
+  }, [isSubmit]);
 
   return (
     <StyledDiv>
@@ -62,7 +107,7 @@ const NewQuizStep4: FC = () => {
           <FormItemForNewQuiz
             htmlFor='time'
             top='Время прохождения'
-            onBlur={() => setIsTimeValid(time.length !== 0)}
+            onBlur={() => setIsTimeValid(time !== 0)}
             onChange={() => setIsTimeValid(true)}
             status={isTimeValid ? 'default' : 'error'}
             style={{ maxWidth: '499px' }}>
@@ -80,7 +125,7 @@ const NewQuizStep4: FC = () => {
             <StyledSelect
               placeholder='Выберите значение'
               value={time}
-              onChange={(e) => setTime(e.target.value)}
+              onChange={(e) => setTime(Number(e.target.value))}
               options={timeList} />
           </FormItemForNewQuiz>
           <FormItemForNewQuiz
@@ -108,21 +153,21 @@ const NewQuizStep4: FC = () => {
         <FormItemForNewQuiz
           htmlFor='image'
           top='Обложка квиза'
-          onBlur={() => setIsImageValid(image !== -1)}
+          onBlur={() => setIsImageValid(image !== '')}
           onChange={() => setIsTimeValid(true)}
           status={isImageValid ? 'default' : 'error'}
           style={{ maxWidth: '499px' }}>
           <DownloadCover
             background={image}>
-            {image === -1 && <Icon56GalleryOutline width={114} height={114} fill='#fff' style={{ margin: '0 auto' }} />}
+            {image === '' && <Icon56GalleryOutline width={114} height={114} fill='#fff' style={{ margin: '0 auto' }} />}
             <StyledButton
               style={{
                 display: 'block',
                 maxWidth: 'min-content',
-                margin: `${image === -1 ? '6' : '120'}px auto 0`,
+                margin: `${image === '' ? '6' : '120'}px auto 0`,
               }}
               onClick={() => setIsGalleryPopupOpen(true)}>
-              {image === -1 ? 'Выбрать обложку' : 'Заменить обложку'}
+              {image === '' ? 'Выбрать обложку' : 'Заменить обложку'}
             </StyledButton>
           </DownloadCover>
         </FormItemForNewQuiz>

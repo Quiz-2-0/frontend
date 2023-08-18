@@ -22,6 +22,9 @@ const DnDItemsContainer = styled.div`
 
 const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
   {
+    question,
+    questionsList,
+    setQuestionsList,
     boardTitles,
     answers,
     selectListAnswers,
@@ -53,6 +56,14 @@ const DragAndDropQuestion: FC<DragAndDropQuestionProps> = (
       selectListAnswers(b);
     }
   };
+
+  useEffect(() => {
+    console.log(boards, question, questionsList);
+    if (question !== undefined && questionsList !== undefined) {
+      setQuestionsList(questionsList.map((quest) => (
+        quest.id === question.id ? { ...quest, answers: boards } : quest)));
+    }
+  }, [boards]);
 
   return (
     <div>

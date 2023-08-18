@@ -1,10 +1,14 @@
+/* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
 import { QuestionTypeProps } from '@/constants/question-types';
 
 const QuestionWithMoreThenTwoAnswers: FC<QuestionTypeProps> = ({
-  questionId,
+  question,
+  questionsList,
+  setQuestionsList,
 }) => {
   const [answers, setAnswers] = useState<{
     id: number,
@@ -18,14 +22,22 @@ const QuestionWithMoreThenTwoAnswers: FC<QuestionTypeProps> = ({
 
   useEffect(() => {
     if (answers.length === 0) {
-      setAnswers([{ id: 0, text: '', isRight: false }]);
+      setQuestionsList(questionsList.map((quest) => (
+        quest.id === question.id ? { ...quest, answers: [{ id: 0, text: '' }] } : quest
+      )));
       setIsAnswerValid([{ isValid: true, id: 0 }]);
+    } else {
+      setQuestionsList(questionsList.map((quest) => (
+        quest.id === question.id ? { ...quest, answers } : quest
+      )));
     }
   }, [answers]);
 
   return (
     <AddAnswersOnPage
-      questionId={questionId}
+      question={undefined}
+      questionsList={undefined}
+      setQuestionsList={undefined}
       questionType='MANY'
       answers={answers}
       setAnswers={setAnswers}

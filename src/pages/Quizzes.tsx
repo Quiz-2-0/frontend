@@ -71,7 +71,6 @@ const Quizzes: FC = () => {
         appointedQuizzes={appointedQuizzes} />
       <QuizCardList
         quizList={search !== '' ? quizNameFilter : quizzesOnPage}
-        setIsConfirmationPopupOpen={undefined}
         isIncomplete={false} />
     </StyledDiv>
   );

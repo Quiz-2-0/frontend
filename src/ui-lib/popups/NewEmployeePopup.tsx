@@ -71,7 +71,7 @@ const NewEmployeePopup: FC<{
   setIsNewEmploeePopupOpen,
   departments,
 }) => {
-  const [createUser, result] = useCreateUserMutation();
+  const [createUser] = useCreateUserMutation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -85,7 +85,6 @@ const NewEmployeePopup: FC<{
   const [position, setPosition] = useState('');
   const [isPositionValid, setIsPositionValid] = useState(true);
   const [isActive, setIsActive] = useState(true);
-
   useEffect(() => {
     setIsActive(
       isFirstNameValid && isLastNameValid && isPatronymicValid &&
@@ -133,7 +132,7 @@ const NewEmployeePopup: FC<{
       department,
       email,
       role: 'EMP',
-    });
+    }).then((data: any) => console.log(data));
     resetForm();
     setIsNewEmploeePopupOpen(false);
   };

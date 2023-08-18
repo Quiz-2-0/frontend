@@ -3,6 +3,7 @@ import NewQuizStep1 from '@/ui-lib/widgets/NewQuizStep1';
 import NewQuizStep2 from '@/ui-lib/widgets/NewQuizStep2';
 import NewQuizStep3 from '@/ui-lib/widgets/NewQuizStep3';
 import NewQuizStep4 from '@/ui-lib/widgets/NewQuizStep4';
+import { IQuestionAdmin } from '@/types/types';
 
 export interface Step<T> {
   id: number;
@@ -18,17 +19,19 @@ export interface Step<T> {
 
 export interface StepProps {
   items: number[];
+  quizId: number;
+  questionsList: IQuestionAdmin[];
+  setIsButtonDisabled: any;
+  setNextPage: any;
+  isSubmit: boolean[];
+  setIsSubmit: any;
   setItems: any;
   formElements: FormElements;
   setFormElements: SetFormElements;
 }
 
 export type FormElements = Record<
-string, {
-  id: number,
-  text: string,
-  isRight?: boolean,
-}[] | { id: number, isValid: boolean }[]>;
+string, { id: number, isValid: boolean }[]>;
 
 export type SetFormElements = Record<string, any>;
 
