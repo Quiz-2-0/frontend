@@ -6,20 +6,25 @@ import styled from 'styled-components';
 import QuizCard from './QuizCard';
 import { AdminQuizz, IQuiz } from '@/types/types';
 
-const StyledQuizListContainer = styled.ul`
+const StyledQuizListContainer = styled.ul<{ isIncomplete: boolean }>`
   margin: 0;
   padding: 0;
   width: 100%;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 42px;
+  justify-items: start;
+  align-items: start;
+  justify-content: space-between;
+  align-content: start;
+  gap: ${({ isIncomplete }) => (isIncomplete ? '18px 24px' : '42px')};;
 `;
 
-const QuizCardList: FC<{ quizList: IQuiz[] | undefined | AdminQuizz[] }> = (
-  { quizList },
-) => (
-  <StyledQuizListContainer>
+const QuizCardList: FC<{
+  quizList: IQuiz[] | undefined | AdminQuizz[],
+  isIncomplete: boolean,
+}> = ({ quizList, isIncomplete }) => (
+  <StyledQuizListContainer isIncomplete={isIncomplete}>
     {quizList?.length === 0 || quizList === undefined
       ? (
         <>

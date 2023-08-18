@@ -38,7 +38,9 @@ const NewQuiz: FC = () => {
       </StyledDiv>
       <StyledDiv>
         <Title level='1' style={{ marginBottom: '28px' }}>Черновики</Title>
-        <QuizCardList quizList={quizzesList} />
+        <QuizCardList
+          quizList={quizzesList}
+          isIncomplete={false} />
       </StyledDiv>
     </div>
   );

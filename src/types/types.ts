@@ -207,11 +207,26 @@ export interface TAnswerItem {
 }
 
 export interface Statistic {
-  explanation: string;
-  isRight: boolean;
-  question: string;
-  right_answer: string;
-  user_answer: string;
+  result: boolean;
+  info: string;
+  statistics: {
+    question_type: string;
+    question: string;
+    explanation: string;
+    answer: string;
+    user_answer: string;
+    is_right: boolean;
+    answers: {
+      answer_text: string;
+      answered: boolean;
+      answer_right: boolean;
+      is_right: boolean;
+      answer_list: {
+        text: string;
+        answer_right: boolean
+      }[];
+    }[];
+  }[];
 }
 
 export interface Item {
