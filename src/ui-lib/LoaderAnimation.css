@@ -1,6 +1,6 @@
 @keyframes fill-orange-background {
   0%, 10% {
-    height: 0%;
+    height: 0;
     opacity: 1;
   }
   35%, 98% {
@@ -15,7 +15,7 @@
 
 @keyframes fill-green-background {
   0%, 35% {
-    height: 0%;
+    height: 0;
     opacity: 1;
   }
   70%, 98% {
@@ -30,7 +30,7 @@
 
 @keyframes fill-intersection-green-background {
   0%, 72% {
-    height: 0%;
+    height: 0;
     opacity: 1;
   }
   98% {

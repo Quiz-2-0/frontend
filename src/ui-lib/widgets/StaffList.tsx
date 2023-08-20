@@ -1,16 +1,8 @@
-/* eslint-disable no-unsafe-optional-chaining */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
-/* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, {
   FC,
   useState,
@@ -26,7 +18,7 @@ import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwardButton';
 import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 import { IUser } from '@/types/types';
 import ListItemForStaffTable from './ListItemForStaffTable';
 

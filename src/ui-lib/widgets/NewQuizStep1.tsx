@@ -1,12 +1,5 @@
-/* eslint-disable promise/always-return */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable array-callback-return */
-/* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import {
   FormLayout,
   FormLayoutGroup,
@@ -27,7 +20,7 @@ import {
   useGetDepartmentsQuery,
   useGetTagsQuery,
   useGetLevelsQuery,
-} from '@/api/apiv2';
+} from '@/api/api';
 import { StepProps } from '@/constants/steps';
 
 const StyledSelect = styled(Select)`
@@ -83,9 +76,9 @@ const NewQuizStep1: FC<StepProps> = ({
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
   const [categoriesList, setCategoriesList] = useState<{ label: string; value: number }[]>(
-    categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
-      label: categ.name,
-      value: categ.id,
+    categories?.filter(({ name }) => name !== 'Новый').map((cat: { name: string, id: number }) => ({
+      label: cat.name,
+      value: cat.id,
     })) ?? [],
   );
 
@@ -145,10 +138,11 @@ const NewQuizStep1: FC<StepProps> = ({
     setLevel(error ? NaN : quiz?.level ?? NaN);
     setDescription(error ? '' : quiz?.description ?? '');
     setCategoriesList(
-      categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
-        label: categ.name,
-        value: categ.id,
-      })) ?? [],
+      categories?.filter(({ name }) => name !== 'Новый')
+        .map((cat) => ({
+          label: cat.name,
+          value: cat.id,
+        })) ?? [],
     );
     setDepartmentsList(
       departments?.map((dep: { name: string, id: number }) => ({

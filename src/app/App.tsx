@@ -1,11 +1,5 @@
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable no-param-reassign */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -21,7 +15,7 @@ import MainLayout from '@/ui-lib/layouts/MainLayout';
 import { routes } from '@/constants/routes';
 import Error from '@/pages/Error';
 import Loader from '@/ui-lib/widgets/Loader';
-import { useSelector, useDispatch } from '@/store/store.types';
+import { useSelector } from '@/store/store.types';
 import Login from '@/pages/Login';
 import ResetPassword from '@/pages/ResetPassword';
 
@@ -36,10 +30,9 @@ const Main = styled.main`
 
 const App = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const { isLoaderRun } = useSelector((state) => state.all);
-  const localStorageRole = localStorage.getItem('role') || '';
-  const sessionStorageRole = sessionStorage.getItem('role') || '';
+  const localStorageRole = localStorage.getItem('role') ?? '';
+  const sessionStorageRole = sessionStorage.getItem('role') ?? '';
 
   const userRole = (localStorageRole !== '') ? localStorageRole : sessionStorageRole;
 
@@ -52,9 +45,9 @@ const App = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/404' element={<Error />} />
-            {routes.map(({ path, Component, role }, index) => (
+            {routes.map(({ path, Component, role }) => (
               (userRole === role) ? (
-                <Route element={<MainLayout />} key={index}>
+                <Route element={<MainLayout />} key={path}>
                   <Route path={path} element={Component} />
                 </Route>
               ) : (

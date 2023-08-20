@@ -1,12 +1,6 @@
-/* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable ternary/nesting */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import StaffFilter from '@/ui-lib/widgets/StaffFilters';
@@ -15,7 +9,7 @@ import ChooseQuizzesPopup from '@/ui-lib/popups/ChooseQuizzesPopup';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
 import { IUser } from '@/types/types';
-import { useGetQuizzesQuery, useGetDepartmentsQuery, useGetUsersQuery } from '@/api/apiv2';
+import { useGetQuizzesQuery, useGetDepartmentsQuery, useGetUsersQuery } from '@/api/api';
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -33,7 +27,7 @@ const Staff: FC = () => {
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isNewEmployeeAdd, setIsNewEmployeeAdd] = useState(false);
-  const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
+  const [isNewEmployeePopupOpen, setIsNewEmployeePopupOpen] = useState(false);
 
   const { data: staff } = useGetUsersQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -103,7 +97,7 @@ const Staff: FC = () => {
           type={selectType}
           setType={staffDepartmentFilter}
           setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
-          setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
+          setIsNewEmployeePopupOpen={setIsNewEmployeePopupOpen}
           isChecked={isEmployeeChecked} />
         <StaffList
           staffList={searchEmployee !== '' ? staffNameFilter : staffOnPage}
@@ -152,7 +146,7 @@ const Staff: FC = () => {
         setIsNewEmployeeAdd={setIsNewEmployeeAdd}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
-        setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
+        setIsNewEmployeePopupOpen={setIsNewEmployeePopupOpen}
         departments={departmentsList} />
     </>
   );

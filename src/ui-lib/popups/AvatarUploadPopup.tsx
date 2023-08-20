@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useRef, useState } from 'react';
 import styled from 'styled-components';
 import {
@@ -13,10 +7,10 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetDefaultAvatarsQuery, useUploadAvatarMutation } from '@/api/apiv2';
+import { useGetDefaultAvatarsQuery, useUploadAvatarMutation } from '@/api/api';
 import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
 import { IAvatar } from '@/types/types';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 interface PopupProps {
   closeAvatarPopup: () => void;
@@ -118,7 +112,7 @@ const UploadedImgPreview = styled.img`
 `;
 
 const AvatarUploadPopup: FC<PopupProps> = ({ isOpen, closeAvatarPopup }) => {
-  const [uploadAvatar, { data, error, isLoading }] = useUploadAvatarMutation();
+  const [uploadAvatar] = useUploadAvatarMutation();
   const { data: avatars } = useGetDefaultAvatarsQuery();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadedAvatarUrl, setUploadedAvatarUrl] = useState<string>('');

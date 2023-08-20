@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable camelcase */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import QuizCard from '@/ui-lib/widgets/QuizCard';
-import { AdminQuizz, IQuiz } from '@/types/types';
+import { AdminQuiz, IQuiz } from '@/types/types';
 
 const StyledQuizListContainer = styled.ul<{ isIncomplete: boolean }>`
   margin: 0;
@@ -21,7 +19,7 @@ const StyledQuizListContainer = styled.ul<{ isIncomplete: boolean }>`
 `;
 
 const QuizCardList: FC<{
-  quizList: IQuiz[] | undefined | AdminQuizz[],
+  quizList: IQuiz[] | undefined | AdminQuiz[],
   isIncomplete: boolean,
 }> = ({ quizList, isIncomplete }) => (
   <StyledQuizListContainer isIncomplete={isIncomplete}>
@@ -31,7 +29,7 @@ const QuizCardList: FC<{
           <div> </div>
           <p style={{ fontSize: '16px', color: '#818C99', paddingLeft: '15px' }}>Ничего не найдено</p>
         </>
-      ) : quizList?.map((quiz: IQuiz | AdminQuizz) => (
+      ) : quizList?.map((quiz: IQuiz | AdminQuiz) => (
         <QuizCard
           id={quiz.id}
           key={quiz.id}

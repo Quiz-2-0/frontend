@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Question } from '@/types/types';
@@ -32,10 +31,18 @@ const Bar = styled.ul`
   height: 8px;
 `;
 
-const ProgressBar: FC<{ progressObject: any, questionArr: Question[] | undefined | { id: number, name: string }[] }> = ({ progressObject, questionArr }) => (
+interface IProgressBarProps {
+  progressObject: any,
+  questionArr: undefined | Question[] | { id: number, name: string }[]
+}
+
+const ProgressBar: FC<IProgressBarProps> = ({ progressObject, questionArr }) => (
   <Bar>
     {questionArr?.map((el, index) => (
-      <BarElement width={100 / questionArr.length} isCurrentBar={index in progressObject} key={el.id} />
+      <BarElement
+        key={el.id}
+        width={100 / questionArr.length}
+        isCurrentBar={index in progressObject} />
     ))}
   </Bar>
 );

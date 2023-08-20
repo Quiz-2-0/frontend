@@ -1,9 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon20ChevronRight, Icon24AddOutline } from '@vkontakte/icons';
@@ -15,7 +9,7 @@ import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import steps, { Step, StepProps } from '@/constants/steps';
 import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
-import { useGetQuestionsQuery } from '@/api/apiv2';
+import { useGetQuestionsQuery } from '@/api/api';
 import { IQuestionAdmin } from '@/types/types';
 
 const CreateNewQuiz: FC = () => {

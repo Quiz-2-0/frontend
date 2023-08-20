@@ -1,5 +1,3 @@
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react';
 import styled from 'styled-components';
 import checkboxIcon from '@/assets/images/icons/checkbox_checked.svg';

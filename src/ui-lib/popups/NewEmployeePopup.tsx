@@ -1,11 +1,5 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, {
   ChangeEvent,
@@ -13,7 +7,6 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import validator from 'validator';
 import {
@@ -28,7 +21,7 @@ import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
-import { useCreateUserMutation } from '@/api/apiv2';
+import { useCreateUserMutation } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 1000px;
@@ -64,13 +57,13 @@ const FormItemForNewEmployee = styled(StyledFormItem)`
 
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
-  setIsNewEmploeePopupOpen: any,
+  setIsNewEmployeePopupOpen: any,
   setIsNewEmployeeAdd: any,
   setIsConfirmationPopupOpen: any,
   departments: { label: string; value: number }[] | undefined,
 }> = ({
   isNewEmployeePopupOpen,
-  setIsNewEmploeePopupOpen,
+  setIsNewEmployeePopupOpen,
   departments,
   setIsNewEmployeeAdd,
   setIsConfirmationPopupOpen,
@@ -138,7 +131,7 @@ const NewEmployeePopup: FC<{
       role: 'EMP',
     }).then((data: any) => console.log(data));
     resetForm();
-    setIsNewEmploeePopupOpen(false);
+    setIsNewEmployeePopupOpen(false);
     setIsNewEmployeeAdd(true);
     setIsConfirmationPopupOpen(true);
   };
@@ -166,7 +159,7 @@ const NewEmployeePopup: FC<{
               alignItems: 'center',
             }}
             onClick={() => {
-              setIsNewEmploeePopupOpen(false);
+              setIsNewEmployeePopupOpen(false);
               resetForm();
             }}>
             <Icon24CancelOutline fill='#3F8AE0' />

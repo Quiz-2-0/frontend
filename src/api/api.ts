@@ -1,20 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ADMIN_LEVELS_ROUTE,
-  ALL_QUIZES,
   API_ROOT,
-  GET_ADMIN_QUIZZES,
-  GET_ADMIN_USERS,
-  GET_USER,
+  USER_ROUTE,
   LOGIN_ROUTE,
-  POST_ADMIN_NEW_USER,
-  RESET_PASSWORD,
-} from '@/constants/api-url';
+  RESET_PASSWORD_ROUTE,
+  QUIZZES_ROUTE,
+  USER_ACHIEVEMENTS_ROUTE,
+  ADMIN_DEPARTMENTS_ROUTE,
+  ADMIN_LEVELS_ROUTE,
+  ADMIN_QUIZZES_ROUTE,
+  ADMIN_USERS_ROUTE,
+  ADMIN_NEW_USER_ROUTE,
+  ADMIN_TAGS_ROUTE,
+} from './api-url';
 import {
   AdminImage,
-  AdminQuizz,
+  AdminQuiz,
   IAchievement,
   IAvatar,
   IDefaultAvatar,
@@ -101,14 +102,14 @@ export const userApi = createApi({
     }),
     recoverPassword: build.mutation<string, string>({
       query: (email) => ({
-        url: RESET_PASSWORD,
+        url: RESET_PASSWORD_ROUTE,
         method: 'POST',
         body: { email },
       }),
     }),
     getCurrentUser: build.query<IUser, void>({
       query: () => ({
-        url: GET_USER,
+        url: USER_ROUTE,
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -118,8 +119,7 @@ export const userApi = createApi({
     }),
     getAchievements: build.query<IAchievement[], void>({
       query: () => ({
-        url: '/users/achivements/',
-        method: 'GET',
+        url: USER_ACHIEVEMENTS_ROUTE,
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -127,8 +127,7 @@ export const userApi = createApi({
     }),
     getShortAchievements: build.query<IShortAchievement[], void>({
       query: () => ({
-        url: '/users/achivements/short',
-        method: 'GET',
+        url: `${USER_ACHIEVEMENTS_ROUTE}short/`,
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -137,7 +136,6 @@ export const userApi = createApi({
     getShortRatings: build.query<IShortRating[], void>({
       query: () => ({
         url: '/users/ratings/short',
-        method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -146,7 +144,6 @@ export const userApi = createApi({
     getDefaultAvatars: build.query<IDefaultAvatar[], void>({
       query: () => ({
         url: '/users/avatar',
-        method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt.get()}`,
         },
@@ -177,26 +174,26 @@ export const quizApi = createApi({
   }),
   tagTypes: ['quiz'],
   endpoints: (build) => ({
-    getAllQuizes: build.query<IQuiz[], void>({
-      query: () => ALL_QUIZES,
+    getAllQuizzes: build.query<IQuiz[], void>({
+      query: () => QUIZZES_ROUTE,
       keepUnusedDataFor: 0,
     }),
     getIncompleteQuizzes: build.query<IQuiz[], void>({
-      query: () => '/quizes/not_complited/',
+      query: () => `${QUIZZES_ROUTE}not_complited/`,
       keepUnusedDataFor: 0,
     }),
     getQuiz: build.query<IQuiz, number>({
-      query: (id: number) => `${ALL_QUIZES}${id}/`,
+      query: (id: number) => `${QUIZZES_ROUTE}${id}/`,
       providesTags: ['quiz'],
       keepUnusedDataFor: 0,
     }),
     getStatistic: build.query<Statistic, number>({
-      query: (id: number) => `${ALL_QUIZES}${id}/statistic/`,
+      query: (id: number) => `${QUIZZES_ROUTE}${id}/statistic/`,
       keepUnusedDataFor: 0,
     }),
     setAnswer: build.mutation<void, TAnswerRequest>({
       query: ({ quizId, ...patch }) => ({
-        url: `${ALL_QUIZES}${quizId}/answer/`,
+        url: `${QUIZZES_ROUTE}${quizId}/answer/`,
         method: 'POST',
         body: patch,
       }),
@@ -217,22 +214,22 @@ export const adminTagsApi = createApi({
   tagTypes: ['adminTag'],
   endpoints: (build) => ({
     getTags: build.query<Tag[], void>({
-      query: () => '/admin/tags/',
+      query: () => ADMIN_TAGS_ROUTE,
     }),
     createTag: build.mutation<Tag, IAdminTagsRequest>({
       query: (body) => ({
-        url: '/admin/tags/',
+        url: ADMIN_TAGS_ROUTE,
         method: 'POST',
         body,
       }),
       invalidatesTags: ['adminTag'],
     }),
     getTag: build.query<Tag, number>({
-      query: (id) => `/admin/tags/${id}`,
+      query: (id) => `${ADMIN_TAGS_ROUTE}${id}/`,
     }),
     updateTag: build.mutation<Tag, Tag>({
       query: ({ id, ...body }) => ({
-        url: `/admin/tags/${id}`,
+        url: `${ADMIN_TAGS_ROUTE}${id}/`,
         method: 'PUT',
         body,
       }),
@@ -240,7 +237,7 @@ export const adminTagsApi = createApi({
     }),
     removeTag: build.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/tags/${id}`,
+        url: `${ADMIN_TAGS_ROUTE}${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminTag'],
@@ -303,22 +300,22 @@ export const adminDepartmentsApi = createApi({
   tagTypes: ['adminDepartment'],
   endpoints: (build) => ({
     getDepartments: build.query<IDepartment[], void>({
-      query: () => '/admin/users/departments/',
+      query: () => ADMIN_DEPARTMENTS_ROUTE,
     }),
     createDepartment: build.mutation<IDepartment, string>({
       query: (name) => ({
-        url: '/admin/users/departments/',
+        url: ADMIN_DEPARTMENTS_ROUTE,
         method: 'POST',
         body: { name },
       }),
       invalidatesTags: ['adminDepartment'],
     }),
     getDepartment: build.query<IDepartment, number>({
-      query: (id) => `/admin/users/departments/${id}`,
+      query: (id) => `${ADMIN_DEPARTMENTS_ROUTE}${id}/`,
     }),
     updateDepartment: build.mutation<IDepartment, IDepartment>({
       query: ({ id, ...body }) => ({
-        url: `/admin/users/departments/${id}`,
+        url: `${ADMIN_DEPARTMENTS_ROUTE}${id}/`,
         method: 'PUT',
         body,
       }),
@@ -326,7 +323,7 @@ export const adminDepartmentsApi = createApi({
     }),
     removeDepartment: build.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/users/departments/${id}`,
+        url: `${ADMIN_DEPARTMENTS_ROUTE}${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminDepartment'],
@@ -345,15 +342,15 @@ export const adminQuizzesApi = createApi({
   }),
   tagTypes: ['adminQuiz'],
   endpoints: (build) => ({
-    getQuizzes: build.query<AdminQuizz[], void>({
-      query: () => GET_ADMIN_QUIZZES,
+    getQuizzes: build.query<AdminQuiz[], void>({
+      query: () => ADMIN_QUIZZES_ROUTE,
     }),
     getImagesForQuizzes: build.query<AdminImage[], void>({
-      query: () => `${GET_ADMIN_QUIZZES}images/`,
+      query: () => `${ADMIN_QUIZZES_ROUTE}images/`,
     }),
     createQuiz: build.mutation<IAdminCreateQuizRequest, IAdminCreateQuizRequest>({
       query: (quiz) => ({
-        url: GET_ADMIN_QUIZZES,
+        url: ADMIN_QUIZZES_ROUTE,
         method: 'POST',
         body: quiz,
       }),
@@ -361,27 +358,27 @@ export const adminQuizzesApi = createApi({
     }),
     assignQuizzesToUsers: build.mutation<void, IAdminAssignQuizzesToUsersRequest>({
       query: (body) => ({
-        url: `${GET_ADMIN_QUIZZES}assigned_list/`,
+        url: `${ADMIN_QUIZZES_ROUTE}assigned_list/`,
         method: 'POST',
         body,
       }),
       invalidatesTags: ['adminQuiz'],
     }),
     getAdminQuiz: build.query<IAdminGetQuizRequest, number>({
-      query: (quizId) => `${GET_ADMIN_QUIZZES}${quizId}/`,
+      query: (quizId) => `${ADMIN_QUIZZES_ROUTE}${quizId}/`,
       keepUnusedDataFor: 0,
     }),
     updateQuiz: build.mutation<IAdminCreateQuizRequest, IAdminUpdateQuizRequest>({
       query: ({ quizId, quiz }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/`,
         method: 'PUT',
         body: quiz,
       }),
       invalidatesTags: ['adminQuiz'],
     }),
-    deleteQuiz: build.mutation<void, number>({
+    removeQuiz: build.mutation<void, number>({
       query: (quizId) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminQuiz'],
@@ -401,11 +398,11 @@ export const adminQuestionsApi = createApi({
   tagTypes: ['adminQuestion'],
   endpoints: (build) => ({
     getQuestions: build.query<IQuestionAdmin[], number>({
-      query: (quizId) => `${GET_ADMIN_QUIZZES}${quizId}/questions/`,
+      query: (quizId) => `${ADMIN_QUIZZES_ROUTE}${quizId}/questions/`,
     }),
     createQuestion: build.mutation<IQuestionAdmin, IAdminCreateQuestionRequest>({
       query: ({ quizId, question }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/questions/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/questions/`,
         method: 'POST',
         body: question,
       }),
@@ -413,7 +410,7 @@ export const adminQuestionsApi = createApi({
     }),
     createQuestionsList: build.mutation<IQuestionAdmin[], IAdminCreateQuestionsListRequest>({
       query: ({ quizId, questions }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/questions_list/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/questions_list/`,
         method: 'POST',
         body: questions,
       }),
@@ -421,15 +418,15 @@ export const adminQuestionsApi = createApi({
     }),
     updateQuestion: build.mutation<IQuestionAdmin, IAdminUpdateQuestionRequest>({
       query: ({ quizId, questionId, question }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/questions/${questionId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/questions/${questionId}/`,
         method: 'PATCH',
         body: question,
       }),
       invalidatesTags: ['adminQuestion'],
     }),
-    deleteQuestion: build.mutation<void, IAdminRemoveQuestionRequest>({
+    removeQuestion: build.mutation<void, IAdminRemoveQuestionRequest>({
       query: ({ quizId, questionId }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/questions/${questionId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/questions/${questionId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminQuestion'],
@@ -449,30 +446,30 @@ export const adminVolumesApi = createApi({
   tagTypes: ['adminVolume'],
   endpoints: (build) => ({
     getVolumes: build.query<Volume[], number>({
-      query: (quizId) => `${GET_ADMIN_QUIZZES}${quizId}/volumes/`,
+      query: (quizId) => `${ADMIN_QUIZZES_ROUTE}${quizId}/volumes/`,
     }),
     createVolume: build.mutation<Volume, IAdminCreateVolumeRequest>({
       query: ({ quizId, volume }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/volumes/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/volumes/`,
         method: 'POST',
         body: volume,
       }),
       invalidatesTags: ['adminVolume'],
     }),
     getVolume: build.query<Volume, IAdminGetVolumeRequest>({
-      query: ({ quizId, volumeId }) => `${GET_ADMIN_QUIZZES}${quizId}/volumes/${volumeId}/`,
+      query: ({ quizId, volumeId }) => `${ADMIN_QUIZZES_ROUTE}${quizId}/volumes/${volumeId}/`,
     }),
     updateVolume: build.mutation<Volume, IAdminUpdateVolumeRequest>({
       query: ({ quizId, volumeId, volume }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/volumes/${volumeId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/volumes/${volumeId}/`,
         method: 'PUT',
         body: volume,
       }),
       invalidatesTags: ['adminVolume'],
     }),
-    deleteVolume: build.mutation<void, IAdminRemoveVolumeRequest>({
+    removeVolume: build.mutation<void, IAdminRemoveVolumeRequest>({
       query: ({ quizId, volumeId }) => ({
-        url: `${GET_ADMIN_QUIZZES}${quizId}/volumes/${volumeId}/`,
+        url: `${ADMIN_QUIZZES_ROUTE}${quizId}/volumes/${volumeId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminVolume'],
@@ -492,24 +489,24 @@ export const adminUsersApi = createApi({
   tagTypes: ['adminUser'],
   endpoints: (build) => ({
     getUsers: build.query<IUser[], void>({
-      query: () => GET_ADMIN_USERS,
+      query: () => ADMIN_USERS_ROUTE,
       keepUnusedDataFor: 0,
     }),
     createUser: build.mutation<IUser, IUserCreate>({
       query: (body) => ({
-        url: POST_ADMIN_NEW_USER,
+        url: ADMIN_NEW_USER_ROUTE,
         method: 'POST',
         body,
       }),
       invalidatesTags: ['adminUser'],
     }),
     getUser: build.query<IUser, number>({
-      query: (id) => `${GET_ADMIN_USERS}${id}/`,
+      query: (id) => `${ADMIN_USERS_ROUTE}${id}/`,
       keepUnusedDataFor: 0,
     }),
     updateUser: build.mutation<IUser, IAdminUpdateUserRequest>({
       query: ({ userId, user }) => ({
-        url: `${POST_ADMIN_NEW_USER}${userId}/`,
+        url: `${ADMIN_NEW_USER_ROUTE}${userId}/`,
         method: 'PUT',
         body: user,
       }),
@@ -517,7 +514,7 @@ export const adminUsersApi = createApi({
     }),
     removeUser: build.mutation<void, number>({
       query: (id) => ({
-        url: `${POST_ADMIN_NEW_USER}${id}/`,
+        url: `${ADMIN_NEW_USER_ROUTE}${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['adminUser'],
@@ -537,7 +534,7 @@ export const {
 } = userApi;
 
 export const {
-  useGetAllQuizesQuery,
+  useGetAllQuizzesQuery,
   useGetIncompleteQuizzesQuery,
   useGetQuizQuery,
   useSetAnswerMutation,
@@ -575,7 +572,7 @@ export const {
   useAssignQuizzesToUsersMutation,
   useGetAdminQuizQuery,
   useUpdateQuizMutation,
-  useDeleteQuizMutation,
+  useRemoveQuizMutation,
 } = adminQuizzesApi;
 
 export const {
@@ -583,7 +580,7 @@ export const {
   useCreateQuestionMutation,
   useCreateQuestionsListMutation,
   useUpdateQuestionMutation,
-  useDeleteQuestionMutation,
+  useRemoveQuestionMutation,
 } = adminQuestionsApi;
 
 export const {
@@ -591,7 +588,7 @@ export const {
   useCreateVolumeMutation,
   useGetVolumeQuery,
   useUpdateVolumeMutation,
-  useDeleteVolumeMutation,
+  useRemoveVolumeMutation,
 } = adminVolumesApi;
 
 export const {

@@ -1,13 +1,8 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import ClickAwayListener from 'react-click-away-listener';
 import Logo from '../styled-components/Logo';
 import {
   BellIcon,
@@ -16,14 +11,12 @@ import {
   AvatarIcon,
 } from '../styled-components/icons';
 import logoImg from '@/assets/images/logo/header__logo.svg';
-import { useSelector, useDispatch } from '@/store/store.types';
 import AdvBanner from './AdvBanner';
 import AvatarUploadPopup from '@/ui-lib/popups/AvatarUploadPopup';
-import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '@/api/apiv2';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { useGetCurrentUserQuery, jwt, useGetAllQuizzesQuery } from '@/api/api';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const HeaderWrapper = styled.header`
-
   width: 100%;
   padding: 32px 80px 0;
   box-sizing: border-box;
@@ -50,8 +43,8 @@ const HeaderContainer = styled.div`
 const ToolBar = styled.div`
   display: flex;
   align-items: center;
-
 `;
+
 const AvatarWrapper = styled.div<{ width: number, height: number }>`
   width:${({ width }) => width}px;
   height:${({ height }) => height}px;
@@ -118,9 +111,9 @@ const IconWrapper = styled.div`
 
 const Header: FC = () => {
   const navigate = useNavigate();
-  const { data, error } = useGetCurrentUserQuery();
+  const { data } = useGetCurrentUserQuery();
   /// нужно убрать этот ранний запрос за квизами
-  const { data: quizes } = useGetAllQuizesQuery();
+  const { data: quizzes } = useGetAllQuizzesQuery();
   const [isOpen, openModal] = useState(false);
   const [isAvatarPopupOpen, openAvatarPopup] = useState(false);
   const logOutFunction = () => {
@@ -172,7 +165,7 @@ const Header: FC = () => {
           <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>
             <BellIcon onClick={(e: any) => { e.stopPropagation(); openModal(!isOpen); }} />
-            {quizes && <RedBallIcon top={3} left={17} />}
+            {quizzes && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
           <LogOutIcon onClick={logOutFunction} />
         </ToolBar>

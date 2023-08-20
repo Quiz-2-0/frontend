@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable object-shorthand */
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import styled from 'styled-components';

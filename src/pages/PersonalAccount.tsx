@@ -1,21 +1,11 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable consistent-return */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-fallthrough */
-/* eslint-disable default-case */
 import React, { FC } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import {
   Title,
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useSelector } from '@/store/store.types';
-import { useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery } from '@/api/api';
 import LearningProgress from '@/ui-lib/widgets/LearningProgress';
 import Castle from '@/ui-lib/widgets/Castle';
 import Rating from '@/ui-lib/widgets/Rating';
@@ -35,8 +25,6 @@ const Div = styled.div`
 `;
 
 const PersonalAccount: FC = () => {
-  const navigate = useNavigate();
-  const { isLoaderRun } = useSelector((state) => state.all);
   const { data: currentUser } = useGetCurrentUserQuery();
 
   return (

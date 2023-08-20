@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable array-callback-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useEffect, useState } from 'react';
 import { FormLayout, FormLayoutGroup, Select, Text } from '@vkontakte/vkui';
 import { Icon56GalleryOutline } from '@vkontakte/icons';
@@ -17,8 +11,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import StyledButton from '../styled-components/StyledButton';
 import GalleryPopup from '../popups/GalleryPopup';
 import { StepProps } from '@/constants/steps';
-import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/apiv2';
-import { API_ROOT } from '@/constants/api-url';
+import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/api';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;

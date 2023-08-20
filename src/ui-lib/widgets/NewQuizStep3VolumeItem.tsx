@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import React, { FC, useState } from 'react';
 import { FormLayoutGroup, IconButton, Textarea, Title } from '@vkontakte/vkui';

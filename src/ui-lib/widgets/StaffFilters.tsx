@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Select, Search } from '@vkontakte/vkui';
@@ -30,7 +29,7 @@ const StaffFilter: FC<{
   setType: any,
   departments: { label: string, value: number }[] | undefined,
   setIsChooseQuizzesPopupOpen: any,
-  setIsNewEmploeePopupOpen: any,
+  setIsNewEmployeePopupOpen: any,
   isChecked: number[],
 }> = ({
   setSearch,
@@ -39,7 +38,7 @@ const StaffFilter: FC<{
   setType,
   departments,
   setIsChooseQuizzesPopupOpen,
-  setIsNewEmploeePopupOpen,
+  setIsNewEmployeePopupOpen,
   isChecked,
 }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -59,7 +58,7 @@ const StaffFilter: FC<{
         <StyledButton
           mode='outline'
           style={{ margin: 0, width: '220px' }}
-          onClick={() => setIsNewEmploeePopupOpen(true)}>
+          onClick={() => setIsNewEmployeePopupOpen(true)}>
           Добавить сотрудника
         </StyledButton>
         <StyledButton

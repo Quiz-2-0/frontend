@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Tabs, TabsItem } from '@vkontakte/vkui';
@@ -38,7 +36,7 @@ const StyledTabs = styled(Tabs)`
 const StyledTabsItem = styled(TabsItem)`
   padding: 12px 12px;
   box-sizing: border-box;
-  heigth: 48px;
+  height: 48px;
   display: flex;
   justify-content: left;
   border-radius: 0;

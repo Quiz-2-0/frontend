@@ -1,14 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable ternary/nesting */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable ternary/no-unreachable */
 import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Title, Text, Div } from '@vkontakte/vkui';
@@ -16,14 +5,14 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '../styled-components/StyledButton';
 import successImage from '@/assets/images/results_success.png';
 import failImage from '@/assets/images/results_fail.png';
-import { useGetStatisticQuery } from '@/api/apiv2';
+import { useGetStatisticQuery } from '@/api/api';
 
 const Results: FC<{
   quizName: string | undefined,
 }> = ({ quizName }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetStatisticQuery(Number(id));
+  const { data } = useGetStatisticQuery(Number(id));
 
   const handleFirstButtonClick = () => {
     if (data && data.result === false) {

@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -13,10 +7,10 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 import { ArrowIcon } from '../styled-components/icons';
-import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/apiv2';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/api';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const RatingTitleContainer = styled(Div)`
   width: 100%;
@@ -41,20 +35,20 @@ const UsersContainer = styled(Div)`
 const UserContainer = styled(Div)<{ user: boolean }>`
   position: relative;
   padding: 0;
-  width: ${({ user }) => user ? '80px' : '60px'};
+  width: ${({ user }) => (user ? '80px' : '60px')};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: ${({ user }) => user ? '5px' : '2px'};
+  gap: ${({ user }) => (user ? '5px' : '2px')};
 `;
 
 const RatingCircle = styled(Div)<{ user: boolean }>`
   padding: 0;
-  width: ${({ user }) => user ? '24px' : '21px'};
-  height: ${({ user }) => user ? '24px' : '21px'};
+  width: ${({ user }) => (user ? '24px' : '21px')};
+  height: ${({ user }) => (user ? '24px' : '21px')};
   border-radius: 50%;
-  background-color: ${({ user }) => user ? '#B2DEFF' : '#FAEFD2'};
+  background-color: ${({ user }) => (user ? '#B2DEFF' : '#FAEFD2')};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,8 +59,8 @@ const RatingCircle = styled(Div)<{ user: boolean }>`
 `;
 
 const UserPhoto = styled.img<{ user: boolean }>`
-  width: ${({ user }) => user ? '80px' : '60px'};
-  height: ${({ user }) => user ? '80px' : '60px'};
+  width: ${({ user }) => (user ? '80px' : '60px')};
+  height: ${({ user }) => (user ? '80px' : '60px')};
   object-fit: cover;
   border-radius: 50%;
   overflow: hidden;

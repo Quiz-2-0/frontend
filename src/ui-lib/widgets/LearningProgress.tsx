@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
@@ -7,7 +6,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery } from '@/api/api';
 import CircularProgressBar from './CircularProgressBar';
 import StyledDiv from '../styled-components/StyledDiv';
 import { StyledNavButton } from './Achievements';

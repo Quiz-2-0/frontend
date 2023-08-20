@@ -12,7 +12,7 @@ import {
   adminVolumesApi,
   quizApi,
   userApi,
-} from '@/api/apiv2';
+} from '@/api/api';
 
 const store = configureStore({
   reducer: {

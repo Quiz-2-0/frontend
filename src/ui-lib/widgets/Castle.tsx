@@ -1,12 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-plusplus */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { useNavigate } from 'react-router';
 import {
@@ -17,11 +8,11 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
-import { setFromCastle, setLoaderState } from '@/store/allSlice/allSlice';
-import { useGetAllQuizesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
+import { setFromCastle } from '@/store/allSlice/allSlice';
+import { useGetAllQuizzesQuery, useGetCurrentUserQuery } from '@/api/api';
 import { useDispatch } from '@/store/store.types';
 import { pluralsFull } from '@/constants/plurals';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const StyledImage = styled.img`
   max-width: 310px;
@@ -60,7 +51,7 @@ const StyledText = styled(Text)`
 const Castle: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetAllQuizesQuery();
+  const { data } = useGetAllQuizzesQuery();
   const { data: currentUser } = useGetCurrentUserQuery();
 
   const onButtonClick = () => {

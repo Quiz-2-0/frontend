@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import {
   Title,
@@ -7,9 +5,8 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
-import { useGetIncompleteQuizzesQuery } from '@/api/apiv2';
+import { useGetIncompleteQuizzesQuery } from '@/api/api';
 import QuizCardList from './QuizCardList';
-import QuizCard from './QuizCard';
 
 const IncompleteQuizzes: React.FC = () => {
   const { data: incompleteQuizzes } = useGetIncompleteQuizzesQuery();

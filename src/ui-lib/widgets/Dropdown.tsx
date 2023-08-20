@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable import/no-named-as-default */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import DropdownOneAnswersList from '@/ui-lib/widgets/DropdownOneAnswersList';
@@ -8,7 +5,7 @@ import DropdownMnyAnswersList from '@/ui-lib/widgets/DropdownMnyAnswersList';
 import DropdownOpnAnswersList from '@/ui-lib/widgets/DropdownOpnAnswersList';
 import DropdownLstAnswersList from '@/ui-lib/widgets/DropdownLstAnswersList';
 import { ArrowIcon, CheckIcon, FalseIcon } from '../styled-components/icons';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 
 const Li = styled.li<{ isReview: boolean }>`
   width: 100%;

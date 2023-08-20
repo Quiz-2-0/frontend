@@ -1,8 +1,3 @@
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable no-else-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { AnswersList } from './SingleChoiceQuestion';
 import MultipleChoiceAnswer from './MultipleChoiceAnswer';
@@ -16,7 +11,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = (
   },
 ) => {
   const handleCheckboxChange = (answerId: number) => {
-    let answerIds = [];
+    let answerIds: number[];
     if (selectedAnswers.includes(answerId)) {
       answerIds = selectedAnswers.filter((answer) => answer !== answerId);
     } else {

@@ -1,13 +1,9 @@
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Div, Title, Text } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetAchievementsQuery } from '@/api/apiv2';
+import { useGetAchievementsQuery } from '@/api/api';
 import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
 import BackButton from '@/ui-lib/styled-components/BackButton';
 import buttonIcon from '@/assets/images/icons/button_icon.svg';
@@ -76,10 +72,6 @@ const AchieveLi = styled.li<{ achieved: boolean }>`
 const AchieveCounter = styled(Title)`
   align-self: flex-end;
   transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchieveImg = styled.img`
@@ -88,18 +80,10 @@ const AchieveImg = styled.img`
   border-radius: 50%;
   margin: 8px 0 20px;
   transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchieveTitle = styled(Title)`
   transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchieveDescription = styled(Text)`
@@ -108,19 +92,15 @@ const AchieveDescription = styled(Text)`
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const AchievementsPage: FC = () => {
   const { data } = useGetAchievementsQuery();
   const navigate = useNavigate();
-  const [achievements, setAchievements] = useState(data ? data : []);
+  const [achievements, setAchievements] = useState(data ?? []);
 
   useEffect(() => {
-    setAchievements(data ? data : []);
+    setAchievements(data ?? []);
   }, [data]);
 
   return (

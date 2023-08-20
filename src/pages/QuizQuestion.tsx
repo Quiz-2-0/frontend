@@ -1,33 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-param-reassign */
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable ternary/nesting */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable spaced-comment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import {
   Div,
   Title,
   Headline,
-  Subhead,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
-import { useGetQuizQuery, useSetAnswerMutation } from '@/api/apiv2';
+import { useGetQuizQuery, useSetAnswerMutation } from '@/api/api';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import { TAnswerItem, BoardTitlesProps, BoardAnswersProps, Answer, AnswerItem, Item } from '@/types/types';
 import Results from '@/ui-lib/widgets/Results';
@@ -38,8 +19,8 @@ import DragAndDropQuestion from '@/ui-lib/widgets/DragAndDropQuestion';
 
 const QuizQuestion: React.FC = () => {
   const { id = 0 } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(Number(id));
-  const [setAnswer, result] = useSetAnswerMutation();
+  const { data } = useGetQuizQuery(Number(id));
+  const [setAnswer] = useSetAnswerMutation();
   const [progressObject, setProgress] = useState<Record<number, string>>({});
 
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -63,9 +44,9 @@ const QuizQuestion: React.FC = () => {
 
   const selectAnswers = (answerIds: number[]) => {
     const answers: TAnswerItem[] = [];
-    answerIds.forEach((id) => {
+    answerIds.forEach((answerId) => {
       answers.push({
-        answer: id,
+        answer: answerId,
         answer_list: [],
       });
     });

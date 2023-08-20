@@ -1,14 +1,9 @@
-/* eslint-disable camelcase */
-/* eslint-disable ternary/no-dupe */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable ternary/nesting */
+/* eslint-disable react/require-default-props */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable react/require-default-props */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/nesting */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable ternary/no-unreachable */
 import React, { FC, useState, useEffect } from 'react';
 import {
   Checkbox,
@@ -64,7 +59,7 @@ const StyledInput = styled(Input)<{ value: string, placeholder: string }>`
   &:hover:-webkit-autofill,
   &:focus:-webkit-autofill,
   &:active:-webkit-autofill {
-  box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
   }
 `;
 
@@ -102,7 +97,7 @@ const StyledCheckbox = styled(Checkbox)<{ questionType: string }>`
   & > .vkuiCheckbox__content > .vkuiCheckbox__title > span {
     display: flex;
     gap: 8px;
-    alignItems: center;
+    align-items: center;
   }
 `;
 

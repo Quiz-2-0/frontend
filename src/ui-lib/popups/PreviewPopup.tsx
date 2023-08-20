@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/no-unreachable */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import '@vkontakte/vkui/dist/vkui.css';

@@ -45,42 +45,48 @@ module.exports = {
         'config-overrides.js'
     ],
     rules: {
-        'spaced-comment': 'off',
+        'class-methods-use-this': ['error'],
+        'default-param-last': 'off',
+        'jsx-quotes': ['error', 'prefer-single'],
         'linebreak-style': 'off',
+        'no-console': ['warn', { allow: ['debug', 'warn', 'error'] }],
         'no-underscore-dangle': ['error', {
             allow: ['_id', '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'],
             enforceInMethodNames: true,
             allowAfterThis: true
         }],
-        'jsx-quotes': ['error', 'prefer-single'],
-        'react/jsx-closing-bracket-location': ['error', 'after-props'],
-        'class-methods-use-this': ['error'],
-        'react/jsx-filename-extension': ['warn', {
-            extensions: ['.js', '.jsx', '.ts', '.tsx']
-        }],
-        'react/forbid-prop-types': 'off',
-        'react/function-component-definition': ['error', {
-            'namedComponents': 'arrow-function',
-            'unnamedComponents': 'arrow-function'
-        }],
-        'camelcase': ['error', { allow: ['^image_'] }],
+        'object-curly-newline': 'off',
+        'operator-linebreak': 'off',
+        'quotes': 'off',
         'prefer-arrow/prefer-arrow-functions': ['warn', {
             disallowPrototype: true,
             singleReturnOnly: true,
             classPropertiesAllowed: false
         }],
-        'quotes': 'off',
-        'default-param-last': 'off',
+        'spaced-comment': 'off',
+
         'import/extensions': 'off',
+        'import/no-unresolved': 'off',
+        'import/prefer-default-export': 'warn',
+
+        'react/forbid-prop-types': 'off',
+        'react/function-component-definition': ['error', {
+            'namedComponents': 'arrow-function',
+            'unnamedComponents': 'arrow-function'
+        }],
+        'react/jsx-key': 'warn',
+        'react/jsx-closing-bracket-location': ['error', 'after-props'],
+        'react/jsx-filename-extension': ['warn', {
+            extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }],
+
+        'ternary/no-unreachable': 'off',
+
         '@typescript-eslint/quotes': ['error', 'single'],
         '@typescript-eslint/object-curly-spacing': ['error', 'always'],
-        'import/no-unresolved': 'off',
-        'object-curly-newline': 'off',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/prefer-nullish-coalescing': 'warn',
         '@typescript-eslint/prefer-optional-chain': 'warn',
-        'react/jsx-key': 'warn',
-        'operator-linebreak': 'off',
     },
 };

@@ -1,23 +1,17 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { FormItem, IconButton, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import React, { FC, SetStateAction, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Icon24CancelOutline } from '@vkontakte/icons';
 import { TableTitle, TableItem } from '../styled-components/TableItems';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
-import { AdminQuizz } from '@/types/types';
-import { useAssignQuizzesToUsersMutation } from '@/api/apiv2';
+import { AdminQuiz } from '@/types/types';
+import { useAssignQuizzesToUsersMutation } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 1080px;
@@ -36,7 +30,7 @@ const ChooseQuizzesPopup: FC<{
   setIsConfirmationPopupOpen: any,
   setIsNewEmployeeAdd: any,
   isChooseQuizzesPopupOpen: boolean,
-  quizzes: AdminQuizz[] | undefined,
+  quizzes: AdminQuiz[] | undefined,
   search: string,
   setSearch: any,
   isChecked: number[],
@@ -127,7 +121,7 @@ const ChooseQuizzesPopup: FC<{
                 onClick={() => (
                   isChecked.length === quizzes?.length
                     ? setIsChecked([])
-                    : setIsChecked(quizzes?.map((quiz: AdminQuizz) => quiz.id))
+                    : setIsChecked(quizzes?.map((quiz: AdminQuiz) => quiz.id))
                 )}>
                 <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
                 <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>
@@ -145,11 +139,11 @@ const ChooseQuizzesPopup: FC<{
                       }}>
                       По вашему запросу ничего не найдено
                     </p>
-                  ) : quizzes.map((quiz: AdminQuizz, i: number) => (
+                  ) : quizzes.map((quiz) => (
                     <StyledCheckbox
                       style={{ marginTop: '16px' }}
-                      key={i}
-                      checked={!!isChecked.includes(quiz.id)}
+                      key={quiz.id}
+                      checked={isChecked.includes(quiz.id)}
                       onClick={() => (
                         isChecked.includes(quiz.id)
                           ? setIsChecked(isChecked.filter((num) => num !== quiz.id))
