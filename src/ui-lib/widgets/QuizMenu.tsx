@@ -35,7 +35,7 @@ export const StyledTabs = styled(Tabs)`
   & > div > .vkuiTabsItem--selected > .vkuiTabsItem__status > .vkuiBadge--mode-prominent {
     background-color: #ff3347;
   }
-  
+
   & > div > .vkuiTabsItem--selected:hover {
     background: rgba(63, 138, 224, 0.15);
   }

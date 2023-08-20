@@ -44,10 +44,6 @@ const StyledQuizContainer = styled.li`
 
     .info {
       transform: translateY(-55px);
-      -webkit-transform: translateY(-55px);
-      -moz-transform: translateY(-55px);
-      -o-transform: translateY(-55px);
-      -ms-transform: translateY(-55px);
     }
 
     .btn, .btns {
@@ -66,10 +62,6 @@ const StyledQuizCover = styled.img`
   height: 174px;
   object-fit: cover;
   transition: all 4s ease;
-  -webkit-transition: all 4s ease;
-  -moz-transition: all 4s ease;
-  -o-transition: all 4s ease;
-  -ms-transition: all 4s ease;
 `;
 
 const StyledQuizInfoWrapper = styled(Div)`
@@ -81,10 +73,6 @@ const StyledQuizInfoWrapper = styled(Div)`
   top: 178px;
   left: 0;
   transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
 `;
 
 const StyledButton = styled(Button)`
@@ -97,10 +85,6 @@ const StyledButton = styled(Button)`
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -webkit-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -moz-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -o-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -ms-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
 
   & > .vkuiButton__in > .vkuiButton__content {
     padding: 0 !important;
@@ -109,17 +93,13 @@ const StyledButton = styled(Button)`
 
 const Buttons = styled.div`
   width: 100%;
-  minHeight: 36px;
+  min-height: 36px;
   display: flex;
   justify-content: space-between;
   gap: 8px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -webkit-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -moz-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -o-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
-  -ms-transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
 `;
 
 const QuizCard: React.FC<QuizCardProps> = (

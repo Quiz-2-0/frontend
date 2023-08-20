@@ -59,7 +59,7 @@ const StyledInput = styled(Input)<{ value: string, placeholder: string }>`
   &:hover:-webkit-autofill,
   &:focus:-webkit-autofill,
   &:active:-webkit-autofill {
-  box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
   }
 `;
 
@@ -97,7 +97,7 @@ const StyledCheckbox = styled(Checkbox)<{ questionType: string }>`
   & > .vkuiCheckbox__content > .vkuiCheckbox__title > span {
     display: flex;
     gap: 8px;
-    alignItems: center;
+    align-items: center;
   }
 `;
 
