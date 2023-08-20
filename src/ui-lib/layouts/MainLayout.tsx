@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Navigate, Outlet } from 'react-router';
 import Header from '../widgets/Header';
 import Sidebar from '../widgets/Sidebar';
-import { useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery } from '@/api/api';
 
 import Loader from '../widgets/Loader';
 

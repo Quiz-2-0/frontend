@@ -9,7 +9,7 @@ import ChooseQuizzesPopup from '@/ui-lib/popups/ChooseQuizzesPopup';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
 import NewEmployeePopup from '@/ui-lib/popups/NewEmployeePopup';
 import { IUser } from '@/types/types';
-import { useGetQuizzesQuery, useGetDepartmentsQuery, useGetUsersQuery } from '@/api/apiv2';
+import { useGetQuizzesQuery, useGetDepartmentsQuery, useGetUsersQuery } from '@/api/api';
 
 const StyledDiv = styled.div`
   width: 100%;

@@ -8,7 +8,7 @@ import {
   useGetVolumesQuery,
   useUpdateVolumeMutation,
   useRemoveVolumeMutation, useCreateVolumeMutation,
-} from '@/api/apiv2';
+} from '@/api/api';
 import NewQuizStep3VolumeItem from '@/ui-lib/widgets/NewQuizStep3VolumeItem';
 import { Volume } from '@/types/types';
 

@@ -5,7 +5,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '../styled-components/StyledButton';
 import successImage from '@/assets/images/results_success.png';
 import failImage from '@/assets/images/results_fail.png';
-import { useGetStatisticQuery } from '@/api/apiv2';
+import { useGetStatisticQuery } from '@/api/api';
 
 const Results: FC<{
   quizName: string | undefined,

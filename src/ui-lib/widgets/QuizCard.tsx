@@ -21,7 +21,7 @@ import StyledQuizTagContainer from '../styled-components/StyledQuizTagContainer'
 import { QuizCardProps } from '@/types/types';
 import { pluralsFull } from '@/constants/plurals';
 import ConfirmationPopup from '../popups/ConfirmationPopup';
-import { useGetLevelsQuery } from '@/api/apiv2';
+import { useGetLevelsQuery } from '@/api/api';
 
 const StyledQuizContainer = styled.li`
   list-style: none;

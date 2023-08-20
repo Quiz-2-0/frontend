@@ -10,7 +10,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
-import { useRemoveQuizMutation } from '@/api/apiv2';
+import { useRemoveQuizMutation } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 500px;

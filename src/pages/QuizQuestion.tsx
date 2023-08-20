@@ -8,7 +8,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import { useParams } from 'react-router';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
-import { useGetQuizQuery, useSetAnswerMutation } from '@/api/apiv2';
+import { useGetQuizQuery, useSetAnswerMutation } from '@/api/api';
 import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import { TAnswerItem, BoardTitlesProps, BoardAnswersProps, Answer, AnswerItem, Item } from '@/types/types';
 import Results from '@/ui-lib/widgets/Results';

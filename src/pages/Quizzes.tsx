@@ -5,7 +5,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import QuizCardList from '@/ui-lib/widgets/QuizCardList';
 import QuizMenu from '@/ui-lib/widgets/QuizMenu';
-import { useGetAllQuizzesQuery } from '@/api/apiv2';
+import { useGetAllQuizzesQuery } from '@/api/api';
 import { useSelector, useDispatch } from '@/store/store.types';
 import { setFromCastle } from '@/store/allSlice/allSlice';
 

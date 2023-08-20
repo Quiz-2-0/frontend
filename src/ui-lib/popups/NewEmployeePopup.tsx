@@ -21,7 +21,7 @@ import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
-import { useCreateUserMutation } from '@/api/apiv2';
+import { useCreateUserMutation } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 1000px;

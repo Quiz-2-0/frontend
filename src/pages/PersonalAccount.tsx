@@ -5,7 +5,7 @@ import {
   Text,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery } from '@/api/api';
 import LearningProgress from '@/ui-lib/widgets/LearningProgress';
 import Castle from '@/ui-lib/widgets/Castle';
 import Rating from '@/ui-lib/widgets/Rating';

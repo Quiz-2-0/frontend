@@ -11,7 +11,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import StyledButton from '../styled-components/StyledButton';
 import GalleryPopup from '../popups/GalleryPopup';
 import { StepProps } from '@/constants/steps';
-import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/apiv2';
+import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/api';
 
 const FormItemForNewQuiz = styled(StyledFormItem)`
   padding-top: 28px;

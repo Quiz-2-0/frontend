@@ -22,7 +22,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
 import styled from 'styled-components';
 import { useDispatch } from '@/store/store.types';
-import { useLoginMutation, jwt } from '@/api/apiv2';
+import { useLoginMutation, jwt } from '@/api/api';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledFormLayout from '@/ui-lib/styled-components/StyledFormLayout';
 import StyledInput from '@/ui-lib/styled-components/StyledInput';

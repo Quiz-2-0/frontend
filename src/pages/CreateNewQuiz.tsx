@@ -9,7 +9,7 @@ import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import steps, { Step, StepProps } from '@/constants/steps';
 import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
-import { useGetQuestionsQuery } from '@/api/apiv2';
+import { useGetQuestionsQuery } from '@/api/api';
 import { IQuestionAdmin } from '@/types/types';
 
 const CreateNewQuiz: FC = () => {

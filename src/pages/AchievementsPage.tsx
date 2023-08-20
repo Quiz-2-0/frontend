@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Div, Title, Text } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetAchievementsQuery } from '@/api/apiv2';
+import { useGetAchievementsQuery } from '@/api/api';
 import ButtonIcon from '@/ui-lib/styled-components/ButtonIcon';
 import BackButton from '@/ui-lib/styled-components/BackButton';
 import buttonIcon from '@/assets/images/icons/button_icon.svg';

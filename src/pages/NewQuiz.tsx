@@ -6,7 +6,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import QuizCardList from '@/ui-lib/widgets/QuizCardList';
-import { useGetQuizzesQuery } from '@/api/apiv2';
+import { useGetQuizzesQuery } from '@/api/api';
 
 const NewQuiz: FC = () => {
   const { data: quizzes } = useGetQuizzesQuery(undefined, {

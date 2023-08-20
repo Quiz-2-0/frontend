@@ -9,7 +9,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
 import { setFromCastle } from '@/store/allSlice/allSlice';
-import { useGetAllQuizzesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetAllQuizzesQuery, useGetCurrentUserQuery } from '@/api/api';
 import { useDispatch } from '@/store/store.types';
 import { pluralsFull } from '@/constants/plurals';
 import { SRC_BASE_URL } from '@/constants/api-url';

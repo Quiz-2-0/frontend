@@ -9,7 +9,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achieves';
 import { ArrowIcon } from '../styled-components/icons';
-import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/api';
 import { SRC_BASE_URL } from '@/constants/api-url';
 
 const RatingTitleContainer = styled(Div)`

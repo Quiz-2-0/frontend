@@ -9,7 +9,7 @@ import {
   Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useGetQuizQuery } from '@/api/apiv2';
+import { useGetQuizQuery } from '@/api/api';
 import StyledQuizTagContainer from '@/ui-lib/styled-components/StyledQuizTagContainer';
 import StyledQuizTag from '@/ui-lib/styled-components/StyledQuizTag';
 import StyledQuizDetailsWrapper from '@/ui-lib/styled-components/StyledDetailsWrapper';

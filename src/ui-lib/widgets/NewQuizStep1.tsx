@@ -20,7 +20,7 @@ import {
   useGetDepartmentsQuery,
   useGetTagsQuery,
   useGetLevelsQuery,
-} from '@/api/apiv2';
+} from '@/api/api';
 import { StepProps } from '@/constants/steps';
 
 const StyledSelect = styled(Select)`

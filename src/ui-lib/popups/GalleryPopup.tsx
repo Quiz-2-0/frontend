@@ -13,7 +13,7 @@ import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwar
 import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
-import { useGetImagesForQuizzesQuery } from '@/api/apiv2';
+import { useGetImagesForQuizzesQuery } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 832px;

@@ -11,7 +11,7 @@ import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
 import { AdminQuiz } from '@/types/types';
-import { useAssignQuizzesToUsersMutation } from '@/api/apiv2';
+import { useAssignQuizzesToUsersMutation } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 1080px;

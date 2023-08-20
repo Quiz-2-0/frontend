@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Dropdown from './Dropdown';
 import { StyledTabs, StyledTabsItem } from './QuizMenu';
 import { Volume } from '@/types/types';
-import { useGetQuizQuery, useGetStatisticQuery } from '@/api/apiv2';
+import { useGetQuizQuery, useGetStatisticQuery } from '@/api/api';
 import ErrorParsing from './ErrorParsing';
 
 const Div = styled.div`

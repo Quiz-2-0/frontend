@@ -13,7 +13,7 @@ import {
   Text,
   FormItem,
 } from '@vkontakte/vkui';
-import { useRecoverPasswordMutation } from '@/api/apiv2';
+import { useRecoverPasswordMutation } from '@/api/api';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledFormLayout from '@/ui-lib/styled-components/StyledFormLayout';

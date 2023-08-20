@@ -19,7 +19,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import { StepProps } from '@/constants/steps';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
 import { IQuestionAdmin } from '@/types/types';
-import { useCreateQuestionsListMutation } from '@/api/apiv2';
+import { useCreateQuestionsListMutation } from '@/api/api';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
