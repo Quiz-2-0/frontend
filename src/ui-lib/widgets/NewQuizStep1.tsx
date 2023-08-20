@@ -76,9 +76,9 @@ const NewQuizStep1: FC<StepProps> = ({
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
   const [categoriesList, setCategoriesList] = useState<{ label: string; value: number }[]>(
-    categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
-      label: categ.name,
-      value: categ.id,
+    categories?.filter(({ name }) => name !== 'Новый').map((cat: { name: string, id: number }) => ({
+      label: cat.name,
+      value: cat.id,
     })) ?? [],
   );
 
@@ -138,10 +138,11 @@ const NewQuizStep1: FC<StepProps> = ({
     setLevel(error ? NaN : quiz?.level ?? NaN);
     setDescription(error ? '' : quiz?.description ?? '');
     setCategoriesList(
-      categories?.filter(({ name }) => name !== 'Новый').map((categ: { name: string, id: number }) => ({
-        label: categ.name,
-        value: categ.id,
-      })) ?? [],
+      categories?.filter(({ name }) => name !== 'Новый')
+        .map((cat) => ({
+          label: cat.name,
+          value: cat.id,
+        })) ?? [],
     );
     setDepartmentsList(
       departments?.map((dep: { name: string, id: number }) => ({

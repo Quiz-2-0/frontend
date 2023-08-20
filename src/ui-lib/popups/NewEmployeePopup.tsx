@@ -57,13 +57,13 @@ const FormItemForNewEmployee = styled(StyledFormItem)`
 
 const NewEmployeePopup: FC<{
   isNewEmployeePopupOpen: boolean,
-  setIsNewEmploeePopupOpen: any,
+  setIsNewEmployeePopupOpen: any,
   setIsNewEmployeeAdd: any,
   setIsConfirmationPopupOpen: any,
   departments: { label: string; value: number }[] | undefined,
 }> = ({
   isNewEmployeePopupOpen,
-  setIsNewEmploeePopupOpen,
+  setIsNewEmployeePopupOpen,
   departments,
   setIsNewEmployeeAdd,
   setIsConfirmationPopupOpen,
@@ -131,7 +131,7 @@ const NewEmployeePopup: FC<{
       role: 'EMP',
     }).then((data: any) => console.log(data));
     resetForm();
-    setIsNewEmploeePopupOpen(false);
+    setIsNewEmployeePopupOpen(false);
     setIsNewEmployeeAdd(true);
     setIsConfirmationPopupOpen(true);
   };
@@ -159,7 +159,7 @@ const NewEmployeePopup: FC<{
               alignItems: 'center',
             }}
             onClick={() => {
-              setIsNewEmploeePopupOpen(false);
+              setIsNewEmployeePopupOpen(false);
               resetForm();
             }}>
             <Icon24CancelOutline fill='#3F8AE0' />

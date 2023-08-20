@@ -10,7 +10,7 @@ import { TableTitle, TableItem } from '../styled-components/TableItems';
 import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
-import { AdminQuizz } from '@/types/types';
+import { AdminQuiz } from '@/types/types';
 import { useAssignQuizzesToUsersMutation } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
@@ -30,7 +30,7 @@ const ChooseQuizzesPopup: FC<{
   setIsConfirmationPopupOpen: any,
   setIsNewEmployeeAdd: any,
   isChooseQuizzesPopupOpen: boolean,
-  quizzes: AdminQuizz[] | undefined,
+  quizzes: AdminQuiz[] | undefined,
   search: string,
   setSearch: any,
   isChecked: number[],
@@ -121,7 +121,7 @@ const ChooseQuizzesPopup: FC<{
                 onClick={() => (
                   isChecked.length === quizzes?.length
                     ? setIsChecked([])
-                    : setIsChecked(quizzes?.map((quiz: AdminQuizz) => quiz.id))
+                    : setIsChecked(quizzes?.map((quiz: AdminQuiz) => quiz.id))
                 )}>
                 <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
                 <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>

@@ -12,7 +12,7 @@ import {
 } from '@/constants/api-url';
 import {
   AdminImage,
-  AdminQuizz,
+  AdminQuiz,
   IAchievement,
   IAvatar,
   IDefaultAvatar,
@@ -175,7 +175,7 @@ export const quizApi = createApi({
   }),
   tagTypes: ['quiz'],
   endpoints: (build) => ({
-    getAllQuizes: build.query<IQuiz[], void>({
+    getAllQuizzes: build.query<IQuiz[], void>({
       query: () => ALL_QUIZES,
       keepUnusedDataFor: 0,
     }),
@@ -343,7 +343,7 @@ export const adminQuizzesApi = createApi({
   }),
   tagTypes: ['adminQuiz'],
   endpoints: (build) => ({
-    getQuizzes: build.query<AdminQuizz[], void>({
+    getQuizzes: build.query<AdminQuiz[], void>({
       query: () => GET_ADMIN_QUIZZES,
     }),
     getImagesForQuizzes: build.query<AdminImage[], void>({
@@ -377,7 +377,7 @@ export const adminQuizzesApi = createApi({
       }),
       invalidatesTags: ['adminQuiz'],
     }),
-    deleteQuiz: build.mutation<void, number>({
+    removeQuiz: build.mutation<void, number>({
       query: (quizId) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/`,
         method: 'DELETE',
@@ -425,7 +425,7 @@ export const adminQuestionsApi = createApi({
       }),
       invalidatesTags: ['adminQuestion'],
     }),
-    deleteQuestion: build.mutation<void, IAdminRemoveQuestionRequest>({
+    removeQuestion: build.mutation<void, IAdminRemoveQuestionRequest>({
       query: ({ quizId, questionId }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/questions/${questionId}/`,
         method: 'DELETE',
@@ -468,7 +468,7 @@ export const adminVolumesApi = createApi({
       }),
       invalidatesTags: ['adminVolume'],
     }),
-    deleteVolume: build.mutation<void, IAdminRemoveVolumeRequest>({
+    removeVolume: build.mutation<void, IAdminRemoveVolumeRequest>({
       query: ({ quizId, volumeId }) => ({
         url: `${GET_ADMIN_QUIZZES}${quizId}/volumes/${volumeId}/`,
         method: 'DELETE',
@@ -535,7 +535,7 @@ export const {
 } = userApi;
 
 export const {
-  useGetAllQuizesQuery,
+  useGetAllQuizzesQuery,
   useGetIncompleteQuizzesQuery,
   useGetQuizQuery,
   useSetAnswerMutation,
@@ -573,7 +573,7 @@ export const {
   useAssignQuizzesToUsersMutation,
   useGetAdminQuizQuery,
   useUpdateQuizMutation,
-  useDeleteQuizMutation,
+  useRemoveQuizMutation,
 } = adminQuizzesApi;
 
 export const {
@@ -581,7 +581,7 @@ export const {
   useCreateQuestionMutation,
   useCreateQuestionsListMutation,
   useUpdateQuestionMutation,
-  useDeleteQuestionMutation,
+  useRemoveQuestionMutation,
 } = adminQuestionsApi;
 
 export const {
@@ -589,7 +589,7 @@ export const {
   useCreateVolumeMutation,
   useGetVolumeQuery,
   useUpdateVolumeMutation,
-  useDeleteVolumeMutation,
+  useRemoveVolumeMutation,
 } = adminVolumesApi;
 
 export const {

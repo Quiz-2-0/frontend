@@ -7,7 +7,7 @@ import { StepProps } from '@/constants/steps';
 import {
   useGetVolumesQuery,
   useUpdateVolumeMutation,
-  useDeleteVolumeMutation, useCreateVolumeMutation,
+  useRemoveVolumeMutation, useCreateVolumeMutation,
 } from '@/api/apiv2';
 import NewQuizStep3VolumeItem from '@/ui-lib/widgets/NewQuizStep3VolumeItem';
 import { Volume } from '@/types/types';
@@ -32,7 +32,7 @@ const NewQuizStep3: FC<StepProps> = ({
   const quizId = Number(urlParams.id);
 
   const { data: volumes } = useGetVolumesQuery(quizId);
-  const [removeVolumeRun] = useDeleteVolumeMutation();
+  const [removeVolumeRun] = useRemoveVolumeMutation();
   const [updateVolumeRun] = useUpdateVolumeMutation();
   const [createVolumeRun] = useCreateVolumeMutation();
 
@@ -145,7 +145,7 @@ const NewQuizStep3: FC<StepProps> = ({
     if (typeof volumes !== 'undefined') {
       setVolumeItems(volumes.map((item) => ({
         volume: item,
-        canRemove: volumes.length > 1,
+        canRemove: false,
         isNew: false,
         isChanged: false,
         isValid: true,

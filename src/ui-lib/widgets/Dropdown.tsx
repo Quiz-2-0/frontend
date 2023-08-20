@@ -5,7 +5,7 @@ import DropdownMnyAnswersList from '@/ui-lib/widgets/DropdownMnyAnswersList';
 import DropdownOpnAnswersList from '@/ui-lib/widgets/DropdownOpnAnswersList';
 import DropdownLstAnswersList from '@/ui-lib/widgets/DropdownLstAnswersList';
 import { ArrowIcon, CheckIcon, FalseIcon } from '../styled-components/icons';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 
 const Li = styled.li<{ isReview: boolean }>`
   width: 100%;

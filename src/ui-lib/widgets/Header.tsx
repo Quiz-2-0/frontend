@@ -13,7 +13,7 @@ import {
 import logoImg from '@/assets/images/logo/header__logo.svg';
 import AdvBanner from './AdvBanner';
 import AvatarUploadPopup from '@/ui-lib/popups/AvatarUploadPopup';
-import { useGetCurrentUserQuery, jwt, useGetAllQuizesQuery } from '@/api/apiv2';
+import { useGetCurrentUserQuery, jwt, useGetAllQuizzesQuery } from '@/api/apiv2';
 import { SRC_BASE_URL } from '@/constants/api-url';
 
 const HeaderWrapper = styled.header`
@@ -113,7 +113,7 @@ const Header: FC = () => {
   const navigate = useNavigate();
   const { data } = useGetCurrentUserQuery();
   /// нужно убрать этот ранний запрос за квизами
-  const { data: quizes } = useGetAllQuizesQuery();
+  const { data: quizzes } = useGetAllQuizzesQuery();
   const [isOpen, openModal] = useState(false);
   const [isAvatarPopupOpen, openAvatarPopup] = useState(false);
   const logOutFunction = () => {
@@ -165,7 +165,7 @@ const Header: FC = () => {
           <UserName>{`${data?.firstName} ${data?.lastName}`}</UserName>
           <IconWrapper>
             <BellIcon onClick={(e: any) => { e.stopPropagation(); openModal(!isOpen); }} />
-            {quizes && <RedBallIcon top={3} left={17} />}
+            {quizzes && <RedBallIcon top={3} left={17} />}
           </IconWrapper>
           <LogOutIcon onClick={logOutFunction} />
         </ToolBar>

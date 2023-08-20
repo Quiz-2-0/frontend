@@ -9,7 +9,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import StyledDiv from '../styled-components/StyledDiv';
 import { setFromCastle } from '@/store/allSlice/allSlice';
-import { useGetAllQuizesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
+import { useGetAllQuizzesQuery, useGetCurrentUserQuery } from '@/api/apiv2';
 import { useDispatch } from '@/store/store.types';
 import { pluralsFull } from '@/constants/plurals';
 import { SRC_BASE_URL } from '@/constants/api-url';
@@ -51,7 +51,7 @@ const StyledText = styled(Text)`
 const Castle: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data } = useGetAllQuizesQuery();
+  const { data } = useGetAllQuizzesQuery();
   const { data: currentUser } = useGetCurrentUserQuery();
 
   const onButtonClick = () => {

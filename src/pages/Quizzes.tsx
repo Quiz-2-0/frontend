@@ -5,7 +5,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import styled from 'styled-components';
 import QuizCardList from '@/ui-lib/widgets/QuizCardList';
 import QuizMenu from '@/ui-lib/widgets/QuizMenu';
-import { useGetAllQuizesQuery } from '@/api/apiv2';
+import { useGetAllQuizzesQuery } from '@/api/apiv2';
 import { useSelector, useDispatch } from '@/store/store.types';
 import { setFromCastle } from '@/store/allSlice/allSlice';
 
@@ -21,7 +21,7 @@ const Quizzes: FC = () => {
   const { fromCastle } = useSelector((state) => state.all);
   const [search, setSearch] = useState('');
   const [quizType, setQuizType] = useState(fromCastle ? 'appointed' : 'all');
-  const { data } = useGetAllQuizesQuery(undefined, {
+  const { data } = useGetAllQuizzesQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 

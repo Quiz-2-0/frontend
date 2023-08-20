@@ -10,7 +10,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28CheckCircleOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import Background from '../styled-components/Background';
 import StyledButton from '../styled-components/StyledButton';
-import { useDeleteQuizMutation } from '@/api/apiv2';
+import { useRemoveQuizMutation } from '@/api/apiv2';
 
 const StyledDiv = styled.div`
   max-width: 500px;
@@ -50,9 +50,9 @@ const ConfirmationPopup: FC<{
   setIsChooseQuizzesPopupOpen,
 }) => {
   const navigate = useNavigate();
-  const [deleteQuiz] = useDeleteQuizMutation();
-  const deleteQuizById = async () => {
-    await deleteQuiz(quizId);
+  const [removeQuiz] = useRemoveQuizMutation();
+  const removeQuizById = async () => {
+    await removeQuiz(quizId);
   };
 
   return (
@@ -103,7 +103,7 @@ const ConfirmationPopup: FC<{
             style={{ margin: 0, width: '100%' }}
             onClick={() => {
               if (icon === 'delete') {
-                deleteQuizById();
+                removeQuizById();
               } else if (blueButton === 'Назначить квиз') {
                 setIsChooseQuizzesPopupOpen(true);
               }

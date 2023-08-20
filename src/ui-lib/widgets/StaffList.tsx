@@ -18,7 +18,7 @@ import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledBackAndForwardButton from '../styled-components/StyledBackAndForwardButton';
 import { TableItem, TableTitle } from '../styled-components/TableItems';
 import { ArrowIcon } from '../styled-components/icons';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 import { IUser } from '@/types/types';
 import ListItemForStaffTable from './ListItemForStaffTable';
 

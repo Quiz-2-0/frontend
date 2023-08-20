@@ -6,7 +6,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import CircularProgressBar from './CircularProgressBar';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 import { ArrowIcon } from '../styled-components/icons';
 
 const Progress: React.FC = () => {

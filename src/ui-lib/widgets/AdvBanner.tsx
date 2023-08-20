@@ -48,7 +48,7 @@ const AchieveWrapper = styled.div`
   overflow: hidden;
   cursor: pointer;
 `;
-const Achive = styled.img`
+const Achieve = styled.img`
     width: 100%;
     height: 100%;
 `;
@@ -105,10 +105,10 @@ const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
         <RedBallIcon left={14} />
         <StyledDiv>
           <CupIcon />
-          <Sentence>У вас новая ачивка “Вызов июля"</Sentence>
+          <Sentence>У вас новая ачивка &quot;Вызов июля&quot;</Sentence>
         </StyledDiv>
         <AchieveWrapper>
-          <Achive src={achieve1} />
+          <Achieve src={achieve1} />
         </AchieveWrapper>
       </AdvPlate>
       <AdvPlate>
@@ -118,7 +118,7 @@ const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
           <Sentence>Вам назначен новый квиз</Sentence>
         </StyledDiv>
         {/*    {<AchieveWrapper>
-                      <Achive src={achieve3} />
+                      <Achieve src={achieve3} />
                   </AchieveWrapper>} */}
       </AdvPlate>
       <AdvPlate>
@@ -128,7 +128,7 @@ const AdvBanner: FC<{ isOpen: boolean }> = ({ isOpen }) => (
           <Sentence>У вас новая ачивка “5 квизов без ошибок”</Sentence>
         </StyledDiv>
         <AchieveWrapper>
-          <Achive src={achieve2} />
+          <Achieve src={achieve2} />
         </AchieveWrapper>
       </AdvPlate>
     </AdvContainer>

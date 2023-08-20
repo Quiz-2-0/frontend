@@ -13,7 +13,6 @@ const UpdatedDiv = styled(StyledDiv)`
     display: flex;
     gap: 24px;
     flex-direction: column;
-
 `;
 
 export const IconWrapper = styled.div`
@@ -36,6 +35,7 @@ const ContainerHeader = styled.div`
     justify-content: space-between;
     display: flex;
 `;
+
 const Title = styled.h3`
     font-size: 20px;
     font-family: 'SFProDisplay';
@@ -45,11 +45,13 @@ const Title = styled.h3`
     color: #000;
     margin: 0;
 `;
-const AchiveImage = styled.img`
+
+const AchieveImage = styled.img`
     width: 64px;
     height: 64px;
 `;
-/// / временное решение для индикации количества пройденных квизов
+
+// временное решение для индикации количества пройденных квизов
 const Progress = styled.p`
     font-size: 13px;
     font-family: 'SFProDisplay';
@@ -60,7 +62,7 @@ const Progress = styled.p`
     margin: 0;
 `;
 
-const AchivePlate = styled.li`
+const AchievePlate = styled.li`
     display: flex;
     gap: 16px;
     padding: 12px 0;
@@ -74,7 +76,8 @@ const ProgressWrapper = styled.div`
     justify-content: space-between;
     flex: auto;
 `;
-/// / создать метод для высчитывания длины прогрессбара
+
+// создать метод для высчитывания длины прогрессбара
 const ProgressBar = styled.span<{ width?: number }>`
     width: 100%;
     height: 8px;
@@ -92,7 +95,7 @@ const ProgressBar = styled.span<{ width?: number }>`
     }
 `;
 
-const AchivesContainer = styled.ul`
+const AchievesContainer = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
@@ -101,7 +104,7 @@ const AchivesContainer = styled.ul`
     gap: 12px;
 `;
 
-const Achives: FC = () => {
+const Achieves: FC = () => {
   const navigate = useNavigate();
   return (
     <UpdatedDiv>
@@ -109,9 +112,9 @@ const Achives: FC = () => {
         <Title>Ачивки</Title>
         <IconWrapper><ArrowIcon /></IconWrapper>
       </ContainerHeader>
-      <AchivesContainer>
-        <AchivePlate>
-          <AchiveImage src={achieve1} alt='ачивка крутая' />
+      <AchievesContainer>
+        <AchievePlate>
+          <AchieveImage src={achieve1} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
               <Title>Вызов Июня</Title>
@@ -119,10 +122,10 @@ const Achives: FC = () => {
             </ContainerHeader>
             <ProgressBar width={40} />
           </ProgressWrapper>
-        </AchivePlate>
+        </AchievePlate>
 
-        <AchivePlate>
-          <AchiveImage src={achieve2} alt='ачивка крутая' />
+        <AchievePlate>
+          <AchieveImage src={achieve2} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
               <Title>5 квизов без ошибок</Title>
@@ -130,10 +133,10 @@ const Achives: FC = () => {
             </ContainerHeader>
             <ProgressBar width={60} />
           </ProgressWrapper>
-        </AchivePlate>
+        </AchievePlate>
 
-        <AchivePlate>
-          <AchiveImage src={achieve3} alt='ачивка крутая' />
+        <AchievePlate>
+          <AchieveImage src={achieve3} alt='ачивка крутая' />
           <ProgressWrapper>
             <ContainerHeader>
               <Title>Квизмэн</Title>
@@ -141,10 +144,10 @@ const Achives: FC = () => {
             </ContainerHeader>
             <ProgressBar width={200} />
           </ProgressWrapper>
-        </AchivePlate>
-      </AchivesContainer>
+        </AchievePlate>
+      </AchievesContainer>
     </UpdatedDiv>
   );
 };
 
-export default Achives;
+export default Achieves;

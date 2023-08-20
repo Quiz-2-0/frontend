@@ -27,7 +27,7 @@ const Staff: FC = () => {
   const [isChooseQuizzesPopupOpen, setIsChooseQuizzesPopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [isNewEmployeeAdd, setIsNewEmployeeAdd] = useState(false);
-  const [isNewEmployeePopupOpen, setIsNewEmploeePopupOpen] = useState(false);
+  const [isNewEmployeePopupOpen, setIsNewEmployeePopupOpen] = useState(false);
 
   const { data: staff } = useGetUsersQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -97,7 +97,7 @@ const Staff: FC = () => {
           type={selectType}
           setType={staffDepartmentFilter}
           setIsChooseQuizzesPopupOpen={setIsChooseQuizzesPopupOpen}
-          setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
+          setIsNewEmployeePopupOpen={setIsNewEmployeePopupOpen}
           isChecked={isEmployeeChecked} />
         <StaffList
           staffList={searchEmployee !== '' ? staffNameFilter : staffOnPage}
@@ -146,7 +146,7 @@ const Staff: FC = () => {
         setIsNewEmployeeAdd={setIsNewEmployeeAdd}
         setIsConfirmationPopupOpen={setIsConfirmationPopupOpen}
         isNewEmployeePopupOpen={isNewEmployeePopupOpen}
-        setIsNewEmploeePopupOpen={setIsNewEmploeePopupOpen}
+        setIsNewEmployeePopupOpen={setIsNewEmployeePopupOpen}
         departments={departmentsList} />
     </>
   );

@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
-import { IconWrapper } from './Achives';
+import { IconWrapper } from './Achieves';
 import { ArrowIcon } from '../styled-components/icons';
 import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/apiv2';
 import { SRC_BASE_URL } from '@/constants/api-url';
