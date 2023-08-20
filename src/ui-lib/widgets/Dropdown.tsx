@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable import/no-named-as-default */
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import DropdownOneAnswersList from '@/ui-lib/widgets/DropdownOneAnswersList';

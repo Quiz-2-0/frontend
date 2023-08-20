@@ -1,6 +1,3 @@
-/* eslint-disable import/extensions */
-
-import { Action, ActionCreator } from 'redux';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,

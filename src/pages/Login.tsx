@@ -1,16 +1,6 @@
-/* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable import/order */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, {
   FC,
   ChangeEvent,
@@ -18,8 +8,6 @@ import React, {
   useState,
 } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import { useDispatch } from '@/store/store.types';
-import { useLoginMutation, jwt } from '@/api/apiv2';
 import {
   Title,
   Div,
@@ -29,13 +17,15 @@ import {
   Tabs,
   TabsItem,
 } from '@vkontakte/vkui';
+import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
 import '@vkontakte/vkui/dist/vkui.css';
 import validator from 'validator';
-import { Icon12EyeSlashOutline, Icon16View } from '@vkontakte/icons';
+import styled from 'styled-components';
+import { useDispatch } from '@/store/store.types';
+import { useLoginMutation, jwt } from '@/api/apiv2';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledFormLayout from '@/ui-lib/styled-components/StyledFormLayout';
 import StyledInput from '@/ui-lib/styled-components/StyledInput';
-import styled from 'styled-components';
 import { setRememberMe, setLoaderState } from '@/store/allSlice/allSlice';
 import StyledFormItem from '@/ui-lib/styled-components/StyledFormItem';
 import AuthLayout from '@/ui-lib/layouts/AuthLayout';
@@ -80,7 +70,7 @@ const Login: FC = () => {
   /// /// это хук который у нас содержит все данные о запросе к серверу
   /// / в теории можно и в редакт ничего не толкать ,так как в хуке все сохраняется да
   // еще и кэшируется, поэтому как будет у нас сервер и реальные запросы я попробую настроить
-  const [login, { data, error, isLoading }] = useLoginMutation({
+  const [login, { error, isLoading }] = useLoginMutation({
     fixedCacheKey: 'shared-update-post',
   });
   const dispatch = useDispatch();
@@ -144,9 +134,9 @@ const Login: FC = () => {
     localStorage.setItem('isRemember', 'true');
   };
 
-  if (localStorage.getItem('JWT') || sessionStorage.getItem('JWT')) {
+  if (localStorage.getItem('JWT') ?? sessionStorage.getItem('JWT')) {
     return (
-      <Navigate to={localStorage.getItem('role') || sessionStorage.getItem('role') === 'EMP' ? '/' : '/staff'} />
+      <Navigate to={localStorage.getItem('role') ?? sessionStorage.getItem('role') === 'EMP' ? '/' : '/staff'} />
     );
   }
 

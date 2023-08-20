@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, {
   FC,
   useState,
@@ -18,7 +15,6 @@ import {
 } from '@vkontakte/vkui';
 import { useRecoverPasswordMutation } from '@/api/apiv2';
 import '@vkontakte/vkui/dist/vkui.css';
-import { useDispatch } from '@/store/store.types';
 import StyledButton from '@/ui-lib/styled-components/StyledButton';
 import StyledFormLayout from '@/ui-lib/styled-components/StyledFormLayout';
 import StyledInput from '@/ui-lib/styled-components/StyledInput';
@@ -46,10 +42,9 @@ const ResetPassword: FC = () => {
   const [timer, setTimer] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const emailSchema = z.string().email();
-  const [recoverPassword, { isLoading, error }] = useRecoverPasswordMutation();
-  const buttonText = isSubmitted ? 'Войти' : 'Отправить пароль'; // eslint-disable-line ternary/no-unreachable
+  const [recoverPassword] = useRecoverPasswordMutation();
+  const buttonText = isSubmitted ? 'Войти' : 'Отправить пароль';
 
   const isButtonDisabled = !isEmailValid || email === '';
 
@@ -192,11 +187,7 @@ const ResetPassword: FC = () => {
               }}
               onBlur={handleBlur}
               status={isEmailValid ? 'default' : 'error'}
-              bottom={
-                isEmailValid // eslint-disable-line ternary/no-unreachable
-                  ? ''
-                  : 'Неправильный формат почты'
-              }>
+              bottom={!isEmailValid && 'Неправильный формат почты'}>
               <StyledInput
                 id='passwordReset'
                 type='email'

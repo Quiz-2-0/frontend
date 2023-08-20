@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import React from 'react';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
-import { Statistic, Question } from '@/types/types';
+import { Question } from '@/types/types';
 
 const StyledUl = styled.ul`
   display: flex;
@@ -15,7 +12,7 @@ const StyledUl = styled.ul`
   margin: 0;
 `;
 
-const ErrorParsing: React.FC<{
+interface IErrorParsingProps {
   statistics: {
     question_type: string,
     question: string,
@@ -35,7 +32,9 @@ const ErrorParsing: React.FC<{
     }[],
   }[] | undefined,
   questions: Question[],
-}> = ({ statistics, questions }) => (
+}
+
+const ErrorParsing: React.FC<IErrorParsingProps> = ({ statistics, questions }) => (
   <StyledUl>
     {statistics === undefined || statistics.length === 0
       ? (

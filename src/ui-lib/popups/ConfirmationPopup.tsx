@@ -2,9 +2,7 @@
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable ternary/no-unreachable */
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';

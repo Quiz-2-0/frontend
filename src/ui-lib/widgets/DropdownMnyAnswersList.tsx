@@ -1,4 +1,3 @@
-/* eslint-disable ternary/no-unreachable */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable ternary/nesting */
 import React, { FC } from 'react';

@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Navigate, Outlet, useNavigate } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 import Header from '../widgets/Header';
 import Sidebar from '../widgets/Sidebar';
-import { useSelector, useDispatch } from '@/store/store.types';
 import { useGetCurrentUserQuery } from '@/api/apiv2';
 
-import { setLoaderState } from '@/store/allSlice/allSlice';
 import Loader from '../widgets/Loader';
 
 const Section = styled.section`
@@ -26,9 +23,7 @@ const ContentWrapper = styled.div`
 `;
 
 const MainLayout: FC = () => {
-  const { data, error, isLoading } = useGetCurrentUserQuery();
-  const { isLoaderRun } = useSelector((state) => state.all);
-  const dispatch = useDispatch();
+  const { error, isLoading } = useGetCurrentUserQuery();
 
   if (isLoading) return <Loader />;
   if (error) return <Navigate to='/login' />;

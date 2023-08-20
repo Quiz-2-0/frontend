@@ -1,11 +1,5 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, {
   ChangeEvent,
@@ -13,7 +7,6 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import validator from 'validator';
 import {

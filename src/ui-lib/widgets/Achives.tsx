@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';

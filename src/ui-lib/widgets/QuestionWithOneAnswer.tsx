@@ -1,7 +1,4 @@
-/* eslint-disable camelcase */
-/* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';
 import { QuestionTypeProps } from '@/constants/question-types';

@@ -1,7 +1,3 @@
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
@@ -117,10 +113,10 @@ const AchieveDescription = styled(Text)`
 const AchievementsPage: FC = () => {
   const { data } = useGetAchievementsQuery();
   const navigate = useNavigate();
-  const [achievements, setAchievements] = useState(data ? data : []);
+  const [achievements, setAchievements] = useState(data ?? []);
 
   useEffect(() => {
-    setAchievements(data ? data : []);
+    setAchievements(data ?? []);
   }, [data]);
 
   return (

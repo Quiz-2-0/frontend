@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   ADMIN_LEVELS_ROUTE,

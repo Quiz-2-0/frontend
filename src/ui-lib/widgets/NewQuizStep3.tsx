@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Button } from '@vkontakte/vkui';
-import { FormElements, SetFormElements, StepProps } from '@/constants/steps';
+import { StepProps } from '@/constants/steps';
 import {
   useGetVolumesQuery,
   useUpdateVolumeMutation,

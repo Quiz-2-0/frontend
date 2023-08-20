@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Tabs, TabsItem } from '@vkontakte/vkui';

@@ -1,7 +1,4 @@
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { CupIcon, SquareIcon, RedBallIcon } from '../styled-components/icons';
 import achieve1 from '@/assets/images/achievement-icons/icon1.png';

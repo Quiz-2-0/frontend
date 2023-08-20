@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable camelcase */
-
 export type TRole = 'EMP' | 'AD';
 
 export interface IUser {

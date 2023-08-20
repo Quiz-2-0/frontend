@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { FC, useState } from 'react';
 import { FormLayoutGroup } from '@vkontakte/vkui';

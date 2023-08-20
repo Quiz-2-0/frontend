@@ -1,4 +1,3 @@
-/* eslint-disable ternary/no-unreachable */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable ternary/nesting */
@@ -23,7 +22,7 @@ const StyledDivWithCheckbox = styled.div`
     background: rgba(63, 138, 224, 0.05);
   }
 
-  &:pressed {
+  &:active {
     background: rgba(63, 138, 224, 0.15);
   }
 `;
@@ -73,7 +72,7 @@ const ListItemForStaffTable: FC<{
           ? bottomRef
           : null}>
     <StyledCheckbox
-      checked={!!isChecked.includes(user.id)}
+      checked={isChecked.includes(user.id)}
       onClick={() => (isChecked.includes(user.id)
         ? setIsChecked(isChecked.filter((num) => num !== user.id))
         : setIsChecked([...isChecked, user.id]))}>

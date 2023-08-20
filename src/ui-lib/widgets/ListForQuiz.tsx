@@ -1,15 +1,11 @@
-/* eslint-disable ternary/no-unreachable */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
 import { StyledTabs, StyledTabsItem } from './QuizMenu';
-import { Volume, Statistic } from '@/types/types';
+import { Volume } from '@/types/types';
 import { useGetQuizQuery, useGetStatisticQuery } from '@/api/apiv2';
 import ErrorParsing from './ErrorParsing';
 
@@ -83,12 +79,13 @@ const ListForQuiz: FC<{ volumes: Volume[] | undefined }> = ({ volumes }) => {
       {listType === 'about'
         ? (
           <List>
-            {volumes && volumes.length !== 0
-              ? volumes?.map((el: Volume) => (
+            {volumes?.length
+              ? volumes.map((volume: Volume) => (
                 <Dropdown
+                  key={volume.id}
                   index={null}
-                  name={el.name}
-                  description={el.description}
+                  name={volume.name}
+                  description={volume.description}
                   answers={[]}
                   isReview={false} />
               ))

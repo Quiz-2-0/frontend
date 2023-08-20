@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { FC, useState, useEffect } from 'react';
 import AddAnswersOnPage from '@/ui-lib/widgets/AddAnswersOnPage';

@@ -1,12 +1,5 @@
-/* eslint-disable promise/always-return */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable array-callback-return */
-/* eslint-disable ternary/no-unreachable */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import {
   FormLayout,
   FormLayoutGroup,

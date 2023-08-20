@@ -1,12 +1,6 @@
-/* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable ternary/nesting */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import StaffFilter from '@/ui-lib/widgets/StaffFilters';

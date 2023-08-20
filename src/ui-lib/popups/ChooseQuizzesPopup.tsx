@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable ternary/no-unreachable */
-/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { FormItem, IconButton, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import React, { FC, SetStateAction, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Icon24CancelOutline } from '@vkontakte/icons';
 import { TableTitle, TableItem } from '../styled-components/TableItems';
@@ -145,11 +139,11 @@ const ChooseQuizzesPopup: FC<{
                       }}>
                       По вашему запросу ничего не найдено
                     </p>
-                  ) : quizzes.map((quiz: AdminQuizz, i: number) => (
+                  ) : quizzes.map((quiz) => (
                     <StyledCheckbox
                       style={{ marginTop: '16px' }}
-                      key={i}
-                      checked={!!isChecked.includes(quiz.id)}
+                      key={quiz.id}
+                      checked={isChecked.includes(quiz.id)}
                       onClick={() => (
                         isChecked.includes(quiz.id)
                           ? setIsChecked(isChecked.filter((num) => num !== quiz.id))

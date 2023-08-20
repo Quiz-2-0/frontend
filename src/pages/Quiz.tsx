@@ -1,10 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { FC } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -47,7 +42,7 @@ const StyledButton = styled(Button)`
 
 const Quiz: FC = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useGetQuizQuery(Number(id));
+  const { data } = useGetQuizQuery(Number(id));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -81,8 +76,8 @@ const Quiz: FC = () => {
               <Title>{data?.name}</Title>
               {data?.tags === null ? null : (
                 <StyledQuizTagContainer>
-                  {data?.tags.map((tag: any) => (
-                    <StyledQuizTag style={{ backgroundColor: `${tag.color}` }}>
+                  {data?.tags.map((tag) => (
+                    <StyledQuizTag key={tag.id} style={{ backgroundColor: `${tag.color}` }}>
                       {tag.name}
                     </StyledQuizTag>
                   ))}

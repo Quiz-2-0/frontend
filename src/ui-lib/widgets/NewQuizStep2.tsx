@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable array-callback-return */
-/* eslint-disable ternary/no-unreachable */
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   FormLayout,
   FormLayoutGroup,
@@ -22,10 +16,10 @@ import styled from 'styled-components';
 import StyledInput from '../styled-components/StyledInput';
 import questionTypes from '@/constants/question-types';
 import StyledDiv from '../styled-components/StyledDiv';
-import { FormElements, SetFormElements, StepProps } from '../../constants/steps';
+import { StepProps } from '@/constants/steps';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
 import { IQuestionAdmin } from '@/types/types';
-import { useCreateQuestionMutation, useCreateQuestionsListMutation } from '@/api/apiv2';
+import { useCreateQuestionsListMutation } from '@/api/apiv2';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
