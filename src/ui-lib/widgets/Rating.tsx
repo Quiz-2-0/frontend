@@ -10,7 +10,7 @@ import StyledDiv from '../styled-components/StyledDiv';
 import { IconWrapper } from './Achieves';
 import { ArrowIcon } from '../styled-components/icons';
 import { useGetCurrentUserQuery, useGetShortRatingsQuery } from '@/api/api';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const RatingTitleContainer = styled(Div)`
   width: 100%;

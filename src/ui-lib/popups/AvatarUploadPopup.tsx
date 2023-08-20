@@ -10,7 +10,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import { useGetDefaultAvatarsQuery, useUploadAvatarMutation } from '@/api/api';
 import { CloseIcon, UploadIcon, AvatarIcon } from '../styled-components/icons';
 import { IAvatar } from '@/types/types';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 interface PopupProps {
   closeAvatarPopup: () => void;

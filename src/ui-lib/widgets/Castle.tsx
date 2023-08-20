@@ -12,7 +12,7 @@ import { setFromCastle } from '@/store/allSlice/allSlice';
 import { useGetAllQuizzesQuery, useGetCurrentUserQuery } from '@/api/api';
 import { useDispatch } from '@/store/store.types';
 import { pluralsFull } from '@/constants/plurals';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const StyledImage = styled.img`
   max-width: 310px;

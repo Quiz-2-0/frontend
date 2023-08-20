@@ -14,7 +14,7 @@ import logoImg from '@/assets/images/logo/header__logo.svg';
 import AdvBanner from './AdvBanner';
 import AvatarUploadPopup from '@/ui-lib/popups/AvatarUploadPopup';
 import { useGetCurrentUserQuery, jwt, useGetAllQuizzesQuery } from '@/api/api';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const HeaderWrapper = styled.header`
   width: 100%;

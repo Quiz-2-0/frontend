@@ -10,7 +10,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import StyledDiv from '../styled-components/StyledDiv';
 import { ArrowIcon } from '../styled-components/icons';
 import { useGetShortAchievementsQuery } from '@/api/api';
-import { SRC_BASE_URL } from '@/constants/api-url';
+import { SRC_BASE_URL } from '@/api/api-url';
 
 const AchievementsTitleWrapper = styled(Div)`
   width: 100%;
