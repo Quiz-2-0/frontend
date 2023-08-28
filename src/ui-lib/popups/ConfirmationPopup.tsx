@@ -76,7 +76,7 @@ const ConfirmationPopup: FC<{
           }}>
           {icon === 'check'
             ? <Icon28CheckCircleOutline fill='#43A843' />
-            : icon === ''
+            : icon === 'none'
               ? <div />
               : <Icon28DeleteOutline fill='#99A2AD' />}
           {title}

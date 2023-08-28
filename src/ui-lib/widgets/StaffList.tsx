@@ -23,11 +23,12 @@ import { IUser } from '@/types/types';
 import ListItemForStaffTable from './ListItemForStaffTable';
 
 const StyledExpandedItem = styled.div<{ isOpen: number[]; index: number; staffList: IUser[] | undefined }>`
+  height: ${({ isOpen, index }) => (!isOpen.includes(index) ? 'min-content' : '0')};
   min-height: ${({ isOpen, index, staffList }) => (!isOpen.includes(index) ? `${(staffList?.length ?? 0) * 36}px` : '0')};
   overflow: hidden;
   padding: 0;
   position: relative;
-  transition: all ease 0.7s;
+  transition: all 0.7s ease;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -105,11 +106,11 @@ const StaffList: FC<{
             {(departments?.length ?? 0) > 1
               ? (
                 <StyledButton
-                  onClick={() => (
+                  onClick={() => {
                     isOpen.length === (departments?.length ?? 0)
                       ? setIsOpen([])
-                      : setIsOpen(departments?.map(({ value }) => value) ?? [])
-                  )}
+                      : setIsOpen(departments?.map(({ value }) => value) ?? []);
+                  }}
                   style={{ margin: '0 0 0 28px', height: '20px', minHeight: '20px' }}
                   mode='link'>
                   {isOpen.length === (departments?.length ?? 0)
@@ -143,7 +144,6 @@ const StaffList: FC<{
                         topRef={topRef}
                         bottomRef={bottomRef}
                         staffList={staffList}
-                        departmentsNumber={0}
                         isChecked={isChecked}
                         setIsChecked={setIsChecked} />
                     )))) : (
@@ -216,7 +216,6 @@ const StaffList: FC<{
                           topRef={topRef}
                           bottomRef={bottomRef}
                           staffList={staffList}
-                          departmentsNumber={departments.length}
                           isChecked={isChecked}
                           setIsChecked={setIsChecked} />
                       ))}
@@ -235,6 +234,13 @@ const StaffList: FC<{
           alignItems: 'center',
           gap: '16px',
           marginTop: '14px',
+          visibility: `${
+            ((staffList?.length ?? 0) * 36 >= 360 && isOpen.length < (departments?.length ?? 0))
+            || ((departments?.length ?? 0) * 44 >= 360 && isOpen.length !== 0) ? 'visible' : 'hidden'}`,
+          opacity: `${
+            ((staffList?.length ?? 0) * 36 >= 360 && isOpen.length < (departments?.length ?? 0))
+            || ((departments?.length ?? 0) * 44 >= 360 && isOpen.length === (departments?.length ?? 0)) ? '1' : '0'}`,
+          transition: 'all 1 ease',
         }}>
         <StyledBackAndForwardButton
           onClick={scrollToTop}

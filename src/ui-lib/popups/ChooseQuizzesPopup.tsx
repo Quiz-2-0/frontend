@@ -11,7 +11,7 @@ import StyledCheckbox from '../styled-components/StyledCheckbox';
 import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
 import { AdminQuiz } from '@/types/types';
-import { useAssignQuizzesToUsersMutation } from '@/api/api';
+import { useAssignQuizzesToUsersMutation, useGetDepartmentsQuery, useGetLevelsQuery } from '@/api/api';
 
 const StyledDiv = styled.div`
   max-width: 1080px;
@@ -51,6 +51,8 @@ const ChooseQuizzesPopup: FC<{
   setIsNewEmployeeAdd,
 }) => {
   const [assignQuizzesToUsers] = useAssignQuizzesToUsersMutation();
+  const { data: departments } = useGetDepartmentsQuery();
+  const { data: levels } = useGetLevelsQuery();
   const assignQuizzes = async () => {
     await assignQuizzesToUsers({
       users: isEmployeeChecked.map((userId) => ({ id: userId })),
@@ -153,12 +155,14 @@ const ChooseQuizzesPopup: FC<{
                         {quiz.name}
                       </TableItem>
                       <TableItem style={{ maxWidth: '180px' }}>
-                        {quiz.directory || 'Для всех отделов'}
+                        {departments?.find(({ id }) => (id === Number(quiz.directory)))?.name ?? 'Для всех отделов'}
                       </TableItem>
                       <TableItem style={{ maxWidth: '152px' }}>
                         {quiz.tags[0]?.name ?? null}
                       </TableItem>
-                      <TableItem style={{ maxWidth: '100px' }}>{quiz.level}</TableItem>
+                      <TableItem style={{ maxWidth: '100px' }}>
+                        {levels?.find(({ id }) => (id === Number(quiz.level)))?.name ?? ''}
+                      </TableItem>
                     </StyledCheckbox>
                   ))}
               </div>

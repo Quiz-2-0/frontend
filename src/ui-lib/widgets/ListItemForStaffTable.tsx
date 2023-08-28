@@ -14,6 +14,7 @@ import StyledCheckbox from '../styled-components/StyledCheckbox';
 const StyledDivWithCheckbox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 12px;
   padding: 0 24px;
   gap: 98px;
@@ -39,15 +40,14 @@ const StaffLink = styled(StyledButton)`
 `;
 
 const ListItemForStaffTable: FC<{
-  user: IUser,
-  userInd: number,
-  depInd: number,
-  topRef: React.RefObject<HTMLDivElement>,
-  bottomRef: React.RefObject<HTMLDivElement>,
-  staffList: IUser[] | undefined,
-  departmentsNumber: number,
-  isChecked: number[],
-  setIsChecked: any,
+  user: IUser;
+  userInd: number;
+  depInd: number;
+  topRef: React.RefObject<HTMLDivElement>;
+  bottomRef: React.RefObject<HTMLDivElement>;
+  staffList: IUser[] | undefined;
+  isChecked: number[];
+  setIsChecked: any;
 }> = ({
   user,
   userInd,
@@ -55,47 +55,26 @@ const ListItemForStaffTable: FC<{
   topRef,
   bottomRef,
   staffList,
-  departmentsNumber,
   isChecked,
   setIsChecked,
 }) => (
   <StyledDivWithCheckbox
-    ref={depInd !== -1
-      ? depInd === 0 && userInd === 0
-        ? topRef
-        : (depInd === departmentsNumber - 1) && (userInd === (staffList?.length ?? 0 - 1))
-          ? bottomRef
-          : null
-      : userInd === 0
-        ? topRef
-        : (userInd === (staffList?.length ?? 0) - 1)
-          ? bottomRef
-          : null}>
+    ref={userInd === 0 && (depInd === 0 || depInd === -1)
+      ? topRef
+      : user.id === staffList?.[(staffList?.length ?? 0) - 1]?.id
+        ? bottomRef
+        : null}>
     <StyledCheckbox
       checked={isChecked.includes(user.id)}
-      onClick={() => (isChecked.includes(user.id)
-        ? setIsChecked(isChecked.filter((num) => num !== user.id))
-        : setIsChecked([...isChecked, user.id]))}>
-      <TableItem
-        style={{ minWidth: '220px' }}>
-        {`${user.lastName} ${user.firstName} ${user.patronymic}`}
-      </TableItem>
-      <TableItem
-        style={{ minWidth: '220px' }}>
-        {user.email}
-      </TableItem>
-      <TableItem
-        style={{ minWidth: '100px', textAlign: 'center' }}>
-        {user.assigned || 0}
-      </TableItem>
-      <TableItem
-        style={{ minWidth: '100px', textAlign: 'center' }}>
-        {user.count_passed || 0}
-      </TableItem>
-      <TableItem
-        style={{ minWidth: '100px', textAlign: 'center' }}>
-        {user.rating || 0}
-      </TableItem>
+      onClick={() => (
+        isChecked.includes(user.id)
+          ? setIsChecked(isChecked.filter((num) => num !== user.id))
+          : setIsChecked([...isChecked, user.id]))}>
+      <TableItem style={{ minWidth: '220px' }}>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</TableItem>
+      <TableItem style={{ minWidth: '220px' }}>{user.email}</TableItem>
+      <TableItem style={{ minWidth: '100px', textAlign: 'center' }}>{user.assigned || 0}</TableItem>
+      <TableItem style={{ minWidth: '100px', textAlign: 'center' }}>{user.count_passed || 0}</TableItem>
+      <TableItem style={{ minWidth: '100px', textAlign: 'center' }}>{user.rating || 0}</TableItem>
     </StyledCheckbox>
     <StaffLink mode='link'>
       <Icon24UserOutline />
