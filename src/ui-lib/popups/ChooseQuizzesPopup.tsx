@@ -1,9 +1,10 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { FormItem, IconButton, Search } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Icon24CancelOutline } from '@vkontakte/icons';
 import { TableTitle, TableItem } from '../styled-components/TableItems';
@@ -12,6 +13,7 @@ import StyledButton from '../styled-components/StyledButton';
 import Background from '../styled-components/Background';
 import { AdminQuiz } from '@/types/types';
 import { useAssignQuizzesToUsersMutation, useGetDepartmentsQuery, useGetLevelsQuery } from '@/api/api';
+import ErrorPopup from './ErrorPopup';
 
 const StyledDiv = styled.div`
   max-width: 1080px;
@@ -50,6 +52,7 @@ const ChooseQuizzesPopup: FC<{
   isEmployeeChecked,
   setIsNewEmployeeAdd,
 }) => {
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [assignQuizzesToUsers] = useAssignQuizzesToUsersMutation();
   const { data: departments } = useGetDepartmentsQuery();
   const { data: levels } = useGetLevelsQuery();
@@ -57,126 +60,140 @@ const ChooseQuizzesPopup: FC<{
     await assignQuizzesToUsers({
       users: isEmployeeChecked.map((userId) => ({ id: userId })),
       quizes: isChecked.map((quizId) => ({ id: quizId })),
-    });
-    setIsNewEmployeeAdd(false);
-    setIsConfirmationPopupOpen(true);
-    setIsChooseQuizzesPopupOpen(false);
-    setIsChecked([]);
-    setIsEmployeeChecked([]);
+    })
+      .unwrap()
+      .then(() => {
+        setIsNewEmployeeAdd(false);
+        setIsConfirmationPopupOpen(true);
+        setIsChooseQuizzesPopupOpen(false);
+        setIsChecked([]);
+        setIsEmployeeChecked([]);
+      })
+      .catch(() => {
+        setIsErrorPopupOpen(true);
+      });
   };
 
   return (
-    <Background
-      style={{
-        visibility: `${isChooseQuizzesPopupOpen ? 'visible' : 'hidden'}`,
-        opacity: `${isChooseQuizzesPopupOpen ? '1' : '0'}`,
-      }}>
-      <StyledDiv>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-          }}>
-          <IconButton
-            aria-label='Закрыть'
-            style={{ width: '28px', height: '28px' }}
-            onClick={() => {
-              setIsChooseQuizzesPopupOpen(false);
-              setIsChecked([]);
-            }}>
-            <Icon24CancelOutline fill='#3F8AE0' />
-          </IconButton>
+    <>
+      <Background
+        style={{
+          visibility: `${isChooseQuizzesPopupOpen ? 'visible' : 'hidden'}`,
+          opacity: `${isChooseQuizzesPopupOpen ? '1' : '0'}`,
+        }}>
+        <StyledDiv>
           <div
             style={{
-              width: '100%',
               display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: '40px 0 24px',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: '20px',
-                fontWeight: '600',
-                lineHeight: '24px',
-                letterSpacing: '0.38px',
+            <IconButton
+              aria-label='Закрыть'
+              style={{ width: '28px', height: '28px' }}
+              onClick={() => {
+                setIsChooseQuizzesPopupOpen(false);
+                setIsChecked([]);
               }}>
-              Выбор квиза
-            </h2>
-            <Search
+              <Icon24CancelOutline fill='#3F8AE0' />
+            </IconButton>
+            <div
               style={{
-                maxWidth: '360px',
                 width: '100%',
-                margin: '0',
-                padding: '0',
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)} />
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                margin: '40px 0 24px',
+              }}>
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  lineHeight: '24px',
+                  letterSpacing: '0.38px',
+                }}>
+                Выбор квиза
+              </h2>
+              <Search
+                style={{
+                  maxWidth: '360px',
+                  width: '100%',
+                  margin: '0',
+                  padding: '0',
+                }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)} />
+            </div>
+            <StyledDiv style={{ height: '396px', margin: 0, padding: '24px' }}>
+              <FormItem style={{ padding: '0' }}>
+                <StyledCheckbox
+                  style={{ marginBottom: '20px' }}
+                  checked={isChecked.length === quizzes?.length && quizzes?.length !== 0}
+                  onClick={() => (
+                    isChecked.length === quizzes?.length
+                      ? setIsChecked([])
+                      : setIsChecked(quizzes?.map((quiz: AdminQuiz) => quiz.id))
+                  )}>
+                  <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
+                  <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>
+                  <TableTitle style={{ maxWidth: '152px' }}>Категория</TableTitle>
+                  <TableTitle style={{ maxWidth: '100px' }}>Уровень</TableTitle>
+                </StyledCheckbox>
+                <div style={{ height: '328px', overflow: 'scroll' }}>
+                  {quizzes?.length === 0 || quizzes === undefined
+                    ? (
+                      <p
+                        style={{
+                          fontSize: '16px',
+                          color: '#818C99',
+                          paddingLeft: '72px',
+                        }}>
+                        По вашему запросу ничего не найдено
+                      </p>
+                    ) : quizzes.map((quiz) => (
+                      <StyledCheckbox
+                        style={{ marginTop: '16px' }}
+                        key={quiz.id}
+                        checked={isChecked.includes(quiz.id)}
+                        onClick={() => (
+                          isChecked.includes(quiz.id)
+                            ? setIsChecked(isChecked.filter((num) => num !== quiz.id))
+                            : setIsChecked([...isChecked, quiz.id])
+                        )}>
+                        <TableItem style={{ maxWidth: '336px' }}>
+                          {quiz.name}
+                        </TableItem>
+                        <TableItem style={{ maxWidth: '180px' }}>
+                          {departments?.find(({ id }) => (id === Number(quiz.directory)))?.name ?? 'Для всех отделов'}
+                        </TableItem>
+                        <TableItem style={{ maxWidth: '152px' }}>
+                          {quiz.tags[0]?.name ?? null}
+                        </TableItem>
+                        <TableItem style={{ maxWidth: '100px' }}>
+                          {levels?.find(({ id }) => (id === Number(quiz.level)))?.name ?? ''}
+                        </TableItem>
+                      </StyledCheckbox>
+                    ))}
+                </div>
+              </FormItem>
+            </StyledDiv>
+            <StyledButton
+              disabled={isChecked.length === 0}
+              style={{ minWidth: '167px', marginTop: '28px' }}
+              onClick={assignQuizzes}>
+              Назначить
+            </StyledButton>
           </div>
-          <StyledDiv style={{ height: '396px', margin: 0, padding: '24px' }}>
-            <FormItem style={{ padding: '0' }}>
-              <StyledCheckbox
-                style={{ marginBottom: '20px' }}
-                checked={isChecked.length === quizzes?.length && quizzes?.length !== 0}
-                onClick={() => (
-                  isChecked.length === quizzes?.length
-                    ? setIsChecked([])
-                    : setIsChecked(quizzes?.map((quiz: AdminQuiz) => quiz.id))
-                )}>
-                <TableTitle style={{ maxWidth: '336px' }}>Название</TableTitle>
-                <TableTitle style={{ maxWidth: '180px' }}>Отдел</TableTitle>
-                <TableTitle style={{ maxWidth: '152px' }}>Категория</TableTitle>
-                <TableTitle style={{ maxWidth: '100px' }}>Уровень</TableTitle>
-              </StyledCheckbox>
-              <div style={{ height: '328px', overflow: 'scroll' }}>
-                {quizzes?.length === 0 || quizzes === undefined
-                  ? (
-                    <p
-                      style={{
-                        fontSize: '16px',
-                        color: '#818C99',
-                        paddingLeft: '72px',
-                      }}>
-                      По вашему запросу ничего не найдено
-                    </p>
-                  ) : quizzes.map((quiz) => (
-                    <StyledCheckbox
-                      style={{ marginTop: '16px' }}
-                      key={quiz.id}
-                      checked={isChecked.includes(quiz.id)}
-                      onClick={() => (
-                        isChecked.includes(quiz.id)
-                          ? setIsChecked(isChecked.filter((num) => num !== quiz.id))
-                          : setIsChecked([...isChecked, quiz.id])
-                      )}>
-                      <TableItem style={{ maxWidth: '336px' }}>
-                        {quiz.name}
-                      </TableItem>
-                      <TableItem style={{ maxWidth: '180px' }}>
-                        {departments?.find(({ id }) => (id === Number(quiz.directory)))?.name ?? 'Для всех отделов'}
-                      </TableItem>
-                      <TableItem style={{ maxWidth: '152px' }}>
-                        {quiz.tags[0]?.name ?? null}
-                      </TableItem>
-                      <TableItem style={{ maxWidth: '100px' }}>
-                        {levels?.find(({ id }) => (id === Number(quiz.level)))?.name ?? ''}
-                      </TableItem>
-                    </StyledCheckbox>
-                  ))}
-              </div>
-            </FormItem>
-          </StyledDiv>
-          <StyledButton
-            disabled={isChecked.length === 0}
-            style={{ minWidth: '167px', marginTop: '28px' }}
-            onClick={assignQuizzes}>
-            Назначить
-          </StyledButton>
-        </div>
-      </StyledDiv>
-    </Background>
+        </StyledDiv>
+      </Background>
+      <ErrorPopup
+        title={isChecked.length === 1 ? 'Квиз не назначен' : 'Квизы не назначены'}
+        description='В процессе назначения что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к списку'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
+    </>
   );
 };
 

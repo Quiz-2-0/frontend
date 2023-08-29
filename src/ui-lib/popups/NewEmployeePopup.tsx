@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -22,6 +23,7 @@ import StyledButton from '../styled-components/StyledButton';
 import StyledInput from '../styled-components/StyledInput';
 import StyledFormItem from '../styled-components/StyledFormItem';
 import { useCreateUserMutation } from '@/api/api';
+import ErrorPopup from './ErrorPopup';
 
 const StyledDiv = styled.div`
   max-width: 1000px;
@@ -68,6 +70,7 @@ const NewEmployeePopup: FC<{
   setIsNewEmployeeAdd,
   setIsConfirmationPopupOpen,
 }) => {
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [createUser] = useCreateUserMutation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -129,207 +132,222 @@ const NewEmployeePopup: FC<{
       department,
       email,
       role: 'EMP',
-    }).then((data: any) => console.log(data));
-    resetForm();
-    setIsNewEmployeePopupOpen(false);
-    setIsNewEmployeeAdd(true);
-    setIsConfirmationPopupOpen(true);
+    })
+      .unwrap()
+      .then((data: any) => {
+        console.log(data);
+        resetForm();
+        setIsNewEmployeePopupOpen(false);
+        setIsNewEmployeeAdd(true);
+        setIsConfirmationPopupOpen(true);
+      })
+      .catch(() => {
+        setIsErrorPopupOpen(true);
+      });
   };
 
   return (
-    <Background
-      style={{
-        visibility: `${isNewEmployeePopupOpen ? 'visible' : 'hidden'}`,
-        opacity: `${isNewEmployeePopupOpen ? '1' : '0'}`,
-      }}>
-      <StyledDiv>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-          }}>
-          <IconButton
-            aria-label='Закрыть'
-            style={{
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onClick={() => {
-              setIsNewEmployeePopupOpen(false);
-              resetForm();
-            }}>
-            <Icon24CancelOutline fill='#3F8AE0' />
-          </IconButton>
+    <>
+      <Background
+        style={{
+          visibility: `${isNewEmployeePopupOpen ? 'visible' : 'hidden'}`,
+          opacity: `${isNewEmployeePopupOpen ? '1' : '0'}`,
+        }}>
+        <StyledDiv>
           <div
             style={{
-              width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              gap: '16px',
-              margin: '8px 0 28px',
+              alignItems: 'flex-end',
             }}>
-            <h2
+            <IconButton
+              aria-label='Закрыть'
               style={{
-                margin: 0,
-                fontSize: '20px',
-                fontWeight: '600',
-                lineHeight: '24px',
-                letterSpacing: '0.38px',
+                width: '28px',
+                height: '28px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onClick={() => {
+                setIsNewEmployeePopupOpen(false);
+                resetForm();
               }}>
-              Добавление нового сотрудника
-            </h2>
-            <p
+              <Icon24CancelOutline fill='#3F8AE0' />
+            </IconButton>
+            <div
               style={{
-                margin: 0,
-                fontSize: '15px',
-                fontWeight: '400',
-                lineHeight: '20px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                gap: '16px',
+                margin: '8px 0 28px',
               }}>
-              После добавления нового сотрудника, на указанную почту ему придет
-              сгенерированный пароль.
-            </p>
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  lineHeight: '24px',
+                  letterSpacing: '0.38px',
+                }}>
+                Добавление нового сотрудника
+              </h2>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: '15px',
+                  fontWeight: '400',
+                  lineHeight: '20px',
+                }}>
+                После добавления нового сотрудника, на указанную почту ему придет
+                сгенерированный пароль.
+              </p>
+            </div>
+            <FormLayout
+              onSubmit={onSubmit}
+              style={{
+                width: '100%',
+                padding: '0',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+              <StyledFormLayoutGroup mode='horizontal'>
+                <FormItemForNewEmployee
+                  htmlFor='last-name'
+                  top='Фамилия'
+                  onBlur={() => {
+                    const regex = /^[А-ЯЁA-Z][а-яёa-z'-]+$/;
+                    setIsLastNameValid(regex.test(lastName));
+                  }}
+                  onChange={() => setIsLastNameValid(true)}
+                  status={isLastNameValid ? 'default' : 'error'}
+                  bottom={isLastNameValid ? '' : 'Неверно введена фамилия'}
+                  style={{ paddingBottom: `${isLastNameValid ? '24px' : '0px'}` }}>
+                  <StyledInput
+                    id='last-name'
+                    type='text'
+                    placeholder='Введите Фамилию'
+                    name='last-name'
+                    value={lastName}
+                    onChange={onChange} />
+                </FormItemForNewEmployee>
+                <FormItemForNewEmployee
+                  htmlFor='email'
+                  top='Email'
+                  onBlur={() => {
+                    setIsEmailValid(validator.isEmail(email));
+                  }}
+                  onChange={() => setIsEmailValid(true)}
+                  status={isEmailValid ? 'default' : 'error'}
+                  bottom={isEmailValid ? '' : 'Неверно введён email'}
+                  style={{ paddingBottom: `${isEmailValid ? '24px' : '0px'}` }}>
+                  <StyledInput
+                    id='email'
+                    type='email'
+                    placeholder='Введите email'
+                    name='email'
+                    value={email}
+                    onChange={onChange} />
+                </FormItemForNewEmployee>
+              </StyledFormLayoutGroup>
+              <StyledFormLayoutGroup mode='horizontal'>
+                <FormItemForNewEmployee
+                  htmlFor='first-name'
+                  top='Имя'
+                  onBlur={() => {
+                    const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
+                    setIsFirstNameValid(regex.test(firstName));
+                  }}
+                  onChange={() => setIsFirstNameValid(true)}
+                  status={isFirstNameValid ? 'default' : 'error'}
+                  bottom={isFirstNameValid ? '' : 'Неверно введено имя'}
+                  style={{ paddingBottom: `${isFirstNameValid ? '24px' : '0px'}` }}>
+                  <StyledInput
+                    id='first-name'
+                    type='text'
+                    placeholder='Введите Имя'
+                    name='first-name'
+                    value={firstName}
+                    onChange={onChange} />
+                </FormItemForNewEmployee>
+                <FormItemForNewEmployee
+                  htmlFor='department'
+                  top='Отдел'
+                  onBlur={() => {
+                    setIsDepartmentValid(department !== -1);
+                  }}
+                  onChange={() => setIsFirstNameValid(true)}
+                  status={isDepartmentValid ? 'default' : 'error'}
+                  bottom={isDepartmentValid ? '' : 'Отдел не выбран'}
+                  style={{ paddingBottom: `${isDepartmentValid ? '24px' : '0px'}` }}>
+                  <StyledSelect
+                    placeholder='Выберите отдел'
+                    value={department}
+                    onChange={(e) => setDepartment(Number(e.target.value))}
+                    options={departments ?? []} />
+                </FormItemForNewEmployee>
+              </StyledFormLayoutGroup>
+              <StyledFormLayoutGroup mode='horizontal'>
+                <FormItemForNewEmployee
+                  htmlFor='patronymic'
+                  top='Отчество'
+                  onBlur={() => {
+                    const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
+                    setIsPatronymicValid(regex.test(patronymic));
+                  }}
+                  onChange={() => setIsPatronymicValid(true)}
+                  status={isPatronymicValid ? 'default' : 'error'}
+                  bottom={isPatronymicValid ? '' : 'Неверно введено отчество'}
+                  style={{ paddingBottom: `${isPatronymicValid ? '24px' : '0px'}` }}>
+                  <StyledInput
+                    id='patronymic'
+                    type='text'
+                    placeholder='Введите Отчество'
+                    name='patronymic'
+                    value={patronymic}
+                    onChange={onChange} />
+                </FormItemForNewEmployee>
+                <FormItemForNewEmployee
+                  htmlFor='position'
+                  top='Должность'
+                  onBlur={() => {
+                    const regex = /^[А-ЯЁA-Z][а-яёa-z\s-]+$/;
+                    setIsPositionValid(regex.test(position));
+                  }}
+                  onChange={() => setIsPositionValid(true)}
+                  status={isPositionValid ? 'default' : 'error'}
+                  bottom={isPositionValid ? '' : 'Неверно введена должность'}
+                  style={{ paddingBottom: `${isPositionValid ? '24px' : '0px'}` }}>
+                  <StyledInput
+                    id='position'
+                    type='text'
+                    placeholder='Введите должность'
+                    name='position'
+                    value={position}
+                    onChange={onChange} />
+                </FormItemForNewEmployee>
+              </StyledFormLayoutGroup>
+              <StyledButton
+                type='submit'
+                disabled={!isActive}
+                style={{ maxWidth: '198px', marginTop: '16px' }}>
+                Добавить сотрудника
+              </StyledButton>
+            </FormLayout>
           </div>
-          <FormLayout
-            onSubmit={onSubmit}
-            style={{
-              width: '100%',
-              padding: '0',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}>
-            <StyledFormLayoutGroup mode='horizontal'>
-              <FormItemForNewEmployee
-                htmlFor='last-name'
-                top='Фамилия'
-                onBlur={() => {
-                  const regex = /^[А-ЯЁA-Z][а-яёa-z'-]+$/;
-                  setIsLastNameValid(regex.test(lastName));
-                }}
-                onChange={() => setIsLastNameValid(true)}
-                status={isLastNameValid ? 'default' : 'error'}
-                bottom={isLastNameValid ? '' : 'Неверно введена фамилия'}
-                style={{ paddingBottom: `${isLastNameValid ? '24px' : '0px'}` }}>
-                <StyledInput
-                  id='last-name'
-                  type='text'
-                  placeholder='Введите Фамилию'
-                  name='last-name'
-                  value={lastName}
-                  onChange={onChange} />
-              </FormItemForNewEmployee>
-              <FormItemForNewEmployee
-                htmlFor='email'
-                top='Email'
-                onBlur={() => {
-                  setIsEmailValid(validator.isEmail(email));
-                }}
-                onChange={() => setIsEmailValid(true)}
-                status={isEmailValid ? 'default' : 'error'}
-                bottom={isEmailValid ? '' : 'Неверно введён email'}
-                style={{ paddingBottom: `${isEmailValid ? '24px' : '0px'}` }}>
-                <StyledInput
-                  id='email'
-                  type='email'
-                  placeholder='Введите email'
-                  name='email'
-                  value={email}
-                  onChange={onChange} />
-              </FormItemForNewEmployee>
-            </StyledFormLayoutGroup>
-            <StyledFormLayoutGroup mode='horizontal'>
-              <FormItemForNewEmployee
-                htmlFor='first-name'
-                top='Имя'
-                onBlur={() => {
-                  const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
-                  setIsFirstNameValid(regex.test(firstName));
-                }}
-                onChange={() => setIsFirstNameValid(true)}
-                status={isFirstNameValid ? 'default' : 'error'}
-                bottom={isFirstNameValid ? '' : 'Неверно введено имя'}
-                style={{ paddingBottom: `${isFirstNameValid ? '24px' : '0px'}` }}>
-                <StyledInput
-                  id='first-name'
-                  type='text'
-                  placeholder='Введите Имя'
-                  name='first-name'
-                  value={firstName}
-                  onChange={onChange} />
-              </FormItemForNewEmployee>
-              <FormItemForNewEmployee
-                htmlFor='department'
-                top='Отдел'
-                onBlur={() => {
-                  setIsDepartmentValid(department !== -1);
-                }}
-                onChange={() => setIsFirstNameValid(true)}
-                status={isDepartmentValid ? 'default' : 'error'}
-                bottom={isDepartmentValid ? '' : 'Отдел не выбран'}
-                style={{ paddingBottom: `${isDepartmentValid ? '24px' : '0px'}` }}>
-                <StyledSelect
-                  placeholder='Выберите отдел'
-                  value={department}
-                  onChange={(e) => setDepartment(Number(e.target.value))}
-                  options={departments ?? []} />
-              </FormItemForNewEmployee>
-            </StyledFormLayoutGroup>
-            <StyledFormLayoutGroup mode='horizontal'>
-              <FormItemForNewEmployee
-                htmlFor='patronymic'
-                top='Отчество'
-                onBlur={() => {
-                  const regex = /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/;
-                  setIsPatronymicValid(regex.test(patronymic));
-                }}
-                onChange={() => setIsPatronymicValid(true)}
-                status={isPatronymicValid ? 'default' : 'error'}
-                bottom={isPatronymicValid ? '' : 'Неверно введено отчество'}
-                style={{ paddingBottom: `${isPatronymicValid ? '24px' : '0px'}` }}>
-                <StyledInput
-                  id='patronymic'
-                  type='text'
-                  placeholder='Введите Отчество'
-                  name='patronymic'
-                  value={patronymic}
-                  onChange={onChange} />
-              </FormItemForNewEmployee>
-              <FormItemForNewEmployee
-                htmlFor='position'
-                top='Должность'
-                onBlur={() => {
-                  const regex = /^[А-ЯЁA-Z][а-яёa-z\s-]+$/;
-                  setIsPositionValid(regex.test(position));
-                }}
-                onChange={() => setIsPositionValid(true)}
-                status={isPositionValid ? 'default' : 'error'}
-                bottom={isPositionValid ? '' : 'Неверно введена должность'}
-                style={{ paddingBottom: `${isPositionValid ? '24px' : '0px'}` }}>
-                <StyledInput
-                  id='position'
-                  type='text'
-                  placeholder='Введите должность'
-                  name='position'
-                  value={position}
-                  onChange={onChange} />
-              </FormItemForNewEmployee>
-            </StyledFormLayoutGroup>
-            <StyledButton
-              type='submit'
-              disabled={!isActive}
-              style={{ maxWidth: '198px', marginTop: '16px' }}>
-              Добавить сотрудника
-            </StyledButton>
-          </FormLayout>
-        </div>
-      </StyledDiv>
-    </Background>
+        </StyledDiv>
+      </Background>
+      <ErrorPopup
+        title='Пользователь не был создан'
+        description='В процессе создания пользователя что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к форме'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
+    </>
   );
 };
 
