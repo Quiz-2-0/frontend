@@ -102,6 +102,17 @@ const Buttons = styled.div`
   transition: opacity 0.4s ease-in-out, visibility 0s ease-in-out 0.4s;
 `;
 
+const Description = styled(Headline)`
+  padding: 4px 0 0;
+  display: -webkit-box;
+  height: 60px;
+  letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
 const QuizCard: React.FC<QuizCardProps> = (
   {
     id,
@@ -155,15 +166,9 @@ const QuizCard: React.FC<QuizCardProps> = (
           }}>
           {title}
         </Headline>
-        <Headline
-          style={{
-            padding: '4px 0 0 0',
-            display: 'inline-block',
-            minHeight: '60px',
-            letterSpacing: '-0.2px',
-          }}>
+        <Description>
           {description}
-        </Headline>
+        </Description>
         <StyledQuizDetailsWrapper>
           <StyledQuizDetailWrapper>
             <DurationIcon />

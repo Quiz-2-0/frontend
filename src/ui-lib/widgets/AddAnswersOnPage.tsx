@@ -43,9 +43,11 @@ const StyledInput = styled(Input)<{ value: string, placeholder: string }>`
     font-weight: 400;
     line-height: 20px;
     height: 20px;
-    min-width: ${({ value, placeholder }) => (
-    value === '' ? placeholder.length * 15 * 0.55 : value.length * 15 * 0.55
+    min-width: 30px;
+    width: ${({ value, placeholder }) => (
+    value === '' ? placeholder.length * 15 * 0.55 : value.length * 15 * 0.53
   )}px;
+    max-width: 930px;
   }
   & > .vkuiFormField__border {
     border: none;
@@ -145,7 +147,7 @@ const AddAnswersOnPage: FC<{
       setIsOpen(false);
     }
   }, [categories, answers]);
-  console.log(answers);
+
   return (
     <FormItemForNewQuiz
       top={title}>
@@ -179,8 +181,10 @@ const AddAnswersOnPage: FC<{
                   questionType === 'ONE'
                     ? setAnswers(answers.map((answ) => (
                       answ.id === answer.id
-                        ? { ...answ, is_right: !answer.is_right }
-                        : { ...answ, is_right: answer.is_right })))
+                        ? answer.is_right !== true
+                          ? { ...answ, is_right: true }
+                          : { ...answ, is_right: false }
+                        : { ...answ, is_right: false })))
                     : setAnswers(answers.map((answ) => (
                       answ.id === answer.id && questionType !== 'LST'
                         ? { ...answ, is_right: !answer.is_right } : answ)));

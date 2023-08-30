@@ -1,10 +1,11 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable ternary/nesting */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FormItem, IconButton } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -33,7 +34,20 @@ const GalleryCheckbox = styled(StyledCheckbox)`
 
   & > .vkuiCheckbox__icon {
     margin-right: 10px;
+    display: none;
 }
+`;
+
+const PageButton = styled(StyledBackAndForwardButton)<{ currentPage: number, page: number }>`
+  border-radius: 0;
+  width: 40px;
+  height: 40px;
+  background: ${({ currentPage, page }) => (currentPage === page ? 'rgba(63, 138, 224, 0.15)' : 'none')};
+
+  & > .vkuiButton__in > .vkuiButton__content {
+    justify-content: center;
+    gap: 0;
+  }
 `;
 
 const GalleryPopup: FC<{
@@ -47,26 +61,43 @@ const GalleryPopup: FC<{
   image,
   setImage,
 }) => {
+  const MAX_IMAGES_QUANTITY_ON_PAGE = 9;
   const { data: images } = useGetImagesForQuizzesQuery();
-  const [gallery, setGallery] = useState(images ?? []);
-  console.log(images);
-  const topRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const [currentPage, setCurrentPage] = useState(
+    (images?.length ?? 0) > MAX_IMAGES_QUANTITY_ON_PAGE ? 1 : NaN,
+  );
+  const [imagesOnPage, setImagesOnPage] = useState(
+    images?.slice(0, MAX_IMAGES_QUANTITY_ON_PAGE) ?? [],
+  );
 
-  const scrollToTop = () => {
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const pages: number[] = [];
+  for (let i = 0; i < Math.ceil((images?.length ?? 0) / 9); i++) {
+    pages.push(i + 1);
+  }
 
-  const scrollToBottom = () => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+  const choosePage = (value: number) => {
+    setCurrentPage(value);
+    if (value === 1) {
+      setImagesOnPage(images?.slice(0, MAX_IMAGES_QUANTITY_ON_PAGE) ?? []);
+    } else if (value === pages.length) {
+      setImagesOnPage(images?.slice(value * MAX_IMAGES_QUANTITY_ON_PAGE) ?? []);
     }
+    setImagesOnPage(
+      images?.slice(
+        MAX_IMAGES_QUANTITY_ON_PAGE * (value - 1),
+        MAX_IMAGES_QUANTITY_ON_PAGE * value,
+      ) ?? [],
+    );
   };
 
   useEffect(() => {
-    setGallery(images ?? []);
+    setCurrentPage(
+      (images?.length ?? 0) > MAX_IMAGES_QUANTITY_ON_PAGE ? 1 : NaN,
+    );
+    setImagesOnPage(images?.slice(0, 9) ?? []);
+    for (let i = 0; i < Math.ceil((images?.length ?? 0) / 9); i++) {
+      pages.push(i + 1);
+    }
   }, [images]);
 
   return (
@@ -118,16 +149,16 @@ const GalleryPopup: FC<{
         </p>
         <FormItem
           style={{
-            overflow: 'scroll',
             width: '100%',
-            height: '436px',
+            minHeight: '436px',
+            boxSizing: 'border-box',
             margin: 0,
             padding: 0,
             display: 'flex',
             flexWrap: 'wrap',
             gap: '8px',
           }}>
-          {gallery.map((item, i) => (
+          {imagesOnPage.map((item) => (
             <div
               key={item.id}
               style={{
@@ -141,14 +172,7 @@ const GalleryPopup: FC<{
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
               }}
-              onClick={() => setImage(item.image)}
-              ref={
-                i === 0
-                  ? topRef
-                  : i === gallery.length - 1
-                    ? bottomRef
-                    : null
-              }>
+              onClick={() => setImage(item.image)}>
               <GalleryCheckbox
                 checked={image === item.image} />
             </div>
@@ -160,10 +184,14 @@ const GalleryPopup: FC<{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            marginTop: '28px',
           }}>
           <StyledButton
             disabled={image === ''}
-            style={{ minWidth: '167px', marginTop: '28px' }}
+            style={{
+              minWidth: '167px',
+              marginTop: '0',
+            }}
             onClick={() => {
               setIsGalleryPopupOpen(false);
             }}>
@@ -172,21 +200,38 @@ const GalleryPopup: FC<{
           <div
             style={{
               width: '100%',
-              display: 'flex',
+              display: `${!Number.isNaN(currentPage) ? 'flex' : 'none'}`,
               justifyContent: 'flex-end',
               alignItems: 'center',
-              gap: '16px',
-              marginTop: '14px',
+              gap: '8px',
             }}>
             <StyledBackAndForwardButton
-              onClick={scrollToTop}
+              onClick={() => choosePage(1)}
+              style={{ display: `${currentPage === 1 ? 'none' : 'block'}` }}
               aria-label='В начало'
               mode='link'>
               <Icon20ChevronRight style={{ transform: 'rotate(180deg)' }} />
               В начало
             </StyledBackAndForwardButton>
+            <div
+              style={{
+                display: 'flex',
+              }}>
+              {pages.map((page) => (
+                <PageButton
+                  currentPage={currentPage}
+                  page={page}
+                  key={page}
+                  mode='link'
+                  aria-label={`Страница ${page}`}
+                  onClick={() => choosePage(page)}>
+                  {page}
+                </PageButton>
+              ))}
+            </div>
             <StyledBackAndForwardButton
-              onClick={scrollToBottom}
+              onClick={() => choosePage(pages.length)}
+              style={{ display: `${currentPage === pages.length ? 'none' : 'block'}` }}
               aria-label='В конец'
               mode='link'>
               В конец

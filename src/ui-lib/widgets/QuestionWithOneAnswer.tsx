@@ -24,6 +24,7 @@ const QuestionWithOneAnswer: FC<QuestionTypeProps> = ({
       setQuestionsList(questionsList.map((quest) => (
         quest.id === question.id ? { ...quest, answers: [{ text: '', is_right: false, answers_list: [] }] } : quest
       )));
+      setAnswers([{ id: 0, text: '', is_right: false, answers_list: [] }]);
       setIsAnswerValid([{ isValid: true, id: 0 }]);
     } else {
       setQuestionsList(questionsList.map((quest) => (
