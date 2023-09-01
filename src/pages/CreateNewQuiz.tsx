@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Title } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon20ChevronRight, Icon24AddOutline } from '@vkontakte/icons';
@@ -9,8 +11,12 @@ import ProgressBar from '@/ui-lib/widgets/ProgressBar';
 import steps, { Step, StepProps } from '@/constants/steps';
 import StyledBackAndForwardButton from '@/ui-lib/styled-components/StyledBackAndForwardButton';
 import ConfirmationPopup from '@/ui-lib/popups/ConfirmationPopup';
-import { useGetQuestionsQuery } from '@/api/api';
-import { IQuestionAdmin } from '@/types/types';
+import {
+  useUpdateVolumeMutation,
+  useCreateVolumeMutation,
+  useGetQuestionsQuery,
+} from '@/api/api';
+import { IQuestionAdmin, Volume, IVolumeItem } from '@/types/types';
 
 const CreateNewQuiz: FC = () => {
   const { id } = useParams();
@@ -31,10 +37,12 @@ const CreateNewQuiz: FC = () => {
   const [progressObject, setProgress] = useState<number[]>([0]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
-  const [items, setItems] = useState<number[]>([0]);
   const [isPreviewPopupOpen, setIsPreviewPopupOpen] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isSubmit, setIsSubmit] = useState([false, false, false, false]);
+
+  const [updateVolumeRun] = useUpdateVolumeMutation();
+  const [createVolumeRun] = useCreateVolumeMutation();
 
   const [isQuestionTextValid, setIsQuestionTextValid] = useState<{
     id: number,
@@ -59,6 +67,18 @@ const CreateNewQuiz: FC = () => {
       }],
     }]);
   }, [questions]);
+
+  const [volumeItems, setVolumeItems] = useState<IVolumeItem[]>([{
+    volume: {
+      id: 0,
+      name: '',
+      description: '',
+    },
+    isNew: false,
+    isChanged: false,
+    isValid: true,
+  }]);
+  const [newVolumeIdx, setNewVolumeIdx] = useState(-1);
 
   useEffect(() => {
     if (questionsList.length === 0) {
@@ -87,35 +107,63 @@ const CreateNewQuiz: FC = () => {
     }
   };
 
-  const renderStep = () => {
-    const step: Step<StepProps> = steps[currentPage];
-    return (
-      <step.markup.Component
-        setNextPage={setNextPage}
-        items={items}
-        quizId={quizId}
-        questionsList={questionsList}
-        setItems={setItems}
-        isSubmit={isSubmit}
-        setIsSubmit={setIsSubmit}
-        setIsButtonDisabled={setIsButtonDisabled}
-        formElements={currentPage === 1
-          ? {
-            isQuestionTextValid,
-            isQuestionTypeValid,
-          } : {}}
-        setFormElements={currentPage === 1
-          ? {
-            setQuestionsList,
-            setIsQuestionTextValid,
-            setIsQuestionTypeValid,
-            setQuizId,
-          } : []} />
-    );
+  const createOrUpdateVolume = async (volumeItem: IVolumeItem) => {
+    const { volume } = volumeItem;
+    if (!volumeItem.isChanged) return;
+    if (!volume.id || !volume.name || !volume.description) return;
+
+    try {
+      let newVolume: Volume;
+
+      if (volumeItem.isNew) {
+        newVolume = await createVolumeRun({
+          quizId,
+          volume: {
+            name: volume.name,
+            description: volume.description,
+          },
+        }).unwrap();
+      } else {
+        newVolume = await updateVolumeRun({
+          quizId,
+          volumeId: volume.id,
+          volume: {
+            name: volume.name,
+            description: volume.description,
+          },
+        }).unwrap();
+      }
+
+      setVolumeItems(volumeItems.map(({ volume: volOld, ...otherProps }) => {
+        if (volOld.id !== volume.id) {
+          return { volume: volOld, ...otherProps };
+        }
+        return {
+          volume: {
+            ...newVolume,
+          },
+          ...otherProps,
+          isChanged: false,
+          isNew: false,
+          isValid: true,
+        };
+      }));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const addNewItem = () => {
-    setItems([...items, items.length]);
+  const saveDrafts = async () => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const volumeItem of volumeItems) {
+      if (volumeItem.isChanged) {
+        // eslint-disable-next-line no-await-in-loop
+        await createOrUpdateVolume(volumeItem);
+      }
+    }
+  };
+
+  const addNewItem = async () => {
     if (currentPage === 1) {
       setQuestionsList([...questionsList, {
         id: questionsList.length,
@@ -136,7 +184,50 @@ const CreateNewQuiz: FC = () => {
         { id: isQuestionTypeValid.length, isValid: true },
       ]);
     }
+    if (currentPage === 2) {
+      await saveDrafts();
+      setNewVolumeIdx(newVolumeIdx - 1);
+      setVolumeItems([...volumeItems, {
+        volume: {
+          id: newVolumeIdx,
+          name: '',
+          description: '',
+        },
+        isNew: true,
+        isChanged: false,
+        isValid: true,
+      }]);
+    }
   };
+
+  const renderStep = () => {
+    const step: Step<StepProps> = steps[currentPage];
+    return (
+      <step.markup.Component
+        saveDrafts={saveDrafts}
+        setNextPage={setNextPage}
+        volumeItems={volumeItems}
+        quizId={quizId}
+        questionsList={questionsList}
+        setVolumeItems={setVolumeItems}
+        isSubmit={isSubmit}
+        setIsSubmit={setIsSubmit}
+        setQuizId={setQuizId}
+        setIsButtonDisabled={setIsButtonDisabled}
+        formElements={currentPage === 1
+          ? {
+            isQuestionTextValid,
+            isQuestionTypeValid,
+          } : {}}
+        setFormElements={currentPage === 1
+          ? {
+            setQuestionsList,
+            setIsQuestionTextValid,
+            setIsQuestionTypeValid,
+          } : []} />
+    );
+  };
+  console.log(volumeItems);
   return (
     <>
       <div style={{ width: '100%' }}>
@@ -218,9 +309,9 @@ const CreateNewQuiz: FC = () => {
             <StyledButton
               disabled={!isButtonDisabled}
               mode='outline'
-              onClick={() => {
+              onClick={async () => {
                 if (currentPage !== 3) {
-                  addNewItem();
+                  await addNewItem();
                 } else {
                   setIsPreviewPopupOpen(true);
                 }

@@ -5,7 +5,7 @@ import { Icon28DeleteOutline } from '@vkontakte/icons';
 import StyledInput from '@/ui-lib/styled-components/StyledInput';
 import StyledDiv from '@/ui-lib/styled-components/StyledDiv';
 import FormItemForNewQuiz from '@/ui-lib/styled-components/FormItemForNewQuiz';
-import { IVolumeItem } from '@/ui-lib/widgets/NewQuizStep3';
+import { IVolumeItem } from '@/types/types';
 
 export interface IVolumeItemProps extends IVolumeItem {
   index: number;

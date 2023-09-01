@@ -1,112 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Button } from '@vkontakte/vkui';
 import { StepProps } from '@/constants/steps';
 import {
   useGetVolumesQuery,
-  useUpdateVolumeMutation,
-  useRemoveVolumeMutation, useCreateVolumeMutation,
+  useRemoveVolumeMutation,
 } from '@/api/api';
 import NewQuizStep3VolumeItem from '@/ui-lib/widgets/NewQuizStep3VolumeItem';
-import { Volume } from '@/types/types';
-
-export interface IVolumeItem {
-  volume: Partial<Volume>;
-  isNew: boolean;
-  isChanged: boolean;
-  isValid: boolean;
-}
+import { IVolumeItem } from '@/types/types';
+import ErrorPopup from '../popups/ErrorPopup';
 
 const NewQuizStep3: FC<StepProps> = ({
-  items,
-  setItems,
-  formElements,
-  setFormElements,
+  volumeItems,
+  setVolumeItems,
+  saveDrafts,
+  setIsButtonDisabled,
+  quizId,
   isSubmit,
   setNextPage,
   setIsSubmit,
 }) => {
-  const urlParams = useParams();
-  const quizId = Number(urlParams.id);
-
   const { data: volumes } = useGetVolumesQuery(quizId);
   const [removeVolumeRun] = useRemoveVolumeMutation();
-  const [updateVolumeRun] = useUpdateVolumeMutation();
-  const [createVolumeRun] = useCreateVolumeMutation();
 
-  const [volumeItems, setVolumeItems] = useState<IVolumeItem[]>([]);
-  const [newVolumeIdx, setNewVolumeIdx] = useState(-1);
-
-  const createOrUpdateVolume = async (volumeItem: IVolumeItem) => {
-    const { volume } = volumeItem;
-    if (!volumeItem.isChanged) return;
-    if (!volume.id || !volume.name || !volume.description) return;
-
-    try {
-      let newVolume: Volume;
-
-      if (volumeItem.isNew) {
-        newVolume = await createVolumeRun({
-          quizId,
-          volume: {
-            name: volume.name,
-            description: volume.description,
-          },
-        }).unwrap();
-      } else {
-        newVolume = await updateVolumeRun({
-          quizId,
-          volumeId: volume.id,
-          volume: {
-            name: volume.name,
-            description: volume.description,
-          },
-        }).unwrap();
-      }
-
-      setVolumeItems(volumeItems.map(({ volume: volOld, ...otherProps }) => {
-        if (volOld.id !== volume.id) {
-          return { volume: volOld, ...otherProps };
-        }
-        return {
-          volume: {
-            ...newVolume,
-          },
-          ...otherProps,
-          isChanged: false,
-          isNew: false,
-          isValid: true,
-        };
-      }));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const saveDrafts = async () => {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const volumeItem of volumeItems) {
-      if (volumeItem.isChanged) {
-        // eslint-disable-next-line no-await-in-loop
-        await createOrUpdateVolume(volumeItem);
-      }
-    }
-  };
-
-  const addVolume = async () => {
-    await saveDrafts();
-    setNewVolumeIdx(newVolumeIdx - 1);
-    setVolumeItems([...volumeItems, {
-      volume: {
-        id: newVolumeIdx,
-      },
-      isNew: true,
-      isChanged: false,
-      isValid: true,
-    }]);
-  };
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
 
   const editVolume = (volumeId: number, volume: Partial<IVolumeItem>) => {
     setVolumeItems(volumeItems.map(({ volume: volumeOld, ...otherProps }) => {
@@ -142,7 +61,7 @@ const NewQuizStep3: FC<StepProps> = ({
   };
 
   useEffect(() => {
-    if (typeof volumes !== 'undefined') {
+    if (volumes?.length !== 0 && typeof volumes !== 'undefined') {
       setVolumeItems(volumes.map((item) => ({
         volume: item,
         canRemove: false,
@@ -157,13 +76,20 @@ const NewQuizStep3: FC<StepProps> = ({
     if (isSubmit[2]) {
       // eslint-disable-next-line promise/catch-or-return
       saveDrafts()
-        .catch((err) => console.error(err))
+        .catch((err: any) => console.error(err))
         .finally(() => {
           setNextPage();
           setIsSubmit([false, false, false, false]);
         });
     }
   }, [isSubmit]);
+
+  useEffect(() => {
+    const isDisabled: boolean = volumeItems.length !== 0 && volumeItems.every(
+      (volumeItem) => (volumeItem.volume.name ?? '').length > 1 && (volumeItem.volume.description ?? '').length > 50 && volumeItem.isValid === true,
+    );
+    setIsButtonDisabled(isDisabled);
+  }, [volumeItems]);
 
   return (
     <>
@@ -179,11 +105,12 @@ const NewQuizStep3: FC<StepProps> = ({
           editVolume={editVolume}
           removeVolume={removeVolume} />
       ))}
-      <Button
-        size='l'
-        onClick={addVolume}>
-        + Добавить
-      </Button>
+      <ErrorPopup
+        title='Что-то пошло не так'
+        description='В процессе создания квиза что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к форме'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
     </>
   );
 };

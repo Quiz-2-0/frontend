@@ -10,6 +10,7 @@ import thresholdList from '@/constants/threshold';
 import StyledDiv from '../styled-components/StyledDiv';
 import StyledButton from '../styled-components/StyledButton';
 import GalleryPopup from '../popups/GalleryPopup';
+import ErrorPopup from '../popups/ErrorPopup';
 import { StepProps } from '@/constants/steps';
 import { useGetAdminQuizQuery, useUpdateQuizMutation } from '@/api/api';
 
@@ -48,6 +49,7 @@ const NewQuizStep4: FC<StepProps> = ({
   quizId,
   isSubmit,
   setIsSubmit,
+  setIsButtonDisabled,
 }) => {
   const { data: quiz, error } = useGetAdminQuizQuery(quizId, {
     refetchOnMountOrArgChange: true,
@@ -59,6 +61,8 @@ const NewQuizStep4: FC<StepProps> = ({
   const [isImageValid, setIsImageValid] = useState(true);
   const [isGalleryPopupOpen, setIsGalleryPopupOpen] = useState(false);
 
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
+
   const [updateQuiz] = useUpdateQuizMutation();
 
   useEffect(() => {
@@ -69,6 +73,7 @@ const NewQuizStep4: FC<StepProps> = ({
     setIsImageValid(true);
     setIsGalleryPopupOpen(false);
   }, [quiz]);
+
   const onSubmit = async () => {
     await updateQuiz({
       quizId,
@@ -81,7 +86,11 @@ const NewQuizStep4: FC<StepProps> = ({
         level: quiz?.level,
         tags: quiz?.tags,
       },
-    });
+    })
+      .unwrap()
+      .catch(() => {
+        setIsErrorPopupOpen(true);
+      });
     setIsSubmit([false, false, false, false]);
   };
 
@@ -90,6 +99,10 @@ const NewQuizStep4: FC<StepProps> = ({
       onSubmit();
     }
   }, [isSubmit]);
+
+  useEffect(() => {
+    setIsButtonDisabled(time !== 0 && isTimeValid && image !== '' && isImageValid);
+  }, [image, time]);
 
   return (
     <StyledDiv>
@@ -168,6 +181,12 @@ const NewQuizStep4: FC<StepProps> = ({
         setIsGalleryPopupOpen={setIsGalleryPopupOpen}
         image={image}
         setImage={setImage} />
+      <ErrorPopup
+        title='Что-то пошло не так'
+        description='В процессе создания квиза что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к форме'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
     </StyledDiv>
   );
 };

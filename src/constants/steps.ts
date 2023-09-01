@@ -3,7 +3,7 @@ import NewQuizStep1 from '@/ui-lib/widgets/NewQuizStep1';
 import NewQuizStep2 from '@/ui-lib/widgets/NewQuizStep2';
 import NewQuizStep3 from '@/ui-lib/widgets/NewQuizStep3';
 import NewQuizStep4 from '@/ui-lib/widgets/NewQuizStep4';
-import { IQuestionAdmin } from '@/types/types';
+import { IQuestionAdmin, IVolumeItem } from '@/types/types';
 
 export interface Step<T> {
   id: number;
@@ -18,14 +18,16 @@ export interface Step<T> {
 }
 
 export interface StepProps {
-  items: number[];
+  saveDrafts: any;
+  volumeItems: IVolumeItem[];
   quizId: number;
+  setQuizId: any;
   questionsList: IQuestionAdmin[];
   setIsButtonDisabled: any;
   setNextPage: any;
   isSubmit: boolean[];
   setIsSubmit: any;
-  setItems: any;
+  setVolumeItems: any;
   formElements: FormElements;
   setFormElements: SetFormElements;
 }

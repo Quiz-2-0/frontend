@@ -1,8 +1,9 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   FormLayout,
   FormLayoutGroup,
@@ -20,6 +21,7 @@ import { StepProps } from '@/constants/steps';
 import FormItemForNewQuiz from '../styled-components/FormItemForNewQuiz';
 import { IQuestionAdmin } from '@/types/types';
 import { useCreateQuestionsListMutation } from '@/api/api';
+import ErrorPopup from '../popups/ErrorPopup';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
@@ -82,6 +84,8 @@ const NewQuizStep2: FC<StepProps> = ({
   const { setQuestionsList } = setFormElements;
   const [createQuestionsList] = useCreateQuestionsListMutation();
 
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
+
   const renderElement = (typeName: string, question: IQuestionAdmin) => {
     const type = questionTypes.find(({ shortname }) => (typeName === shortname)) ?? { id: -1, name: '', markup: { Component: () => null } };
     return (
@@ -93,11 +97,20 @@ const NewQuizStep2: FC<StepProps> = ({
   };
 
   const onSubmit = async () => {
+    console.log(quizId, questionsList);
     await createQuestionsList({
       quizId,
       questions: questionsList,
-    });
-    setNextPage();
+    })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        setNextPage();
+      })
+      .catch((err) => {
+        setIsErrorPopupOpen(true);
+        console.log(err);
+      });
     setIsSubmit([false, false, false, false]);
   };
 
@@ -242,6 +255,12 @@ const NewQuizStep2: FC<StepProps> = ({
           </FormLayout>
         </StyledDiv>
       ))}
+      <ErrorPopup
+        title='Что-то пошло не так'
+        description='В процессе создания квиза что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к форме'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
     </>
   );
 };

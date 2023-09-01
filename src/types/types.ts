@@ -155,6 +155,13 @@ export interface Volume {
   description: string;
 }
 
+export interface IVolumeItem {
+  volume: Partial<Volume>;
+  isNew: boolean;
+  isChanged: boolean;
+  isValid: boolean;
+}
+
 export type VolumeCreate = Omit<Volume, 'id'>;
 
 export interface IQuiz {

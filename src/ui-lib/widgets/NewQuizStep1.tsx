@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import {
@@ -22,6 +23,7 @@ import {
   useGetLevelsQuery,
 } from '@/api/api';
 import { StepProps } from '@/constants/steps';
+import ErrorPopup from '../popups/ErrorPopup';
 
 const StyledSelect = styled(Select)`
   & > .vkuiSelect {
@@ -49,17 +51,18 @@ const NewQuizStep1: FC<StepProps> = ({
   isSubmit,
   setIsSubmit,
   setNextPage,
-  setFormElements,
+  setQuizId,
+  quizId,
 }) => {
-  const { id } = useParams();
-  const { data: quiz, error } = useGetAdminQuizQuery(Number(id), {
+  const { data: quiz, error } = useGetAdminQuizQuery(quizId, {
     refetchOnMountOrArgChange: true,
   });
   const { data: departments } = useGetDepartmentsQuery();
   const { data: categories } = useGetTagsQuery();
   const { data: quizLevels } = useGetLevelsQuery();
 
-  const { setQuizId } = setFormElements;
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
+
   const [quizName, setQuizName] = useState(error ? '' : quiz?.name ?? '');
   const [isQuizNameValid, setIsQuizNameValid] = useState(true);
 
@@ -96,7 +99,7 @@ const NewQuizStep1: FC<StepProps> = ({
     })) ?? [],
   );
 
-  const [createQuiz, data] = useCreateQuizMutation();
+  const [createQuiz] = useCreateQuizMutation();
   const [updateQuiz] = useUpdateQuizMutation();
 
   const onSubmit = async () => {
@@ -110,13 +113,20 @@ const NewQuizStep1: FC<StepProps> = ({
         tags: [
           { id: category },
         ],
-      });
-      if (data?.data?.id !== undefined) {
-        setQuizId(data?.data?.id);
-      }
+      })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+          setQuizId(res.id);
+          setNextPage();
+        })
+        .catch((err) => {
+          setIsErrorPopupOpen(true);
+          console.log(err);
+        });
     } else {
       await updateQuiz({
-        quizId: Number(id) ?? 0,
+        quizId: quizId ?? 0,
         quiz: {
           description,
           directory: department,
@@ -126,9 +136,17 @@ const NewQuizStep1: FC<StepProps> = ({
           level,
           tags: [{ id: category }],
         },
-      });
+      })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+          setNextPage();
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsErrorPopupOpen(true);
+        });
     }
-    setNextPage();
   };
 
   useEffect(() => {
@@ -268,6 +286,12 @@ const NewQuizStep1: FC<StepProps> = ({
           </StyledFormItemForNewQuiz>
         </StyledFormLayoutGroup>
       </FormLayout>
+      <ErrorPopup
+        title='Что-то пошло не так'
+        description='В процессе создания квиза что-то пошло не так... Попробуйте ещё раз.'
+        button='Вернуться к форме'
+        isErrorPopupOpen={isErrorPopupOpen}
+        setIsErrorPopupOpen={setIsErrorPopupOpen} />
     </StyledDiv>
   );
 };
