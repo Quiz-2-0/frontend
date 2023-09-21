@@ -1,4 +1,4 @@
-name: CI
+name: CD
 
 on:
   push:
@@ -41,7 +41,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           sudo docker-compose down
           sudo docker-compose rm frontend
